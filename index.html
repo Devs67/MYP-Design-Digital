@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criterion A — MYP 4 Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --moss:#2F6B4F; --moss-tint:#E8F1EC;
+  --clay:#9C3E2F; --clay-tint:#F8E9E6;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 26px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+/* masthead */
+.mast{padding:52px 0 24px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0}
+.mast .sub{margin:14px 0 0;font-size:16px;color:var(--slate);max-width:60ch}
+
+
+/* command term box */
+.ctbox{margin:26px 0 0;background:var(--card);border:1px solid var(--rule);
+  border-left:4px solid var(--amber);border-radius:3px;padding:22px 26px 24px;max-width:74ch}
+.ctbox__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);margin:0 0 16px;font-weight:500}
+.ctrow{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;padding:11px 0;
+  border-top:1px solid var(--rule-soft)}
+.ctrow:first-of-type{border-top:0;padding-top:0}
+.ctrow b{font-family:var(--display);font-size:20px;font-weight:600;flex:0 0 96px;color:var(--amber)}
+.ctrow span{font-size:15.5px;line-height:1.5;flex:1 1 320px}
+.ctbox__note{margin:16px 0 0;padding-top:14px;border-top:1px solid var(--rule-soft);
+  font-size:13.5px;color:var(--slate)}
+
+.ctrow i.ctband{font-family:var(--mono);font-size:11px;color:var(--slate);
+  flex:0 0 34px;font-style:normal;letter-spacing:.04em}
+.ctall{margin-top:18px;border-top:1px solid var(--rule-soft);padding-top:14px}
+.ctall summary{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--amber);cursor:pointer;list-style:none;
+  display:flex;align-items:center;gap:8px;padding:4px 0}
+.ctall summary::-webkit-details-marker{display:none}
+.ctall summary::before{content:"+";font-size:14px;line-height:1;width:15px;height:15px;
+  border:1px solid var(--rule);border-radius:2px;display:flex;align-items:center;
+  justify-content:center;color:var(--slate)}
+.ctall[open] summary::before{content:"\2013"}
+.ctall summary:hover{color:var(--ink)}
+.ctgrid{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px}
+.ctg{flex:1 1 260px;background:var(--paper);border-radius:3px;padding:13px 15px}
+.ctg b{display:block;font-family:var(--display);font-size:16px;font-weight:600;margin-bottom:4px}
+.ctg span{display:block;font-size:13.5px;line-height:1.5;color:var(--slate)}
+.ctg span.used{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:5px}
+@media print{.ctall[open] .ctgrid,.ctall .ctgrid{display:flex !important}
+  .ctall summary::before{display:none}}
+
+/* strand tabs */
+.tabs{border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20;
+  background:rgba(242,245,246,.95);backdrop-filter:blur(6px)}
+.tabs .wrap{display:flex;gap:6px;flex-wrap:wrap;padding-top:12px;padding-bottom:0}
+.tab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;
+  padding:11px 18px;border:1px solid var(--rule);border-bottom:none;
+  background:transparent;color:var(--slate);cursor:pointer;
+  border-radius:3px 3px 0 0;position:relative;top:1px}
+.tab:hover{color:var(--ink);background:var(--card)}
+.tab.on{background:var(--card);color:var(--ink);border-bottom:1px solid var(--card)}
+.tab.todo{opacity:.5}
+
+/* generic section */
+.sec{padding:48px 0 0}
+.sec h2{font-family:var(--display);font-weight:600;font-size:25px;margin:8px 0 4px;
+  letter-spacing:-.01em}
+.sec .sub{margin:0 0 24px;font-size:14.5px;color:var(--slate);max-width:70ch}
+
+.obj{padding:20px 24px;background:var(--card);border:1px solid var(--rule);
+  border-radius:3px;font-size:16.5px;max-width:74ch}
+.obj b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--slate);display:block;margin-bottom:8px;font-weight:500}
+
+/* command terms */
+.terms{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.term{flex:1 1 200px;background:var(--card);border:1px solid var(--rule);
+  border-radius:3px;padding:16px 18px}
+.term b{font-family:var(--display);font-size:17px;font-weight:600;display:block;margin-bottom:5px}
+.term span{font-size:13.5px;color:var(--slate);line-height:1.5;display:block}
+
+/* flow strip */
+.flow{display:flex;gap:0;flex-wrap:wrap;background:var(--card);
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.fstep{flex:1 1 190px;padding:20px 20px 22px;border-right:1px solid var(--rule-soft);
+  position:relative;min-width:180px}
+.fstep:last-child{border-right:none}
+.fstep b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);display:block;margin-bottom:7px}
+.fstep h4{font-family:var(--display);font-size:17px;font-weight:600;margin:0 0 7px;line-height:1.25}
+.fstep p{margin:0;font-size:13px;color:var(--slate);line-height:1.5}
+.flownote{font-size:13.5px;color:var(--slate);margin:0 0 6px}
+
+/* detailed steps */
+.step{background:var(--card);border:1px solid var(--rule);border-radius:3px;
+  padding:26px 28px 28px;margin-bottom:16px}
+.step__n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);margin:0 0 8px}
+.step h3{font-family:var(--display);font-size:22px;font-weight:600;margin:0 0 14px;
+  letter-spacing:-.01em}
+.step ul{margin:0;padding:0;list-style:none}
+.step li{position:relative;padding:7px 0 7px 18px;font-size:15px;line-height:1.55}
+.step li::before{content:"";position:absolute;left:0;top:16px;width:8px;height:1.5px;
+  background:var(--amber)}
+.tools{margin-top:16px;padding:14px 16px;background:var(--paper);border-radius:3px;
+  font-size:13.5px;color:var(--slate)}
+.tools b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  display:block;margin-bottom:6px;font-weight:500;color:var(--slate)}
+.concepts{margin-top:12px;padding:14px 16px;background:var(--amber-tint);border-radius:3px;
+  font-size:13.5px;line-height:1.6}
+.concepts b{font-weight:600;color:var(--amber)}
+
+/* exemplar chunk */
+.ex{margin-top:18px;border-top:1px solid var(--rule-soft);padding-top:18px}
+.ex__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--moss);margin:0 0 10px;font-weight:500}
+.quote{background:var(--moss-tint);border-left:3px solid var(--moss);border-radius:3px;
+  padding:14px 18px;font-size:14.5px;line-height:1.6;font-style:italic;margin:0}
+.does{margin:12px 0 0;font-size:14px;color:var(--slate)}
+.does b{color:var(--ink);font-weight:600}
+.gap{margin:10px 0 0;padding:12px 16px;background:var(--clay-tint);border-radius:3px;
+  font-size:13.5px;line-height:1.55}
+.gap b{color:var(--clay);font-weight:600}
+
+
+/* frameworks */
+.fwgroup{margin-bottom:26px}
+.fwgroup__hd{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;
+  border-bottom:1px solid var(--rule);padding-bottom:9px;margin-bottom:14px}
+.fwgroup__n{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--amber)}
+.fwgroup__hd h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0}
+.fwlist{display:flex;flex-wrap:wrap;gap:14px}
+.fwc{flex:1 1 400px;background:var(--card);border:1px solid var(--rule);
+  border-radius:3px;padding:20px 22px 22px}
+.fwc__top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+.fwc h4{font-family:var(--display);font-size:18px;font-weight:600;margin:0;letter-spacing:-.01em}
+.pill{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 8px;border-radius:2px;background:var(--amber-tint);color:var(--amber);white-space:nowrap}
+.fwc__out{margin:0 0 12px;font-size:14px;color:var(--slate)}
+.fwc__out b{color:var(--ink);font-weight:600}
+.fwc ol{margin:0;padding-left:18px}
+.fwc ol li{font-size:14px;padding:3px 0;line-height:1.5}
+.fwc ol li::marker{font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+/* full worked example */
+.doc{background:var(--card);border:1px solid var(--rule);border-radius:3px;
+  padding:34px 38px 36px}
+.doc__meta{font-size:13.5px;color:var(--slate);margin:0 0 26px;padding-bottom:18px;
+  border-bottom:1px solid var(--rule-soft)}
+.dblock{margin-bottom:30px}
+.dblock:last-child{margin-bottom:0}
+.dhd{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:12px}
+.dhd h3{font-family:var(--display);font-size:21px;font-weight:600;margin:0;letter-spacing:-.01em}
+.spill{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 9px;border-radius:2px;background:var(--amber-tint);color:var(--amber);white-space:nowrap}
+.doc p.t{margin:0 0 13px;font-size:15px;line-height:1.72;text-align:justify}
+.doc ul.needs{margin:6px 0 0;padding:0;list-style:none}
+.doc ul.needs li{position:relative;padding:6px 0 6px 18px;font-size:15px;line-height:1.6}
+.doc ul.needs li::before{content:"";position:absolute;left:0;top:15px;width:8px;height:1.5px;
+  background:var(--amber)}
+.dnote{margin:14px 0 0;padding:13px 16px;background:var(--paper);border-radius:3px;
+  font-size:13.5px;line-height:1.55;color:var(--slate)}
+.dnote b{color:var(--ink);font-weight:600}
+.dnote.warn{background:var(--clay-tint)}
+.dnote.warn b{color:var(--clay)}
+@media (max-width:600px){.doc{padding:24px 22px 26px}.doc p.t{text-align:left}}
+
+/* collapsible worked example */
+.docwrap{background:var(--card);border:1px solid var(--rule);border-radius:3px}
+.docwrap > summary{list-style:none;cursor:pointer;padding:20px 26px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.docwrap > summary::-webkit-details-marker{display:none}
+.docwrap > summary::before{content:"+";font-family:var(--mono);font-size:16px;line-height:1;
+  width:24px;height:24px;flex:0 0 24px;border:1px solid var(--rule);border-radius:2px;
+  display:flex;align-items:center;justify-content:center;color:var(--amber)}
+.docwrap[open] > summary::before{content:"\2013"}
+.docwrap > summary:hover{background:var(--paper)}
+.docwrap[open] > summary{border-bottom:1px solid var(--rule-soft)}
+.docwrap > summary b{font-family:var(--display);font-size:18px;font-weight:600}
+.docwrap > summary i{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--slate);font-style:normal;margin-left:auto}
+.doc{border:0 !important;border-radius:0 !important}
+@media print{.docwrap > summary::before{display:none}
+  .docwrap .doc{display:block !important}}
+
+.fwgroup > summary{list-style:none;cursor:pointer}
+.fwgroup > summary::-webkit-details-marker{display:none}
+.fwgroup > summary::before{content:"+";font-family:var(--mono);font-size:15px;line-height:1;
+  width:21px;height:21px;flex:0 0 21px;border:1px solid var(--rule);border-radius:2px;
+  display:flex;align-items:center;justify-content:center;color:var(--amber);align-self:center}
+.fwgroup[open] > summary::before{content:"\2013"}
+.fwgroup > summary:hover h3{color:var(--amber)}
+.fwgroup > summary i{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--slate);font-style:normal;margin-left:auto}
+.fwgroup > summary h3{transition:color .15s}
+.fwgroup .fwlist{margin-top:14px}
+@media print{.fwgroup > summary::before{display:none}
+  .fwgroup .fwlist{display:flex !important}}
+
+/* bands */
+.band{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
+  border-radius:3px;padding:22px 26px;margin-bottom:12px}
+.band--top{border-left-color:var(--moss)}
+.band--sub{border-left-color:var(--amber)}
+.band__hd{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.band__n{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--slate)}
+.band--top .band__n{color:var(--moss)}
+.band--sub .band__n{color:var(--amber)}
+.cterm{font-family:var(--display);font-size:16px;font-weight:600}
+.steps-req{margin-left:auto;display:flex;gap:5px}
+.sq{font-family:var(--mono);font-size:10px;width:22px;height:22px;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--rule-soft);color:var(--slate)}
+.sq.on{background:var(--ink);color:#fff}
+.band p{margin:0;font-size:15px;line-height:1.6}
+.band .diff{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--rule-soft);
+  font-size:13.5px;color:var(--slate)}
+.band .diff b{color:var(--amber);font-weight:600}
+
+/* checklist */
+.clbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.meter{flex:1 1 200px;height:8px;background:var(--rule-soft);border-radius:2px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--moss);transition:width .25s}
+.count{font-family:var(--mono);font-size:12px;color:var(--slate);white-space:nowrap}
+.rst{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--rule);background:var(--card);color:var(--slate);
+  padding:7px 13px;border-radius:2px;cursor:pointer}
+.rst:hover{border-color:var(--slate);color:var(--ink)}
+.clgroup{background:var(--card);border:1px solid var(--rule);border-radius:3px;
+  padding:22px 24px;margin-bottom:14px}
+.clgroup h3{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);margin:0 0 12px}
+.ck{display:flex;gap:13px;align-items:flex-start;padding:10px 0;
+  border-top:1px solid var(--rule-soft);cursor:pointer}
+.ck:first-of-type{border-top:0}
+.ck input{margin:4px 0 0;width:17px;height:17px;flex:0 0 auto;accent-color:var(--moss);cursor:pointer}
+.ck span{font-size:15px;line-height:1.5}
+.ck small{display:block;font-size:12.5px;color:var(--slate);margin-top:3px}
+.ck.must span{font-weight:600}
+.ck.must small{color:var(--amber)}
+.ck input:checked + span{color:var(--slate);text-decoration:line-through;
+  text-decoration-color:var(--rule)}
+.ck input:checked + span small{text-decoration:none}
+
+/* traps */
+.traps{display:flex;flex-wrap:wrap;gap:14px}
+.trap{flex:1 1 380px;background:var(--card);border:1px solid var(--rule);
+  border-radius:3px;padding:20px 22px}
+.trap h4{font-size:16px;font-weight:600;margin:0 0 8px;color:var(--clay)}
+.trap p{margin:0;font-size:14px;color:var(--slate)}
+.trap p+p{margin-top:9px;color:var(--ink)}
+
+/* placeholder strands */
+.soon{background:var(--card);border:1px dashed var(--rule);border-radius:3px;
+  padding:56px 30px;text-align:center;margin-top:20px}
+.soon h2{font-family:var(--display);font-size:23px;font-weight:600;margin:0 0 8px}
+.soon p{margin:0;font-size:14.5px;color:var(--slate)}
+
+footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
+
+@media (max-width:700px){
+  .steps-req{margin-left:0;width:100%}
+  .fstep{border-right:none;border-bottom:1px solid var(--rule-soft)}
+}
+@media print{
+  body{background:#fff}
+  .tabs,.rst,.meter{display:none}
+  .step,.band,.clgroup,.trap{break-inside:avoid}
+  .sec{padding-top:26px}
+  [hidden]{display:block !important}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">MYP 4 Design · Task-specific clarification</p>
+    <h1>Criterion A — Inquiring and analysing</h1>
+    <p class="sub">What must be in each strand, the command term at every band, and a worked example.</p>
+    <div class="ctbox">
+      <p class="ctbox__lbl">Command terms &mdash; Criterion A, strand i</p>
+      <div class="ctrow"><i class="ctband">1&ndash;2</i><b>State</b><span>Give a specific name, value or other brief answer without explanation or calculation.</span></div>
+      <div class="ctrow"><i class="ctband">3&ndash;4</i><b>Outline</b><span>Give a brief account or summary.</span></div>
+      <div class="ctrow"><i class="ctband">5&ndash;6</i><b>Explain</b><span>Give a detailed account including reasons or causes.</span></div>
+      <div class="ctrow"><i class="ctband">7&ndash;8</i><b>Justify</b><span>Give valid reasons or evidence to support an answer or conclusion.</span></div>
+      <p class="ctbox__note">Explaining is done with reasoning. Justifying cannot be done without evidence.</p>
+
+      <details class="ctall">
+        <summary>All MYP command terms</summary>
+        <div class="ctgrid">
+          <div class="ctg"><b>Analyse</b><span>Break down in order to bring out the essential elements or structure.</span></div>
+          <div class="ctg"><b>Construct</b><span>Display information in a diagrammatic or logical form.</span></div>
+          <div class="ctg"><b>Create</b><span class="used">Used in strand i</span><span>To evolve from one's own thought or imagination, as a work or an invention.</span></div>
+          <div class="ctg"><b>Define</b><span>Give the precise meaning of a word, phrase, concept or physical quantity.</span></div>
+          <div class="ctg"><b>Demonstrate</b><span>Make clear by reasoning or evidence, illustrating with examples or practical application.</span></div>
+          <div class="ctg"><b>Describe</b><span>Give a detailed account or picture of a situation, event, pattern or process.</span></div>
+          <div class="ctg"><b>Design</b><span>Produce a plan, simulation or model.</span></div>
+          <div class="ctg"><b>Develop</b><span>To improve incrementally, elaborate or expand in detail. Evolve to a more advanced or effective state.</span></div>
+          <div class="ctg"><b>Evaluate</b><span>Make an appraisal by weighing up the strengths and limitations.</span></div>
+          <div class="ctg"><b>Identify</b><span class="used">Used in strand i</span><span>Provide an answer from a number of possibilities. Recognize and state briefly a distinguishing fact or feature.</span></div>
+          <div class="ctg"><b>List</b><span>Give a sequence of brief answers with no explanation.</span></div>
+          <div class="ctg"><b>Present</b><span class="used">Used in strand i</span><span>Offer for display, observation, examination or consideration.</span></div>
+          <div class="ctg"><b>Prioritize</b><span>Give relative importance to, or put in an order of preference.</span></div>
+          <div class="ctg"><b>Summarize</b><span>Abstract a general theme or major point(s).</span></div>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Strand">
+  <div class="wrap">
+    <button class="tab on" data-s="i" aria-pressed="true">Strand i</button>
+    <button class="tab todo" data-s="ii" aria-pressed="false">Strand ii</button>
+    <button class="tab todo" data-s="iii" aria-pressed="false">Strand iii</button>
+    <button class="tab todo" data-s="iv" aria-pressed="false">Strand iv</button>
+  </div>
+</nav>
+
+<!-- ==================== STRAND I ==================== -->
+<div data-panel="i">
+
+<section class="sec">
+  <div class="wrap">
+    <div class="obj">
+      <b>Strand i — objective</b>
+      Explain and justify the need for a solution to a problem for a specified target audience.
+    </div>
+  </div>
+</section>
+
+<!-- command terms -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">The command terms</p>
+    <h2>Four terms, four bands</h2>
+    <p class="sub">The verb changes at every band. Find the verb your draft performs and you know your level.</p>
+    <div class="terms">
+      <div class="term"><b>States</b><span>Says there is a problem. 1–2</span></div>
+      <div class="term"><b>Outlines</b><span>Gives a brief account of it. 3–4</span></div>
+      <div class="term"><b>Explains</b><span>Gives a detailed account including reasons or causes. 5–6</span></div>
+      <div class="term"><b>Explains and justifies</b><span>Gives a detailed account, and supports it with valid reasons or evidence. 7–8</span></div>
+    </div>
+    <p class="sub" style="margin-bottom:0">Three more verbs appear inside the strand: <b>identify</b> the target audience, <b>critically present</b> the cause and reason, and <b>create</b> the problem statement.</p>
+  </div>
+</section>
+
+<!-- flow -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">The flow</p>
+    <h2>Four steps, in this order</h2>
+    <p class="sub">Steps 1 to 3 reach 5–6. Step 4 is the one that reaches 7–8.</p>
+    <div class="flow">
+      <div class="fstep"><b>Step 1</b><h4>Establish the context</h4><p>Set the problem in its wider world.</p></div>
+      <div class="fstep"><b>Step 2</b><h4>Identify the users</h4><p>Name the specific target audience.</p></div>
+      <div class="fstep"><b>Step 3</b><h4>Present cause and reason</h4><p>Use a tool, then write the problem statement.</p></div>
+      <div class="fstep"><b>Step 4</b><h4>Justify the need</h4><p>Cite 10–12 secondary sources and primary research.</p></div>
+    </div>
+    <p class="flownote">Step 4 cannot be done from your desk. It needs research gathered before you write.</p>
+  </div>
+</section>
+
+<!-- detailed steps -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">In detail</p>
+    <h2>What goes into each step</h2>
+    <p class="sub">Each step includes an extract from a strong response, and what that extract is doing.</p>
+
+    <!-- STEP 1 -->
+    <article class="step">
+      <p class="step__n">Step 1</p>
+      <h3>Establish the context</h3>
+      <ul>
+        <li>Explain the problem situation within its wider setting</li>
+        <li>Frame it through the unit's key concept, related concepts and global context</li>
+        <li>Move from the wide picture down to your own setting</li>
+      </ul>
+      <div class="concepts">
+        <b>Key concept, related concepts and global context:</b> the context must be framed through these from 5–6 upwards. At 7–8 each one must be explicitly identified and labelled as a key concept, a related concept or the global context. Which ones apply to this unit will be introduced in class — leave room for them here.
+      </div>
+
+      <div class="ex">
+        <p class="ex__lbl">Extract from a strong response</p>
+        <p class="quote">"The worlds' largest democracy faces a grave problem, one that may not show its symptoms now, but will come to wreak havoc on its growth plans in the decades to come… However, the Indian Government and multiple NGOs have moved swiftly to try and tackle this problem through policy initiatives and public awareness campaigns."</p>
+        <p class="does"><b>What it does:</b> opens at national scale, names the community affected, then ends on what has changed recently — parents becoming more willing to invest. That last move is what makes the problem look solvable rather than simply sad.</p>
+      </div>
+    </article>
+
+    <!-- STEP 2 -->
+    <article class="step">
+      <p class="step__n">Step 2</p>
+      <h3>Identify the target audience</h3>
+      <ul>
+        <li>Name the specific target audience or user group</li>
+        <li>Describe who they actually are — age, setting, routine, needs</li>
+        <li>Say why this group and not a wider or narrower one</li>
+        <li>Show evidence that you interacted with them</li>
+        <li>State your conclusion from that interaction here, and cite the full evidence in the appendix</li>
+        <li>An empathy map can be included here as well</li>
+      </ul>
+      <div class="tools">
+        <b>Evidence of interaction</b>
+        Interview notes · Survey responses · Photographs · Observation records · Empathy map
+        <br><br>Put the raw evidence in the appendix and write only the conclusion here. The appendix number goes in the text: (Appendix B, 2.1).
+      </div>
+
+      <div class="ex">
+        <p class="ex__lbl">Extract from a strong response</p>
+        <p class="quote">"…the problem must be addressed from the root, by targeting those who will have the maximum upside in the future — children aged 10 to 14. These years are critical for cognitive development and attaining physical maturity."</p>
+        <p class="does"><b>What it does:</b> does not just name an age group, it argues for it. The reasoning about growth and cognitive development is what turns a stated audience into an identified one.</p>
+      </div>
+    </article>
+
+    <!-- STEP 3 -->
+    <article class="step">
+      <p class="step__n">Step 3</p>
+      <h3>Present the cause and reason, then state the problem</h3>
+      <ul>
+        <li>Critically present the cause and the reason behind the problem</li>
+        <li>Show it through a graphic organiser, not prose alone</li>
+        <li>Include the perspectives of everyone involved</li>
+        <li>Write the conclusions and insights from your secondary research that are relevant to the cause</li>
+        <li>This can be presented as an infographic</li>
+        <li>Create the problem statement</li>
+      </ul>
+      <div class="tools">
+        <b>Tools</b>
+        Statistical analysis · Empathy map · Circle of Viewpoints · Infographic
+        <br><br>Only the relevant findings belong here. Secondary research that does not explain the cause stays in the appendix.
+      </div>
+
+      <div class="ex">
+        <p class="ex__lbl">Extract from a strong response</p>
+        <p class="quote">"This diet is the result of years of poverty, carbohydrates like wheat and rice are filling, easily replenishing, and cheap, making them a large portion of the diet."</p>
+        <p class="does"><b>What it does:</b> gives a cause with a reason behind it, rather than restating the problem. The response then sets out three separate perspectives — the snacking brands, the children, and the parents — which is a Circle of Viewpoints written as prose.</p>
+        <div class="gap"><b>What it is missing:</b> the perspectives are written out but never shown as an organiser. The TSC asks for a graphic organiser, so the empathy map or viewpoints circle needs to appear as a visual too.</div>
+      </div>
+    </article>
+
+    <!-- STEP 4 -->
+    <article class="step">
+      <p class="step__n">Step 4</p>
+      <h3>Justify the need</h3>
+      <ul>
+        <li>Justify the need for a solution to the problem</li>
+        <li>Cite a minimum of 10–12 secondary sources</li>
+        <li>Include relevant primary research</li>
+        <li>After every statistic, say what it means for your users</li>
+      </ul>
+      <div class="tools">
+        <b>Primary research — choose what fits</b>
+        Survey · Interview · Observation · Focus group discussion · Expert opinion or view
+        <br><br>More than one method is stronger than one done well. A number from a survey and a quote from an interview prove different things.
+      </div>
+
+      <div class="ex">
+        <p class="ex__lbl">Extract from a strong response</p>
+        <p class="quote">"A comprehensive meta-analysis, spanning over two decades has placed the childhood obesity rate in India at 8.4%, while overweight prevalence stands at 12.4%… These are grave indicators of upcoming health issues that will plague Indian society if not tackled in a timely manner."</p>
+        <p class="does"><b>What it does:</b> a statistic followed immediately by what it means. Data alone would sit at 5–6; the sentence after it is what justifies.</p>
+        <div class="gap"><b>What it is missing:</b> the citation is only "Refer Appendix C". A source with no name and no year is not a citation. Write it as: source name, year, appendix number.</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+
+<!-- full example -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Worked example</p>
+    <h2>A complete strand i response</h2>
+    <p class="sub">Reproduced in full and unedited. The section headings are the student's own — the step tags show which part of the strand each one covers.</p>
+
+    <details class="docwrap">
+      <summary><b>Read the complete response</b><i>Approx. 1,400 words &middot; 4 sections</i></summary>
+    <div class="doc">
+      <p class="doc__meta">Unit context: child nutrition in India. Outcome: a savoury snack for children aged 10 to 14.</p>
+
+      <div class="dblock">
+        <div class="dhd"><h3>Context</h3><span class="spill">Step 1</span></div>
+        <p class="t">The worlds' largest democracy faces a grave problem, one that may not show its symptoms now, but will come to wreak havoc on its growth plans in the decades to come &mdash; rampant child malnutrition and anemia. India happens to be the nation with the most vegetarians whose diets are dominated by carbohydrates, reinforced with little protein or fibre as they tend to be more expensive than carbs such as wheat or rice. Thus, the nation finds itself with a population deficient in protein, iron and fibre. To further aggravate this problem, it also finds its supermarkets overflowing with cheap, processed and unhealthy snacks which are rapidly consumed by the ever growing population of children in the nation. A large majority of Indian men and women find themselves engulfed in the daily pressures of work, forcing them to turn a blind-eye to their children's consumption of such processed and unhealthy garbage simply for the sake of convenience. However, the Indian Government and multiple NGOs have moved swiftly to try and tackle this problem through policy initiatives and public awareness campaigns targeted towards parents, shining a light on what it means to truly be healthy, and the ways to accomplish that. As a result of such initiatives, parents' understanding and willingness to invest in their children's nutritional requirements has been growing, particularly the cities of India, across all 3 tiers.</p>
+        <p class="dnote"><b>Why this works:</b> it opens at national scale, names the communities affected, and closes on what has changed recently. That final move &mdash; parents becoming more willing to invest &mdash; is what makes the problem look solvable rather than simply sad.</p>
+      </div>
+
+      <div class="dblock">
+        <div class="dhd"><h3>Target Audience</h3><span class="spill">Step 2</span></div>
+        <p class="t">Having considered the various factors surrounding the nutrition issue in India, it is of paramount importance to solve the many issues plaguing its young and ever growing population. In order to do this, identifying a target audience, an age group or demographic will help build a solution specifically catered to their needs, helping prevent excess expenditure while providing maximum reach. This process hinges upon a greater understanding of the impacts of iron, protein and fibre deficiencies in the long-term. In brief, prolonged iron deficiency can cause cognitive impairment, a reduced ability to function, grasp knowledge and adapt to different environments while fibre deficiencies cause digestive issues, often resulting in weight gain. At the same time, protein deficiencies in adults can go fairly unnoticed apart from situations wherein they exert themselves however, a protein deficiency as a growing child, above the age of 10, would cause problems that could last a lifetime. These problems include stunted growth, reduced physical fitness and a noticeable degradation in the performance of the immune system. Together, they create a person bound for a lifetime of hardship. It is due to this reason, the problem must be addressed from the root, by targeting those who will have the maximum upside in the future &mdash; children aged 10 to 14. These years are critical for cognitive development and attaining physical maturity, during which providing the most balanced, all-rounded and consistent nutrition will allow them to reach their full potential.</p>
+        <p class="dnote"><b>Why this works:</b> it does not just name an age group, it argues for it. The reasoning about growth and cognitive development is what turns a stated audience into an identified one.</p>
+        <p class="dnote warn"><b>What is missing:</b> no evidence of interaction with the audience. There is no interview, survey or empathy map, and no conclusion drawn from meeting a real user. That evidence belongs here, with the raw material cited to the appendix.</p>
+      </div>
+
+      <div class="dblock">
+        <div class="dhd"><h3>Problem</h3><span class="spill">Step 3</span></div>
+        <p class="t">India is a nation known for its cultural diversity, but in this diversity, its food culture has one aspect in common &mdash; the prevalence of carbohydrates in their diet coupled with minimal consumption of protein and fibres. This diet is the result of years of poverty, carbohydrates like wheat and rice are filling, easily replenishing, and cheap, making them a large portion of the diet. 39% of India is vegetarian, a diet infamous for its protein deficiency. These underlying cultural developments have led to the problem of malnutrition in India.</p>
+        <p class="t">Moreover, the introduction of snacks such as chips, wafers and crisps to the Indian market has led to the compounding of this malnutrition problem. These snacks have become more prevalent in the Indian market in recent years, and to understand the reasons for consumption, and how it is changing society, it is essential to analyse the various perspectives of all those involved &mdash; namely the parents of adolescent children, the adolescents themselves and the large snacking brands in the Indian market. (Refer Appendix C for study)</p>
+        <p class="t">Snacking brands have only one goal &mdash; to turn a profit and ensure investor satisfaction. In order to achieve this target, these brands aim to create flavourful and almost addictive products which primarily appeal to children and adolescents. Across years of product development, these snacks have consistently progressed towards becoming unhealthier for the consumer, in part due to the discovery of flavour and colour enhancers but also the lack of regulation on nutritional requirements for snacks. It has become increasingly convenient to load new flavours with enhancers such as MSG (monosodium glutamate), artificial flavours and artificial colours like RED-40. The vibrant and prominent colours attract children, while artificial flavours and flavour enhancers hook them onto these flavours, making them seek out every opportunity to purchase packs. In order to produce these snacks in a cheap and time efficient manner, manufacturers began sourcing low quality ingredients and using cheap oils such as palm oil in their products. This unhealthy combination of low-quality ingredients, unhealthy oils, artificial flavours, colours and enhancers create a deadly blend. RED-40, a dye derived from petroleum is safe in small doses, but can trigger an inflammatory response in the colon and rectum, causing discomfort for the consumer. Although, some studies have linked the consumption of this dye to the development of migraines, mental disorders and cognitive impairment in regular consumers. Such findings have prompted many nations to ban the sale and use of this dye, but in India, its use remains legal with generous limits being set by the FSSAI. The risk posed by RED-40 pales in comparison to the risks associated with the repeated consumption of palm oil. Increased consumption of palm oil increases the amount of LDL Cholesterol (bad cholesterol) in the bloodstream, increasing the risk of cardiovascular disease while also contributing to rampant weight gain. (reference Appendix C)</p>
+        <p class="t">However, from the perspective of children, who largely cannot comprehend the long term effects of the regular consumption of such snacks, they remain simply too &ldquo;tasty&rdquo;, &ldquo;crunchy&rdquo; and &ldquo;delicious&rdquo; to let go of. Those who do understand the long term effects and are willing to make significant changes to their diet, the obstacle of bland, &lsquo;weird&rsquo; tasting health foods still remains. On the other hand, parents often find themselves purchasing such snacks as the last resort, knowing the risks associated. Many parents find themselves preoccupied with work, stressed and incredibly tired to provide home-made, nutritious snacking options. Few parents try to reason with their children, asking them to consume the more nutritious snacks, but these children often resist, prompting them to purchase conventional unhealthy snacks.</p>
+        <p class="dnote"><b>Why this works:</b> the cause comes with a reason behind it rather than restating the problem, and the secondary research on RED-40 and palm oil is used to explain <em>why</em> the snacks are harmful. Three perspectives are set out &mdash; brands, children, parents &mdash; which is a Circle of Viewpoints written as prose.</p>
+        <p class="dnote warn"><b>What is missing:</b> the perspectives never appear as a graphic organiser, and the secondary research insights are not summarised as an infographic. The task-specific clarification asks for a visual, so prose alone does not meet it however well written.</p>
+      </div>
+
+      <div class="dblock">
+        <div class="dhd"><h3>The Need</h3><span class="spill">Step 4</span></div>
+        <p class="t">The consequences of consuming such unhealthy snacks and maintaining an unbalanced diet have never been more grave. Studies indicate growing levels of childhood obesity, childhood diabetes, and stunted growth in Indian society over the past 10 years. A comprehensive meta-analysis, spanning over two decades has placed the childhood obesity rate in India at 8.4%, while overweight prevalence stands at 12.4%. This same study estimated annual spending amounting to USD $780 million to treat and reduce childhood obesity. India has also witnessed a sharp rise in childhood diabetes cases, recording more than 10 cases per 100,000 people in urban areas. Chennai, a large metropolitan city, recorded an increase in cases, currently at 10.5 cases per 100,000 residents, peaking at ages between 10 and 12. This growing nation has also recorded a historic increase in cardiovascular disease, a study conducted in 2021 reported India had the highest number of childhood cardiovascular disease (CVD) cases, standing at 261,465, noting an increase in childhood CVD incidence by 1.28% annually. These are grave indicators of upcoming health issues that will plague Indian society if not tackled in a timely manner. (Refer to Appendix C)</p>
+        <p class="t">Thus, it is necessary to create a snack, which can replace or reduce the regular consumption of ultra-processed, artificial junk by the target age group of 10 to 14 year old children in order to pave the way for a lifetime of healthy living, cutting short the deficiencies and minimising the long-term impact of malnutrition. These snacks are the most convenient mode of nutrition delivery &mdash; being easy to manufacture at large volumes, shelf-stable for months together, and most importantly, will be the path of least resistance for the target group. It is also rather convenient that the Indian market has few competitors in the healthy savoury snack category, with most market players focussing on protein bars or more traditionally &lsquo;healthy&rsquo; and &lsquo;organic&rsquo; produce such as unprocessed nuts, oats, cereals, etc. Even within this small group of savoury healthy snack brands, no brand markets themselves towards children. Instead they choose to attract the athletes, the gym enthusiasts or the health-conscious adults. This rare situation makes the market the most receptive it may ever be towards a &lsquo;savory snack&rsquo; specially created for children aged between 10 and 14.</p>
+        <p class="t">However, the need is not only for a savoury snack for the young, it is for a snack that is:</p>
+        <ul class="needs">
+          <li>Rich in iron to reduce the risk of anemia</li>
+          <li>Rich in fibre to reduce gut problems and ensure natural weight reduction</li>
+          <li>High in protein to support muscle growth and overall bodily development and function in arguably the most critical stage of a human's life</li>
+          <li>Low in fats to prevent excess calorie intake and reduce the risk of weight gain</li>
+          <li>Balanced carbohydrate quantity to provide much needed energy</li>
+          <li>Affordably priced, allowing for a wide range of consumers to purchase and reap the benefits</li>
+          <li>Flavourful, attracting the target group by providing flavours of their liking without increasing the amount of sugar or salt content</li>
+          <li>Attractively packaged to grab attention and encourage the young to try out this new innovation</li>
+        </ul>
+        <p class="dnote"><b>Why this works:</b> each statistic is followed by what it means, and the section closes on the market gap &mdash; no brand targets children. That gap is the justification. The closing list stays on the right side of the line: these are needs, not specifications, because none of them carries a number.</p>
+        <p class="dnote warn"><b>What is missing:</b> two things. No primary research at all &mdash; no survey, interview, observation or focus group with children aged 10 to 14. And the citations are only &ldquo;Refer Appendix C&rdquo;, which names no source and no year. Both are required for 7&ndash;8.</p>
+      </div>
+
+    </div>
+    </details>
+  </div>
+</section>
+
+<!-- frameworks -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Thinking tools</p>
+    <h2>Frameworks for each step</h2>
+    <p class="sub">Tools marked <em>named in TSC</em> appear in the task-specific clarification itself. The others are optional, but each one produces something a step needs.</p>
+
+    <details class="fwgroup">
+      <summary class="fwgroup__hd"><span class="fwgroup__n">Step 1</span><h3>Establish the context</h3><i>3 tools</i></summary>
+      <div class="fwlist">
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Think &middot; Puzzle &middot; Explore</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the opening context, and your first research questions.</p>
+          <ol>
+            <li>What do I <em>think</em> I know about this situation?</li>
+            <li>What <em>puzzles</em> me about it?</li>
+            <li>How could I <em>explore</em> the puzzles? Each puzzle becomes a research question for strand ii.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Scale ladder</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the wide-to-narrow movement a strong context needs.</p>
+          <ol>
+            <li>Find evidence at global, national, state and school level.</li>
+            <li>Open your writing at the widest rung where evidence holds.</li>
+            <li>Narrow down, rung by rung, until you reach your own setting.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Concept mapping</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the link between your problem and the unit's concepts.</p>
+          <ol>
+            <li>Write the problem in the centre.</li>
+            <li>Branch out to the key concept, the related concepts and the global context.</li>
+            <li>On each branch, write one sentence connecting the concept to your problem. Those sentences become your context paragraph.</li>
+          </ol>
+        </article>
+
+      </div>
+    </details>
+
+    <details class="fwgroup">
+      <summary class="fwgroup__hd"><span class="fwgroup__n">Step 2</span><h3>Identify the target audience</h3><i>4 tools</i></summary>
+      <div class="fwlist">
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Empathy map</h4><span class="pill">Named in TSC</span></div>
+          <p class="fwc__out"><b>Produces:</b> a four-sided picture of your user, and the quotes you need.</p>
+          <ol>
+            <li>Four quadrants: says, thinks, does, feels.</li>
+            <li>Fill "says" and "does" from interviews and observation only — never from imagination.</li>
+            <li>Fill "thinks" and "feels" from what you infer, and mark those as inferences.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Stakeholder map</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the difference between who suffers and who decides.</p>
+          <ol>
+            <li>Primary user — who lives with the problem daily.</li>
+            <li>Secondary user — who else is affected by it.</li>
+            <li>Decision maker — who can approve a change.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>User persona</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the hobbies, likes and dislikes the strand asks for.</p>
+          <ol>
+            <li>Build one representative person: name, age, year group, routine.</li>
+            <li>Add interests, dislikes, and where they encounter the problem.</li>
+            <li>Base every detail on a real person you spoke to, not a stereotype.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>User journey</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the moment and the place the problem bites.</p>
+          <ol>
+            <li>Map your user's day as a timeline of steps.</li>
+            <li>Mark where the problem appears.</li>
+            <li>The marked point tells you where a solution has to work.</li>
+          </ol>
+        </article>
+
+      </div>
+    </details>
+
+    <details class="fwgroup">
+      <summary class="fwgroup__hd"><span class="fwgroup__n">Step 3</span><h3>Present the cause and reason</h3><i>6 tools</i></summary>
+      <div class="fwlist">
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Circle of Viewpoints</h4><span class="pill">Named in TSC</span></div>
+          <p class="fwc__out"><b>Produces:</b> the multiple perspectives that make the analysis critical.</p>
+          <ol>
+            <li>List every group involved — usually three or four.</li>
+            <li>For each, write: I am thinking of this from the viewpoint of… I think… A question I have is…</li>
+            <li>Show it as a circle diagram, not only as paragraphs.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Statistical analysis</h4><span class="pill">Named in TSC</span></div>
+          <p class="fwc__out"><b>Produces:</b> your own data made visible.</p>
+          <ol>
+            <li>Turn your survey, tally or observation into a chart.</li>
+            <li>Choose the chart for the job — bar for comparison, line for change over time, pie only for parts of one whole.</li>
+            <li>Write one sentence under it saying what the chart shows. A chart with no sentence scores nothing.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Fishbone</h4></div>
+          <p class="fwc__out"><b>Produces:</b> a wide search for causes before you commit to one.</p>
+          <ol>
+            <li>Problem in the head, six bones: people, process, place, tools, time, rules.</li>
+            <li>Three causes per bone — the quota forces breadth.</li>
+            <li>Mark each cause as evidenced or guessed.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Five Whys</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the reason behind the cause, which is what "critically present" asks for.</p>
+          <ol>
+            <li>Start at the symptom and ask why, five times.</li>
+            <li>Stop when the next why leaves your control.</li>
+            <li>Any why you cannot evidence becomes a research question.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Problem tree</h4></div>
+          <p class="fwc__out"><b>Produces:</b> proof you are designing for a cause and not a symptom.</p>
+          <ol>
+            <li>Roots are causes, trunk is the core problem, branches are effects.</li>
+            <li>Place your current statement on the tree.</li>
+            <li>If it sits in the branches, move down to the trunk and rewrite.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Problem statement frame</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the problem statement itself, in one sentence.</p>
+          <ol>
+            <li>[Target audience] needs a way to [do what] because [evidenced reason].</li>
+            <li>Check it names no product.</li>
+            <li>Check every part traces back to something on this page.</li>
+          </ol>
+        </article>
+
+      </div>
+    </details>
+
+    <details class="fwgroup">
+      <summary class="fwgroup__hd"><span class="fwgroup__n">Step 4</span><h3>Justify the need</h3><i>4 tools</i></summary>
+      <div class="fwlist">
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Rule of three</h4></div>
+          <p class="fwc__out"><b>Produces:</b> justification that cannot be dismissed as one person's opinion.</p>
+          <ol>
+            <li>Every claim needs a number, a voice and an observation.</li>
+            <li>One source is an anecdote; two of the same kind repeat one blind spot.</li>
+            <li>Three different kinds of evidence cannot all be wrong in the same direction.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>Source card</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the 10–12 citations, recorded as you go rather than reconstructed at the end.</p>
+          <ol>
+            <li>One card per source: where from, when, who it studied, what it says.</li>
+            <li>Add the appendix number the moment you file it.</li>
+            <li>No card means no citation, and no citation means no justification.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>OPVL</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the judgement of sources that turns collecting into analysing.</p>
+          <ol>
+            <li>Origin — who made it, when, what kind of source.</li>
+            <li>Purpose — why it was made, and for whom.</li>
+            <li>Value and Limitation — both must follow from the origin and purpose.</li>
+          </ol>
+        </article>
+
+        <article class="fwc">
+          <div class="fwc__top"><h4>PEEL</h4></div>
+          <p class="fwc__out"><b>Produces:</b> paragraphs where the claim and its proof sit together.</p>
+          <ol>
+            <li>Point — the claim, in one sentence.</li>
+            <li>Evidence — the statistic or quote, with its source.</li>
+            <li>Explain, then Link back to your target audience.</li>
+          </ol>
+        </article>
+
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<!-- bands -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Achievement levels</p>
+    <h2>Task-specific clarification</h2>
+    <p class="sub">Squares show which of the four steps each band requires.</p>
+
+    <div class="band band--top">
+      <div class="band__hd"><span class="band__n">7–8</span><span class="cterm">Explains and justifies</span>
+        <div class="steps-req"><i class="sq on">1</i><i class="sq on">2</i><i class="sq on">3</i><i class="sq on">4</i></div></div>
+      <p>Explains the problem situation by establishing the context through the key concept, global context and related concepts, each explicitly identified. Identifies the target audience, critically presents the cause and reason for the problem using graphic organizers or tools (statistical analysis, empathy map, circle of viewpoints) and creates the problem statement. Justifies the need for a solution to a problem by citing a minimum of 10–12 secondary sources and relevant primary research.</p>
+      <p class="diff"><b>Added at this band:</b> each concept explicitly identified as a key concept, related concept or global context, plus the justification with 10–12 cited secondary sources and primary research.</p>
+    </div>
+
+    <div class="band band--sub">
+      <div class="band__hd"><span class="band__n">5–6</span><span class="cterm">Explains</span>
+        <div class="steps-req"><i class="sq on">1</i><i class="sq on">2</i><i class="sq on">3</i><i class="sq">4</i></div></div>
+      <p>Explains the problem situation by establishing the context through the concepts underpinning the unit. Identifies the target audience, critically presents the cause and reason for the problem using graphic organizers or tools (statistical analysis, empathy map, circle of viewpoints) and creates the problem statement.</p>
+      <p class="diff"><b>Missing from this band:</b> the justification and the cited research. Everything else is already here — the gap between 6 and 8 is one step.</p>
+    </div>
+
+    <div class="band">
+      <div class="band__hd"><span class="band__n">3–4</span><span class="cterm">Outlines</span>
+        <div class="steps-req"><i class="sq">1</i><i class="sq on">2</i><i class="sq on">3</i><i class="sq">4</i></div></div>
+      <p>Outlines the need for a solution to a problem for a specified target audience using an empathy map, and creates a problem statement.</p>
+      <p class="diff"><b>Missing from this band:</b> the context, the critical presentation of cause and reason, and any justification. Only the empathy map is required as a tool.</p>
+    </div>
+
+    <div class="band">
+      <div class="band__hd"><span class="band__n">1–2</span><span class="cterm">States</span>
+        <div class="steps-req"><i class="sq">1</i><i class="sq on">2</i><i class="sq">3</i><i class="sq">4</i></div></div>
+      <p>States the need for a solution to a problem for a specified target audience.</p>
+      <p class="diff"><b>Missing from this band:</b> everything except naming the problem and the audience.</p>
+    </div>
+
+    <div class="band">
+      <div class="band__hd"><span class="band__n">0</span></div>
+      <p>The student does not reach a standard described by any of the descriptors above.</p>
+    </div>
+  </div>
+</section>
+
+<!-- checklist -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Before you submit</p>
+    <h2>Checklist</h2>
+    <p class="sub">Bold items are the ones that carry the top band. Ticks are not saved — print this or work through it in one sitting.</p>
+
+    <div class="clbar">
+      <div class="meter"><i id="bar"></i></div>
+      <span class="count" id="count">0 of 15 checked</span>
+      <button class="rst" id="rst">Reset</button>
+    </div>
+
+    <div class="clgroup">
+      <h3>Step 1 — Context</h3>
+      <label class="ck"><input type="checkbox"><span>I have explained the problem situation in its wider setting</span></label>
+      <label class="ck"><input type="checkbox"><span>I have framed it through the unit's key concept, related concepts and global context</span></label>
+      <label class="ck must"><input type="checkbox"><span>I have labelled each one as a key concept, a related concept or the global context<small>Required at 7–8. Leave space if these have not been introduced yet</small></span></label>
+    </div>
+
+    <div class="clgroup">
+      <h3>Step 2 — Target audience</h3>
+      <label class="ck"><input type="checkbox"><span>I have named a specific target audience or user group</span></label>
+      <label class="ck"><input type="checkbox"><span>I have described who they are, not who they might be</span></label>
+      <label class="ck"><input type="checkbox"><span>I have said why this group and not a wider one</span></label>
+    </div>
+
+    <div class="clgroup">
+      <h3>Step 3 — Cause and problem statement</h3>
+      <label class="ck"><input type="checkbox"><span>My cause is a real cause, not the problem restated</span></label>
+      <label class="ck must"><input type="checkbox"><span>I have used a graphic organiser, shown as a visual<small>Statistical analysis, empathy map or circle of viewpoints</small></span></label>
+      <label class="ck"><input type="checkbox"><span>I have included the perspectives of everyone involved</span></label>
+      <label class="ck"><input type="checkbox"><span>I have written the problem statement</span></label>
+    </div>
+
+    <div class="clgroup">
+      <h3>Step 4 — Justification</h3>
+      <label class="ck must"><input type="checkbox"><span>I have cited at least 10–12 secondary sources</span></label>
+      <label class="ck must"><input type="checkbox"><span>I have included relevant primary research</span></label>
+      <label class="ck must"><input type="checkbox"><span>Every statistic is followed by what it means for my users</span></label>
+      <label class="ck must"><input type="checkbox"><span>Every source has a name, a year and an appendix number<small>"Refer Appendix C" on its own is not a citation</small></span></label>
+      <label class="ck"><input type="checkbox"><span>I have named no product anywhere in this strand</span></label>
+    </div>
+  </div>
+</section>
+
+<!-- traps -->
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Watch for</p>
+    <h2>Four traps</h2>
+    <div class="traps" style="margin-top:20px">
+      <div class="trap">
+        <h4>Naming the product</h4>
+        <p>"I will design an app to fix this."</p>
+        <p>This strand is about the need. Write what a solution must <em>do</em>, never what it will be.</p>
+      </div>
+      <div class="trap">
+        <h4>The invisible user</h4>
+        <p>"This is a problem for everyone."</p>
+        <p>Name the group, describe them, and say why them. If you cannot picture one real person, you have not identified an audience.</p>
+      </div>
+      <div class="trap">
+        <h4>Organiser missing</h4>
+        <p>Perspectives written as paragraphs but never shown as a visual.</p>
+        <p>The TSC asks for a graphic organiser. Prose alone does not meet it, however well written.</p>
+      </div>
+      <div class="trap">
+        <h4>Statistics with no meaning</h4>
+        <p>Paragraphs of numbers with nothing said about them.</p>
+        <p>After every number, answer one question: what does this mean for my users?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ==================== PLACEHOLDER STRANDS ==================== -->
+<div data-panel="ii" hidden>
+  <div class="wrap"><div class="soon"><h2>Strand ii</h2><p>Constructs a detailed research plan. Not added yet.</p></div></div>
+</div>
+<div data-panel="iii" hidden>
+  <div class="wrap"><div class="soon"><h2>Strand iii</h2><p>Analyses a diverse range of existing products. Not added yet.</p></div></div>
+</div>
+<div data-panel="iv" hidden>
+  <div class="wrap"><div class="soon"><h2>Strand iv</h2><p>Develops a detailed design brief. Not added yet.</p></div></div>
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Dev — MYP Design Educator</span>
+    <span>Criterion A · MYP 4</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.tab');
+  var panels = document.querySelectorAll('[data-panel]');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
+      t.classList.add('on'); t.setAttribute('aria-pressed','true');
+      panels.forEach(function(p){ p.hidden = (p.dataset.panel !== t.dataset.s); });
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  var boxes = document.querySelectorAll('.ck input');
+  var bar = document.getElementById('bar');
+  var count = document.getElementById('count');
+  var total = boxes.length;
+  function update(){
+    var n = 0;
+    boxes.forEach(function(b){ if(b.checked) n++; });
+    bar.style.width = (n/total*100) + '%';
+    count.textContent = n + ' of ' + total + ' checked';
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', update); });
+  document.getElementById('rst').addEventListener('click', function(){
+    boxes.forEach(function(b){ b.checked = false; });
+    update();
+  });
+  update();
+})();
+</script>
+
+</body>
+</html>
