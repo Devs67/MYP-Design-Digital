@@ -164,6 +164,64 @@ html{scroll-behavior:smooth}
   html{scroll-behavior:auto}
   .js-anim .reveal{opacity:1;transform:none}
 }
+
+/* ============ FLIP TILES ============ */
+.ctiles{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 4px}
+.ctile{flex:1 1 200px;min-width:170px;padding:0;border:0;background:none;
+  cursor:pointer;perspective:1000px;font-family:inherit;text-align:left}
+.ctile__inner{display:grid;position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.4,1)}
+.ctile.flipped .ctile__inner{transform:rotateY(180deg)}
+.ctile__face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;
+  border-radius:3px;padding:18px 18px 16px;display:flex;flex-direction:column;
+  justify-content:center;min-height:132px}
+.ctile__front{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--amber);
+  transition:border-color .25s ease,box-shadow .25s ease}
+.ctile:hover .ctile__front{border-color:var(--amber);box-shadow:0 4px 16px rgba(20,48,60,.09)}
+.ctile__back{background:var(--ink);color:#E4EEF1;transform:rotateY(180deg);
+  border:1px solid var(--ink)}
+.ctile__band{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--slate);
+  margin:0 0 8px}
+.ctile__term{font-family:var(--display);font-size:23px;font-weight:600;color:var(--amber);
+  line-height:1.1;margin:0}
+.ctile__hint{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--slate);margin:12px 0 0;opacity:.75}
+.ctile__def{font-size:13.5px;line-height:1.5;margin:0}
+.ctile__back .ctile__band{color:var(--amber);margin-bottom:9px}
+
+/* ============ HOVER LIFT ============ */
+@media (hover:hover) and (prefers-reduced-motion: no-preference){
+  .step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.crit,.pbox,.flip__side,.term{
+    transition:transform .22s cubic-bezier(.22,.61,.36,1),border-color .22s ease,box-shadow .22s ease}
+  .step:hover,.fwc:hover,.trap:hover,.band:hover,.clgroup:hover,.asp:hover,
+  .mm__branch:hover,.pbox:hover,.flip__side:hover{
+    transform:translateY(-3px) scale(1.006);border-color:var(--amber)}
+  a.crit:hover{transform:translateY(-3px) scale(1.008)}
+  .jump button:hover,.tab:hover,.rst:hover,.homelink:hover{transform:translateY(-1px)}
+  .pri,.pill,.spill,.st,.sq,.chip{transition:transform .18s ease,filter .18s ease}
+  .step:hover .step__n,.fwc:hover .pill,.band:hover .sq{transform:translateY(-1px)}
+  .mm__col li,.step li,.fwc ol li{transition:color .18s ease}
+  .step li:hover,.fwc ol li:hover,.mm__col li:hover{color:var(--amber)}
+  .totop:hover{transform:translateY(-2px) scale(1.05)}
+}
+
+/* ============ TAP TINT ============ */
+.tapfx{transition:background-image .35s ease,border-color .35s ease,box-shadow .35s ease}
+.tapfx[data-clicks="1"]{background-image:linear-gradient(160deg,rgba(176,90,28,.035),rgba(176,90,28,.075))}
+.tapfx[data-clicks="2"]{background-image:linear-gradient(160deg,rgba(176,90,28,.065),rgba(176,90,28,.13))}
+.tapfx[data-clicks="3"]{background-image:linear-gradient(160deg,rgba(176,90,28,.10),rgba(176,90,28,.19))}
+.tapfx[data-clicks="4"]{background-image:linear-gradient(160deg,rgba(176,90,28,.14),rgba(176,90,28,.25))}
+.tapfx[data-clicks="5"]{background-image:linear-gradient(160deg,rgba(176,90,28,.185),rgba(176,90,28,.31));
+  border-color:var(--amber);box-shadow:0 0 0 1px rgba(176,90,28,.25)}
+@media (prefers-reduced-motion: no-preference){
+  .tapfx:active{transform:scale(.995)}
+}
+
+@media (max-width:760px){
+  .ctile{flex:1 1 100%;min-width:0}
+  .ctile__face{min-height:0;padding:15px 16px}
+  .ctile__term{font-size:21px}
+}
 </style>
 </head>
 <body>
@@ -306,14 +364,14 @@ html{scroll-behavior:smooth}
     var SEL = '.step,.fwc,.band,.clgroup,.trap,.crit,.docwrap,.flow,.tabwrap,'
             + '.mm,.aspects,.flip,.cite-warn,.conflict,.keyline,.obj,.ctbox,.strands,.matrix';
 
+    // bidirectional: eases in whether you arrive scrolling down or back up
     var io = new IntersectionObserver(function(entries){
       for(var i=0;i<entries.length;i++){
-        if(entries[i].isIntersecting){
-          entries[i].target.classList.add('in');
-          io.unobserve(entries[i].target);
-        }
+        var e = entries[i];
+        if(e.isIntersecting) e.target.classList.add('in');
+        else e.target.classList.remove('in');
       }
-    }, {rootMargin:'0px 0px -8% 0px', threshold:0.05});
+    }, {rootMargin:'14% 0px 14% 0px', threshold:0});
 
     function arm(root){
       var els = (root || document).querySelectorAll(SEL);
@@ -333,6 +391,84 @@ html{scroll-behavior:smooth}
 
     window.__armReveal = arm;
     arm(document);
+  })();
+
+
+  // --- command terms become flip tiles ---
+  (function(){
+    var boxes = document.querySelectorAll('.ctbox');
+    for(var b=0; b<boxes.length; b++){
+      var box = boxes[b];
+      var rows = box.querySelectorAll('.ctrow');
+      if(!rows.length) continue;
+
+      var grid = document.createElement('div');
+      grid.className = 'ctiles';
+      box.insertBefore(grid, rows[0]);
+
+      for(var r=0; r<rows.length; r++){
+        var row  = rows[r];
+        var band = row.querySelector('.ctband');
+        var term = row.querySelector('b');
+        var def  = row.querySelector('span');
+
+        var tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = 'ctile';
+        tile.setAttribute('aria-pressed', 'false');
+
+        var inner = document.createElement('div');
+        inner.className = 'ctile__inner';
+
+        var front = document.createElement('div');
+        front.className = 'ctile__face ctile__front';
+        front.innerHTML =
+          '<p class="ctile__band">' + (band ? band.textContent : '') + '</p>' +
+          '<p class="ctile__term">' + (term ? term.textContent : '') + '</p>' +
+          '<p class="ctile__hint">Tap for meaning</p>';
+
+        var back = document.createElement('div');
+        back.className = 'ctile__face ctile__back';
+        back.innerHTML =
+          '<p class="ctile__band">' + (term ? term.textContent : '') + '</p>' +
+          '<p class="ctile__def">' + (def ? def.textContent : '') + '</p>';
+
+        inner.appendChild(front);
+        inner.appendChild(back);
+        tile.appendChild(inner);
+        grid.appendChild(tile);
+
+        (function(t){
+          t.addEventListener('click', function(e){
+            e.stopPropagation();
+            t.classList.toggle('flipped');
+            t.setAttribute('aria-pressed', t.classList.contains('flipped') ? 'true' : 'false');
+          });
+        })(tile);
+
+        row.parentNode.removeChild(row);
+      }
+    }
+  })();
+
+  // --- tap tint: repeated clicks deepen the shade ---
+  (function(){
+    var SEL = '.step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.pbox,.flip__side,'
+            + '.dnote,.tools,.concepts,.quote,.fstep,.crit:not(a)';
+    var els = document.querySelectorAll(SEL);
+    for(var i=0;i<els.length;i++) els[i].classList.add('tapfx');
+
+    document.addEventListener('click', function(e){
+      var t = e.target;
+      if(!t || !t.closest) return;
+      // never hijack a real control
+      if(t.closest('a,button,summary,label,input,select,textarea,.sechead,.ctile')) return;
+      var card = t.closest('.tapfx');
+      if(!card) return;
+      var n = parseInt(card.getAttribute('data-clicks') || '0', 10) + 1;
+      if(n > 5) n = 1;
+      card.setAttribute('data-clicks', String(n));
+    });
   })();
 
 })();
