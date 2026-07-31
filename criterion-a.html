@@ -21,9 +21,34 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:920px;margin:0 auto;padding:0 26px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
   text-transform:uppercase;color:var(--amber);margin:0}
+
+/* home link */
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:2px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+@media print{.homelink{display:none}}
+
+/* back to top */
+.totop{position:fixed;right:26px;bottom:26px;width:52px;height:52px;padding:0;
+  border:0;background:var(--card);border-radius:50%;cursor:pointer;z-index:60;
+  box-shadow:0 3px 14px rgba(20,48,60,.14);display:flex;align-items:center;
+  justify-content:center;opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .25s,transform .25s,visibility .25s}
+.totop.show{opacity:1;visibility:visible;transform:translateY(0)}
+.totop:hover{box-shadow:0 5px 20px rgba(20,48,60,.2)}
+.totop svg{position:absolute;inset:0;width:52px;height:52px;transform:rotate(-90deg)}
+.totop .trk{fill:none;stroke:var(--rule-soft);stroke-width:3}
+.totop .prg{fill:none;stroke:var(--amber);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:119.4;stroke-dashoffset:119.4;transition:stroke-dashoffset .1s linear}
+.totop .arw{font-size:18px;line-height:1;color:var(--ink);position:relative;top:-1px}
+@media print{.totop{display:none}}
+@media (max-width:600px){.totop{right:16px;bottom:16px;width:46px;height:46px}
+  .totop svg{width:46px;height:46px}}
 
 /* masthead */
 .mast{padding:52px 0 24px}
@@ -34,7 +59,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 
 /* command term box */
 .ctbox{margin:26px 0 0;background:var(--card);border:1px solid var(--rule);
-  border-left:4px solid var(--amber);border-radius:3px;padding:22px 26px 24px;max-width:74ch}
+  border-left:4px solid var(--amber);border-radius:3px;padding:22px 26px 24px;max-width:88ch}
 .ctbox__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--slate);margin:0 0 16px;font-weight:500}
 .ctrow{display:flex;gap:18px;align-items:baseline;flex-wrap:wrap;padding:11px 0;
@@ -85,7 +110,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .sec .sub{margin:0 0 24px;font-size:14.5px;color:var(--slate);max-width:70ch}
 
 .obj{padding:20px 24px;background:var(--card);border:1px solid var(--rule);
-  border-radius:3px;font-size:16.5px;max-width:74ch}
+  border-radius:3px;font-size:16.5px;max-width:88ch}
 .obj b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--slate);display:block;margin-bottom:8px;font-weight:500}
 
@@ -148,7 +173,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   text-transform:uppercase;color:var(--amber)}
 .fwgroup__hd h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0}
 .fwlist{display:flex;flex-wrap:wrap;gap:14px}
-.fwc{flex:1 1 400px;background:var(--card);border:1px solid var(--rule);
+.fwc{flex:1 1 330px;background:var(--card);border:1px solid var(--rule);
   border-radius:3px;padding:20px 22px 22px}
 .fwc__top{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
 .fwc h4{font-family:var(--display);font-size:18px;font-weight:600;margin:0;letter-spacing:-.01em}
@@ -215,6 +240,50 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 @media print{.fwgroup > summary::before{display:none}
   .fwgroup .fwlist{display:flex !important}}
 
+/* mind map */
+.mm{background:var(--paper);border-radius:3px;padding:22px 20px 24px;margin:0 0 22px}
+.mm__root{background:var(--amber);color:#fff;border-radius:3px;padding:12px 20px;
+  text-align:center;font-family:var(--display);font-size:18px;font-weight:600;
+  max-width:280px;margin:0 auto 8px}
+.mm__stem{width:1px;height:16px;background:var(--rule);margin:0 auto}
+.mm__split{display:flex;gap:18px;flex-wrap:wrap}
+.mm__branch{flex:1 1 380px;background:var(--card);border:1px solid var(--rule);
+  border-radius:3px;padding:18px 18px 20px}
+.mm__bhd{background:var(--ink);color:#fff;border-radius:2px;padding:9px 14px;
+  font-family:var(--body);font-size:14.5px;font-weight:600;text-align:center;margin-bottom:16px}
+.mm__cols{display:flex;gap:14px;flex-wrap:wrap}
+.mm__col{flex:1 1 150px}
+.mm__chd{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--amber);margin:0 0 9px;padding-bottom:7px;border-bottom:1px solid var(--rule-soft)}
+.mm__col ul{margin:0;padding:0;list-style:none}
+.mm__col li{position:relative;padding:6px 0 6px 14px;font-size:13px;line-height:1.45;
+  color:var(--ink)}
+.mm__col li::before{content:"";position:absolute;left:0;top:13px;width:6px;height:1.5px;
+  background:var(--amber)}
+
+/* research plan tables */
+.tabwrap{border:1px solid var(--rule);border-radius:3px;overflow-x:auto;background:var(--card)}
+.rtab{width:100%;min-width:740px;border-collapse:collapse;font-size:13.5px}
+.rtab th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.12em;text-transform:uppercase;padding:11px 13px;text-align:left;font-weight:500}
+.rtab td{padding:12px 13px;border-bottom:1px solid var(--rule-soft);vertical-align:top;
+  line-height:1.5}
+.rtab tr:last-child td{border-bottom:0}
+.rtab td.q{font-weight:600;color:var(--ink)}
+.rtab td.src{font-size:12.5px;color:var(--slate)}
+.rtab td.help{color:var(--slate)}
+.rtab td.area{background:var(--paper);font-family:var(--mono);font-size:10px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--amber);vertical-align:middle;
+  text-align:center;border-right:1px solid var(--rule-soft)}
+.rtab tr.grp td{background:var(--paper);font-family:var(--mono);font-size:10px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--amber);padding:9px 13px}
+.pri{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 8px;border-radius:2px;white-space:nowrap}
+.pri--h{background:var(--clay-tint);color:var(--clay)}
+.pri--m{background:var(--amber-tint);color:var(--amber)}
+.pri--l{background:var(--rule-soft);color:var(--slate)}
+.rank{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--amber);text-align:center}
+
 /* bands */
 .band{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
   border-radius:3px;padding:22px 26px;margin-bottom:12px}
@@ -262,7 +331,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 
 /* traps */
 .traps{display:flex;flex-wrap:wrap;gap:14px}
-.trap{flex:1 1 380px;background:var(--card);border:1px solid var(--rule);
+.trap{flex:1 1 320px;background:var(--card);border:1px solid var(--rule);
   border-radius:3px;padding:20px 22px}
 .trap h4{font-size:16px;font-weight:600;margin:0 0 8px;color:var(--clay)}
 .trap p{margin:0;font-size:14px;color:var(--slate)}
@@ -296,6 +365,7 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
 
 <header class="mast">
   <div class="wrap">
+    <a class="homelink" href="index.html">&larr; All criteria</a>
     <p class="eyebrow">MYP 4 Design · Task-specific clarification</p>
     <h1>Criterion A — Inquiring and analysing</h1>
     <p class="sub">What must be in each strand, the command term at every band, and a worked example.</p>
@@ -994,25 +1064,114 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
     <details class="docwrap">
       <summary><b>Example A &mdash; healthy snack for children aged 10&ndash;14</b><i>Mind map + High / Medium / Low</i></summary>
       <div class="doc">
+
         <div class="dblock">
-          <div class="dhd"><h3>The mind map</h3><span class="spill">Steps 1 &amp; 3</span></div>
-          <p class="t"><b>Research Plan</b> splits into <b>Secondary Sources</b> and <b>Primary Sources</b>. Each then splits again into <em>Sources</em> and <em>Purpose</em>.</p>
-          <p class="t"><b>Secondary &mdash; sources:</b> reports on snack consumption habits in India &middot; research on high protein and high fibre food ingredients &middot; studies on child nutrition and dietary needs &middot; articles on food processing and preservation methods.</p>
-          <p class="t"><b>Secondary &mdash; purpose:</b> to identify key nutrients required for children aged 10&ndash;14 &middot; to analyse eating habits and preferences of the target audience &middot; to explore key food processing techniques that maintain nutritional integrity &middot; to study sustainable packaging options.</p>
-          <p class="t"><b>Primary &mdash; sources:</b> surveys with the target audience and their parents &middot; interviews with nutritionists and dietitians &middot; market analysis of existing health snack options.</p>
-          <p class="t"><b>Primary &mdash; purpose:</b> understanding taste and texture preference amongst the target group &middot; identifying appealing flavours for the target group &middot; assessing affordability and accessibility in the current market.</p>
-          <p class="dnote"><b>Why this works:</b> pairing every source with a purpose means the plan cannot contain research that has no job. It also makes the primary and secondary split visible at a glance, which is exactly what the checklist asks for.</p>
+          <div class="dhd"><h3>The research plan mind map</h3><span class="spill">Steps 1 &amp; 3</span></div>
+
+          <div class="mm">
+            <div class="mm__root">Research Plan</div>
+            <div class="mm__stem"></div>
+            <div class="mm__split">
+
+              <div class="mm__branch">
+                <div class="mm__bhd">Secondary Sources</div>
+                <div class="mm__cols">
+                  <div class="mm__col">
+                    <p class="mm__chd">Sources</p>
+                    <ul>
+                      <li>Reports on snack consumption habits in India</li>
+                      <li>Research on high protein, high fibre food ingredients</li>
+                      <li>Studies on child nutrition and dietary needs</li>
+                      <li>Articles on food processing and preservation methods</li>
+                    </ul>
+                  </div>
+                  <div class="mm__col">
+                    <p class="mm__chd">Purpose</p>
+                    <ul>
+                      <li>To identify key nutrients required for children aged 10&ndash;14</li>
+                      <li>To analyse eating habits and preferences of the target audience</li>
+                      <li>To explore key food processing techniques that maintain nutritional integrity</li>
+                      <li>To study sustainable packaging options</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mm__branch">
+                <div class="mm__bhd">Primary Sources</div>
+                <div class="mm__cols">
+                  <div class="mm__col">
+                    <p class="mm__chd">Sources</p>
+                    <ul>
+                      <li>Surveys with the target audience and their parents</li>
+                      <li>Interviews with nutritionists and dietitians</li>
+                      <li>Market analysis of existing health snack options</li>
+                    </ul>
+                  </div>
+                  <div class="mm__col">
+                    <p class="mm__chd">Purpose</p>
+                    <ul>
+                      <li>Understanding taste and texture preference amongst the target group</li>
+                      <li>Identifying appealing flavours for the target group</li>
+                      <li>Assessing affordability and accessibility in the current market</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <p class="dnote"><b>Why this works:</b> the plan splits into primary and secondary first, then each side splits again into <em>sources</em> and <em>purpose</em>. Pairing every source with a purpose means the plan cannot contain research that has no job.</p>
         </div>
 
         <div class="dblock">
           <div class="dhd"><h3>The question table</h3><span class="spill">Steps 2 &amp; 4</span></div>
-          <p class="t">Four columns: research question &middot; priority &middot; source &middot; how it helps. Questions are grouped under area headings such as <b>Packaging &amp; Storage</b>.</p>
-          <p class="t"><b>Q:</b> Which fruits or vegetables can be used to provide macro and micro nutrients? &nbsp;<b>Priority:</b> Medium &nbsp;<b>Source:</b> Primary &mdash; Ms Dhara Mavuleti, a renowned nutritionist specialising in the needs of adolescent children (Appendix A1) &nbsp;<b>How it helps:</b> supplementing ingredients are important in determining the nutritional content and flavour profile of snacks. Choosing the correct ingredients can ensure cost-effective production, calorie efficient nutrition, and good flavour.</p>
-          <p class="t"><b>Q:</b> What cooking process would be the most effective at maintaining nutritional quantities and using the minimum fat? &nbsp;<b>Priority:</b> High &nbsp;<b>Source:</b> Website (Appendix C) &nbsp;<b>How it helps:</b> in-depth research into cooking methods allows for the reduction of calories and the most appealing flavour profile.</p>
-          <p class="t"><b>Q:</b> Which preservative would be the most effective at expanding shelf-life yet not harming the consumer? &nbsp;<b>Priority:</b> Low &nbsp;<b>Source:</b> Website (Appendix C) &nbsp;<b>How it helps:</b> the Indian market rewards long term shelf-stable products, letting retailers sell higher volume with less risk.</p>
-          <p class="dnote"><b>Why this works:</b> the priorities are genuinely spread &mdash; one High, one Medium, two Low. A plan where everything is High has not prioritised anything.</p>
-          <p class="dnote warn"><b>What is weaker:</b> five separate questions all cite &ldquo;Website (Appendix C)&rdquo;. Naming the actual sites would turn a vague pointer into real evidence.</p>
+          <div class="tabwrap">
+            <table class="rtab">
+              <thead>
+                <tr><th style="width:26%">Research question</th><th style="width:10%">Priority</th><th style="width:22%">Source</th><th>How it helps solve the problem</th></tr>
+              </thead>
+              <tbody>
+                <tr class="grp"><td colspan="4">Nutrition &amp; ingredients</td></tr>
+                <tr>
+                  <td class="q">Which fruits or vegetables can be used to provide macro and micro nutrients?</td>
+                  <td><span class="pri pri--m">Medium</span></td>
+                  <td class="src"><b>Primary</b><br>Ms Dhara Mavuleti, a renowned nutritionist specialising in the needs of adolescent children.<br>(Appendix A1)</td>
+                  <td class="help">Supplementing ingredients are incredibly important in determining the nutritional content and flavour profile of snacks. Choosing the correct ingredients can ensure cost-effective production, calorie efficient nutrition, and good flavour.</td>
+                </tr>
+                <tr>
+                  <td class="q">What flavours are the most appealing to children aged 10&ndash;14?</td>
+                  <td><span class="pri pri--m">Medium</span></td>
+                  <td class="src"><b>Secondary</b><br>Website (Appendix C)</td>
+                  <td class="help">Children aged between 10&ndash;14 tend to be picky eaters, resisting the consumption of many traditional or conventional homemade snacks. Conducting in depth research of the target audience can help determine the best flavours to develop, and thus appeal to the masses.</td>
+                </tr>
+                <tr>
+                  <td class="q">What cooking process would be the most effective at maintaining nutritional quantities and using the minimum fat?</td>
+                  <td><span class="pri pri--h">High</span></td>
+                  <td class="src"><b>Secondary</b><br>Website (Appendix C)</td>
+                  <td class="help">Through conducting in-depth research into the various cooking methods and processes that allow for the reduction of calories and most appealing flavour profile, the snack can appeal to the masses.</td>
+                </tr>
+                <tr class="grp"><td colspan="4">Packaging &amp; storage</td></tr>
+                <tr>
+                  <td class="q">Which preservative would be the most effective at expanding shelf-life yet not harming the consumer?</td>
+                  <td><span class="pri pri--l">Low</span></td>
+                  <td class="src"><b>Secondary</b><br>Website (Appendix C)</td>
+                  <td class="help">The Indian market tends to reward long term shelf-stable products. Long term storage of foods gives retailers an opportunity to sell higher volume with less risk, while also allowing buyers to store the product for longer. Such added conveniences would further bolster the product's market appeal.</td>
+                </tr>
+                <tr>
+                  <td class="q">Is there a method of storage that would allow preservatives to be forgone?</td>
+                  <td><span class="pri pri--l">Low</span></td>
+                  <td class="src"><b>Secondary</b><br>Website (Appendix C)</td>
+                  <td class="help">It is well known that preservatives have been deemed unhealthy across the world, and in an ideal situation they must be forgone. In order to further bolster the healthy image of the product, determining a form of storage which allows for it to be forgone is crucial.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="dnote"><b>Why this works:</b> the priorities are genuinely spread &mdash; one High, two Medium, two Low. A plan where everything is High has not prioritised anything. Questions are grouped under areas rather than listed at random.</p>
+          <p class="dnote warn"><b>What is weaker:</b> four questions all cite &ldquo;Website (Appendix C)&rdquo;. Naming the actual sites would turn a vague pointer into real evidence.</p>
         </div>
+
       </div>
     </details>
 
@@ -1020,15 +1179,52 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
       <summary><b>Example B &mdash; board game storage for families</b><i>ACCESS FM areas + ranked numbers</i></summary>
       <div class="doc">
         <div class="dblock">
-          <div class="dhd"><h3>The table</h3><span class="spill">Steps 1&ndash;4</span></div>
-          <p class="t">Five columns: research area &middot; question &middot; type of research &middot; how it helps &middot; priority rank. The areas run down the left as merged cells &mdash; Cost, Safety, Size, Function.</p>
-          <p class="t"><b>Cost &mdash;</b> How much does 15x15 inches of this wood cost? &nbsp;<em>Secondary: websites.</em> &nbsp;Helps me understand which wood can be used which is environmentally friendly.</p>
-          <p class="t"><b>Safety &mdash;</b> What are some safety precautions incorporated in board games? &nbsp;<em>Secondary: websites.</em> &nbsp;Based on the safety precautions taken in existing board games, I can incorporate such precautions in my product along with certain new precautions. &nbsp;<b>Rank 12</b></p>
-          <p class="t"><b>Size &mdash;</b> What is the average size of a board game? &nbsp;<em>Secondary: websites, existing products.</em> &nbsp;The average size of the board can make sure that the product is not too small or too big, and includes the regular board games in a space saving manner. &nbsp;<b>Rank 10</b></p>
-          <p class="t"><b>Function &mdash;</b> What are the most common family board games? &nbsp;<em>Secondary: websites. Primary: interview.</em> &nbsp;This product should include commonly played games so that people can enjoy them and it is popular within all age groups. &nbsp;<b>Rank 5</b></p>
-          <p class="t"><b>Function &mdash;</b> How to play Checkers? &nbsp;<em>Secondary: instructional videos.</em> &nbsp;Checkers is a common game, but I did not know how it works or the parameters required, so I needed to learn it in order to design the board game. &nbsp;<b>Rank 6</b></p>
-          <p class="dnote"><b>Why this works:</b> the research areas are ACCESS FM headings, which means the plan covers the problem systematically rather than wherever curiosity led. One question draws on both primary and secondary research, and says so.</p>
-          <p class="dnote"><b>Worth noticing:</b> ranked numbers force harder choices than High/Medium/Low. You cannot give two questions the same rank, so every comparison has to be made.</p>
+          <div class="dhd"><h3>The research plan table</h3><span class="spill">Steps 1&ndash;4</span></div>
+          <div class="tabwrap">
+            <table class="rtab">
+              <thead>
+                <tr><th style="width:9%">Area</th><th style="width:22%">Research question</th><th style="width:16%">Type of research</th><th>How it helps solve the problem</th><th style="width:8%">Rank</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="area">Cost</td>
+                  <td class="q">How much does 15x15 inches of this wood cost?</td>
+                  <td class="src">Secondary &mdash; websites</td>
+                  <td class="help">Helps me understand which wood can be used which is environmentally friendly.</td>
+                  <td class="rank">&mdash;</td>
+                </tr>
+                <tr>
+                  <td class="area">Safety</td>
+                  <td class="q">What are some safety precautions incorporated in board games?</td>
+                  <td class="src">Secondary &mdash; websites</td>
+                  <td class="help">Based on the safety precautions taken in existing board games, I can incorporate such precautions in my product along with certain new precautions.</td>
+                  <td class="rank">12</td>
+                </tr>
+                <tr>
+                  <td class="area">Size</td>
+                  <td class="q">What is the average size of a board game?</td>
+                  <td class="src">Secondary &mdash; websites, existing products</td>
+                  <td class="help">The average size of the board can make sure that the product that I aim to create is not too small or too big. This product should include the regular board games in a space saving manner.</td>
+                  <td class="rank">10</td>
+                </tr>
+                <tr>
+                  <td class="area" rowspan="2">Function</td>
+                  <td class="q">What are the most common family board games?</td>
+                  <td class="src">Secondary &mdash; websites<br>Primary &mdash; interview</td>
+                  <td class="help">This product should include commonly played games so that people can enjoy the games and it is popular within all age groups.</td>
+                  <td class="rank">5</td>
+                </tr>
+                <tr>
+                  <td class="q">How to play Checkers?</td>
+                  <td class="src">Secondary &mdash; instructional videos</td>
+                  <td class="help">After conducting some research, I learned that checkers is a common game. But I did not know how this game works and the parameters required for this game. And hence I needed to learn how to play the game in order to design the board game.</td>
+                  <td class="rank">6</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="dnote"><b>Why this works:</b> the research areas are ACCESS FM headings, so the plan covers the problem systematically rather than wherever curiosity led. One question draws on both primary and secondary research, and says so.</p>
+          <p class="dnote"><b>Worth noticing:</b> ranked numbers force harder choices than High / Medium / Low. You cannot give two questions the same rank, so every comparison has to be made.</p>
         </div>
       </div>
     </details>
@@ -1278,6 +1474,15 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
   </div>
 </footer>
 
+
+<button class="totop" id="totop" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 52 52" aria-hidden="true">
+    <circle class="trk" cx="26" cy="26" r="19"></circle>
+    <circle class="prg" cx="26" cy="26" r="19"></circle>
+  </svg>
+  <span class="arw">&uarr;</span>
+</button>
+
 <script>
 (function(){
   var tabs = document.querySelectorAll('.tab');
@@ -1312,6 +1517,28 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
     });
     update();
   });
+
+  // back-to-top with scroll progress ring
+  (function(){
+    var btn = document.getElementById('totop');
+    if(!btn) return;
+    var ring = btn.querySelector('.prg');
+    var LEN = 119.4;
+    function onScroll(){
+      var top = window.pageYOffset || document.documentElement.scrollTop;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = max > 0 ? Math.min(top / max, 1) : 0;
+      ring.style.strokeDashoffset = LEN * (1 - pct);
+      btn.classList.toggle('show', top > 260);
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    btn.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+    onScroll();
+  })();
+
 })();
 </script>
 

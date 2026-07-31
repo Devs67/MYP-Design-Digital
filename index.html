@@ -21,9 +21,26 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:920px;margin:0 auto;padding:0 26px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
   text-transform:uppercase;color:var(--amber);margin:0}
+
+/* back to top */
+.totop{position:fixed;right:26px;bottom:26px;width:52px;height:52px;padding:0;
+  border:0;background:var(--card);border-radius:50%;cursor:pointer;z-index:60;
+  box-shadow:0 3px 14px rgba(20,48,60,.14);display:flex;align-items:center;
+  justify-content:center;opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .25s,transform .25s,visibility .25s}
+.totop.show{opacity:1;visibility:visible;transform:translateY(0)}
+.totop:hover{box-shadow:0 5px 20px rgba(20,48,60,.2)}
+.totop svg{position:absolute;inset:0;width:52px;height:52px;transform:rotate(-90deg)}
+.totop .trk{fill:none;stroke:var(--rule-soft);stroke-width:3}
+.totop .prg{fill:none;stroke:var(--amber);stroke-width:3;stroke-linecap:round;
+  stroke-dasharray:119.4;stroke-dashoffset:119.4;transition:stroke-dashoffset .1s linear}
+.totop .arw{font-size:18px;line-height:1;color:var(--ink);position:relative;top:-1px}
+@media print{.totop{display:none}}
+@media (max-width:600px){.totop{right:16px;bottom:16px;width:46px;height:46px}
+  .totop svg{width:46px;height:46px}}
 
 .mast{padding:70px 0 44px}
 .mast h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,5.4vw,48px);
@@ -35,7 +52,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .sec .note{margin:0 0 22px;font-size:14px;color:var(--slate)}
 
 .grid{display:flex;flex-wrap:wrap;gap:16px}
-.crit{flex:1 1 400px;background:var(--card);border:1px solid var(--rule);
+.crit{flex:1 1 330px;background:var(--card);border:1px solid var(--rule);
   border-left:4px solid var(--rule);border-radius:3px;padding:24px 26px 26px;
   text-decoration:none;color:inherit;display:block;transition:.15s}
 a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
@@ -45,6 +62,9 @@ a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
 .crit--c{border-left-color:var(--c)}
 .crit--d{border-left-color:var(--d)}
 .crit--soon{opacity:.62;cursor:default}
+.crit--fw{border-left-color:var(--ink)}
+.crit--fw .badge{background:var(--ink);font-size:16px;letter-spacing:.03em}
+
 .crit__top{display:flex;gap:14px;align-items:center;margin-bottom:12px}
 .badge{width:46px;height:46px;border-radius:3px;flex:0 0 46px;
   display:flex;align-items:center;justify-content:center;
@@ -145,6 +165,20 @@ footer{margin-top:60px;padding:30px 0 60px;border-top:1px solid var(--rule);
         </div>
       </div>
 
+
+      <a class="crit crit--fw" href="frameworks.html">
+        <div class="crit__top">
+          <span class="badge">FW</span>
+          <h3>Frameworks used</h3>
+          <span class="status">Open</span>
+        </div>
+        <p>Every thinking tool mapped to the strand it serves, with how to apply it &mdash; plus PEEL and OPVL, which work across all four criteria.</p>
+        <div class="strands">
+          <span class="st live">31 frameworks</span>
+          <span class="st live">Sourced</span>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
@@ -155,6 +189,39 @@ footer{margin-top:60px;padding:30px 0 60px;border-top:1px solid var(--rule);
     <span>MYP Years 4–5</span>
   </div>
 </footer>
+
+<button class="totop" id="totop" aria-label="Back to top" title="Back to top">
+  <svg viewBox="0 0 52 52" aria-hidden="true">
+    <circle class="trk" cx="26" cy="26" r="19"></circle>
+    <circle class="prg" cx="26" cy="26" r="19"></circle>
+  </svg>
+  <span class="arw">&uarr;</span>
+</button>
+
+<script>
+(function(){
+  // back-to-top with scroll progress ring
+  (function(){
+    var btn = document.getElementById('totop');
+    if(!btn) return;
+    var ring = btn.querySelector('.prg');
+    var LEN = 119.4;
+    function onScroll(){
+      var top = window.pageYOffset || document.documentElement.scrollTop;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = max > 0 ? Math.min(top / max, 1) : 0;
+      ring.style.strokeDashoffset = LEN * (1 - pct);
+      btn.classList.toggle('show', top > 260);
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    btn.addEventListener('click', function(){
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+    onScroll();
+  })();
+})();
+</script>
 
 </body>
 </html>
