@@ -337,6 +337,91 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .summ td.sn{font-family:var(--mono);font-size:11px;color:var(--amber);white-space:nowrap;
   background:var(--paper);border-right:1px solid var(--rule-soft)}
 
+.pdfbox object{display:block;width:100%;height:720px;background:var(--paper)}
+.pdffail{margin:0;padding:60px 24px;text-align:center;font-size:14.5px;color:var(--slate)}
+@media (max-width:700px){.pdfbox object{height:440px}}
+@media print{.pdfbox object{display:none}}
+
+/* ============ MOBILE ============ */
+.sechead{display:block}
+.secbody{display:block}
+.jump{display:none}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+
+  /* reclaim padding inside every card */
+  .obj{padding:16px 18px}
+  .ctbox{padding:18px 18px 20px;border-left-width:3px}
+  .step{padding:20px 18px 22px}
+  .fwc{padding:17px 18px 19px}
+  .band{padding:18px 18px;border-left-width:3px}
+  .clgroup{padding:18px 18px}
+  .trap{padding:17px 18px}
+  .doc{padding:20px 16px 22px}
+  .docwrap > summary{padding:16px 18px}
+  .mm{padding:16px 12px 18px}
+  .mm__branch{padding:14px 14px 16px}
+  .tools,.concepts,.dnote,.pbox{padding:12px 14px}
+  .quote{padding:12px 14px}
+  .fstep{padding:16px 18px 18px}
+  .flip__side{padding:15px 17px}
+  .cite-warn{padding:14px 16px}
+  .asp{padding:12px 14px}
+
+  /* type breathes */
+  body{font-size:16px;line-height:1.65}
+  .step li,.ck span,.band p{font-size:15.5px;line-height:1.6}
+  .fwc ol li,.pbox li,.mm__col li{font-size:14.5px;line-height:1.55}
+  .sec h2{font-size:22px}
+  .step h3{font-size:20px}
+
+  /* tighter vertical rhythm */
+  .sec{padding-top:8px}
+  .step,.clgroup{margin-bottom:12px}
+  .band{margin-bottom:10px}
+
+  /* collapsible sections */
+  .sechead{display:flex;align-items:center;gap:12px;cursor:pointer;
+    padding:18px 0 16px;border-bottom:1px solid var(--rule);user-select:none}
+  .sechead .hgroup{flex:1 1 auto;min-width:0}
+  .sechead h2{margin:3px 0 0}
+  .sechead .eyebrow{margin:0}
+  .sechead::after{content:"+";font-family:var(--mono);font-size:17px;line-height:1;
+    width:26px;height:26px;flex:0 0 26px;border:1px solid var(--rule);border-radius:2px;
+    display:flex;align-items:center;justify-content:center;color:var(--amber)}
+  .sec.open .sechead::after{content:"\2013"}
+  .sec.open .sechead{border-bottom-color:var(--rule-soft)}
+  .secbody{display:none;padding-top:18px}
+  .sec.open .secbody{display:block}
+
+  /* jump menu */
+  .jump{display:flex;gap:7px;overflow-x:auto;padding:12px 0 14px;margin:0;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .jump::-webkit-scrollbar{display:none}
+  .jump button{flex:0 0 auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;padding:9px 13px;border:1px solid var(--rule);
+    background:var(--card);color:var(--slate);border-radius:2px;cursor:pointer;white-space:nowrap}
+  .jump button:active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* tables get a scroll hint */
+  .tabwrap{position:relative}
+  .tabwrap::after{content:"Scroll \2192";position:absolute;top:0;right:0;
+    font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+    color:#fff;background:var(--amber);padding:4px 8px;border-radius:0 0 0 3px;
+    pointer-events:none;opacity:.9}
+  .rtab,.swtab,.summ{min-width:600px}
+
+  .tabs .wrap{padding-left:14px;padding-right:14px}
+  .tab{padding:10px 14px;font-size:11px}
+}
+
+@media (max-width:400px){
+  .wrap{padding:0 11px}
+  .step,.fwc,.clgroup,.band,.trap{padding-left:15px;padding-right:15px}
+}
+@media print{.sechead::after{display:none}.secbody{display:block !important}.jump{display:none}}
+
 /* bands */
 .band{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
   border-radius:3px;padding:22px 26px;margin-bottom:12px}
@@ -1733,23 +1818,29 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
     <h2>Read the complete strand iii submissions</h2>
     <p class="sub">The full PDFs, including every product, every table and every annotated photograph.</p>
 
-    <details class="docwrap">
+    <details class="docwrap" open>
       <summary><b>Sample 1 &mdash; healthy snack brands</b><i>PDF &middot; opens in page</i></summary>
       <div class="pdfbox">
-        <iframe src="examples/crit-a-s3-sample-1.pdf" title="Strand iii sample 1"></iframe>
+        <object data="examples/crit-a-s3-sample-1.pdf" type="application/pdf" title="Strand iii sample 1">
+          <iframe src="examples/crit-a-s3-sample-1.pdf" title="Strand iii sample 1"></iframe>
+          <p class="pdffail">This browser will not display the PDF inline. Use the link below to open it.</p>
+        </object>
         <div class="pdfbar">
-          <span>Not loading on your device?</span>
+          <span>Blank or not loading? Phones often refuse inline PDFs.</span>
           <a href="examples/crit-a-s3-sample-1.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>
         </div>
       </div>
     </details>
 
-    <details class="docwrap" style="margin-top:14px">
+    <details class="docwrap" style="margin-top:14px" open>
       <summary><b>Sample 2 &mdash; board game products</b><i>PDF &middot; opens in page</i></summary>
       <div class="pdfbox">
-        <iframe src="examples/crit-a-s3-sample-2.pdf" title="Strand iii sample 2"></iframe>
+        <object data="examples/crit-a-s3-sample-2.pdf" type="application/pdf" title="Strand iii sample 2">
+          <iframe src="examples/crit-a-s3-sample-2.pdf" title="Strand iii sample 2"></iframe>
+          <p class="pdffail">This browser will not display the PDF inline. Use the link below to open it.</p>
+        </object>
         <div class="pdfbar">
-          <span>Not loading on your device?</span>
+          <span>Blank or not loading? Phones often refuse inline PDFs.</span>
           <a href="examples/crit-a-s3-sample-2.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>
         </div>
       </div>
@@ -2157,23 +2248,29 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
     <h2>Read the complete strand iv submissions</h2>
     <p class="sub">The full PDFs, including appendices and citations.</p>
 
-    <details class="docwrap">
+    <details class="docwrap" open>
       <summary><b>Sample 1</b><i>PDF &middot; opens in page</i></summary>
       <div class="pdfbox">
-        <iframe src="examples/crit-a-s4-sample-1.pdf" title="Strand iv sample 1"></iframe>
+        <object data="examples/crit-a-s4-sample-1.pdf" type="application/pdf" title="Strand iv sample 1">
+          <iframe src="examples/crit-a-s4-sample-1.pdf" title="Strand iv sample 1"></iframe>
+          <p class="pdffail">This browser will not display the PDF inline. Use the link below to open it.</p>
+        </object>
         <div class="pdfbar">
-          <span>Not loading on your device?</span>
+          <span>Blank or not loading? Phones often refuse inline PDFs.</span>
           <a href="examples/crit-a-s4-sample-1.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>
         </div>
       </div>
     </details>
 
-    <details class="docwrap" style="margin-top:14px">
+    <details class="docwrap" style="margin-top:14px" open>
       <summary><b>Sample 2 &mdash; board game storage</b><i>PDF &middot; opens in page</i></summary>
       <div class="pdfbox">
-        <iframe src="examples/crit-a-s4-sample-2.pdf" title="Strand iv sample 2"></iframe>
+        <object data="examples/crit-a-s4-sample-2.pdf" type="application/pdf" title="Strand iv sample 2">
+          <iframe src="examples/crit-a-s4-sample-2.pdf" title="Strand iv sample 2"></iframe>
+          <p class="pdffail">This browser will not display the PDF inline. Use the link below to open it.</p>
+        </object>
         <div class="pdfbar">
-          <span>Not loading on your device?</span>
+          <span>Blank or not loading? Phones often refuse inline PDFs.</span>
           <a href="examples/crit-a-s4-sample-2.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>
         </div>
       </div>
@@ -2411,6 +2508,7 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
       tabs.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
       t.classList.add('on'); t.setAttribute('aria-pressed','true');
       panels.forEach(function(p){ p.hidden = (p.dataset.panel !== t.dataset.s); });
+      if(window.__buildJump) window.__buildJump(document.querySelector('[data-panel]:not([hidden])'));
       window.scrollTo({top:0, behavior:'smooth'});
     });
   });
@@ -2456,6 +2554,74 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
       window.scrollTo({top:0, behavior:'smooth'});
     });
     onScroll();
+  })();
+
+
+  // --- mobile: wrap section bodies, build jump menu ---
+  (function(){
+    var secs = document.querySelectorAll('[data-panel] .sec');
+    for(var s=0; s<secs.length; s++){
+      var sec = secs[s];
+      if(sec.getAttribute('data-collapsible')) continue;
+      var wrap = sec.firstElementChild;
+      if(!wrap || wrap.className.indexOf('wrap') === -1) continue;
+
+      var kids = wrap.children, h2 = null, eyebrow = null;
+      for(var k=0; k<kids.length; k++){
+        if(!h2 && kids[k].tagName === 'H2') h2 = kids[k];
+        if(!eyebrow && kids[k].className === 'eyebrow') eyebrow = kids[k];
+      }
+      if(!h2) continue;                       // no heading, section stays open
+
+      var head = document.createElement('div');
+      head.className = 'sechead';
+      var hg = document.createElement('div');
+      hg.className = 'hgroup';
+      wrap.insertBefore(head, eyebrow || h2);
+      if(eyebrow) hg.appendChild(eyebrow);
+      hg.appendChild(h2);
+      head.appendChild(hg);
+
+      var body = document.createElement('div');
+      body.className = 'secbody';
+      while(head.nextSibling) body.appendChild(head.nextSibling);
+      wrap.appendChild(body);
+
+      sec.setAttribute('data-collapsible', '1');
+      (function(target){
+        head.addEventListener('click', function(){ target.classList.toggle('open'); });
+      })(sec);
+    }
+
+    function buildJump(panel){
+      if(!panel) return;
+      var old = panel.querySelector('.jump');
+      if(old && old.parentNode) old.parentNode.removeChild(old);
+      var list = panel.querySelectorAll('.sec[data-collapsible]');
+      if(!list.length) return;
+      var nav = document.createElement('nav');
+      nav.className = 'jump';
+      nav.setAttribute('aria-label', 'Jump to section');
+      for(var n=0; n<list.length; n++){
+        (function(sec){
+          var h2 = sec.querySelector('.sechead h2');
+          if(!h2) return;
+          var b = document.createElement('button');
+          b.type = 'button';
+          var t = h2.textContent.replace(/\s+/g, ' ').trim();
+          b.textContent = t.length > 26 ? t.slice(0, 24) + '\u2026' : t;
+          b.addEventListener('click', function(){
+            sec.classList.add('open');
+            sec.scrollIntoView({behavior:'smooth', block:'start'});
+          });
+          nav.appendChild(b);
+        })(list[n]);
+      }
+      if(nav.children.length) panel.insertBefore(nav, panel.firstChild);
+    }
+
+    window.__buildJump = buildJump;
+    buildJump(document.querySelector('[data-panel]:not([hidden])'));
   })();
 
 })();
