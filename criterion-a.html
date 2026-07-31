@@ -497,6 +497,69 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
   .sec{padding-top:26px}
   [hidden]{display:block !important}
 }
+
+/* ============ MOTION ============ */
+html{scroll-behavior:smooth}
+
+@media (prefers-reduced-motion: no-preference){
+
+  /* scroll reveal - only armed once JS confirms support */
+  .js-anim .reveal{opacity:0;transform:translateY(12px);
+    transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1);
+    transition-delay:var(--d,0ms)}
+  .js-anim .reveal.in{opacity:1;transform:none}
+
+  /* masthead on load */
+  .mast .eyebrow,.mast h1,.mast .sub,.mast .facts,.mast .ctbox,.homelink{
+    animation:riseIn .55s cubic-bezier(.22,.61,.36,1) both}
+  .homelink{animation-delay:.02s}
+  .mast .eyebrow{animation-delay:.06s}
+  .mast h1{animation-delay:.12s}
+  .mast .sub{animation-delay:.2s}
+  .mast .ctbox,.mast .facts{animation-delay:.28s}
+  @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* strand panel cross-fade */
+  [data-panel]:not([hidden]){animation:panelIn .38s cubic-bezier(.22,.61,.36,1) both}
+  @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* dropdown + section open */
+  details[open] > .doc,
+  details[open] > .fwlist,
+  details[open] > .pdfbox,
+  details[open] > .ctgrid,
+  .sec.open > .wrap > .secbody{animation:openIn .34s cubic-bezier(.22,.61,.36,1) both}
+  @keyframes openIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
+
+  /* summary chevrons and toggles */
+  .docwrap > summary::before,.fwgroup > summary::before,
+  .ctall summary::before,.sechead::after{transition:background .2s,color .2s,border-color .2s}
+  .docwrap > summary:hover::before,.fwgroup > summary:hover::before,
+  .sechead:hover::after{background:var(--amber);color:#fff;border-color:var(--amber)}
+
+  /* interactive lift */
+  .step,.fwc,.trap,.band,.clgroup{transition:box-shadow .25s ease,border-color .25s ease}
+  .step:hover,.fwc:hover,.trap:hover{box-shadow:0 3px 16px rgba(20,48,60,.06)}
+
+  .tab{transition:background .2s ease,color .2s ease,border-color .2s ease}
+  .ck{transition:background .18s ease}
+  .ck:hover{background:var(--paper)}
+  .ck input{transition:transform .15s ease}
+  .ck input:active{transform:scale(.88)}
+  .ck span{transition:color .25s ease,text-decoration-color .25s ease}
+
+  .jump button{transition:background .18s ease,color .18s ease,border-color .18s ease}
+  .homelink{transition:border-color .2s ease,color .2s ease,transform .2s ease}
+  .homelink:hover{transform:translateX(-2px)}
+
+  .pri,.spill,.pill,.st,.chip{transition:transform .18s ease}
+  .fwc:hover .pill{transform:translateY(-1px)}
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .js-anim .reveal{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
@@ -2508,7 +2571,9 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
       tabs.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
       t.classList.add('on'); t.setAttribute('aria-pressed','true');
       panels.forEach(function(p){ p.hidden = (p.dataset.panel !== t.dataset.s); });
-      if(window.__buildJump) window.__buildJump(document.querySelector('[data-panel]:not([hidden])'));
+      var vis = document.querySelector('[data-panel]:not([hidden])');
+      if(window.__buildJump) window.__buildJump(vis);
+      if(window.__armReveal) window.__armReveal(vis);
       window.scrollTo({top:0, behavior:'smooth'});
     });
   });
@@ -2622,6 +2687,46 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
 
     window.__buildJump = buildJump;
     buildJump(document.querySelector('[data-panel]:not([hidden])'));
+  })();
+
+
+  // --- scroll reveal ---
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if(mq.matches) return;
+    document.documentElement.classList.add('js-anim');
+
+    var SEL = '.step,.fwc,.band,.clgroup,.trap,.crit,.docwrap,.flow,.tabwrap,'
+            + '.mm,.aspects,.flip,.cite-warn,.conflict,.keyline,.obj,.ctbox,.strands,.matrix';
+
+    var io = new IntersectionObserver(function(entries){
+      for(var i=0;i<entries.length;i++){
+        if(entries[i].isIntersecting){
+          entries[i].target.classList.add('in');
+          io.unobserve(entries[i].target);
+        }
+      }
+    }, {rootMargin:'0px 0px -8% 0px', threshold:0.05});
+
+    function arm(root){
+      var els = (root || document).querySelectorAll(SEL);
+      for(var i=0;i<els.length;i++){
+        var el = els[i];
+        if(el.classList.contains('reveal')) continue;
+        if(el.closest && el.closest('.mast')) continue;
+        el.classList.add('reveal');
+        // stagger siblings in the same parent, capped so nothing waits long
+        var par = el.parentNode;
+        if(!par.__revealIdx) par.__revealIdx = 0;
+        el.style.setProperty('--d', Math.min(par.__revealIdx * 55, 220) + 'ms');
+        par.__revealIdx++;
+        io.observe(el);
+      }
+    }
+
+    window.__armReveal = arm;
+    arm(document);
   })();
 
 })();
