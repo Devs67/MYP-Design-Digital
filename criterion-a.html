@@ -505,6 +505,41 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
   [hidden]{display:block !important}
 }
 
+/* ============ PROGRESS SYNC ============ */
+.sync{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--moss);
+  border-radius:12px;padding:18px 22px;margin:0 0 18px}
+.sync p{margin:0;font-size:14.5px;color:var(--slate)}
+.sync__row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sync__row p{flex:1 1 260px}
+.sync__btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  padding:10px 16px;border-radius:7px;cursor:pointer;border:1px solid var(--ink);
+  background:var(--ink);color:#fff;transition:background .2s,border-color .2s,transform .2s}
+.sync__btn:hover{background:var(--moss);border-color:var(--moss);transform:translateY(-1px)}
+.sync__btn--ghost{background:transparent;color:var(--slate);border-color:var(--rule)}
+.sync__btn--ghost:hover{background:transparent;color:var(--ink);border-color:var(--slate)}
+.sync input{font-family:var(--body);font-size:15px;padding:10px 13px;border:1px solid var(--rule);
+  border-radius:7px;background:var(--paper);color:var(--ink);flex:1 1 160px;min-width:0}
+.sync input:focus{outline:2px solid var(--amber);outline-offset:1px}
+.sync__form{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sync__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--slate);width:100%;margin:0 0 2px}
+.sync__code{font-family:var(--mono);font-size:19px;font-weight:600;color:var(--moss);
+  letter-spacing:.06em;background:var(--moss-tint);padding:7px 13px;border-radius:7px}
+.sync__who{font-size:14.5px;color:var(--ink);font-weight:600}
+.sync__note{font-size:13px;color:var(--slate);margin-top:10px}
+.sync__status{font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--slate);margin-left:auto}
+.sync__status.ok{color:var(--moss)}
+.sync__status.err{color:var(--clay)}
+.sync--on{border-left-color:var(--moss)}
+.sync--err{border-left-color:var(--clay)}
+@media (max-width:760px){
+  .sync{padding:15px 16px}
+  .sync__row{gap:8px}
+  .sync__status{margin-left:0;width:100%}
+}
+@media print{.sync{display:none}}
+
 /* ============ MOTION ============ */
 html{scroll-behavior:smooth}
 
@@ -2870,6 +2905,221 @@ html{scroll-behavior:smooth}
       if(n > 5) n = 1;
       card.setAttribute('data-clicks', String(n));
     });
+  })();
+
+
+  // --- progress sync (Cloudflare Worker + D1) ---
+  (function(){
+    var API  = 'https://myp-progress.bachhudevenderchintu.workers.dev';
+    var PAGE = 'criterion-a';
+
+    var state = { code:null, name:null, section:null };
+    var panels = [];
+
+    function hash(str){
+      var h = 5381;
+      for(var i=0;i<str.length;i++) h = ((h*33) ^ str.charCodeAt(i)) >>> 0;
+      return 'i' + h.toString(36);
+    }
+    function labelOf(input){
+      var sp = input.parentNode.querySelector('span');
+      return sp ? sp.textContent.replace(/\s+/g,' ').trim() : '';
+    }
+    function panelOf(el){
+      var p = el.closest('[data-panel]');
+      return p ? p.dataset.panel : 'x';
+    }
+
+    function api(path, opts){
+      return fetch(API + path, opts).then(function(r){
+        return r.json().then(function(d){
+          if(!r.ok) throw new Error(d && d.error ? d.error : 'Request failed');
+          return d;
+        });
+      });
+    }
+
+    function setStatus(txt, kind){
+      for(var i=0;i<panels.length;i++){
+        var s = panels[i].querySelector('.sync__status');
+        if(s){ s.textContent = txt || ''; s.className = 'sync__status' + (kind ? ' ' + kind : ''); }
+      }
+    }
+
+    function render(){
+      for(var i=0;i<panels.length;i++){
+        var box = panels[i];
+        var idle = box.querySelector('.sync__idle');
+        var form = box.querySelector('.sync__form-new');
+        var cf   = box.querySelector('.sync__form-code');
+        var on   = box.querySelector('.sync__on');
+        var live = !!state.code;
+        idle.hidden = live; form.hidden = true; cf.hidden = true; on.hidden = !live;
+        box.className = 'sync' + (live ? ' sync--on' : '');
+        if(live){
+          box.querySelector('.sync__who').textContent = state.name + ' \u00b7 ' + state.section;
+          box.querySelector('.sync__code').textContent = state.code;
+        }
+      }
+    }
+
+    function applyTicks(ticks){
+      var map = {};
+      for(var i=0;i<ticks.length;i++){
+        map[ticks[i].panel + '|' + ticks[i].item_id] = ticks[i].checked;
+      }
+      var boxes = document.querySelectorAll('.ck input');
+      for(var j=0;j<boxes.length;j++){
+        var b = boxes[j];
+        var key = panelOf(b) + '|' + hash(labelOf(b));
+        if(map[key] !== undefined) b.checked = !!map[key];
+      }
+      var evt;
+      try { evt = new Event('change', {bubbles:true}); } catch(e){ evt = null; }
+      if(evt && boxes.length) boxes[0].dispatchEvent(evt);
+      // refresh every panel meter
+      var all = document.querySelectorAll('.ck input');
+      for(var k=0;k<all.length;k++){
+        try { all[k].dispatchEvent(new Event('change', {bubbles:true})); } catch(e){}
+      }
+    }
+
+    function saveOne(input){
+      if(!state.code) return;
+      var label = labelOf(input);
+      setStatus('Saving\u2026');
+      api('/api/save', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          code: state.code, page: PAGE, panel: panelOf(input),
+          items: [{ id: hash(label), label: label, checked: input.checked }]
+        })
+      }).then(function(){ setStatus('Saved', 'ok'); })
+        .catch(function(e){ setStatus('Not saved', 'err'); });
+    }
+
+    function connect(code, name, section, silent){
+      state.code = code; state.name = name; state.section = section;
+      render();
+      try {
+        var u = new URL(window.location.href);
+        u.searchParams.set('code', code);
+        window.history.replaceState({}, '', u.toString());
+      } catch(e){}
+      if(!silent) setStatus('Connected', 'ok');
+    }
+
+    function loadCode(code, silent){
+      setStatus('Loading\u2026');
+      return api('/api/load?code=' + encodeURIComponent(code)).then(function(d){
+        connect(d.student.code, d.student.display_name, d.student.section, true);
+        applyTicks(d.ticks || []);
+        setStatus('Progress restored', 'ok');
+      }).catch(function(e){
+        setStatus(e.message || 'Code not found', 'err');
+        if(!silent) window.alert(e.message || 'That code was not recognised.');
+      });
+    }
+
+    function buildPanel(){
+      var box = document.createElement('div');
+      box.className = 'sync';
+      box.innerHTML =
+        '<div class="sync__idle">' +
+          '<div class="sync__row">' +
+            '<p><b>Save your progress.</b> Get a code so you can pick up where you left off, on any device.</p>' +
+            '<button type="button" class="sync__btn sync__new">Get my code</button>' +
+            '<button type="button" class="sync__btn sync__btn--ghost sync__has">I have a code</button>' +
+            '<span class="sync__status"></span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="sync__form sync__form-new" hidden>' +
+          '<p class="sync__lbl">Your name and section</p>' +
+          '<input class="sync__name" type="text" placeholder="Name" maxlength="40" autocomplete="off">' +
+          '<input class="sync__sec" type="text" placeholder="Section, e.g. 4A" maxlength="20" autocomplete="off">' +
+          '<button type="button" class="sync__btn sync__go">Create</button>' +
+          '<button type="button" class="sync__btn sync__btn--ghost sync__cancel">Cancel</button>' +
+          '<span class="sync__status"></span>' +
+        '</div>' +
+        '<div class="sync__form sync__form-code" hidden>' +
+          '<p class="sync__lbl">Enter your code</p>' +
+          '<input class="sync__codein" type="text" placeholder="ABC-4A-K3M9" maxlength="20" autocomplete="off">' +
+          '<button type="button" class="sync__btn sync__load">See my progress</button>' +
+          '<button type="button" class="sync__btn sync__btn--ghost sync__cancel">Cancel</button>' +
+          '<span class="sync__status"></span>' +
+        '</div>' +
+        '<div class="sync__on" hidden>' +
+          '<div class="sync__row">' +
+            '<span class="sync__who"></span>' +
+            '<span class="sync__code"></span>' +
+            '<button type="button" class="sync__btn sync__btn--ghost sync__copy">Copy code</button>' +
+            '<span class="sync__status"></span>' +
+          '</div>' +
+          '<p class="sync__note">Ticks save automatically. Bookmark this page and your code travels with it \u2014 or write the code down to use on another device.</p>' +
+        '</div>';
+
+      box.querySelector('.sync__new').addEventListener('click', function(){
+        box.querySelector('.sync__idle').hidden = true;
+        box.querySelector('.sync__form-new').hidden = false;
+        box.querySelector('.sync__name').focus();
+      });
+      box.querySelector('.sync__has').addEventListener('click', function(){
+        box.querySelector('.sync__idle').hidden = true;
+        box.querySelector('.sync__form-code').hidden = false;
+        box.querySelector('.sync__codein').focus();
+      });
+      var cancels = box.querySelectorAll('.sync__cancel');
+      for(var c=0;c<cancels.length;c++){
+        cancels[c].addEventListener('click', function(){ render(); });
+      }
+      box.querySelector('.sync__go').addEventListener('click', function(){
+        var n = box.querySelector('.sync__name').value.trim();
+        var s = box.querySelector('.sync__sec').value.trim();
+        if(!n || !s){ window.alert('Please fill in both name and section.'); return; }
+        setStatus('Creating\u2026');
+        api('/api/register', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ display_name:n, section:s })
+        }).then(function(d){
+          connect(d.code, d.display_name, d.section);
+          window.alert('Your code is ' + d.code + '\n\nWrite it down. You will need it to see your progress on another device.');
+        }).catch(function(e){ setStatus(e.message || 'Failed', 'err'); });
+      });
+      box.querySelector('.sync__load').addEventListener('click', function(){
+        var c = box.querySelector('.sync__codein').value.trim().toUpperCase();
+        if(!c) return;
+        loadCode(c);
+      });
+      box.querySelector('.sync__copy').addEventListener('click', function(){
+        var t = state.code || '';
+        if(navigator.clipboard) navigator.clipboard.writeText(t);
+        setStatus('Code copied', 'ok');
+      });
+      return box;
+    }
+
+    // drop one panel above every checklist
+    var bars = document.querySelectorAll('.clbar');
+    for(var i=0;i<bars.length;i++){
+      var p = buildPanel();
+      bars[i].parentNode.insertBefore(p, bars[i]);
+      panels.push(p);
+    }
+    if(!panels.length) return;
+    render();
+
+    // save on every tick
+    document.addEventListener('change', function(e){
+      var t = e.target;
+      if(t && t.type === 'checkbox' && t.parentNode && t.parentNode.className === 'ck') saveOne(t);
+    });
+
+    // ?code=XXX in the address bar restores automatically
+    try {
+      var qc = new URL(window.location.href).searchParams.get('code');
+      if(qc) loadCode(qc.toUpperCase(), true);
+    } catch(e){}
   })();
 
 })();
