@@ -65,7 +65,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 
 .grid{display:flex;flex-wrap:wrap;gap:16px}
 .crit{flex:1 1 330px;background:var(--card);border:1px solid var(--rule);
-  border-left:4px solid var(--rule);border-radius:3px;padding:24px 26px 26px;
+  border-left:4px solid var(--rule);border-radius:12px;padding:24px 26px 26px;
   text-decoration:none;color:inherit;display:block;transition:.15s}
 a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
   box-shadow:0 4px 14px rgba(20,48,60,.07)}
@@ -78,7 +78,7 @@ a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
 .crit--fw .badge{background:var(--ink);font-size:16px;letter-spacing:.03em}
 
 .crit__top{display:flex;gap:14px;align-items:center;margin-bottom:12px}
-.badge{width:46px;height:46px;border-radius:3px;flex:0 0 46px;
+.badge{width:46px;height:46px;border-radius:12px;flex:0 0 46px;
   display:flex;align-items:center;justify-content:center;
   font-family:var(--display);font-weight:700;font-size:24px;color:#fff}
 .crit--a .badge{background:var(--a)}
@@ -90,7 +90,7 @@ a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
 .crit p{margin:0 0 16px;font-size:14.5px;color:var(--slate)}
 .strands{display:flex;gap:6px;flex-wrap:wrap}
 .st{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
-  padding:5px 10px;border-radius:2px;background:var(--rule-soft);color:var(--slate)}
+  padding:5px 10px;border-radius:7px;background:var(--rule-soft);color:var(--slate)}
 .st.live{background:var(--moss-tint);color:var(--moss)}
 .status{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--slate);margin-left:auto}
@@ -99,7 +99,7 @@ a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
 footer{margin-top:60px;padding:30px 0 60px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:2px}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:7px}
 @media (prefers-reduced-motion:reduce){a.crit:hover{transform:none}}
 
 /* ============ MOTION ============ */
@@ -173,7 +173,7 @@ html{scroll-behavior:smooth}
   transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.4,1)}
 .ctile.flipped .ctile__inner{transform:rotateY(180deg)}
 .ctile__face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;
-  border-radius:3px;padding:18px 18px 16px;display:flex;flex-direction:column;
+  border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column;
   justify-content:center;min-height:132px}
 .ctile__front{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--amber);
   transition:border-color .25s ease,box-shadow .25s ease}
@@ -229,7 +229,7 @@ html{scroll-behavior:smooth}
   -webkit-backdrop-filter:blur(7px)}
 .wl[hidden]{display:none}
 .wl__card{position:relative;max-width:640px;width:100%;background:var(--card);
-  border-radius:4px;padding:46px 44px 38px;text-align:center;
+  border-radius:16px;padding:46px 44px 38px;text-align:center;
   box-shadow:0 24px 70px rgba(20,48,60,.28);border-top:4px solid var(--amber)}
 .wl__eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--slate);margin:0 0 12px}
@@ -242,10 +242,10 @@ html{scroll-behavior:smooth}
   color:var(--amber);margin:20px 0 0}
 .wl__btn{margin-top:32px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;padding:14px 34px;border:1px solid var(--ink);background:var(--ink);
-  color:#fff;border-radius:2px;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+  color:#fff;border-radius:7px;cursor:pointer;transition:background .2s,color .2s,transform .2s}
 .wl__btn:hover{background:var(--amber);border-color:var(--amber);transform:translateY(-2px)}
 .wl__x{position:absolute;top:14px;right:16px;width:32px;height:32px;border:0;background:none;
-  color:var(--slate);font-size:20px;line-height:1;cursor:pointer;border-radius:2px;
+  color:var(--slate);font-size:20px;line-height:1;cursor:pointer;border-radius:7px;
   transition:color .2s,background .2s}
 .wl__x:hover{color:var(--ink);background:var(--paper)}
 body.wl-open{overflow:hidden}
