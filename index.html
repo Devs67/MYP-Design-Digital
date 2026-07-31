@@ -13,7 +13,7 @@
   --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
   --amber:#B05A1C; --amber-tint:#FBEEE2;
   --moss:#2F6B4F; --moss-tint:#E8F1EC;
-  --a:#12707F; --b:#96700A; --c:#38722C; --d:#B23A2E;
+  --a:#12707F; --b:#96700A; --c:#38722C; --d:#B23A2E; --dev:#6A4C93;
   --display:"Fraunces",Georgia,serif;
   --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -74,6 +74,17 @@ a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
 .crit--c{border-left-color:var(--c)}
 .crit--d{border-left-color:var(--d)}
 .crit--soon{opacity:.62;cursor:default}
+
+.crit--dev{border-left-color:var(--dev);
+  background:linear-gradient(160deg,rgba(106,76,147,.09),rgba(106,76,147,0) 62%)}
+.crit--dev .badge{background:var(--dev);font-size:15px}
+.crit--dev .devname{color:var(--dev);font-size:27px;line-height:1.05;letter-spacing:-.02em}
+.crit--dev .devpre{display:block;font-family:var(--body);font-size:12.5px;font-weight:500;
+  letter-spacing:.02em;color:var(--slate);margin-bottom:3px}
+a.crit--dev:hover{border-color:var(--dev)}
+a.crit--dev:hover .devpre{color:var(--dev)}
+.crit--dev .status{color:var(--dev)}
+.crit--dev .st{background:rgba(106,76,147,.11);color:var(--dev)}
 .crit--fw{border-left-color:var(--ink)}
 .crit--fw .badge{background:var(--ink);font-size:16px;letter-spacing:.03em}
 
@@ -365,6 +376,19 @@ body.wl-open{overflow:hidden}
         <div class="strands">
           <span class="st live">31 frameworks</span>
           <span class="st live">Sourced</span>
+        </div>
+      </a>
+
+
+      <a class="crit crit--dev" href="teacher.html">
+        <div class="crit__top">
+          <span class="badge">&#9679;</span>
+          <h3 class="devname"><span class="devpre">Click here if you are</span>Dev</h3>
+          <span class="status">Teacher</span>
+        </div>
+        <p>Class progress across all four strands &mdash; who is where, and which checklist items the class is stuck on. Needs the teacher key.</p>
+        <div class="strands">
+          <span class="st">Key required</span>
         </div>
       </a>
 
