@@ -222,13 +222,69 @@ html{scroll-behavior:smooth}
   .ctile__face{min-height:0;padding:15px 16px}
   .ctile__term{font-size:21px}
 }
+
+/* ============ WELCOME ============ */
+.wl{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:rgba(20,48,60,.55);backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px)}
+.wl[hidden]{display:none}
+.wl__card{position:relative;max-width:640px;width:100%;background:var(--card);
+  border-radius:4px;padding:46px 44px 38px;text-align:center;
+  box-shadow:0 24px 70px rgba(20,48,60,.28);border-top:4px solid var(--amber)}
+.wl__eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--slate);margin:0 0 12px}
+.wl__title{font-family:var(--display);font-size:clamp(28px,5.5vw,42px);font-weight:600;
+  letter-spacing:-.02em;line-height:1.1;margin:0}
+.wl__rule{width:46px;height:2px;background:var(--amber);margin:24px auto 26px}
+.wl__quote{font-family:var(--display);font-size:clamp(19px,3.2vw,25px);font-weight:400;
+  font-style:italic;line-height:1.45;color:var(--ink);margin:0;letter-spacing:-.01em}
+.wl__who{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);margin:20px 0 0}
+.wl__btn{margin-top:32px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;padding:14px 34px;border:1px solid var(--ink);background:var(--ink);
+  color:#fff;border-radius:2px;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.wl__btn:hover{background:var(--amber);border-color:var(--amber);transform:translateY(-2px)}
+.wl__x{position:absolute;top:14px;right:16px;width:32px;height:32px;border:0;background:none;
+  color:var(--slate);font-size:20px;line-height:1;cursor:pointer;border-radius:2px;
+  transition:color .2s,background .2s}
+.wl__x:hover{color:var(--ink);background:var(--paper)}
+body.wl-open{overflow:hidden}
+
+@media (prefers-reduced-motion: no-preference){
+  .wl{animation:wlFade .35s ease both}
+  .wl__card{animation:wlRise .55s cubic-bezier(.22,.61,.36,1) both .06s}
+  .wl__quote{animation:wlRise .6s cubic-bezier(.22,.61,.36,1) both .2s}
+  .wl__who{animation:wlRise .6s cubic-bezier(.22,.61,.36,1) both .3s}
+  .wl__btn{animation:wlRise .6s cubic-bezier(.22,.61,.36,1) both .38s}
+  .wl.closing{animation:wlFade .3s ease reverse both}
+  @keyframes wlFade{from{opacity:0}to{opacity:1}}
+  @keyframes wlRise{from{opacity:0;transform:translateY(16px) scale(.985)}
+    to{opacity:1;transform:none}}
+}
+@media (max-width:600px){
+  .wl{padding:16px}
+  .wl__card{padding:36px 24px 30px}
+}
 </style>
 </head>
 <body>
 
+<div class="wl" id="welcome" role="dialog" aria-modal="true" aria-labelledby="wlTitle" hidden>
+  <div class="wl__card">
+    <button class="wl__x" id="wlClose" aria-label="Close">&times;</button>
+    <p class="wl__eyebrow">Welcome to</p>
+    <h2 class="wl__title" id="wlTitle">IB MYP Design</h2>
+    <div class="wl__rule"></div>
+    <blockquote class="wl__quote" id="wlQuote"></blockquote>
+    <p class="wl__who" id="wlWho"></p>
+    <button class="wl__btn" id="wlEnter">Enter</button>
+  </div>
+</div>
+
+
 <header class="mast">
   <div class="wrap">
-    <p class="eyebrow">MYP 4 Design · Task-specific clarifications</p>
+    <p class="eyebrow">IB MYP Design · Task-specific clarifications</p>
     <h1>What each criterion asks for, and how to get there.</h1>
     <p class="sub">Strand-by-strand guides: the command terms, the steps in order, the frameworks that produce each part, worked examples, and a checklist to run before submitting.</p>
   </div>
@@ -468,6 +524,68 @@ html{scroll-behavior:smooth}
       var n = parseInt(card.getAttribute('data-clicks') || '0', 10) + 1;
       if(n > 5) n = 1;
       card.setAttribute('data-clicks', String(n));
+    });
+  })();
+
+
+  // --- welcome overlay with a rotating quote ---
+  (function(){
+    var QUOTES = [
+      ["Design is how it works.", "Steve Jobs"],
+      ["Simplicity is the ultimate sophistication.", "Leonardo da Vinci"],
+      ["Good design is as little design as possible.", "Dieter Rams"],
+      ["Less, but better.", "Dieter Rams"],
+      ["Question everything generally thought to be obvious.", "Dieter Rams"],
+      ["Form follows function.", "Louis Sullivan"],
+      ["The details are not the details. They make the design.", "Charles Eames"],
+      ["Recognizing the need is the primary condition for design.", "Charles Eames"],
+      ["Design is a plan for arranging elements to accomplish a purpose.", "Charles Eames"],
+      ["Design is intelligence made visible.", "Alina Wheeler"],
+      ["Good design is obvious. Great design is transparent.", "Joe Sparano"],
+      ["Styles come and go. Good design is a language.", "Massimo Vignelli"],
+      ["There is no such thing as a boring project.", "Milton Glaser"],
+      ["To design is to communicate clearly by whatever means you can control.", "Milton Glaser"],
+      ["Design creates culture. Culture shapes values.", "Robert L. Peters"],
+      ["Everything is designed. Few things are designed well.", "Brian Reed"],
+      ["Perfection is achieved when there is nothing left to take away.", "Antoine de Saint-Exup\u00e9ry"],
+      ["Engineers create the world that has never been.", "Theodore von K\u00e1rm\u00e1n"],
+      ["The best way to predict the future is to invent it.", "Alan Kay"],
+      ["Make it work, make it right, make it fast.", "Kent Beck"],
+      ["Innovation distinguishes between a leader and a follower.", "Steve Jobs"],
+      ["Fail often so you can succeed sooner.", "Tom Kelley, IDEO"],
+      ["Any sufficiently advanced technology is indistinguishable from magic.", "Arthur C. Clarke"],
+      ["Design adds value faster than it adds costs.", "Joel Spolsky"]
+    ];
+
+    var wl = document.getElementById('welcome');
+    if(!wl) return;
+    var q  = document.getElementById('wlQuote');
+    var w  = document.getElementById('wlWho');
+    var pick = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    q.textContent = '\u201c' + pick[0] + '\u201d';
+    w.textContent = pick[1];
+
+    wl.hidden = false;
+    document.body.classList.add('wl-open');
+    var enter = document.getElementById('wlEnter');
+    if(enter) enter.focus();
+
+    function close(){
+      if(wl.hidden) return;
+      wl.classList.add('closing');
+      window.setTimeout(function(){
+        wl.hidden = true;
+        wl.classList.remove('closing');
+        document.body.classList.remove('wl-open');
+      }, 280);
+    }
+
+    if(enter) enter.addEventListener('click', close);
+    var x = document.getElementById('wlClose');
+    if(x) x.addEventListener('click', close);
+    wl.addEventListener('click', function(e){ if(e.target === wl) close(); });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' || e.keyCode === 27) close();
     });
   })();
 
