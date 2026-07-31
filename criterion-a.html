@@ -316,6 +316,27 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   padding:15px 18px;font-size:14px;line-height:1.6;margin:0 0 20px}
 .conflict b{color:var(--clay);font-weight:600}
 
+/* strand iv extras */
+.flip{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 20px}
+.flip__side{flex:1 1 320px;border-radius:3px;padding:18px 20px}
+.flip__side.no{background:var(--clay-tint)}
+.flip__side.yes{background:var(--moss-tint)}
+.flip__side b{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  display:block;margin-bottom:8px}
+.flip__side.no b{color:var(--clay)}
+.flip__side.yes b{color:var(--moss)}
+.flip__side p{margin:0;font-size:14.5px;line-height:1.55}
+.cite-warn{background:var(--clay);color:#fff;border-radius:3px;padding:16px 20px;
+  font-size:14.5px;line-height:1.55;margin:0 0 20px}
+.cite-warn b{font-weight:600}
+.summ{width:100%;min-width:640px;border-collapse:collapse;font-size:13.5px}
+.summ th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.12em;text-transform:uppercase;padding:11px 13px;text-align:left;font-weight:500}
+.summ td{padding:12px 13px;border-bottom:1px solid var(--rule-soft);vertical-align:top;line-height:1.5}
+.summ tr:last-child td{border-bottom:0}
+.summ td.sn{font-family:var(--mono);font-size:11px;color:var(--amber);white-space:nowrap;
+  background:var(--paper);border-right:1px solid var(--rule-soft)}
+
 /* bands */
 .band{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--rule);
   border-radius:3px;padding:22px 26px;margin-bottom:12px}
@@ -409,7 +430,7 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
     <button class="tab on" data-s="i" aria-pressed="true">Strand i</button>
     <button class="tab" data-s="ii" aria-pressed="false">Strand ii</button>
     <button class="tab" data-s="iii" aria-pressed="false">Strand iii</button>
-    <button class="tab todo" data-s="iv" aria-pressed="false">Strand iv</button>
+    <button class="tab" data-s="iv" aria-pressed="false">Strand iv</button>
   </div>
 </nav>
 
@@ -1958,7 +1979,411 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
 </section>
 </div>
 <div data-panel="iv" hidden>
-  <div class="wrap"><div class="soon"><h2>Strand iv</h2><p>Develops a detailed design brief. Not added yet.</p></div></div>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="obj">
+      <b>Strand iv &mdash; objective</b>
+      Develop a detailed design brief which summarizes the analysis of relevant research.
+    </div>
+
+    <div class="ctbox">
+      <p class="ctbox__lbl">Command terms &mdash; Criterion A, strand iv</p>
+      <div class="ctrow"><i class="ctband">All</i><b>Develop</b><span>To improve incrementally, elaborate or expand in detail. Evolve to a more advanced or effective state.</span></div>
+      <div class="ctrow"><i class="ctband">1&ndash;2</i><b>State</b><span>Give a specific name, value or other brief answer without explanation or calculation.</span></div>
+      <div class="ctrow"><i class="ctband">3&ndash;4</i><b>Outline</b><span>Give a brief account or summary.</span></div>
+      <div class="ctrow"><i class="ctband">5&ndash;6</i><b>Explain</b><span>Give a detailed account including reasons or causes.</span></div>
+      <div class="ctrow"><i class="ctband">7&ndash;8</i><b>Summarize</b><span>Abstract a general theme or major point(s).</span></div>
+      <p class="ctbox__note">Do not confuse summarizing with shortening. At 7&ndash;8 you abstract the major points from all three earlier strands into one page &mdash; and you add the design question, which appears at no other band.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Read this first</p>
+    <h2>Strand iv reverses the rule from strand i</h2>
+    <div class="flip">
+      <div class="flip__side no">
+        <b>Strand i &mdash; never name a product</b>
+        <p>&ldquo;A solution would need to let families store several board games in less space.&rdquo;</p>
+      </div>
+      <div class="flip__side yes">
+        <b>Strand iv &mdash; name it in the first line</b>
+        <p>&ldquo;I am going to design and make a storage unit that combines multiple board games into one product for families with children over six.&rdquo;</p>
+      </div>
+    </div>
+    <p class="sub" style="margin-bottom:0">Everything before this point was about establishing a need. The design brief is where the need becomes a stated intention. Students who carry the strand i habit forward write a brief that never says what they are making, which loses the very first checklist item.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">The flow</p>
+    <h2>Four steps, in this order</h2>
+    <p class="sub">One to two pages. Subheading: Design Brief.</p>
+    <div class="flow">
+      <div class="fstep"><b>Step 1</b><h4>State what you will make</h4><p>Open with &ldquo;I am going to design and make&hellip;&rdquo;</p></div>
+      <div class="fstep"><b>Step 2</b><h4>Who, where and why</h4><p>The target audience, the setting, the reason.</p></div>
+      <div class="fstep"><b>Step 3</b><h4>Summarise the research</h4><p>The major points from strands i, ii and iii.</p></div>
+      <div class="fstep"><b>Step 4</b><h4>Question, features, SOI</h4><p>The design question, key features, and the link to the statement of inquiry.</p></div>
+    </div>
+    <p class="flownote">Nothing new is researched here. If a fact does not already appear in an earlier strand, it does not belong in the brief.</p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">In detail</p>
+    <h2>What goes into each step</h2>
+    <p class="sub">Each step includes an extract from a strong response, and what that extract is doing.</p>
+
+    <article class="step">
+      <p class="step__n">Step 1</p>
+      <h3>State what you are going to design and make</h3>
+      <ul>
+        <li>Open with the words &ldquo;I am going to design and make&hellip;&rdquo;</li>
+        <li>Name the product plainly &mdash; this is the one place it is required</li>
+        <li>Keep it to one sentence before you explain anything</li>
+      </ul>
+      <div class="ex">
+        <p class="ex__lbl">From a strong response</p>
+        <p class="quote">&ldquo;To address this issue, I intend to create a design that combines multiple board games while taking up less space.&rdquo;</p>
+        <p class="does"><b>What it does:</b> names the intention and the constraint in one line. The department checklist opens with &ldquo;stated what you are going to design and make&rdquo;, so this sentence earns the first tick before anything else is read.</p>
+        <div class="gap"><b>Worth tightening:</b> the task sheet asks students to start with &ldquo;I am going to design and make&hellip;&rdquo;. This version says &ldquo;I intend to create&rdquo;, which means the same but does not match the required opening. Use the exact wording.</div>
+      </div>
+    </article>
+
+    <article class="step">
+      <p class="step__n">Step 2</p>
+      <h3>Say who it is for, where it will be used, and why</h3>
+      <ul>
+        <li>Name the target audience, carried forward from strand i</li>
+        <li>Say where the product will be used &mdash; a real place</li>
+        <li>Say why this audience needs it, in one or two sentences</li>
+      </ul>
+      <div class="ex">
+        <p class="ex__lbl">From a strong response</p>
+        <p class="quote">&ldquo;One of the most difficult aspects of owning board games is finding enough space to store them. This can be especially difficult for families with children over the age of six, who tend to accumulate more games over time.&rdquo;</p>
+        <p class="does"><b>What it does:</b> names the audience and gives the reason in the same breath. The detail about accumulating games over time is why <em>this</em> group rather than families in general.</p>
+        <div class="gap"><b>What is missing:</b> nowhere does it say where the product will be used &mdash; living room, bedroom, shelf, cupboard. That is a separate checklist item and it is easy to lose.</div>
+      </div>
+    </article>
+
+    <article class="step">
+      <p class="step__n">Step 3</p>
+      <h3>Summarise the analysis of your research</h3>
+      <ul>
+        <li>Pull the major points from strands i, ii and iii</li>
+        <li>One or two sentences per finding, in your own words</li>
+        <li>Only include research that changed the design</li>
+        <li>Cite every source back to its appendix</li>
+      </ul>
+      <div class="ex">
+        <p class="ex__lbl">From a strong response</p>
+        <p class="quote">&ldquo;Based on the information in the survey, families with 3&ndash;4 members were repeatedly mentioned. This helped me understand that ideally these games should be 2&ndash;4 player games&hellip; This product should not include one player games as that defeats the purpose of bringing communities together with board games.&rdquo;</p>
+        <p class="does"><b>What it does:</b> finding, then consequence, then a design decision made because of it. Every summarised piece of research should end in a decision like this. If it does not, it was not relevant research.</p>
+      </div>
+    </article>
+
+    <article class="step">
+      <p class="step__n">Step 4</p>
+      <h3>Design question, key features and the SOI</h3>
+      <ul>
+        <li>State the design question &mdash; required at 7&ndash;8, absent at every other band</li>
+        <li>Describe the expected product outcome</li>
+        <li>Outline its key features</li>
+        <li>Connect the solution to the statement of inquiry</li>
+      </ul>
+      <div class="tools">
+        <b>Design question frames</b>
+        How can I design a&hellip; that&hellip; for&hellip;?
+        <br>To what extent can a&hellip; solve&hellip; for&hellip;?
+        <br><br>The question must be answerable by your solution and testable in Criterion D.
+      </div>
+      <div class="ex">
+        <p class="ex__lbl">From a strong response</p>
+        <p class="quote">&ldquo;This helped me understand that ideally these games should be 2&ndash;4 player games to include multiple people and bring several people together.&rdquo;</p>
+        <p class="does"><b>What it does:</b> a key feature stated as a requirement rather than a specification. Features here stay broad &mdash; numbers and measurements belong in the Criterion B specification, not the brief.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="cite-warn">
+      <b>Very important.</b> All pictures, text, or anyone else's work must be cited. This is the last checklist item on every strand of Criterion A, and the easiest one to lose on a page that is mostly summary of other people's research.
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Worked example</p>
+    <h2>A complete strand iv response</h2>
+    <p class="sub">Reproduced unedited, with the step each part covers.</p>
+
+    <details class="docwrap">
+      <summary><b>Board game storage &mdash; the design brief</b><i>Steps 1&ndash;3 visible</i></summary>
+      <div class="doc">
+        <div class="dblock">
+          <div class="dhd"><h3>Opening</h3><span class="spill">Steps 1 &amp; 2</span></div>
+          <p class="t">Board games have long been a favourite pastime for people of all ages. However, one of the most difficult aspects of owning board games is finding enough space to store them. This can be especially difficult for families with children over the age of six, who tend to accumulate more games over time. To address this issue, I intend to create a design that combines multiple board games while taking up less space. The first step in designing this solution was to conduct extensive research into the needs of the target audience. This research included both primary and secondary research. This further required conducting surveys or interviews with families to explore the types of board games they enjoy playing and the amount of storage space they have available.</p>
+          <p class="dnote"><b>Why this works:</b> context, audience, intention and research method in a single paragraph. It moves fast, which is right for a brief &mdash; the detail already lives in the earlier strands.</p>
+        </div>
+
+        <div class="dblock">
+          <div class="dhd"><h3>Survey</h3><span class="spill">Step 3</span></div>
+          <p class="t">Surveying or interviewing families about their board game preferences can provide information not only about storage requirements, but also about the specific types of games that are popular among the target audience. I further used some of this information to create a product that meets the needs and interests of the target audience. Firstly I needed to understand the number of people in an average family. This answer ranged from 2 all the way to 19. The best way to collect data will be finding the most common answer and stem my research from there. Based on the information in the survey, families with 3&ndash;4 members were repeatedly mentioned. This helped me understand that ideally these games should be 2&ndash;4 player games to include multiple people and bring several people together. This product should not include one player games as that defeats the purpose of bringing communities together with board games.</p>
+          <p class="t">In this case, the survey revealed information about popular board games such as Ticket to Ride and Codenames that I was not previously aware of. As a result, the designer decided to conduct additional research on these games in order to better understand their gameplay mechanics and design elements. And further analyse the relevance of these games in the product that needs to be designed.</p>
+          <p class="dnote"><b>Why this works:</b> the survey response is summarised, not reproduced. The raw data sits in Appendix A.2 and only the conclusion and the design decision appear here. Note the footnote reference &mdash; that is what citing looks like on this page.</p>
+          <p class="dnote warn"><b>What is weaker:</b> &ldquo;the designer decided&rdquo; switches to third person mid-paragraph. Small, but a brief written in first person should stay in first person.</p>
+        </div>
+
+        <div class="dblock">
+          <div class="dhd"><h3>Interviews</h3><span class="spill">Step 3</span></div>
+          <p class="t">Here is a short summary of the interviews that I conducted and the key points from these interviews.</p>
+          <p class="dnote warn"><b>What is missing from this brief:</b> where the product will be used, the design question, an outline of key features, and the connection to the statement of inquiry. The first is a department checklist item; the other three are what the task-specific clarification adds at 7&ndash;8.</p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Full responses</p>
+    <h2>Read the complete strand iv submissions</h2>
+    <p class="sub">The full PDFs, including appendices and citations.</p>
+
+    <details class="docwrap">
+      <summary><b>Sample 1</b><i>PDF &middot; opens in page</i></summary>
+      <div class="pdfbox">
+        <iframe src="examples/crit-a-s4-sample-1.pdf" title="Strand iv sample 1"></iframe>
+        <div class="pdfbar">
+          <span>Not loading on your device?</span>
+          <a href="examples/crit-a-s4-sample-1.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="docwrap" style="margin-top:14px">
+      <summary><b>Sample 2 &mdash; board game storage</b><i>PDF &middot; opens in page</i></summary>
+      <div class="pdfbox">
+        <iframe src="examples/crit-a-s4-sample-2.pdf" title="Strand iv sample 2"></iframe>
+        <div class="pdfbar">
+          <span>Not loading on your device?</span>
+          <a href="examples/crit-a-s4-sample-2.pdf" target="_blank" rel="noopener">Open the PDF in a new tab</a>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Thinking tools</p>
+    <h2>Frameworks for each step</h2>
+
+    <details class="fwgroup">
+      <summary class="fwgroup__hd"><span class="fwgroup__n">Step 1</span><h3>State what you will make</h3><i>1 tool</i></summary>
+      <div class="fwlist">
+        <article class="fwc">
+          <div class="fwc__top"><h4>The design statement frame</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the opening line, in the exact wording the task sheet asks for.</p>
+          <ol>
+            <li>I am going to design and make a <em>[product]</em>&hellip;</li>
+            <li>&hellip;for <em>[target audience]</em>&hellip;</li>
+            <li>&hellip;so that <em>[what it lets them do]</em>.</li>
+          </ol>
+        </article>
+      </div>
+    </details>
+
+    <details class="fwgroup">
+      <summary class="fwgroup__hd"><span class="fwgroup__n">Step 2</span><h3>Who, where and why</h3><i>1 tool</i></summary>
+      <div class="fwlist">
+        <article class="fwc">
+          <div class="fwc__top"><h4>Who &middot; Where &middot; Why check</h4></div>
+          <p class="fwc__out"><b>Produces:</b> three separate checklist ticks in three sentences.</p>
+          <ol>
+            <li>Who &mdash; the target audience by name, carried from strand i.</li>
+            <li>Where &mdash; a real, physical place the product will be used.</li>
+            <li>Why &mdash; the reason this audience, not a wider one.</li>
+          </ol>
+        </article>
+      </div>
+    </details>
+
+    <details class="fwgroup">
+      <summary class="fwgroup__hd"><span class="fwgroup__n">Step 3</span><h3>Summarise the research</h3><i>2 tools</i></summary>
+      <div class="fwlist">
+        <article class="fwc">
+          <div class="fwc__top"><h4>Strand summary grid</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the summary paragraphs, one row at a time.</p>
+          <ol>
+            <li>One row per strand: what I found &rarr; what it means for my design.</li>
+            <li>Write the right-hand column first &mdash; it is the part that matters.</li>
+            <li>Turn each row into one or two sentences of prose.</li>
+          </ol>
+        </article>
+        <article class="fwc">
+          <div class="fwc__top"><h4>The relevance filter</h4></div>
+          <p class="fwc__out"><b>Produces:</b> a brief that fits on one page.</p>
+          <ol>
+            <li>For each finding, ask: did this change my design?</li>
+            <li>If yes, summarise it and name the change.</li>
+            <li>If no, leave it in the appendix. It is research, but it is not relevant research.</li>
+          </ol>
+        </article>
+      </div>
+    </details>
+
+    <details class="fwgroup">
+      <summary class="fwgroup__hd"><span class="fwgroup__n">Step 4</span><h3>Question, features and SOI</h3><i>3 tools</i></summary>
+      <div class="fwlist">
+        <article class="fwc">
+          <div class="fwc__top"><h4>Design question frame</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the one element that only appears at 7&ndash;8.</p>
+          <ol>
+            <li>How can I design a <em>[product]</em> that <em>[does what]</em> for <em>[audience]</em>?</li>
+            <li>Check it can be answered by a thing you could actually build.</li>
+            <li>Check it can be tested in Criterion D.</li>
+          </ol>
+        </article>
+        <article class="fwc">
+          <div class="fwc__top"><h4>Needs to features</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the key features, traced to evidence.</p>
+          <ol>
+            <li>List the needs your research established.</li>
+            <li>Turn each into a feature the product will have.</li>
+            <li>Keep numbers out &mdash; measurements belong in the Criterion B specification.</li>
+          </ol>
+        </article>
+        <article class="fwc">
+          <div class="fwc__top"><h4>SOI bridge</h4></div>
+          <p class="fwc__out"><b>Produces:</b> the connection the task-specific clarification asks for at every band above 1&ndash;2.</p>
+          <ol>
+            <li>Write the statement of inquiry out in full.</li>
+            <li>Underline the part your solution acts on.</li>
+            <li>Write one sentence linking your product to that underlined idea.</li>
+          </ol>
+        </article>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Achievement levels</p>
+    <h2>Task-specific clarification</h2>
+    <p class="sub">Squares show which of the four steps each band requires.</p>
+
+    <div class="band band--top">
+      <div class="band__hd"><span class="band__n">7&ndash;8</span><span class="cterm">Summarizes</span>
+        <div class="steps-req"><i class="sq on">1</i><i class="sq on">2</i><i class="sq on">3</i><i class="sq on">4</i></div></div>
+      <p>Develops a detailed design brief, which summarizes the analysis of relevant research from all the previous strands, states the design question, describes the expected product outcome by outlining its key features and connecting the solution to the statement of inquiry.</p>
+      <p class="diff"><b>Added at this band:</b> the design question. It appears nowhere else in the strand, and it is the single clearest difference between a 6 and an 8.</p>
+    </div>
+
+    <div class="band band--sub">
+      <div class="band__hd"><span class="band__n">5&ndash;6</span><span class="cterm">Explains</span>
+        <div class="steps-req"><i class="sq on">1</i><i class="sq on">2</i><i class="sq on">3</i><i class="sq on">4</i></div></div>
+      <p>Develops a design brief, which explains the analysis of relevant research from all the previous strands, describes the expected product outcome by outlining its key features and connecting the solution to the statement of inquiry.</p>
+      <p class="diff"><b>Missing from this band:</b> the design question, and the word &ldquo;detailed&rdquo;.</p>
+    </div>
+
+    <div class="band">
+      <div class="band__hd"><span class="band__n">3&ndash;4</span><span class="cterm">Outlines</span>
+        <div class="steps-req"><i class="sq on">1</i><i class="sq on">2</i><i class="sq">3</i><i class="sq on">4</i></div></div>
+      <p>Develops a design brief, which outlines the analysis of relevant research from all the previous strands, outlines the expected product outcome by listing its key features and connecting the solution to the statement of inquiry.</p>
+      <p class="diff"><b>Missing from this band:</b> depth. Features are listed rather than outlined, and research is outlined rather than explained.</p>
+    </div>
+
+    <div class="band">
+      <div class="band__hd"><span class="band__n">1&ndash;2</span><span class="cterm">States</span>
+        <div class="steps-req"><i class="sq on">1</i><i class="sq">2</i><i class="sq">3</i><i class="sq">4</i></div></div>
+      <p>Develops a basic design brief, which states the findings of relevant research.</p>
+      <p class="diff"><b>Missing from this band:</b> the audience, the setting, the product outcome, the key features and the statement of inquiry.</p>
+    </div>
+
+    <div class="band">
+      <div class="band__hd"><span class="band__n">0</span></div>
+      <p>The student does not reach a standard described by any of the descriptors above.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Before you submit</p>
+    <h2>Checklist</h2>
+    <p class="sub">Bold items are the ones that carry the top band. Ticks are not saved &mdash; print this or work through it in one sitting.</p>
+
+    <div class="clbar">
+      <div class="meter"><i></i></div>
+      <span class="count">0 checked</span>
+      <button class="rst">Reset</button>
+    </div>
+
+    <div class="clgroup">
+      <h3>Department checklist</h3>
+      <label class="ck must"><input type="checkbox"><span>Stated what I am going to design and make<small>Open with the exact words: I am going to design and make&hellip;</small></span></label>
+      <label class="ck must"><input type="checkbox"><span>Said who I am making it for, and why</span></label>
+      <label class="ck must"><input type="checkbox"><span>Said where it will be used<small>The item students lose most often</small></span></label>
+      <label class="ck must"><input type="checkbox"><span>Summarized the analysis of the relevant research</span></label>
+      <label class="ck must"><input type="checkbox"><span>Cited all copied text and pictures</span></label>
+    </div>
+
+    <div class="clgroup">
+      <h3>Task-specific additions</h3>
+      <label class="ck must"><input type="checkbox"><span>I stated the design question<small>Required at 7&ndash;8 only. The clearest difference between a 6 and an 8</small></span></label>
+      <label class="ck"><input type="checkbox"><span>I described the expected product outcome</span></label>
+      <label class="ck"><input type="checkbox"><span>I outlined its key features</span></label>
+      <label class="ck"><input type="checkbox"><span>I connected the solution to the statement of inquiry</span></label>
+    </div>
+
+    <div class="clgroup">
+      <h3>Quality</h3>
+      <label class="ck"><input type="checkbox"><span>Every research summary ends in a design decision</span></label>
+      <label class="ck"><input type="checkbox"><span>Nothing here is new &mdash; it all appears in an earlier strand</span></label>
+      <label class="ck"><input type="checkbox"><span>No measurements or numbers in the key features<small>Those belong in the Criterion B specification</small></span></label>
+      <label class="ck"><input type="checkbox"><span>Written in first person throughout</span></label>
+      <label class="ck"><input type="checkbox"><span>It fits within one to two pages</span></label>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Watch for</p>
+    <h2>Four traps</h2>
+    <div class="traps" style="margin-top:20px">
+      <div class="trap">
+        <h4>Never saying what it is</h4>
+        <p>A whole page about the need, with no product named.</p>
+        <p>Strand i forbids naming a product. Strand iv requires it in the first line. The rule flips here.</p>
+      </div>
+      <div class="trap">
+        <h4>Repeating strand i</h4>
+        <p>The problem explained again from scratch, at the same length.</p>
+        <p>Summarize means abstract the major points. One page, not a second version of the whole investigation.</p>
+      </div>
+      <div class="trap">
+        <h4>The missing design question</h4>
+        <p>Everything else present, no question stated.</p>
+        <p>It is required at 7&ndash;8 and at no other band. One sentence, and it is the cheapest mark on this page.</p>
+      </div>
+      <div class="trap">
+        <h4>Specification creep</h4>
+        <p>&ldquo;It shall be 40cm by 40cm and hold twelve games.&rdquo;</p>
+        <p>Key features stay broad in the brief. Numbers arrive in Criterion B.</p>
+      </div>
+    </div>
+  </div>
+</section>
 </div>
 
 <footer>
