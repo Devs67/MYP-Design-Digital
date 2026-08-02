@@ -276,6 +276,43 @@ body.wl-open{overflow:hidden}
   .wl{padding:16px}
   .wl__card{padding:36px 24px 30px}
 }
+
+/* ============ TILE SPOTLIGHT HOVER ============ */
+.crit--a{--tone:var(--a)}
+.crit--b{--tone:var(--b)}
+.crit--c{--tone:var(--c)}
+.crit--d{--tone:var(--d)}
+.crit--fw{--tone:var(--ink)}
+.crit--dev{--tone:var(--dev)}
+
+@media (hover:hover) and (prefers-reduced-motion: no-preference){
+  .crit{position:relative}
+
+  .grid:has(.crit:hover) .crit:not(:hover){
+    transform:scale(.95);
+    opacity:.72;
+  }
+
+  .crit,a.crit{
+    transition:transform .32s cubic-bezier(.22,.61,.36,1),box-shadow .32s ease,
+               background .32s ease,border-color .32s ease,opacity .32s ease;
+  }
+
+  .crit:hover,a.crit:hover{
+    background:var(--tone,var(--ink));
+    border-color:var(--tone,var(--ink));
+    transform:translateY(-7px) scale(1.045);
+    box-shadow:0 18px 38px rgba(20,48,60,.24);
+    z-index:2;
+  }
+
+  .crit:hover h3,.crit:hover p,
+  .crit:hover .devname,.crit:hover .devpre{color:#fff !important}
+  .crit:hover .status{color:rgba(255,255,255,.78) !important}
+  .crit:hover .st{background:rgba(255,255,255,.18) !important;color:#fff !important}
+  .crit:hover .badge{background:#fff !important;color:var(--tone) !important}
+  .crit--soon:hover{opacity:1}
+}
 </style>
 </head>
 <body>
