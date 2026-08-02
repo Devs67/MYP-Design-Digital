@@ -505,6 +505,43 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
   [hidden]{display:block !important}
 }
 
+/* ============ TEMPLATE DOWNLOAD ============ */
+.tpl{display:flex;gap:20px;align-items:center;flex-wrap:wrap;
+  background:var(--card);border:2px solid var(--amber);border-radius:12px;
+  padding:22px 26px;margin:0 0 20px;position:relative;overflow:hidden}
+.tpl::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(135deg,rgba(176,90,28,.10),rgba(176,90,28,0) 55%)}
+.tpl__icon{flex:0 0 auto;width:54px;height:54px;border-radius:12px;background:var(--amber);
+  display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.tpl__icon svg{width:26px;height:26px;fill:none;stroke:#fff;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+.tpl__txt{flex:1 1 300px;position:relative;z-index:1;min-width:0}
+.tpl__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--amber);margin:0 0 5px}
+.tpl__txt h3{font-family:var(--display);font-size:21px;font-weight:600;margin:0 0 4px;
+  letter-spacing:-.01em}
+.tpl__txt p{margin:0;font-size:14px;color:var(--slate)}
+.tpl__btn{position:relative;z-index:1;flex:0 0 auto;display:inline-flex;align-items:center;
+  gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:14px 22px;border-radius:7px;background:var(--amber);color:#fff;text-decoration:none;
+  border:1px solid var(--amber);transition:background .2s,transform .2s,box-shadow .2s}
+.tpl__btn:hover{background:var(--ink);border-color:var(--ink);transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(20,48,60,.15)}
+.tpl__btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+@media (prefers-reduced-motion: no-preference){
+  .tpl{animation:tplPulse 2.6s ease-in-out 1.2s 2}
+  @keyframes tplPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(176,90,28,0)}
+    50%{box-shadow:0 0 0 6px rgba(176,90,28,.13)}}
+}
+@media (max-width:760px){
+  .tpl{padding:18px 18px;gap:14px}
+  .tpl__icon{width:44px;height:44px}
+  .tpl__btn{width:100%;justify-content:center}
+}
+@media print{.tpl{display:none}}
+
 /* ============ PROGRESS SYNC ============ */
 .sync{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--moss);
   border-radius:12px;padding:18px 22px;margin:0 0 18px}
@@ -719,6 +756,26 @@ html{scroll-behavior:smooth}
         </div>
       </details>
     </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="tpl">
+      <span class="tpl__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>
+      </span>
+      <div class="tpl__txt">
+        <p class="tpl__lbl">Start here</p>
+        <h3>Strand i writing template</h3>
+        <p>The four sections laid out, with a note under each heading saying exactly what belongs there. Word document.</p>
+      </div>
+      <a class="tpl__btn" href="templates/crit-a-strand-i-template.docx" download>
+        <svg viewBox="0 0 24 24"><path d="M12 3v12"/><path d="M7 11l5 5 5-5"/><path d="M4 20h16"/></svg>
+        Download
+      </a>
+    </div>
+
   </div>
 </section>
 
