@@ -36,6 +36,14 @@ body{
 .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
 a{color:inherit}
 
+/* home link */
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+@media print{.homelink{display:none}}
+
 /* ---------- masthead ---------- */
 .mast{padding:54px 0 30px}
 .kicker{
@@ -335,6 +343,7 @@ html{scroll-behavior:smooth}
 
 <header class="mast">
   <div class="wrap">
+    <a class="homelink" href="index.html">&larr; All criteria</a>
     <p class="kicker">MYP Design · Years 4 and 5 · Framework index</p>
     <h1>Which framework, for which criterion, and how to run it.</h1>
     <p class="lede">Every thinking tool from our problem-definition work, mapped to the strand it actually serves — plus PEEL and OPVL, borrowed from English and History, which do more work in Design than most people expect. Filter by criterion, or print the whole thing.</p>

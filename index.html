@@ -105,7 +105,7 @@ a.crit--dev:hover .devpre{color:var(--dev)}
 .st.live{background:var(--moss-tint);color:var(--moss)}
 .status{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--slate);margin-left:auto}
-.crit--soon .status{color:var(--amber)}
+.crit--soon .status{color:var(--d);font-weight:700}
 
 footer{margin-top:60px;padding:30px 0 60px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
@@ -286,48 +286,45 @@ body.wl-open{overflow:hidden}
 .crit--dev{--tone:var(--dev)}
 
 @media (hover:hover) and (prefers-reduced-motion: no-preference){
-  .crit{position:relative}
-
-  .grid:has(.crit:hover) .crit:not(:hover){
-    transform:scale(.95);
-    opacity:.72;
-  }
+  .crit{position:relative;will-change:transform}
 
   .crit,a.crit{
-    transition:transform .32s cubic-bezier(.22,.61,.36,1),box-shadow .32s ease,
-               background .32s ease,border-color .32s ease,opacity .32s ease;
+    transition:transform .38s cubic-bezier(.22,.61,.36,1),box-shadow .38s ease,
+               background .38s ease,border-color .38s ease,opacity .38s ease;
+  }
+
+  .grid:has(.crit:hover) .crit:not(:hover){
+    transform:scale(.93) !important;
+    opacity:.66;
   }
 
   .crit:hover,a.crit:hover{
-    background:var(--tone,var(--ink));
-    border-color:var(--tone,var(--ink));
-    transform:translateY(-7px) scale(1.045);
-    box-shadow:0 18px 38px rgba(20,48,60,.24);
+    background:linear-gradient(160deg,
+      color-mix(in srgb, var(--tone,var(--ink)) 26%, #fff),
+      color-mix(in srgb, var(--tone,var(--ink)) 10%, #fff)) !important;
+    border-color:var(--tone,var(--ink)) !important;
+    transform:translateY(-9px) scale(1.07) !important;
+    box-shadow:0 22px 44px rgba(20,48,60,.2) !important;
     z-index:2;
   }
 
-  .crit:hover h3,.crit:hover p,
-  .crit:hover .devname,.crit:hover .devpre{color:#fff !important}
-  .crit:hover .status{color:rgba(255,255,255,.78) !important}
-  .crit:hover .st{background:rgba(255,255,255,.18) !important;color:#fff !important}
-  .crit:hover .badge{background:#fff !important;color:var(--tone) !important}
   .crit--soon:hover{opacity:1}
 }
 
-/* ============ MASTHEAD GRID ============ */
-.mast{position:relative}
-.mast::before{
+/* ============ PAGE GRID ============ */
+body{position:relative}
+body::before{
   content:'';
   position:absolute;
-  inset:0;
+  top:0;left:0;right:0;bottom:0;
   z-index:-1;
   pointer-events:none;
   background-image:
     linear-gradient(to right, rgba(20,48,60,.06) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(20,48,60,.06) 1px, transparent 1px);
   background-size:26px 26px;
-  -webkit-mask-image:linear-gradient(to bottom, #000 0%, transparent 100%);
-  mask-image:linear-gradient(to bottom, #000 0%, transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom, #000 0, transparent 1300px);
+  mask-image:linear-gradient(to bottom, #000 0, transparent 1300px);
 }
 </style>
 </head>
