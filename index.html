@@ -314,27 +314,24 @@ body.wl-open{overflow:hidden}
   .crit--soon:hover{opacity:1}
 }
 
-/* ============ BACKGROUND PHOTO ============ */
-.bg-photo,.bg-tint{position:fixed;inset:0;z-index:-1;pointer-events:none}
-.bg-photo{
-  background:url('assets/hero.png') center/cover no-repeat;
-  opacity:.32;
+/* ============ MASTHEAD GRID ============ */
+.mast{position:relative}
+.mast::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-image:
+    linear-gradient(to right, rgba(20,48,60,.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20,48,60,.06) 1px, transparent 1px);
+  background-size:26px 26px;
+  -webkit-mask-image:linear-gradient(to bottom, #000 0%, transparent 100%);
+  mask-image:linear-gradient(to bottom, #000 0%, transparent 100%);
 }
-.bg-tint{
-  background:var(--ink);
-  opacity:.62;
-}
-
-/* masthead and footer sit directly on the photo now, not on --paper */
-.mast h1,.mast .sub{color:#fff}
-.mast .sub{opacity:.86}
-footer{color:rgba(255,255,255,.72);border-top-color:rgba(255,255,255,.18)}
 </style>
 </head>
 <body>
-
-<div class="bg-photo" aria-hidden="true"></div>
-<div class="bg-tint" aria-hidden="true"></div>
 
 <div class="wl" id="welcome" role="dialog" aria-modal="true" aria-labelledby="wlTitle" hidden>
   <div class="wl__card">
