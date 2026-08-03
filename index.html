@@ -326,6 +326,48 @@ body::before{
   -webkit-mask-image:linear-gradient(to bottom, #000 0, transparent 1300px);
   mask-image:linear-gradient(to bottom, #000 0, transparent 1300px);
 }
+
+/* ============ GRADE PICKER ============ */
+.gradepick{display:flex;gap:18px;flex-wrap:wrap;margin:4px 0 6px}
+.gradebtn{flex:1 1 220px;background:var(--card);border:1px solid var(--rule);
+  border-radius:16px;padding:32px 24px 26px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-family:inherit;position:relative;overflow:hidden}
+.gradebtn__n{font-family:var(--display);font-weight:700;font-size:42px;line-height:1;color:var(--slate)}
+.gradebtn h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0;color:var(--ink)}
+.gradebtn__status{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--slate);padding:5px 11px;background:var(--rule-soft);border-radius:99px}
+
+.gradebtn--soon{opacity:.55}
+
+.gradebtn--open{cursor:pointer;border:2px solid var(--amber);padding:31px 24px 25px}
+.gradebtn--open .gradebtn__n{color:var(--amber)}
+.gradebtn--open .gradebtn__status{background:var(--moss-tint);color:var(--moss)}
+.gradebtn--open::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(140deg,rgba(176,90,28,.09),rgba(176,90,28,0) 60%)}
+
+@media (hover:hover) and (prefers-reduced-motion: no-preference){
+  .gradebtn--open{transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s ease}
+  .gradebtn--open:hover{transform:translateY(-5px) scale(1.02);
+    box-shadow:0 16px 34px rgba(176,90,28,.18)}
+}
+@media (prefers-reduced-motion: no-preference){
+  .gradebtn--open{animation:gradePulse 2.6s ease-in-out 1.2s 2}
+  @keyframes gradePulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(176,90,28,0)}
+    50%{box-shadow:0 0 0 6px rgba(176,90,28,.13)}}
+}
+
+#critSec{transition:none}
+@media (prefers-reduced-motion: no-preference){
+  #critSec:not([hidden]){animation:panelIn .4s cubic-bezier(.22,.61,.36,1) both}
+}
+
+.backlink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;
+  padding:10px 18px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--rule-soft);color:var(--slate);margin-bottom:30px;transition:.15s}
+.backlink:hover{background:var(--card);border-color:var(--slate);color:var(--ink)}
 </style>
 </head>
 <body>
@@ -351,8 +393,38 @@ body::before{
   </div>
 </header>
 
-<section class="sec">
+<section class="sec" id="gradeSec">
   <div class="wrap">
+    <p class="eyebrow">Start here</p>
+    <h2>Choose your year group</h2>
+    <p class="sub">Content is organised by MYP year band. Only MYP 4&ndash;5 is published so far.</p>
+    <div class="gradepick">
+
+      <div class="gradebtn gradebtn--soon" aria-disabled="true">
+        <span class="gradebtn__n">1&ndash;2</span>
+        <h3>MYP 1 &amp; 2</h3>
+        <span class="gradebtn__status">Coming</span>
+      </div>
+
+      <div class="gradebtn gradebtn--soon" aria-disabled="true">
+        <span class="gradebtn__n">3</span>
+        <h3>MYP 3</h3>
+        <span class="gradebtn__status">Coming</span>
+      </div>
+
+      <button type="button" class="gradebtn gradebtn--open" id="gradeOpen45" aria-controls="critSec">
+        <span class="gradebtn__n">4&ndash;5</span>
+        <h3>MYP 4 &amp; 5</h3>
+        <span class="gradebtn__status">Open</span>
+      </button>
+
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="critSec" hidden>
+  <div class="wrap">
+    <button type="button" class="homelink backlink" id="backToGrades">&larr; Choose a different year group</button>
     <div class="grid">
 
       <a class="crit crit--a" href="myp4-5/criterion-a.html">
@@ -663,8 +735,36 @@ body::before{
     });
   })();
 
+
+  // --- grade picker: MYP 4-5 reveals the criteria grid ---
+  (function(){
+    var gradeSec = document.getElementById('gradeSec');
+    var critSec  = document.getElementById('critSec');
+    var open45   = document.getElementById('gradeOpen45');
+    var back     = document.getElementById('backToGrades');
+    if(!gradeSec || !critSec || !open45) return;
+
+    function showCrit(smooth){
+      gradeSec.hidden = true;
+      critSec.hidden = false;
+      if(window.__armReveal) window.__armReveal(critSec);
+      if(smooth) critSec.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    open45.addEventListener('click', function(){ showCrit(true); });
+
+    if(back) back.addEventListener('click', function(){
+      critSec.hidden = true;
+      gradeSec.hidden = false;
+      gradeSec.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+
+    // arriving from a strand page's "All criteria" link goes straight back to the grid
+    if(window.location.hash === '#myp4-5') showCrit(false);
+  })();
+
 })();
 </script>
 
 </body>
-</html>
+</html>
