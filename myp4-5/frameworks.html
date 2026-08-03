@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Framework Index — MYP Design Criteria A to D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C;
+  --paper:#EFF3F5;
+  --card:#FFFFFF;
+  --rule:#CBDCE2;
+  --rule-soft:#E3ECEF;
+  --slate:#516A74;
+  --amber:#B05A1C;
+
+  --a:#12707F;      --a-tint:#E1F1F3;
+  --b:#96700A;      --b-tint:#F8F0D9;
+  --c:#38722C;      --c-tint:#E7F1E3;
+  --d:#B23A2E;      --d-tint:#F8E8E6;
+  --x:#4B4A73;      --x-tint:#ECEBF4;
+
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+
+/* home link */
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+@media print{.homelink{display:none}}
+
+/* ---------- masthead ---------- */
+.mast{padding:54px 0 30px}
+.kicker{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--amber);margin:0 0 14px;
+}
+.mast h1{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(30px,5.4vw,54px);line-height:1.08;
+  letter-spacing:-.02em;margin:0;max-width:17ch;
+}
+.mast p.lede{
+  margin:20px 0 0;font-size:17px;color:var(--slate);max-width:62ch;
+}
+
+/* ---------- filter bar ---------- */
+.filters{
+  position:sticky;top:0;z-index:20;
+  background:rgba(239,243,245,.94);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--rule);
+  padding:12px 0;margin-bottom:8px;
+}
+.filters .wrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filt{
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:8px 14px;border:1px solid var(--rule);background:var(--card);
+  color:var(--slate);border-radius:7px;cursor:pointer;transition:.15s;
+}
+.filt:hover{border-color:var(--slate);color:var(--ink)}
+.filt.is-on{background:var(--ink);border-color:var(--ink);color:#fff}
+.filt__hint{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--slate);margin-left:auto;
+}
+
+/* ---------- criterion header ---------- */
+.crit{padding:52px 0 0}
+.crit__top{display:flex;gap:22px;align-items:flex-start;margin-bottom:8px}
+.crit__badge{
+  flex:0 0 auto;width:62px;height:62px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-weight:700;font-size:31px;color:#fff;
+}
+.crit__ttl h2{
+  font-family:var(--display);font-weight:600;
+  font-size:clamp(22px,3.2vw,32px);margin:0;letter-spacing:-.01em;
+}
+.crit__ttl p{margin:3px 0 0;font-size:14.5px;color:var(--slate)}
+.strands{
+  margin:18px 0 26px;padding:18px 22px;background:var(--card);
+  border:1px solid var(--rule);border-radius:12px;
+}
+.strands h3{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--slate);margin:0 0 12px;font-weight:500;
+}
+.strands ol{margin:0;padding-left:22px}
+.strands li{font-size:14.5px;padding:3px 0;color:var(--ink)}
+.strands li::marker{font-family:var(--mono);font-size:12px;color:var(--amber)}
+
+/* ---------- framework cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.fw{
+  background:var(--card);border:1px solid var(--rule);
+  border-left-width:4px;border-radius:12px;
+  padding:24px 26px 26px;position:relative;
+}
+.fw__head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.fw h3{
+  font-family:var(--display);font-weight:600;font-size:21px;
+  margin:0;letter-spacing:-.01em;
+}
+.tag{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;padding:4px 8px;border-radius:7px;white-space:nowrap;
+}
+.tag--borrow{background:var(--x-tint);color:var(--x)}
+.tag--time{background:var(--rule-soft);color:var(--slate);margin-left:auto}
+.fw__what{margin:0 0 18px;font-size:14.5px;color:var(--slate)}
+.fw__block{margin-bottom:16px}
+.fw__block:last-child{margin-bottom:0}
+.fw__lbl{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;margin:0 0 7px;font-weight:500;
+}
+.fw__block p{margin:0;font-size:14.5px}
+.fw__block ol{margin:0;padding-left:19px}
+.fw__block ol li{font-size:14.5px;padding:3px 0}
+.fw__block ol li::marker{font-family:var(--mono);font-size:11.5px}
+.strandsrc{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--rule-soft);
+  font-size:13px;color:var(--slate)}
+.strandsrc a{text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
+.strandsrc a:hover{text-decoration-color:var(--amber)}
+.fw__src{margin-top:18px;padding-top:15px;border-top:1px solid var(--rule-soft)}
+.fw__src a{display:block;font-size:13.5px;padding:3px 0;line-height:1.45;
+  text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
+.fw__src a:hover{text-decoration-color:var(--amber)}
+.srcnote{margin:6px 0 0 !important;font-size:13px !important;color:var(--slate);font-style:italic;line-height:1.5}
+.strandref{
+  font-family:var(--mono);font-size:11px;
+  padding:2px 6px;border-radius:7px;white-space:nowrap;
+}
+
+/* criterion colour binding */
+[data-crit="a"] .crit__badge,[data-crit="a"] .fw{border-left-color:var(--a)}
+[data-crit="a"] .crit__badge{background:var(--a)}
+[data-crit="a"] .fw__lbl,[data-crit="a"] .fw__block ol li::marker{color:var(--a)}
+[data-crit="a"] .strandref{background:var(--a-tint);color:var(--a)}
+[data-crit="b"] .crit__badge,[data-crit="b"] .fw{border-left-color:var(--b)}
+[data-crit="b"] .crit__badge{background:var(--b)}
+[data-crit="b"] .fw__lbl,[data-crit="b"] .fw__block ol li::marker{color:var(--b)}
+[data-crit="b"] .strandref{background:var(--b-tint);color:var(--b)}
+[data-crit="c"] .crit__badge,[data-crit="c"] .fw{border-left-color:var(--c)}
+[data-crit="c"] .crit__badge{background:var(--c)}
+[data-crit="c"] .fw__lbl,[data-crit="c"] .fw__block ol li::marker{color:var(--c)}
+[data-crit="c"] .strandref{background:var(--c-tint);color:var(--c)}
+[data-crit="d"] .crit__badge,[data-crit="d"] .fw{border-left-color:var(--d)}
+[data-crit="d"] .crit__badge{background:var(--d)}
+[data-crit="d"] .fw__lbl,[data-crit="d"] .fw__block ol li::marker{color:var(--d)}
+[data-crit="d"] .strandref{background:var(--d-tint);color:var(--d)}
+[data-crit="x"] .crit__badge,[data-crit="x"] .fw{border-left-color:var(--x)}
+[data-crit="x"] .crit__badge{background:var(--x);font-size:15px;letter-spacing:.08em}
+[data-crit="x"] .fw__lbl,[data-crit="x"] .fw__block ol li::marker{color:var(--x)}
+[data-crit="x"] .strandref{background:var(--x-tint);color:var(--x)}
+
+/* ---------- matrix ---------- */
+.matrix{margin-top:26px;background:var(--card);border:1px solid var(--rule);border-radius:12px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:620px}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--rule-soft);font-size:14.5px}
+thead th{
+  background:var(--ink);color:#fff;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+}
+tbody tr:last-child td{border-bottom:0}
+td.mk{text-align:center;font-family:var(--mono);font-size:15px}
+.dot{color:var(--rule)}
+.dot--a{color:var(--a)}.dot--b{color:var(--b)}.dot--c{color:var(--c)}.dot--d{color:var(--d)}
+th.n{text-align:center;width:70px}
+
+/* ---------- closing note ---------- */
+.note{
+  background:var(--ink);color:#D7E5EA;border-radius:12px;
+  padding:34px 32px;margin:46px 0 0;
+}
+.note h3{font-family:var(--display);color:#fff;font-weight:600;font-size:22px;margin:0 0 16px}
+.note p{margin:0 0 12px;font-size:15px;max-width:78ch}
+.note p:last-child{margin-bottom:0}
+.note strong{color:#fff;font-weight:600}
+
+footer{
+  margin-top:56px;padding:34px 0 60px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:7px}
+
+@media (max-width:900px){
+  .cards{grid-template-columns:1fr}
+  .crit__badge{width:50px;height:50px;font-size:25px}
+  .tag--time{margin-left:0}
+}
+@media print{
+  body{background:#fff}
+  .filters{display:none}
+  [hidden]{display:block !important}
+  .crit{padding-top:26px;break-inside:avoid}
+  .fw{break-inside:avoid}
+  .note{background:#fff;color:var(--ink);border:1px solid var(--rule)}
+  .note h3,.note strong{color:var(--ink)}
+  thead th{background:#fff;color:var(--ink);border-bottom:2px solid var(--ink)}
+}
+
+/* ============ MOTION ============ */
+html{scroll-behavior:smooth}
+
+@media (prefers-reduced-motion: no-preference){
+
+  /* scroll reveal - only armed once JS confirms support */
+  .js-anim .reveal{opacity:0;transform:translateY(12px);
+    transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1);
+    transition-delay:var(--d,0ms)}
+  .js-anim .reveal.in{opacity:1;transform:none}
+
+  /* masthead on load */
+  .mast .eyebrow,.mast h1,.mast .sub,.mast .facts,.mast .ctbox,.homelink{
+    animation:riseIn .55s cubic-bezier(.22,.61,.36,1) both}
+  .homelink{animation-delay:.02s}
+  .mast .eyebrow{animation-delay:.06s}
+  .mast h1{animation-delay:.12s}
+  .mast .sub{animation-delay:.2s}
+  .mast .ctbox,.mast .facts{animation-delay:.28s}
+  @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  /* strand panel cross-fade */
+  [data-panel]:not([hidden]){animation:panelIn .38s cubic-bezier(.22,.61,.36,1) both}
+  @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* dropdown + section open */
+  details[open] > .doc,
+  details[open] > .fwlist,
+  details[open] > .pdfbox,
+  details[open] > .ctgrid,
+  .sec.open > .wrap > .secbody{animation:openIn .34s cubic-bezier(.22,.61,.36,1) both}
+  @keyframes openIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
+
+  /* summary chevrons and toggles */
+  .docwrap > summary::before,.fwgroup > summary::before,
+  .ctall summary::before,.sechead::after{transition:background .2s,color .2s,border-color .2s}
+  .docwrap > summary:hover::before,.fwgroup > summary:hover::before,
+  .sechead:hover::after{background:var(--amber);color:#fff;border-color:var(--amber)}
+
+  /* interactive lift */
+  .step,.fwc,.trap,.band,.clgroup{transition:box-shadow .25s ease,border-color .25s ease}
+  .step:hover,.fwc:hover,.trap:hover{box-shadow:0 3px 16px rgba(20,48,60,.06)}
+
+  .tab{transition:background .2s ease,color .2s ease,border-color .2s ease}
+  .ck{transition:background .18s ease}
+  .ck:hover{background:var(--paper)}
+  .ck input{transition:transform .15s ease}
+  .ck input:active{transform:scale(.88)}
+  .ck span{transition:color .25s ease,text-decoration-color .25s ease}
+
+  .jump button{transition:background .18s ease,color .18s ease,border-color .18s ease}
+  .homelink{transition:border-color .2s ease,color .2s ease,transform .2s ease}
+  .homelink:hover{transform:translateX(-2px)}
+
+  .pri,.spill,.pill,.st,.chip{transition:transform .18s ease}
+  .fwc:hover .pill{transform:translateY(-1px)}
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .js-anim .reveal{opacity:1;transform:none}
+}
+
+/* ============ FLIP TILES ============ */
+.ctiles{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 4px}
+.ctile{flex:1 1 200px;min-width:170px;padding:0;border:0;background:none;
+  cursor:pointer;perspective:1000px;font-family:inherit;text-align:left}
+.ctile__inner{display:grid;position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.4,1)}
+.ctile.flipped .ctile__inner{transform:rotateY(180deg)}
+.ctile__face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;
+  border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column;
+  justify-content:center;min-height:132px}
+.ctile__front{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--amber);
+  transition:border-color .25s ease,box-shadow .25s ease}
+.ctile:hover .ctile__front{border-color:var(--amber);box-shadow:0 4px 16px rgba(20,48,60,.09)}
+.ctile__back{background:var(--ink);color:#E4EEF1;transform:rotateY(180deg);
+  border:1px solid var(--ink)}
+.ctile__band{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--slate);
+  margin:0 0 8px}
+.ctile__term{font-family:var(--display);font-size:23px;font-weight:600;color:var(--amber);
+  line-height:1.1;margin:0}
+.ctile__hint{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--slate);margin:12px 0 0;opacity:.75}
+.ctile__def{font-size:13.5px;line-height:1.5;margin:0}
+.ctile__back .ctile__band{color:var(--amber);margin-bottom:9px}
+
+/* ============ HOVER LIFT ============ */
+@media (hover:hover) and (prefers-reduced-motion: no-preference){
+  .step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.crit,.pbox,.flip__side,.term{
+    transition:transform .22s cubic-bezier(.22,.61,.36,1),border-color .22s ease,box-shadow .22s ease}
+  .step:hover,.fwc:hover,.trap:hover,.band:hover,.clgroup:hover,.asp:hover,
+  .mm__branch:hover,.pbox:hover,.flip__side:hover{
+    transform:translateY(-3px) scale(1.006);border-color:var(--amber)}
+  a.crit:hover{transform:translateY(-3px) scale(1.008)}
+  .jump button:hover,.tab:hover,.rst:hover,.homelink:hover{transform:translateY(-1px)}
+  .pri,.pill,.spill,.st,.sq,.chip{transition:transform .18s ease,filter .18s ease}
+  .step:hover .step__n,.fwc:hover .pill,.band:hover .sq{transform:translateY(-1px)}
+  .mm__col li,.step li,.fwc ol li{transition:color .18s ease}
+  .step li:hover,.fwc ol li:hover,.mm__col li:hover{color:var(--amber)}
+  .totop:hover{transform:translateY(-2px) scale(1.05)}
+}
+
+/* ============ TAP TINT ============ */
+.tapfx{transition:background-image .35s ease,border-color .35s ease,box-shadow .35s ease}
+.tapfx[data-clicks="1"]{background-image:linear-gradient(160deg,rgba(176,90,28,.035),rgba(176,90,28,.075))}
+.tapfx[data-clicks="2"]{background-image:linear-gradient(160deg,rgba(176,90,28,.065),rgba(176,90,28,.13))}
+.tapfx[data-clicks="3"]{background-image:linear-gradient(160deg,rgba(176,90,28,.10),rgba(176,90,28,.19))}
+.tapfx[data-clicks="4"]{background-image:linear-gradient(160deg,rgba(176,90,28,.14),rgba(176,90,28,.25))}
+.tapfx[data-clicks="5"]{background-image:linear-gradient(160deg,rgba(176,90,28,.185),rgba(176,90,28,.31));
+  border-color:var(--amber);box-shadow:0 0 0 1px rgba(176,90,28,.25)}
+@media (prefers-reduced-motion: no-preference){
+  .tapfx:active{transform:scale(.995)}
+}
+
+@media (max-width:760px){
+  .ctile{flex:1 1 100%;min-width:0}
+  .ctile__face{min-height:0;padding:15px 16px}
+  .ctile__term{font-size:21px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="../index.html">&larr; All criteria</a>
+    <p class="kicker">MYP Design · Years 4 and 5 · Framework index</p>
+    <h1>Which framework, for which criterion, and how to run it.</h1>
+    <p class="lede">Every thinking tool from our problem-definition work, mapped to the strand it actually serves — plus PEEL and OPVL, borrowed from English and History, which do more work in Design than most people expect. Filter by criterion, or print the whole thing.</p>
+  </div>
+</header>
+
+<nav class="filters" aria-label="Filter by criterion">
+  <div class="wrap">
+    <button class="filt is-on" data-f="all" aria-pressed="true">All</button>
+    <button class="filt" data-f="x" aria-pressed="false">Cross-cutting</button>
+    <button class="filt" data-f="a" aria-pressed="false">A · Inquiring</button>
+    <button class="filt" data-f="b" aria-pressed="false">B · Developing</button>
+    <button class="filt" data-f="c" aria-pressed="false">C · Creating</button>
+    <button class="filt" data-f="d" aria-pressed="false">D · Evaluating</button>
+    <span class="filt__hint">31 frameworks</span>
+  </div>
+</nav>
+
+<!-- ================= CROSS-CUTTING ================= -->
+<section class="crit" data-crit="x">
+  <div class="wrap">
+    <div class="crit__top">
+      <div class="crit__badge">A–D</div>
+      <div class="crit__ttl">
+        <h2>Works across all four criteria</h2>
+        <p>Two borrowed frameworks that carry the writing and the judgement everywhere in the cycle.</p>
+      </div>
+    </div>
+
+    <div class="cards">
+
+      <article class="fw">
+        <div class="fw__head">
+          <h3>PEEL</h3>
+          <span class="tag tag--borrow">From English</span>
+          <span class="tag tag--time">Every paragraph</span>
+        </div>
+        <p class="fw__what">Point · Evidence · Explain · Link. A paragraph structure that forces a claim to be supported and then connected to something that matters.</p>
+        <div class="fw__block">
+          <p class="fw__lbl">Why it helps</p>
+          <p>Design command terms are <em>justify</em>, <em>analyse</em> and <em>critically evaluate</em> — all of which mean "make a claim and prove it". Most students lose marks not because they lack evidence, but because the evidence sits in a different paragraph from the claim. PEEL welds them together. <span class="strandref">A i</span> <span class="strandref">A iv</span> <span class="strandref">B iii</span> <span class="strandref">C iv</span> <span class="strandref">D ii</span></p>
+        </div>
+        <div class="fw__block">
+          <p class="fw__lbl">How to apply</p>
+          <ol>
+            <li><b>Point</b> — one sentence stating the judgement. "The refill point location is the main barrier."</li>
+            <li><b>Evidence</b> — the number, quote or test result, with its source. "My three-day tally showed 14 of 30 students gave up."</li>
+            <li><b>Explain</b> — why that evidence supports the point, not just a restatement. "Because the queue never formed, distance rather than demand is the constraint."</li>
+            <li><b>Link</b> — back to the user, the specification point, or the next decision.</li>
+          </ol>
+        </div>
+        <div class="fw__block">
+          <p class="fw__lbl">Design-specific rule</p>
+          <p>In Criteria B, C and D the <b>L</b> must link to a numbered specification point. That single rule turns loose reflection into assessable evaluation.</p>
+        </div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://libguides.cwc.edu/college_writing/paragraph_construction_peel" target="_blank" rel="noopener">Central Wyoming College — PEEL paragraph construction</a>
+          <a href="https://libraryguides.sunderland.ac.uk/academic-writing/paragraphs" target="_blank" rel="noopener">University of Sunderland — structuring paragraphs</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head">
+          <h3>OPVL</h3>
+          <span class="tag tag--borrow">From IB History</span>
+          <span class="tag tag--time">8 min per source</span>
+        </div>
+        <p class="fw__what">Origin · Purpose · Value · Limitation. A source-evaluation tool that judges evidence by where it came from and why it was made.</p>
+        <div class="fw__block">
+          <p class="fw__lbl">Why it helps</p>
+          <p>Design students collect sources but rarely weigh them. OPVL gives them the vocabulary to say <em>why</em> a vendor whitepaper is weaker than a government dataset — which is exactly the analytical move that separates listing research from analysing it. It also transfers to Criterion D, where students must judge their own test data. <span class="strandref">A ii</span> <span class="strandref">A iii</span> <span class="strandref">D i</span> <span class="strandref">D ii</span></p>
+        </div>
+        <div class="fw__block">
+          <p class="fw__lbl">How to apply</p>
+          <ol>
+            <li><b>Origin</b> — who produced it, when, and what kind of document is it?</li>
+            <li><b>Purpose</b> — why was it made, and who was meant to read it?</li>
+            <li><b>Value</b> — what does the origin and purpose let this source tell me reliably?</li>
+            <li><b>Limitation</b> — what can it <em>not</em> tell me, for exactly the same reasons?</li>
+          </ol>
+        </div>
+        <div class="fw__block">
+          <p class="fw__lbl">The move most students miss</p>
+          <p>Value and limitation must both come <em>from</em> origin and purpose. "It is old" is not a limitation until you say why the date matters to this question. And point OPVL at their own survey too — their data also has an origin, a purpose and therefore a limitation.</p>
+        </div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://keystoneacademy-cn.libguides.com/opvl" target="_blank" rel="noopener">Keystone Academy Library — what is OPVL</a>
+          <a href="https://branksome-asia.libguides.com/c.php?g=938848&p=7027932" target="_blank" rel="noopener">Branksome Hall Asia — source evaluation for MYP</a>
+          </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CRITERION A ================= -->
+<section class="crit" data-crit="a">
+  <div class="wrap">
+    <div class="crit__top">
+      <div class="crit__badge">A</div>
+      <div class="crit__ttl">
+        <h2>Inquiring and analysing</h2>
+        <p>Establishing that the problem is real, understood and worth solving.</p>
+      </div>
+    </div>
+
+    <div class="strands">
+      <h3>Year 5 strands</h3>
+      <ol>
+        <li>Explain and justify the need for a solution to a problem for a specified client or target audience.</li>
+        <li>Identify and prioritize the primary and secondary research needed to develop a solution.</li>
+        <li>Analyse a range of existing products that inspire a solution to the problem.</li>
+        <li>Develop a detailed design brief which summarizes the analysis of relevant research.</li>
+      </ol>
+      <p class="strandsrc">Strand wording and level descriptors: <a href="https://design.unishanoi.org/design-cycle/a-inquiring-analysing" target="_blank" rel="noopener">UNIS Hanoi MYP Design</a> · <a href="https://www.myp-design.com/home/w/inquiring-analysing" target="_blank" rel="noopener">myp-design.com</a> · <a href="https://www.vistathink.com/myp-design-criterion-a-inquiring-and-analyzing/" target="_blank" rel="noopener">VistaThink</a></p>
+    </div>
+
+    <div class="cards">
+
+      <article class="fw">
+        <div class="fw__head"><h3>Problem hypothesis frame</h3><span class="tag tag--time">10 min</span></div>
+        <p class="fw__what">Rewrites an assumed problem as a testable claim with a named user, a suspected cause and a falsifier.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i asks students to <em>justify</em> a need, not assert one. A claim written so it could be proved wrong is the only kind that can be justified with evidence. <span class="strandref">A i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Write: "I believe [user] struggle to [do what] when [situation], because [cause]."</li>
+          <li>Add: "I am basing this on [what I have seen]."</li>
+          <li>Add the falsifier: "If I am wrong, I would see [observation]."</li>
+          <li>Check for smuggled solutions — if "app", "device" or "better" appears, rewrite.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://modelthinkers.com/mental-model/riskiest-assumption-test" target="_blank" rel="noopener">ModelThinkers — riskiest assumption test</a>
+          <p class="srcnote">The frame itself was written for this unit. The underlying idea — test the belief most likely to be wrong — comes from the source above.</p>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>W³D organiser</h3><span class="tag tag--time">1 lesson</span></div>
+        <p class="fw__what">Who · Why · Where · Data. Four topics, three points each, converging on one problem statement.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Gathers everything strand i needs — client, cause, context and evidence — into one page a moderator can read at a glance. The three-point limit forces decisions rather than lists. <span class="strandref">A i</span> <span class="strandref">A iv</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Name three users: primary, secondary and the decision maker.</li>
+          <li>Name three causes, each one testable.</li>
+          <li>Name three physical places you could go and watch.</li>
+          <li>Add three data points, each carrying a source number. Fill this box last.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <p class="srcnote">Written for this unit. It borrows the fish shape from Ishikawa but is a problem-definition organiser, not a cause analysis. See the fishbone entry for the original.</p>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Assumption dump and risk grid</h3><span class="tag tag--time">12 min</span></div>
+        <p class="fw__what">Lists every unverified belief inside the problem statement, then plots them on impact against evidence held.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand ii is assessed on <em>prioritizing</em> research, not listing it. The grid produces that priority order from the students' own reasoning rather than from guesswork. <span class="strandref">A ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Underline every noun and verb you have not verified.</li>
+          <li>Turn each into a sticky note.</li>
+          <li>Plot on two axes: impact if wrong, and evidence you already hold.</li>
+          <li>Circle the top two in the high-impact, low-evidence corner. Only those get researched this week.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://www.uxpin.com/studio/blog/assumptions-mapping/" target="_blank" rel="noopener">UXPin — assumptions mapping</a>
+          <a href="https://modelthinkers.com/mental-model/riskiest-assumption-test" target="_blank" rel="noopener">ModelThinkers — riskiest assumption test</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Five Whys</h3><span class="tag tag--time">15 min</span></div>
+        <p class="fw__what">Asks "why" repeatedly to travel from a visible symptom to an underlying cause.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Students almost always name a symptom on day one. Designing for a symptom produces a solution that treats nothing, which then fails in Criterion D. <span class="strandref">A i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Write the symptom at the top.</li>
+          <li>Ask why, five times, each answer feeding the next question.</li>
+          <li>Stop when the next why leaves the student's control.</li>
+          <li>Any why you cannot evidence becomes a research question for strand ii.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://asq.org/quality-resources/quality-tools" target="_blank" rel="noopener">ASQ — quality tools index</a>
+          <a href="https://www.visual-paradigm.com/project-management/fishbone-diagram-and-5-whys/" target="_blank" rel="noopener">Visual Paradigm — fishbone combined with Five Whys</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Fishbone (Ishikawa)</h3><span class="tag tag--time">20 min</span></div>
+        <p class="fw__what">Six categories — People, Process, Place, Tools, Time, Rules — each holding three possible causes.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Five Whys goes deep on one path; the fishbone goes wide first, so students do not commit to the first cause they think of. Use it before Five Whys, not instead. <span class="strandref">A i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Write the problem in the fish head.</li>
+          <li>Fill three causes per bone — the quota forces breadth.</li>
+          <li>Mark which bones you have evidence for and which are guesses.</li>
+          <li>Pick one or two likely bones and run Five Whys down them.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://asq.org/quality-resources/fishbone" target="_blank" rel="noopener">ASQ — fishbone / Ishikawa / cause-and-effect diagram</a>
+          <a href="https://asq.org/quality-resources/seven-basic-quality-tools" target="_blank" rel="noopener">ASQ — seven basic quality tools</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Problem tree</h3><span class="tag tag--time">15 min</span></div>
+        <p class="fw__what">Roots are causes, the trunk is the core problem, branches are effects.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Shows students visually whether they picked a branch or the trunk. Designing for a branch treats a symptom; designing for a root removes the problem. <span class="strandref">A i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Write the current problem statement on the trunk.</li>
+          <li>Add effects above — what goes wrong because of it.</li>
+          <li>Add causes below — what makes it happen.</li>
+          <li>Ask: is my trunk actually somebody else's branch? If so, move down.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://www.toolshero.com/problem-solving/problem-tree-analysis/" target="_blank" rel="noopener">Toolshero — problem tree analysis, step by step</a>
+          <a href="https://mspguide.org/2022/03/18/problem-tree/" target="_blank" rel="noopener">MSP Guide — problem tree as a facilitated workshop</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Scale ladder</h3><span class="tag tag--time">1 lesson</span></div>
+        <p class="fw__what">Six rungs from personal anecdote up to global data, checking where the evidence still holds.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Turns "is this a real problem?" into a researchable question with a defined search order, and produces the secondary research strand ii demands. <span class="strandref">A ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Rungs: me → school → city → country → comparable countries → global.</li>
+          <li>Search each rung in order, recording what you find or defending the blank.</li>
+          <li>Name the highest rung with genuine evidence.</li>
+          <li>Decide the verdict: same cause globally, different cause, or local only.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://ourworldindata.org/sdgs" target="_blank" rel="noopener">Our World in Data — SDG indicators</a>
+          <a href="https://www.data.gov.in/" target="_blank" rel="noopener">data.gov.in — Indian government open datasets</a>
+          <a href="https://data.worldbank.org/" target="_blank" rel="noopener">World Bank Open Data</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>SCALE checklist</h3><span class="tag tag--time">Ongoing</span></div>
+        <p class="fw__what">Say it in the field's words · Climb the ladder · Assess each source · Link it to us · End with a verdict.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>The whole secondary-research process as a tick-list with an exit gate, so students can self-check before submitting rather than discovering gaps at moderation. <span class="strandref">A ii</span> <span class="strandref">A iv</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Translate everyday phrasing into the formal term researchers use.</li>
+          <li>Work the ladder rung by rung, including searching for existing solutions.</li>
+          <li>Complete a source card for every find — no card, no citation.</li>
+          <li>Answer for each: same problem, same cause, same audience?</li>
+          <li>State a verdict and say what it changes about the design.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <p class="srcnote">Written for this unit as a wrapper around the tools below it. The steps draw on the search and source-evaluation resources listed elsewhere on this page.</p>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Source card and the rule of three</h3><span class="tag tag--time">5 min per source</span></div>
+        <p class="fw__what">Six fields per source, and no claim admitted unless three independent kinds of evidence support it.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>One source is an anecdote; two of the same kind repeat one blind spot. Three different kinds cannot all be wrong in the same direction — which is what "justify" means in the descriptor. Pairs directly with OPVL. <span class="strandref">A ii</span> <span class="strandref">A iv</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Card fields: where from, when, who it studied, what it says, same as us, why I trust it.</li>
+          <li>Collect one number, one voice and one observation for every claim.</li>
+          <li>Reject anything over five years old unless you can defend it.</li>
+          <li>Run OPVL on the two most important sources.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://branksome-asia.libguides.com/c.php?g=938848&p=7027932" target="_blank" rel="noopener">Branksome Hall Asia — source evaluation for MYP</a>
+          <p class="srcnote">Pair the card with OPVL. The card records what a source says; OPVL judges how far to trust it.</p>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>ACCESS FM</h3><span class="tag tag--borrow">From D&amp;T</span><span class="tag tag--time">20 min</span></div>
+        <p class="fw__what">Aesthetics, Cost, Customer, Environment, Size, Safety, Function, Materials — a fixed lens for taking a product apart.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii asks students to <em>analyse</em> existing products, but without a lens they describe instead. Eight headings force analysis in eight directions and carry straight into the Criterion B specification. <span class="strandref">A iii</span> <span class="strandref">B i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Pick three existing products that solve a similar problem.</li>
+          <li>Write one analytical sentence per heading — not a description, a judgement.</li>
+          <li>End each product with: what should I steal, and what should I avoid?</li>
+          <li>Carry the answers forward as specification points.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://medium.com/@dgeoghegan/what-is-access-fm-a60c0a5feb7b" target="_blank" rel="noopener">What is ACCESS FM — explainer</a>
+          <p class="srcnote">ACCESS FM is a long-standing D&T teaching convention rather than a framework with one owning body, so no single authoritative source exists. Letters vary slightly between schools — agree your version with the department.</p>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>DVF lens</h3><span class="tag tag--time">5 min</span></div>
+        <p class="fw__what">Desirable, feasible, viable — a fast triage before committing a week of research.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Catches problems that are really preferences, and ideas that cannot be built in the time available, before they consume the unit. <span class="strandref">A i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Desirable — does anyone other than me feel this?</li>
+          <li>Feasible — could a solution be made with our tools and time?</li>
+          <li>Viable — is it worth solving, and why has nobody fixed it already?</li>
+          <li>Any fail sends the problem back to the hypothesis stage.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://www.uxpin.com/studio/blog/assumptions-mapping/" target="_blank" rel="noopener">UXPin — assumptions mapping and the DVF lens</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Minimum viable test</h3><span class="tag tag--time">Under 1 hour</span></div>
+        <p class="fw__what">The simplest, fastest evidence-gathering that could change your mind about the riskiest assumption.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Produces genuine primary research inside a school timetable, and keeps strand ii research plans realistic rather than aspirational. <span class="strandref">A ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Choose two options: tally observation, three six-minute interviews, a five-question form, shadowing one user, existing records, or one secondary statistic.</li>
+          <li>Ask "tell me about the last time", never "would you use".</li>
+          <li>Finish before the next lesson — if you cannot, it is the wrong test.</li>
+          <li>Bring raw data, not conclusions.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://modelthinkers.com/mental-model/riskiest-assumption-test" target="_blank" rel="noopener">ModelThinkers — riskiest assumption test</a>
+          <a href="https://www.heyjoyful.com/innovation-insights/assumption-testing/" target="_blank" rel="noopener">Hey Joyful — assumption testing in three phases</a>
+          </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CRITERION B ================= -->
+<section class="crit" data-crit="b">
+  <div class="wrap">
+    <div class="crit__top">
+      <div class="crit__badge">B</div>
+      <div class="crit__ttl">
+        <h2>Developing ideas</h2>
+        <p>Turning research into a specification, a spread of ideas, and one justified choice.</p>
+      </div>
+    </div>
+
+    <div class="strands">
+      <h3>Year 5 strands</h3>
+      <ol>
+        <li>Develop design specifications which clearly state the success criteria for the design of a solution.</li>
+        <li>Develop a range of feasible design ideas which can be correctly interpreted by others.</li>
+        <li>Present the final chosen design and justify its selection.</li>
+        <li>Develop accurate and detailed planning drawings or diagrams and outline the requirements for creation.</li>
+      </ol>
+      <p class="strandsrc">Strand wording and level descriptors: <a href="https://www.vistathink.com/myp-design-criterion-b-developing-ideas/" target="_blank" rel="noopener">VistaThink Criterion B</a> · <a href="https://resources.finalsite.net/images/v1747751609/washoeschoolsnet/ifxjtt76sqhvjpcphfhl/myp-design-rubric.pdf" target="_blank" rel="noopener">IB MYP Design rubric, Year 5 (PDF)</a></p>
+    </div>
+
+    <div class="cards">
+
+      <article class="fw">
+        <div class="fw__head"><h3>Testable specification writing</h3><span class="tag tag--time">1 lesson</span></div>
+        <p class="fw__what">Every specification point written so it can be measured, with the test named alongside it.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i is the hinge of the whole cycle: Criterion D evaluates against these points. A specification that cannot be tested makes a good Criterion D impossible. <span class="strandref">B i</span> <span class="strandref">D ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Use "shall", not "should" — it forces commitment and specificity.</li>
+          <li>Attach a number or an observable outcome to every point.</li>
+          <li>Write the test method in the next column at the same time.</li>
+          <li>Trace each point back to a research finding from Criterion A.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://www.vistathink.com/myp-design-criterion-b-developing-ideas/" target="_blank" rel="noopener">VistaThink — MYP Design Criterion B</a>
+          <a href="https://resources.finalsite.net/images/v1747751609/washoeschoolsnet/ifxjtt76sqhvjpcphfhl/myp-design-rubric.pdf" target="_blank" rel="noopener">IB MYP Design rubric, Year 5</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>MoSCoW prioritisation</h3><span class="tag tag--time">10 min</span></div>
+        <p class="fw__what">Must have, Should have, Could have, Won't have this time.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Stops the flat specification list where twenty points all appear equally important. Priority makes the Criterion D evaluation meaningful, because failing a "could" is not the same as failing a "must". <span class="strandref">B i</span> <span class="strandref">D ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Sort every specification point into the four buckets.</li>
+          <li>Cap the "musts" — if everything is a must, nothing is.</li>
+          <li>Record the "won't" list too; it shows deliberate scoping.</li>
+          <li>Evaluate musts first in Criterion D.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://www.agilebusiness.org/resource/what-is-moscow-prioritization/" target="_blank" rel="noopener">Agile Business Consortium — what is MoSCoW prioritisation</a>
+          <a href="https://www.agilebusiness.org/dsdm-project-framework/moscow-prioritisation.html" target="_blank" rel="noopener">Agile Business Consortium — MoSCoW in the DSDM handbook</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Crazy 8s</h3><span class="tag tag--time">8 min</span></div>
+        <p class="fw__what">Eight sketched ideas in eight minutes, one per folded panel.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand ii asks for a <em>range</em> of feasible ideas. Time pressure defeats the student who draws one polished idea and calls it done. <span class="strandref">B ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Fold A3 into eight panels; one minute per panel, no erasing.</li>
+          <li>Sketch only — words are labels, not substitutes.</li>
+          <li>Annotate afterwards so others can interpret them, as the strand requires.</li>
+          <li>Circle the three most different, not the three best.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://designsprintkit.withgoogle.com/methodology/phase3-sketch/crazy-8s" target="_blank" rel="noopener">Google Design Sprint Kit — Crazy 8s</a>
+          <a href="https://www.nngroup.com/articles/facilitating-design-studio-workshop/" target="_blank" rel="noopener">NN/g — facilitating a design studio workshop</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>SCAMPER</h3><span class="tag tag--time">20 min</span></div>
+        <p class="fw__what">Substitute, Combine, Adapt, Modify, Put to other use, Eliminate, Reverse.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Gives students a way to generate variety on demand rather than waiting for inspiration, and it works directly on the products analysed in strand A iii. <span class="strandref">B ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Start from an existing product you analysed with ACCESS FM.</li>
+          <li>Apply each of the seven prompts in turn, one idea minimum each.</li>
+          <li>Keep the absurd ones — they often unlock a workable variant.</li>
+          <li>Filter for feasibility afterwards, never during.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://ixdf.org/literature/topics/scamper" target="_blank" rel="noopener">Interaction Design Foundation — what is SCAMPER</a>
+          <a href="https://public-media.interaction-design.org/pdf/SCAMPER.pdf" target="_blank" rel="noopener">IxDF — SCAMPER handout (PDF)</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Weighted decision matrix</h3><span class="tag tag--time">20 min</span></div>
+        <p class="fw__what">Score each idea against weighted specification points to produce a defensible ranking.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii requires students to <em>justify</em> the selection. "I liked it best" is not justification; a matrix tied to the specification is. <span class="strandref">B iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Rows are ideas, columns are the "must" specification points.</li>
+          <li>Weight each column 1–3 by importance to the user.</li>
+          <li>Score, multiply, total — then write a PEEL paragraph explaining the winner.</li>
+          <li>If the matrix picks an idea you dislike, say so and explain why. That is analysis.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://asq.org/quality-resources/decision-matrix" target="_blank" rel="noopener">ASQ — decision matrix</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Planning drawing conventions</h3><span class="tag tag--time">1–2 lessons</span></div>
+        <p class="fw__what">Dimensioned orthographic views, exploded diagrams, or wireframes and storyboards for digital solutions.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iv is assessed on accuracy and sufficiency for someone else to build from. The test is literal: hand it to a peer and see whether they could make it. <span class="strandref">B iv</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Physical products: dimensioned views plus an exploded assembly.</li>
+          <li>Digital products: navigation map, wireframes, or a storyboard.</li>
+          <li>Add a requirements list — materials, tools, components, quantities.</li>
+          <li>Peer test: can they list what to buy and the first three steps?</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://resources.finalsite.net/images/v1747751609/washoeschoolsnet/ifxjtt76sqhvjpcphfhl/myp-design-rubric.pdf" target="_blank" rel="noopener">IB MYP Design rubric, Year 5 — includes digital planning examples</a>
+          <a href="https://www.vistathink.com/myp-design-criterion-b-developing-ideas/" target="_blank" rel="noopener">VistaThink — MYP Design Criterion B</a>
+          </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CRITERION C ================= -->
+<section class="crit" data-crit="c">
+  <div class="wrap">
+    <div class="crit__top">
+      <div class="crit__badge">C</div>
+      <div class="crit__ttl">
+        <h2>Creating the solution</h2>
+        <p>Planning the making, doing it well, and accounting honestly for what changed.</p>
+      </div>
+    </div>
+
+    <div class="strands">
+      <h3>Year 5 strands</h3>
+      <ol>
+        <li>Construct a logical plan which describes the efficient use of time and resources, sufficient for peers to follow.</li>
+        <li>Demonstrate excellent technical skills when making the solution.</li>
+        <li>Follow the plan to create the solution, which functions as intended.</li>
+        <li>Fully justify changes made to the chosen design and plan when making the solution.</li>
+      </ol>
+      <p class="strandsrc">Strand wording and level descriptors: <a href="https://www.vistathink.com/myp-design-criterion-c-creating-the-solution/" target="_blank" rel="noopener">VistaThink Criterion C</a> · <a href="https://resources.finalsite.net/images/v1747751609/washoeschoolsnet/ifxjtt76sqhvjpcphfhl/myp-design-rubric.pdf" target="_blank" rel="noopener">IB MYP Design rubric, Year 5 (PDF)</a></p>
+    </div>
+
+    <div class="cards">
+
+      <article class="fw">
+        <div class="fw__head"><h3>Production plan table</h3><span class="tag tag--time">1 lesson</span></div>
+        <p class="fw__what">Step, time estimate, tools, materials, safety note and quality check — one row per operation.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i is judged on whether a peer could follow it. A table makes omissions visible in a way prose hides. <span class="strandref">C i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>One row per operation, in order, verbs first.</li>
+          <li>Estimate time per row and total it against lessons available.</li>
+          <li>Add a quality check column: how will I know this step worked?</li>
+          <li>Swap plans with a partner and have them find the missing step.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://www.vistathink.com/myp-design-criterion-c-creating-the-solution/" target="_blank" rel="noopener">VistaThink — MYP Design Criterion C</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Gantt chart</h3><span class="tag tag--time">20 min</span></div>
+        <p class="fw__what">Tasks against a timeline, showing what runs in parallel and what blocks what.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i specifies <em>efficient</em> use of time. A list cannot show efficiency; only a timeline can show overlap, slack and dependency. <span class="strandref">C i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Columns are lessons, not dates — that is the real unit of school time.</li>
+          <li>Mark dependencies: what cannot start until something else finishes.</li>
+          <li>Identify anything with a lead time, such as ordering or drying.</li>
+          <li>Update it in a second colour as reality diverges. The divergence is evidence for strand iv.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://asq.org/quality-resources/quality-tools" target="_blank" rel="noopener">ASQ — quality tools index, includes Gantt chart template</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Process log with timestamps</h3><span class="tag tag--time">5 min per lesson</span></div>
+        <p class="fw__what">Dated photographs plus a one-line note of what was done and what went wrong.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strands ii and iii are evidenced almost entirely through documentation. Students who photograph only the finished article have no evidence of skill or process. <span class="strandref">C ii</span> <span class="strandref">C iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Photograph at the start and end of every session, always including your hands or the tool in use.</li>
+          <li>Caption each with the date and the technique being demonstrated.</li>
+          <li>Photograph the failures too — they are the evidence for strand iv.</li>
+          <li>Keep it in one place, in order. Sorting fifty photos in week eight is a lost lesson.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://www.vistathink.com/myp-design-criterion-c-creating-the-solution/" target="_blank" rel="noopener">VistaThink — MYP Design Criterion C</a>
+          <p class="srcnote">No external framework needed. The requirement comes straight from the strand: technical skill has to be visible to be assessed.</p>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Modification log</h3><span class="tag tag--time">Ongoing</span></div>
+        <p class="fw__what">A running table: what changed, why, what the alternative was, and what it cost.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iv asks students to <em>fully justify</em> each change. Reconstructing reasons from memory in the last week produces vague answers; logging at the moment of change produces specific ones. <span class="strandref">C iv</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Columns: date, what changed, why, what I rejected, effect on the specification.</li>
+          <li>Write the row the day the change happens.</li>
+          <li>Use PEEL for the "why" — evidence, not preference.</li>
+          <li>Flag any change that weakens a "must" specification point.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://resources.finalsite.net/images/v1747751609/washoeschoolsnet/ifxjtt76sqhvjpcphfhl/myp-design-rubric.pdf" target="_blank" rel="noopener">IB MYP Design rubric, Year 5 — changes must be described and justified</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Plan-Do-Check-Act</h3><span class="tag tag--time">Per iteration</span></div>
+        <p class="fw__what">A short loop of planning a step, doing it, checking against the specification, then adjusting.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Keeps testing inside the making rather than saving it all for Criterion D, so failures are caught while there is still time to fix them. <span class="strandref">C iii</span> <span class="strandref">C iv</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Plan the next small stage and name the specification point it serves.</li>
+          <li>Do it.</li>
+          <li>Check against that point immediately, with a photo.</li>
+          <li>Act — adjust, and record the adjustment in the modification log.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://asq.org/quality-resources/quality-tools" target="_blank" rel="noopener">ASQ — quality tools index, PDCA and PDSA</a>
+          <a href="https://asq.org/quality-resources/problem-solving" target="_blank" rel="noopener">ASQ — problem solving process</a>
+          </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= CRITERION D ================= -->
+<section class="crit" data-crit="d">
+  <div class="wrap">
+    <div class="crit__top">
+      <div class="crit__badge">D</div>
+      <div class="crit__ttl">
+        <h2>Evaluating</h2>
+        <p>Testing properly, judging honestly, and saying what it meant for the user.</p>
+      </div>
+    </div>
+
+    <div class="strands">
+      <h3>Year 5 strands</h3>
+      <ol>
+        <li>Design detailed and relevant testing methods which generate data to measure the success of the solution.</li>
+        <li>Critically evaluate the success of the solution against the design specification.</li>
+        <li>Explain how the solution could be improved.</li>
+        <li>Explain the impact of the solution on the client or target audience.</li>
+      </ol>
+      <p class="strandsrc">Strand wording and level descriptors: <a href="https://resources.finalsite.net/images/v1747751609/washoeschoolsnet/ifxjtt76sqhvjpcphfhl/myp-design-rubric.pdf" target="_blank" rel="noopener">IB MYP Design rubric, Year 5 (PDF)</a> · <a href="https://www.rfs.edu.ps/uploads/files/MYP%20Years%204-5%20%20assessment%20criteria%201.pdf" target="_blank" rel="noopener">MYP Years 4–5 assessment criteria (PDF)</a></p>
+    </div>
+
+    <div class="cards">
+
+      <article class="fw">
+        <div class="fw__head"><h3>Testing methods matrix</h3><span class="tag tag--time">1 lesson</span></div>
+        <p class="fw__what">Each specification point paired with the test that measures it and the data it generates.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i requires methods that <em>generate data</em>. A matrix built from the specification guarantees relevance, which is the word doing the work in the descriptor. <span class="strandref">D i</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Columns: specification point, test method, data type, who tests, what result means success.</li>
+          <li>Every "must" point needs a test. No orphans in either direction.</li>
+          <li>Mix quantitative and qualitative — a number and a voice.</li>
+          <li>Write the success threshold <em>before</em> testing, not after.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://resources.finalsite.net/images/v1747751609/washoeschoolsnet/ifxjtt76sqhvjpcphfhl/myp-design-rubric.pdf" target="_blank" rel="noopener">IB MYP Design rubric, Year 5</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Usability testing with think-aloud</h3><span class="tag tag--time">15 min per user</span></div>
+        <p class="fw__what">A real user attempts a real task while narrating their thinking; you watch and stay silent.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Generates the qualitative data strand i asks for, and surfaces improvement evidence for strand iii that no questionnaire would find. <span class="strandref">D i</span> <span class="strandref">D iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Give a task, not instructions: "log a fault you had this week."</li>
+          <li>Ask them to say what they are thinking. Then do not help.</li>
+          <li>Record time taken, errors, hesitations and exact words.</li>
+          <li>Three users will expose most major problems.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://www.nngroup.com/articles/thinking-aloud-the-1-usability-tool/" target="_blank" rel="noopener">NN/g — thinking aloud, the number one usability tool</a>
+          <a href="https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/" target="_blank" rel="noopener">NN/g — why you only need to test with five users</a>
+          <a href="https://www.nngroup.com/articles/usability-checklist/" target="_blank" rel="noopener">NN/g — checklist for moderating a usability test</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Point-by-point specification audit</h3><span class="tag tag--time">1 lesson</span></div>
+        <p class="fw__what">Every specification point judged met, partly met or not met, with the evidence beside it.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand ii says <em>against the design specification</em> — so the specification must structure the evaluation. Students who write flowing prose about how it went usually miss half the points. <span class="strandref">D ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>One row per specification point, in the original order.</li>
+          <li>Verdict, then the test data that proves the verdict.</li>
+          <li>Write a PEEL paragraph for every "partly" and every "not met".</li>
+          <li>Being critical about your own work scores; defending it does not.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://resources.finalsite.net/images/v1747751609/washoeschoolsnet/ifxjtt76sqhvjpcphfhl/myp-design-rubric.pdf" target="_blank" rel="noopener">IB MYP Design rubric, Year 5</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>OPVL on your own data</h3><span class="tag tag--borrow">From IB History</span><span class="tag tag--time">10 min</span></div>
+        <p class="fw__what">The same four questions turned on the student's own test results.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>"Critically evaluate" includes evaluating the evidence itself. A student who can say why their own sample of five friends limits the conclusion is demonstrating exactly the criticality strand ii rewards. <span class="strandref">D i</span> <span class="strandref">D ii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Origin — who did I test, when, and how were they chosen?</li>
+          <li>Purpose — what was I hoping to find out, and did that shape my questions?</li>
+          <li>Value — what can this data legitimately tell me?</li>
+          <li>Limitation — what can it not tell me, and what would fix that next time?</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://keystoneacademy-cn.libguides.com/opvl" target="_blank" rel="noopener">Keystone Academy Library — what is OPVL</a>
+          <p class="srcnote">Same four questions as the Criterion A entry. The only change is the source being judged: your own test data.</p>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Before-and-after against the baseline</h3><span class="tag tag--time">30 min</span></div>
+        <p class="fw__what">The primary data collected in Criterion A becomes the benchmark the solution is measured against.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iv asks for <em>impact</em> on the client. Impact is a change, and a change needs a starting number. This closes the loop on the whole unit. <span class="strandref">D iv</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Retrieve the original tally, timing or count from Criterion A.</li>
+          <li>Repeat that exact measurement with the solution in use.</li>
+          <li>Report both numbers together, and be honest if nothing moved.</li>
+          <li>Add one user quote describing the difference in their own words.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="https://it.wp.worc.ac.uk/wp-content/uploads/2025/04/November-2024-IT-Service-Monthly-Report.pdf" target="_blank" rel="noopener">University of Worcester — IT service monthly report, an example of baseline reporting</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>What · So what · Now what</h3><span class="tag tag--time">15 min</span></div>
+        <p class="fw__what">A three-step reflection that pushes description into consequence and then into action.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii wants improvements explained, not listed. This structure forces students past "I would make it neater" into a reasoned change with a cause. <span class="strandref">D iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li><b>What</b> — what happened in testing, factually.</li>
+          <li><b>So what</b> — why it matters to the user and which specification point it touches.</li>
+          <li><b>Now what</b> — the specific change, and how you would test that it worked.</li>
+          <li>Rank improvements by user impact, not by ease.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <p class="srcnote">Adapted from Rolfe's reflective model, widely used in nursing and teacher education. It circulates through many institutional study-skills guides rather than one canonical source, so check your own department's version before standardising it.</p>
+          </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= MATRIX ================= -->
+<section class="crit" data-crit="all-matrix">
+  <div class="wrap">
+    <div class="crit__top">
+      <div class="crit__ttl">
+        <h2>At a glance</h2>
+        <p>Where each framework earns its keep. Several work in more than one place.</p>
+      </div>
+    </div>
+
+    <div class="matrix">
+      <table>
+        <thead>
+          <tr><th>Framework</th><th class="n">A</th><th class="n">B</th><th class="n">C</th><th class="n">D</th><th>Best used for</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>PEEL</td><td class="mk"><span class="dot dot--a">●</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot dot--c">●</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Any paragraph that makes a claim</td></tr>
+          <tr><td>OPVL</td><td class="mk"><span class="dot dot--a">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Weighing sources and your own data</td></tr>
+          <tr><td>Problem hypothesis frame</td><td class="mk"><span class="dot dot--a">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Making the need falsifiable</td></tr>
+          <tr><td>W³D organiser</td><td class="mk"><span class="dot dot--a">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>One-page problem definition</td></tr>
+          <tr><td>Fishbone and Five Whys</td><td class="mk"><span class="dot dot--a">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Root cause, and diagnosing test failures</td></tr>
+          <tr><td>Scale ladder and SCALE</td><td class="mk"><span class="dot dot--a">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Secondary research with a search order</td></tr>
+          <tr><td>ACCESS FM</td><td class="mk"><span class="dot dot--a">●</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Product analysis into specification</td></tr>
+          <tr><td>MoSCoW</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Ranking specification points</td></tr>
+          <tr><td>Crazy 8s and SCAMPER</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Generating a genuine range of ideas</td></tr>
+          <tr><td>Weighted decision matrix</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Justifying the chosen design</td></tr>
+          <tr><td>Gantt and production plan</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--c">●</span></td><td class="mk"><span class="dot">○</span></td><td>Showing efficient use of time</td></tr>
+          <tr><td>Modification log and PDCA</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--c">●</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Justifying changes as they happen</td></tr>
+          <tr><td>Testing methods matrix</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Linking every spec point to a test</td></tr>
+          <tr><td>Before-and-after baseline</td><td class="mk"><span class="dot dot--a">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Evidencing impact on the client</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      <h3>Three things worth saying to the class</h3>
+      <p><strong>Frameworks are scaffolds, not deliverables.</strong> A fishbone in the eportfolio scores nothing by itself. What scores is the sentence it let the student write. Ask for the finding, not the diagram.</p>
+      <p><strong>PEEL and OPVL come from other subjects, and that is the point.</strong> Naming their origin out loud — English, History — makes the transfer visible and gives students a reason to trust tools they already half-know. It also lets your Humanities and English colleagues reinforce the same vocabulary.</p>
+      <p><strong>The specification is the spine.</strong> Criterion B strand i is where Criterion D is won or lost. A specification point that cannot be tested is a mark that cannot be earned, which is why the testing method belongs in the specification table from the very first draft.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:14px;width:100%;flex-wrap:wrap">
+    <span>Sreenidhi International School · Design</span>
+    <span>MYP Years 4–5 · Framework index</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btns = document.querySelectorAll('.filt');
+  var secs = document.querySelectorAll('.crit[data-crit]');
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var f = b.dataset.f;
+      btns.forEach(function(x){
+        x.classList.remove('is-on');
+        x.setAttribute('aria-pressed','false');
+      });
+      b.classList.add('is-on');
+      b.setAttribute('aria-pressed','true');
+      secs.forEach(function(s){
+        var c = s.dataset.crit;
+        s.hidden = !(f === 'all' || c === f || c === 'all-matrix');
+      });
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+
+  // --- scroll reveal ---
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if(mq.matches) return;
+    document.documentElement.classList.add('js-anim');
+
+    var SEL = '.step,.fwc,.band,.clgroup,.trap,.crit,.docwrap,.flow,.tabwrap,'
+            + '.mm,.aspects,.flip,.cite-warn,.conflict,.keyline,.obj,.ctbox,.strands,.matrix';
+
+    // bidirectional: eases in whether you arrive scrolling down or back up
+    var io = new IntersectionObserver(function(entries){
+      for(var i=0;i<entries.length;i++){
+        var e = entries[i];
+        if(e.isIntersecting) e.target.classList.add('in');
+        else e.target.classList.remove('in');
+      }
+    }, {rootMargin:'14% 0px 14% 0px', threshold:0});
+
+    function arm(root){
+      var els = (root || document).querySelectorAll(SEL);
+      for(var i=0;i<els.length;i++){
+        var el = els[i];
+        if(el.classList.contains('reveal')) continue;
+        if(el.closest && el.closest('.mast')) continue;
+        el.classList.add('reveal');
+        // stagger siblings in the same parent, capped so nothing waits long
+        var par = el.parentNode;
+        if(!par.__revealIdx) par.__revealIdx = 0;
+        el.style.setProperty('--d', Math.min(par.__revealIdx * 55, 220) + 'ms');
+        par.__revealIdx++;
+        io.observe(el);
+      }
+    }
+
+    window.__armReveal = arm;
+    arm(document);
+  })();
+
+
+  // --- command terms become flip tiles ---
+  (function(){
+    var boxes = document.querySelectorAll('.ctbox');
+    for(var b=0; b<boxes.length; b++){
+      var box = boxes[b];
+      var rows = box.querySelectorAll('.ctrow');
+      if(!rows.length) continue;
+
+      var grid = document.createElement('div');
+      grid.className = 'ctiles';
+      box.insertBefore(grid, rows[0]);
+
+      for(var r=0; r<rows.length; r++){
+        var row  = rows[r];
+        var band = row.querySelector('.ctband');
+        var term = row.querySelector('b');
+        var def  = row.querySelector('span');
+
+        var tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = 'ctile';
+        tile.setAttribute('aria-pressed', 'false');
+
+        var inner = document.createElement('div');
+        inner.className = 'ctile__inner';
+
+        var front = document.createElement('div');
+        front.className = 'ctile__face ctile__front';
+        front.innerHTML =
+          '<p class="ctile__band">' + (band ? band.textContent : '') + '</p>' +
+          '<p class="ctile__term">' + (term ? term.textContent : '') + '</p>' +
+          '<p class="ctile__hint">Tap for meaning</p>';
+
+        var back = document.createElement('div');
+        back.className = 'ctile__face ctile__back';
+        back.innerHTML =
+          '<p class="ctile__band">' + (term ? term.textContent : '') + '</p>' +
+          '<p class="ctile__def">' + (def ? def.textContent : '') + '</p>';
+
+        inner.appendChild(front);
+        inner.appendChild(back);
+        tile.appendChild(inner);
+        grid.appendChild(tile);
+
+        (function(t){
+          t.addEventListener('click', function(e){
+            e.stopPropagation();
+            t.classList.toggle('flipped');
+            t.setAttribute('aria-pressed', t.classList.contains('flipped') ? 'true' : 'false');
+          });
+        })(tile);
+
+        row.parentNode.removeChild(row);
+      }
+    }
+  })();
+
+  // --- tap tint: repeated clicks deepen the shade ---
+  (function(){
+    var SEL = '.step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.pbox,.flip__side,'
+            + '.dnote,.tools,.concepts,.quote,.fstep,.crit:not(a)';
+    var els = document.querySelectorAll(SEL);
+    for(var i=0;i<els.length;i++) els[i].classList.add('tapfx');
+
+    document.addEventListener('click', function(e){
+      var t = e.target;
+      if(!t || !t.closest) return;
+      // never hijack a real control
+      if(t.closest('a,button,summary,label,input,select,textarea,.sechead,.ctile')) return;
+      var card = t.closest('.tapfx');
+      if(!card) return;
+      var n = parseInt(card.getAttribute('data-clicks') || '0', 10) + 1;
+      if(n > 5) n = 1;
+      card.setAttribute('data-clicks', String(n));
+    });
+  })();
+
+})();
+</script>
+
+</body>
+</html>
