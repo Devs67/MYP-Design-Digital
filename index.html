@@ -6,7 +6,7 @@
 <title>MYP Design — Criterion guides</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
@@ -21,7 +21,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.wrap{max-width:1320px;margin:0 auto;padding:0 30px}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
   text-transform:uppercase;color:var(--amber);margin:0}
 
@@ -55,6 +55,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 @media (max-width:400px){.wrap{padding:0 11px}}
 
 .mast{padding:70px 0 44px}
+.mast .eyebrow{font-weight:600;font-size:13px}
 .mast h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,5.4vw,48px);
   line-height:1.1;letter-spacing:-.02em;margin:14px 0 0;max-width:18ch}
 .mast .sub{margin:20px 0 0;font-size:17px;color:var(--slate);max-width:58ch}
@@ -368,6 +369,17 @@ body::before{
   padding:10px 18px;border:1px solid var(--rule);border-radius:7px;
   background:var(--rule-soft);color:var(--slate);margin-bottom:30px;transition:.15s}
 .backlink:hover{background:var(--card);border-color:var(--slate);color:var(--ink)}
+
+/* ============ MASTHEAD IMAGES ============ */
+.mast__row{display:flex;gap:32px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.mast__text{flex:1 1 420px}
+.mast__images{display:flex;gap:14px;flex:0 0 auto}
+.imgframe{width:220px;height:280px;border:2px dashed var(--rule);border-radius:12px;
+  background:var(--card);display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:12px}
+.imgframe__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--slate)}
+@media (max-width:900px){.mast__images{display:none}}
 </style>
 </head>
 <body>
@@ -386,10 +398,16 @@ body::before{
 
 
 <header class="mast">
-  <div class="wrap">
-    <p class="eyebrow">IB MYP Design · Task-specific clarifications</p>
-    <h1>What each criterion asks for, and how to get there.</h1>
-    <p class="sub">Strand-by-strand guides: the command terms, the steps in order, the frameworks that produce each part, worked examples, and a checklist to run before submitting.</p>
+  <div class="wrap mast__row">
+    <div class="mast__text">
+      <p class="eyebrow">IB MYP Design</p>
+      <h1>What each criterion asks for, and how to get there.</h1>
+      <p class="sub">Strand-by-strand guides: the command terms, the steps in order, the frameworks that produce each part, worked examples, and a checklist to run before submitting.</p>
+    </div>
+    <div class="mast__images">
+      <div class="imgframe"><span class="imgframe__lbl">Image 1</span></div>
+      <div class="imgframe"><span class="imgframe__lbl">Image 2</span></div>
+    </div>
   </div>
 </header>
 
@@ -767,4 +785,4 @@ body::before{
 </script>
 
 </body>
-</html>
+</html>
