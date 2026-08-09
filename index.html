@@ -88,6 +88,8 @@ a.crit--dev:hover .devpre{color:var(--dev)}
 .crit--dev .st{background:rgba(106,76,147,.11);color:var(--dev)}
 .crit--fw{border-left-color:var(--ink)}
 .crit--fw .badge{background:var(--ink);font-size:16px;letter-spacing:.03em}
+.crit--journey{border-left-color:var(--moss)}
+.crit--journey .badge{background:var(--moss);font-size:16px}
 
 .crit__top{display:flex;gap:14px;align-items:center;margin-bottom:12px}
 .badge{width:46px;height:46px;border-radius:12px;flex:0 0 46px;
@@ -284,6 +286,7 @@ body.wl-open{overflow:hidden}
 .crit--c{--tone:var(--c)}
 .crit--d{--tone:var(--d)}
 .crit--fw{--tone:var(--ink)}
+.crit--journey{--tone:var(--moss)}
 .crit--dev{--tone:var(--dev)}
 
 @media (hover:hover) and (prefers-reduced-motion: no-preference){
@@ -516,6 +519,18 @@ body::before{
         <div class="strands">
           <span class="st live">31 frameworks</span>
           <span class="st live">Sourced</span>
+        </div>
+      </a>
+
+      <a class="crit crit--journey" href="myp4-5/journey.html">
+        <div class="crit__top">
+          <span class="badge">&#9711;</span>
+          <h3>Our journey</h3>
+          <span class="status">Open</span>
+        </div>
+        <p>What we have actually done in class, lesson by lesson &mdash; a record, not a plan.</p>
+        <div class="strands">
+          <span class="st live">Class log</span>
         </div>
       </a>
 

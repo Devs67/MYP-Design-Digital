@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our Journey — MYP 4 Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --moss:#2F6B4F; --moss-tint:#E8F1EC;
+  --clay:#9C3E2F; --clay-tint:#F8E9E6;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:920px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+
+.mast{padding:52px 0 30px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0}
+.mast .sub{margin:14px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
+
+.stats{display:flex;gap:14px;flex-wrap:wrap;margin:26px 0 0}
+.stat{flex:1 1 150px;background:var(--card);border:1px solid var(--rule);
+  border-radius:12px;padding:16px 18px}
+.stat dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--slate);margin:0 0 6px}
+.stat dd{margin:0;font-family:var(--display);font-size:24px;font-weight:600}
+
+.sec{padding:50px 0 0}
+
+/* timeline */
+.tl{position:relative;padding-left:44px}
+.tl::before{content:"";position:absolute;left:15px;top:8px;bottom:8px;width:2px;
+  background:var(--rule)}
+.tlrow{position:relative;padding-bottom:36px}
+.tlrow:last-child{padding-bottom:0}
+.tlrow::before{content:"";position:absolute;left:-44px;top:2px;width:32px;height:32px;
+  border-radius:50%;background:var(--card);border:2px solid var(--amber);
+  display:flex;align-items:center;justify-content:center}
+.tlrow.done::before{background:var(--moss);border-color:var(--moss)}
+.tldot{position:absolute;left:-38px;top:9px;width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  font-size:10px;font-weight:600;color:var(--amber);z-index:1}
+.tlrow.done .tldot{color:#fff}
+
+.tlcard{background:var(--card);border:1px solid var(--rule);border-radius:12px;
+  padding:20px 24px 22px}
+.tlcard__top{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.tlcard__len{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 9px;border-radius:6px;background:var(--rule-soft);color:var(--slate);
+  white-space:nowrap}
+.tlcard__strand{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 9px;border-radius:6px;background:var(--amber-tint);color:var(--amber);
+  white-space:nowrap}
+.tlcard h3{font-family:var(--display);font-size:21px;font-weight:600;margin:2px 0 10px;
+  letter-spacing:-.01em}
+.tlcard ul{margin:0;padding:0;list-style:none}
+.tlcard li{position:relative;padding:6px 0 6px 17px;font-size:14.5px;line-height:1.55;color:var(--ink)}
+.tlcard li::before{content:"";position:absolute;left:0;top:15px;width:7px;height:1.5px;
+  background:var(--amber)}
+.tlcard__out{margin-top:14px;padding-top:12px;border-top:1px solid var(--rule-soft)}
+.tlcard__outlbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--slate);display:block;margin-bottom:4px}
+.tlcard__outtext{font-size:14px;color:var(--slate);line-height:1.5}
+
+.tlrow.next .tlcard{border-style:dashed;border-color:var(--rule);opacity:.7}
+.tlrow.next h3{color:var(--slate)}
+
+footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:700px){
+  .wrap{padding:0 16px}
+  .tl{padding-left:36px}
+  .tlrow::before{left:-36px;width:26px;height:26px}
+  .tldot{left:-31px;top:8px;width:16px;height:16px;font-size:9px}
+  .tlcard{padding:17px 18px 19px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="../index.html#myp4-5">&larr; All criteria</a>
+    <p class="eyebrow">MYP 4 Design &middot; Class log</p>
+    <h1>Our journey so far</h1>
+    <p class="sub">What we have actually done in class, lesson by lesson, working through Criterion A. Not a plan &mdash; a record.</p>
+
+    <dl class="stats">
+      <div class="stat"><dt>Lessons so far</dt><dd>7</dd></div>
+      <div class="stat"><dt>Weeks</dt><dd>4</dd></div>
+      <div class="stat"><dt>Strand reached</dt><dd>i</dd></div>
+    </dl>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="tl">
+
+      <div class="tlrow done">
+        <span class="tldot">1</span>
+        <div class="tlcard">
+          <div class="tlcard__top">
+            <span class="tlcard__len">1 class</span>
+            <span class="tlcard__strand">Strand i</span>
+          </div>
+          <h3>Evaluating real strand i submissions</h3>
+          <ul>
+            <li>Given real Criterion A strand i sample portfolios</li>
+            <li>Evaluated each one against the checklist and the task-specific clarification</li>
+            <li>Justified their evaluation to the whole class</li>
+          </ul>
+          <div class="tlcard__out">
+            <span class="tlcard__outlbl">Why this first</span>
+            <span class="tlcard__outtext">Marking someone else's work against the standard is faster than explaining the standard. Students find the gaps themselves, out loud, in front of each other.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tlrow done">
+        <span class="tldot">2</span>
+        <div class="tlcard">
+          <div class="tlcard__top">
+            <span class="tlcard__len">1 class &middot; different group</span>
+            <span class="tlcard__strand">Strand ii</span>
+          </div>
+          <h3>Evaluating real strand ii submissions</h3>
+          <ul>
+            <li>Same activity, run for strand ii with a different class</li>
+            <li>Evaluated sample research plans against the checklist</li>
+            <li>Justified their evaluation to the whole class</li>
+          </ul>
+          <div class="tlcard__out">
+            <span class="tlcard__outlbl">Note</span>
+            <span class="tlcard__outtext">This ran in parallel with lesson 1, not after it &mdash; a second class working ahead on the next strand's standard.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tlrow done">
+        <span class="tldot">3</span>
+        <div class="tlcard">
+          <div class="tlcard__top">
+            <span class="tlcard__len">2 classes</span>
+            <span class="tlcard__strand">Strand i</span>
+          </div>
+          <h3>Identifying and finalising the problem</h3>
+          <ul>
+            <li>Worked on identifying a real problem worth solving</li>
+            <li>Drafted, tested and finalised individual problem statements</li>
+            <li>Carried out basic research to understand the problem</li>
+          </ul>
+          <div class="tlcard__out">
+            <span class="tlcard__outlbl">Produced</span>
+            <span class="tlcard__outtext">A finalised problem statement per student, with enough early research to know it was a real problem and not a guess.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tlrow done">
+        <span class="tldot">4</span>
+        <div class="tlcard">
+          <div class="tlcard__top">
+            <span class="tlcard__len">1 class</span>
+            <span class="tlcard__strand">Strand i</span>
+          </div>
+          <h3>Digging deeper with a fishbone diagram</h3>
+          <ul>
+            <li>Used the fishbone diagram to move past the surface of the problem</li>
+            <li>Sorted possible causes into categories</li>
+            <li>Identified which causes were evidenced and which were still guesses</li>
+          </ul>
+          <div class="tlcard__out">
+            <span class="tlcard__outlbl">Produced</span>
+            <span class="tlcard__outtext">A populated fishbone per student, and a shortlist of causes worth researching properly.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tlrow done">
+        <span class="tldot">5</span>
+        <div class="tlcard">
+          <div class="tlcard__top">
+            <span class="tlcard__len">1 class</span>
+            <span class="tlcard__strand">Strand ii</span>
+          </div>
+          <h3>Planning what information is still needed</h3>
+          <ul>
+            <li>Listed everything still needed to finish the strand</li>
+            <li>Classified each item by which method would actually produce it &mdash; survey, interview, existing product, secondary source</li>
+            <li>Started collecting information against that plan</li>
+          </ul>
+          <div class="tlcard__out">
+            <span class="tlcard__outlbl">Produced</span>
+            <span class="tlcard__outtext">A research plan matched to real methods, and the first primary data starting to come in.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tlrow next">
+        <span class="tldot">6</span>
+        <div class="tlcard">
+          <div class="tlcard__top">
+            <span class="tlcard__len">Next</span>
+            <span class="tlcard__strand">Strand ii</span>
+          </div>
+          <h3>Continue collecting, then write up the plan</h3>
+          <ul>
+            <li>Finish collecting primary and secondary research</li>
+            <li>Prioritise the findings and write the strand ii research plan</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Dev &mdash; MYP Design Educator</span>
+    <span>MYP 4 &middot; Criterion A</span>
+  </div>
+</footer>
+
+</body>
+</html>
