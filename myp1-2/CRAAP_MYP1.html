@@ -358,6 +358,28 @@
   }
   .notes:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
 
+  .src-url-row td { padding: 12px 12px 14px; background: var(--paper); }
+  .src-url-label {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .src-url {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font: inherit;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .src-url:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+
   /* ---- per-source meter + conclusion (footer row of each table) ---- */
   .conclusion-row td { background: var(--paper); }
   .meter-mini { margin-bottom: 14px; }
@@ -512,7 +534,7 @@
 <body>
 <div class="wrap">
 
-  <a href="../index.html" class="no-print" style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--muted);text-decoration:none;margin-bottom:22px">&larr; All criteria</a>
+  <a href="index.html" class="no-print" style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--muted);text-decoration:none;margin-bottom:22px">&larr; All criteria</a>
 
   <div class="head-row">
     <div>
@@ -672,6 +694,12 @@
             <div class="type-select">${typePills}</div>
           </td>
         </tr>
+        <tr class="src-url-row">
+          <td colspan="3">
+            <label class="src-url-label">Website link</label>
+            <input type="url" class="src-url" placeholder="https://… the page you are testing">
+          </td>
+        </tr>
         <tr class="col-head-row">
           <td>CRAAP Criteria</td><td>Check Questions</td><td>Student Notes / Audit</td>
         </tr>
@@ -794,7 +822,7 @@
   document.getElementById('clearBtn').addEventListener('click', () => {
     Object.keys(rowStates).forEach(k => rowStates[k] = null);
     sourcesContainer.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-    sourcesContainer.querySelectorAll('.notes, .conclusion').forEach(n => n.value = '');
+    sourcesContainer.querySelectorAll('.notes, .conclusion, .src-url').forEach(n => n.value = '');
     sourcesContainer.querySelectorAll('.print-mirror').forEach(m => m.textContent = '');
     sourcesContainer.querySelectorAll('.source-block').forEach(block => updateMeter(block.dataset.source));
   });
@@ -806,6 +834,8 @@
       const id = block.dataset.source;
       const activeType = block.querySelector('.type-pill.active');
       lines.push('=== Research Source ' + id + ' (' + (activeType ? activeType.textContent : 'Article') + ') ===');
+      const url = block.querySelector('.src-url').value.trim();
+      lines.push('Website: ' + (url || '(not entered)'));
       block.querySelectorAll('.crit-row').forEach(row => {
         const key = row.dataset.crit;
         const note = row.querySelector('.notes').value.trim();
