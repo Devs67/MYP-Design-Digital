@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEEL — Explaining Your Design Problem</title>
+<style>
+  :root {
+    --navy: #1E2761;
+    --teal: #0F9488;
+    --amber: #C2750F;
+    --maroon: #9D174D;
+    --ink: #201C1A;
+    --muted: #6B6A66;
+    --paper: #FFFFFF;
+    --soft: #F7F8F7;
+    --line: #E4E2DD;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.55;
+  }
+
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+
+  .eyebrow {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(30px, 4.5vw, 44px);
+    line-height: 1.12;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+
+  .lede {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 0 8px;
+  }
+
+  .peel-mark {
+    display: flex;
+    gap: 10px;
+    margin: 28px 0 4px;
+  }
+  .peel-mark span {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #fff;
+  }
+
+  .head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 22px;
+  }
+  .idbox {
+    display: flex;
+    gap: 18px;
+    flex: none;
+  }
+  .idbox div { display: flex; flex-direction: column; }
+  .idbox label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .idbox input {
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    font-size: 13.5px;
+    padding: 2px 2px 5px;
+    width: 130px;
+    font-family: inherit;
+    color: var(--ink);
+  }
+  .idbox input:focus { outline: none; border-bottom-color: var(--amber); }
+  @media (max-width: 640px) {
+    .head-row { flex-direction: column; align-items: flex-start; }
+  }
+
+  section { margin-top: 64px; }
+
+  h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 26px;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0 0 28px;
+    max-width: 640px;
+  }
+
+  /* ---- Learn cards ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 820px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 18px 22px;
+    background: var(--paper);
+  }
+  .badge {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    color: #fff;
+    font-size: 17px;
+    margin-bottom: 12px;
+  }
+  .card h3 {
+    margin: 0 0 8px;
+    font-size: 16.5px;
+  }
+  .card p {
+    margin: 0 0 14px;
+    font-size: 13.8px;
+    color: var(--ink);
+  }
+  .example {
+    font-size: 12.8px;
+    font-style: italic;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    margin: 0;
+  }
+  .example b {
+    font-style: normal;
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  /* ---- worked example toggle ---- */
+  .reveal {
+    margin-top: 20px;
+  }
+  .reveal-btn {
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 18px;
+    cursor: pointer;
+  }
+  .reveal-btn:hover { background: #f0f0ee; }
+
+  .worked-box {
+    display: none;
+    margin-top: 16px;
+    padding: 22px 24px;
+    background: var(--soft);
+    border-radius: var(--radius);
+    font-size: 15.5px;
+    line-height: 1.7;
+  }
+  .worked-box.open { display: block; }
+  .worked-box .p { color: var(--amber); font-weight: 600; }
+  .worked-box .e1 { color: var(--teal); font-weight: 600; }
+  .worked-box .e2 { color: var(--navy); font-weight: 600; }
+  .worked-box .l { color: var(--maroon); font-weight: 600; }
+
+  /* ---- Practice ---- */
+  .practice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 700px) {
+    .practice-grid { grid-template-columns: 1fr; }
+  }
+
+  .field {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 16px 12px;
+  }
+  .field-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .field-head .dot {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: 13px;
+    flex: none;
+  }
+  .field-head span.label {
+    font-weight: 700;
+    font-size: 14.5px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 88px;
+    resize: vertical;
+    border: none;
+    background: var(--soft);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  textarea:focus {
+    outline: 2px solid var(--ink);
+    outline-offset: 1px;
+  }
+  .count {
+    text-align: right;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ---- Preview ---- */
+  .preview-wrap {
+    margin-top: 28px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+    background: var(--paper);
+  }
+  .preview-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+  #preview {
+    font-size: 16px;
+    line-height: 1.75;
+    min-height: 60px;
+  }
+  #preview .empty { color: var(--muted); font-style: italic; }
+  #preview .p { color: var(--amber); }
+  #preview .e1 { color: var(--teal); }
+  #preview .e2 { color: var(--navy); }
+  #preview .l { color: var(--maroon); }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 10px 18px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .btn.primary {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .btn:hover { opacity: 0.85; }
+
+  /* ---- checklist ---- */
+  .checklist {
+    margin-top: 32px;
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    font-size: 14.5px;
+    cursor: pointer;
+  }
+  .check-item input {
+    margin-top: 3px;
+    width: 16px; height: 16px;
+    flex: none;
+  }
+  .check-item span.done {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+
+  .note {
+    margin-top: 40px;
+    font-size: 12.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+  }
+
+  footer {
+    margin-top: 56px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+
+  @media print {
+    .no-print { display: none !important; }
+    .print-hide { display: none !important; }
+    body { color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; }
+    .wrap { max-width: 100%; padding: 20px 28px; }
+    .card, .field, .preview-wrap, .worked-box { break-inside: avoid; }
+    section { margin-top: 32px; }
+    textarea { display: none; }
+    .print-mirror { display: block !important; }
+  }
+  .print-mirror {
+    display: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: var(--ink);
+    min-height: 88px;
+  }
+  .print-mirror:empty::before {
+    content: "(no answer written)";
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a href="frameworks.html" class="no-print" style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--muted);text-decoration:none;margin-bottom:22px">&larr; Frameworks</a>
+
+  <div class="head-row">
+    <div>
+      <p class="eyebrow">MYP 1 · Design · Criterion A, Strand i</p>
+      <h1>PEEL: Explaining Your Design Problem</h1>
+      <p class="lede">A simple structure to help you explain — and start to justify — why a design problem is real and worth solving.</p>
+    </div>
+    <div class="idbox">
+      <div><label>Name</label><input type="text"></div>
+      <div><label>Class</label><input type="text" style="width:80px;"></div>
+      <div><label>Date</label><input type="text" style="width:100px;"></div>
+    </div>
+  </div>
+
+  <div class="peel-mark no-print">
+    <span style="background:var(--amber)">P</span>
+    <span style="background:var(--teal)">E</span>
+    <span style="background:var(--navy)">E</span>
+    <span style="background:var(--maroon)">L</span>
+  </div>
+
+  <!-- ============ LEARN ============ -->
+  <section class="print-hide">
+    <h2>Learn</h2>
+    <p class="section-sub">When you write about a design problem, it's not enough to just say what's wrong — you need to explain it clearly and back it up with something real. PEEL helps you do that, one step at a time.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="badge" style="background:var(--amber)">P</div>
+        <h3>Point</h3>
+        <p>Say what the problem is, in one clear sentence.</p>
+        <p class="example"><b>Example</b>One reason Ignite needs a new poster and plan is that many schools outside Hyderabad don't know the event exists.</p>
+      </div>
+      <div class="card">
+        <div class="badge" style="background:var(--teal)">E</div>
+        <h3>Evidence</h3>
+        <p>Back up your point with something real you found out — research, a survey, or something you noticed yourself.</p>
+        <p class="example"><b>Example</b>Last year's poster was only shared in Hyderabad schools' WhatsApp groups, and no version reached other states.</p>
+      </div>
+      <div class="card">
+        <div class="badge" style="background:var(--navy)">E</div>
+        <h3>Explain</h3>
+        <p>Say why this matters. What does your evidence actually show?</p>
+        <p class="example"><b>Example</b>This shows that schools in other parts of India never had a chance to hear about Ignite, even if they might have wanted to join.</p>
+      </div>
+      <div class="card">
+        <div class="badge" style="background:var(--maroon)">L</div>
+        <h3>Link</h3>
+        <p>Connect it back to why this problem is worth solving.</p>
+        <p class="example"><b>Example</b>This matters because Ignite wants to become a truly pan-India event — reaching more schools means more students get the chance to take part.</p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <button class="reveal-btn no-print" id="revealBtn" type="button">See it as one paragraph &darr;</button>
+      <div class="worked-box" id="workedBox">
+        <span class="p">One reason Ignite needs a new poster and plan is that many schools outside Hyderabad don't know the event exists.</span>
+        <span class="e1"> Last year's poster was only shared in Hyderabad schools' WhatsApp groups, and no version reached other states.</span>
+        <span class="e2"> This shows that schools in other parts of India never had a chance to hear about Ignite, even if they might have wanted to join.</span>
+        <span class="l"> This matters because Ignite wants to become a truly pan-India event — reaching more schools means more students get the chance to take part.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRACTICE ============ -->
+  <section>
+    <h2>Practice</h2>
+    <p class="section-sub">Now try it with your own design problem. Write one or two sentences for each part — your paragraph will build below as you go.</p>
+
+    <div class="practice-grid">
+      <div class="field">
+        <div class="field-head"><span class="dot" style="background:var(--amber)">P</span><span class="label">Point</span></div>
+        <textarea id="in-p" placeholder="One major design problem is that…"></textarea>
+        <div class="print-mirror" id="mirror-p"></div>
+        <div class="count" id="count-p">0 words</div>
+      </div>
+      <div class="field">
+        <div class="field-head"><span class="dot" style="background:var(--teal)">E</span><span class="label">Evidence</span></div>
+        <textarea id="in-e1" placeholder="According to my research… / I found that…"></textarea>
+        <div class="print-mirror" id="mirror-e1"></div>
+        <div class="count" id="count-e1">0 words</div>
+      </div>
+      <div class="field">
+        <div class="field-head"><span class="dot" style="background:var(--navy)">E</span><span class="label">Explain</span></div>
+        <textarea id="in-e2" placeholder="This suggests that… / This shows that…"></textarea>
+        <div class="print-mirror" id="mirror-e2"></div>
+        <div class="count" id="count-e2">0 words</div>
+      </div>
+      <div class="field">
+        <div class="field-head"><span class="dot" style="background:var(--maroon)">L</span><span class="label">Link</span></div>
+        <textarea id="in-l" placeholder="This matters because…"></textarea>
+        <div class="print-mirror" id="mirror-l"></div>
+        <div class="count" id="count-l">0 words</div>
+      </div>
+    </div>
+
+    <div class="preview-wrap">
+      <p class="preview-label">Your paragraph</p>
+      <div id="preview"><span class="empty">Start typing above — your paragraph will appear here, color-coded to match each part.</span></div>
+      <div class="actions">
+        <button class="btn primary no-print" id="copyBtn" type="button">Copy paragraph</button>
+        <button class="btn no-print" id="clearBtn" type="button">Clear all</button>
+        <button class="btn no-print" id="printBtn" type="button">Print my answers</button>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <label class="check-item"><input type="checkbox" data-target="chk1"><span id="chk1">My Point states the problem clearly, in one sentence.</span></label>
+      <label class="check-item"><input type="checkbox" data-target="chk2"><span id="chk2">My Evidence comes from real research or something I noticed myself.</span></label>
+      <label class="check-item"><input type="checkbox" data-target="chk3"><span id="chk3">My Explain says why the evidence matters, not just what it is.</span></label>
+      <label class="check-item"><input type="checkbox" data-target="chk4"><span id="chk4">My Link connects the problem back to why it's worth solving.</span></label>
+    </div>
+
+    <p class="note no-print">Printing only prints your name/class/date and your written answers below — not the Learn section above. Your writing here isn't saved once you close this page — copy your paragraph into your workbook before you leave.</p>
+  </section>
+
+  <footer>MYP 1 · Design · Criterion A, Strand i — Explain and justify the need for a solution.</footer>
+</div>
+
+<script>
+  const revealBtn = document.getElementById('revealBtn');
+  const workedBox = document.getElementById('workedBox');
+  revealBtn.addEventListener('click', () => {
+    const open = workedBox.classList.toggle('open');
+    revealBtn.textContent = open ? 'Hide the paragraph \u2191' : 'See it as one paragraph \u2193';
+  });
+
+  const fields = {
+    p:  document.getElementById('in-p'),
+    e1: document.getElementById('in-e1'),
+    e2: document.getElementById('in-e2'),
+    l:  document.getElementById('in-l'),
+  };
+  const counts = {
+    p:  document.getElementById('count-p'),
+    e1: document.getElementById('count-e1'),
+    e2: document.getElementById('count-e2'),
+    l:  document.getElementById('count-l'),
+  };
+  const preview = document.getElementById('preview');
+
+  function wordCount(str) {
+    const t = str.trim();
+    return t.length ? t.split(/\s+/).length : 0;
+  }
+
+  const mirrors = {
+    p: document.getElementById('mirror-p'),
+    e1: document.getElementById('mirror-e1'),
+    e2: document.getElementById('mirror-e2'),
+    l: document.getElementById('mirror-l'),
+  };
+
+  function render() {
+    const vals = {
+      p: fields.p.value.trim(),
+      e1: fields.e1.value.trim(),
+      e2: fields.e2.value.trim(),
+      l: fields.l.value.trim(),
+    };
+    Object.keys(fields).forEach(k => {
+      counts[k].textContent = wordCount(fields[k].value) + ' words';
+      mirrors[k].textContent = fields[k].value;
+    });
+
+    const parts = [];
+    if (vals.p)  parts.push('<span class="p">' + escapeHtml(vals.p) + '</span>');
+    if (vals.e1) parts.push('<span class="e1">' + escapeHtml(vals.e1) + '</span>');
+    if (vals.e2) parts.push('<span class="e2">' + escapeHtml(vals.e2) + '</span>');
+    if (vals.l)  parts.push('<span class="l">' + escapeHtml(vals.l) + '</span>');
+
+    if (parts.length === 0) {
+      preview.innerHTML = '<span class="empty">Start typing above — your paragraph will appear here, color-coded to match each part.</span>';
+    } else {
+      preview.innerHTML = parts.join(' ');
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  Object.values(fields).forEach(f => f.addEventListener('input', render));
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    Object.values(fields).forEach(f => f.value = '');
+    render();
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const text = [fields.p.value.trim(), fields.e1.value.trim(), fields.e2.value.trim(), fields.l.value.trim()]
+      .filter(Boolean).join(' ');
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    }).catch(() => {});
+  });
+
+  document.querySelectorAll('.check-item input').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const span = document.getElementById(cb.dataset.target);
+      span.classList.toggle('done', cb.checked);
+    });
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => {
+    window.print();
+  });
+
+  render();
+</script>
+</body>
+</html>
