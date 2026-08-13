@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRAAP — Is This Source Worth Using?</title>
+<style>
+  :root {
+    --navy: #1E2761;
+    --teal: #0F9488;
+    --amber: #C2750F;
+    --maroon: #9D174D;
+    --purple: #6D28D9;
+    --ink: #201C1A;
+    --muted: #6B6A66;
+    --paper: #FFFFFF;
+    --soft: #F7F8F7;
+    --line: #E4E2DD;
+    --good: #15803D;
+    --warn: #B45309;
+    --bad: #B91C1C;
+    --radius: 14px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.55;
+  }
+
+  .wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+
+  .eyebrow {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(28px, 4.5vw, 42px);
+    line-height: 1.14;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+
+  .lede {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 660px;
+    margin: 0 0 8px;
+  }
+
+  .craap-mark {
+    display: flex;
+    gap: 10px;
+    margin: 28px 0 4px;
+  }
+  .craap-mark span {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #fff;
+  }
+
+  .head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 22px;
+  }
+  .idbox {
+    display: flex;
+    gap: 18px;
+    flex: none;
+  }
+  .idbox div { display: flex; flex-direction: column; }
+  .idbox label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .idbox input {
+    border: none;
+    border-bottom: 1px solid var(--line);
+    background: transparent;
+    font-size: 13.5px;
+    padding: 2px 2px 5px;
+    width: 130px;
+    font-family: inherit;
+    color: var(--ink);
+  }
+  .idbox input:focus { outline: none; border-bottom-color: var(--amber); }
+  @media (max-width: 640px) {
+    .head-row { flex-direction: column; align-items: flex-start; }
+  }
+
+  section { margin-top: 64px; }
+
+  h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 26px;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0 0 28px;
+    max-width: 660px;
+  }
+
+  /* ---- Learn cards ---- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 980px) {
+    .cards { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 16px 20px;
+    background: var(--paper);
+  }
+  .badge {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .card h3 {
+    margin: 0 0 8px;
+    font-size: 15.5px;
+  }
+  .card p {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .example {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 11px;
+    margin: 0;
+  }
+  .example b {
+    font-style: normal;
+    display: block;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-weight: 700;
+  }
+
+  .source-tag {
+    display: inline-block;
+    font-size: 12.5px;
+    color: var(--muted);
+    background: var(--soft);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+  }
+
+  /* ---- worked example toggle ---- */
+  .reveal-btn {
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 18px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  .reveal-btn:hover { background: #f0f0ee; }
+
+  .worked-box {
+    display: none;
+    margin-top: 16px;
+    padding: 22px 24px;
+    background: var(--soft);
+    border-radius: var(--radius);
+  }
+  .worked-box.open { display: block; }
+  .worked-row {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .worked-row:last-child { border-bottom: none; }
+  .worked-row .wl {
+    flex: none;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    font-size: 12.5px;
+  }
+  .worked-row .wtext { color: var(--ink); }
+  .worked-verdict {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 2px solid var(--line);
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  /* ---- Source tables (spreadsheet style, one per source) ---- */
+  .source-block {
+    margin-bottom: 26px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  table.source-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  .source-table td {
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 10px 12px;
+    vertical-align: top;
+    font-size: 13.5px;
+  }
+  .src-title-row td {
+    font-weight: 700;
+    font-size: 14.5px;
+    padding: 12px;
+  }
+  .src-title-row .src-name { display: flex; align-items: center; gap: 8px; }
+  .src-remove {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 999px;
+    padding: 3px 10px;
+    cursor: pointer;
+  }
+  .col-head-row td {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: rgba(255,255,255,0.55);
+  }
+  .crit-cell { font-weight: 700; width: 20%; }
+  .q-cell { font-style: italic; color: var(--ink); width: 42%; }
+  .notes-cell { width: 38%; background: var(--paper); }
+
+  /* colour themes */
+  .theme-green .src-title-row td, .theme-green .col-head-row td { background: #DCEEDC; }
+  .theme-green .crit-cell, .theme-green .src-name { color: #2E6B4F; }
+  .theme-amber .src-title-row td, .theme-amber .col-head-row td { background: #FBEFD2; }
+  .theme-amber .crit-cell, .theme-amber .src-name { color: #9C7A1E; }
+  .theme-blue .src-title-row td, .theme-blue .col-head-row td { background: #DCE6F5; }
+  .theme-blue .crit-cell, .theme-blue .src-name { color: #1B5C9E; }
+  .theme-purple .src-title-row td, .theme-purple .col-head-row td { background: #EBDEF5; }
+  .theme-purple .crit-cell, .theme-purple .src-name { color: #6D28D9; }
+
+  .type-select {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .type-pill {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,0.18);
+    background: rgba(255,255,255,0.7);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .type-pill.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+
+  .toggle-group {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .toggle-btn {
+    font: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .toggle-btn[data-val="pass"].active { background: var(--good); color: #fff; border-color: var(--good); }
+  .toggle-btn[data-val="unsure"].active { background: var(--warn); color: #fff; border-color: var(--warn); }
+  .toggle-btn[data-val="fail"].active { background: var(--bad); color: #fff; border-color: var(--bad); }
+
+  .notes {
+    width: 100%;
+    min-height: 46px;
+    resize: vertical;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 7px 9px;
+    font: inherit;
+    font-size: 12.5px;
+    color: var(--ink);
+  }
+  .notes:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+
+  /* ---- per-source meter + conclusion (footer row of each table) ---- */
+  .conclusion-row td { background: var(--paper); }
+  .meter-mini { margin-bottom: 14px; }
+  .meter-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 8px;
+  }
+  .meter-track {
+    display: flex;
+    gap: 4px;
+    height: 9px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--line);
+  }
+  .meter-seg { flex: 1; background: var(--line); }
+  .meter-seg.pass { background: var(--good); }
+  .meter-seg.unsure { background: var(--warn); }
+  .meter-seg.fail { background: var(--bad); }
+  .meter-verdict {
+    margin-top: 10px;
+    font-size: 13.5px;
+    font-weight: 700;
+  }
+  .meter-sub {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .conclusion-label {
+    display: block;
+    font-weight: 700;
+    font-size: 13.5px;
+    margin: 4px 0 8px;
+  }
+  textarea.conclusion {
+    width: 100%;
+    min-height: 70px;
+    resize: vertical;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+  textarea.conclusion:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+
+  .add-source-wrap {
+    text-align: center;
+    margin: 20px 0 30px;
+  }
+  .add-source-btn {
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--soft);
+    border: 1px dashed var(--muted);
+    border-radius: 999px;
+    padding: 11px 22px;
+    cursor: pointer;
+  }
+  .add-source-btn:hover { background: #f0f0ee; }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: 10px 18px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+  }
+  .btn.primary {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .btn:hover { opacity: 0.85; }
+
+  .note {
+    margin-top: 32px;
+    font-size: 12.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+  }
+
+  footer {
+    margin-top: 56px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+
+  @media print {
+    .no-print { display: none !important; }
+    .print-hide { display: none !important; }
+    body { color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; }
+    .wrap { max-width: 100%; padding: 20px 28px; }
+    .card, .source-block, .worked-box { break-inside: avoid; }
+    section { margin-top: 32px; }
+    textarea { display: none; }
+    .print-mirror { display: block !important; }
+  }
+  .print-mirror {
+    display: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 9px 11px;
+    font-size: 13.5px;
+    color: var(--ink);
+    min-height: 50px;
+  }
+  .print-mirror:empty::before {
+    content: "(no notes written)";
+    color: var(--muted);
+    font-style: italic;
+  }
+  .conclusion-mirror {
+    min-height: 80px;
+    font-size: 14px;
+  }
+  .conclusion-mirror:empty::before {
+    content: "(no conclusion written)";
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a href="../index.html" class="no-print" style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--muted);text-decoration:none;margin-bottom:22px">&larr; All criteria</a>
+
+  <div class="head-row">
+    <div>
+      <p class="eyebrow">MYP 1 · Design · Criterion A</p>
+      <h1>CRAAP: Is This Source Worth Using?</h1>
+      <p class="lede">Before you use something you found online in your research, run it through five quick checks to see if it's actually trustworthy.</p>
+    </div>
+    <div class="idbox">
+      <div><label>Name</label><input type="text"></div>
+      <div><label>Class</label><input type="text" style="width:80px;"></div>
+      <div><label>Date</label><input type="text" style="width:100px;"></div>
+    </div>
+  </div>
+
+  <div class="craap-mark no-print">
+    <span style="background:var(--amber)">C</span>
+    <span style="background:var(--teal)">R</span>
+    <span style="background:var(--navy)">A</span>
+    <span style="background:var(--maroon)">A</span>
+    <span style="background:var(--purple)">P</span>
+  </div>
+
+  <!-- ============ LEARN ============ -->
+  <section class="print-hide">
+    <h2>Learn</h2>
+    <p class="section-sub">Not everything you find online is worth using in your research. CRAAP gives you five quick checks to decide if a source is trustworthy enough to rely on.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="badge" style="background:var(--amber)">C</div>
+        <h3>Currency</h3>
+        <p>Is it recent enough to trust for this topic?</p>
+        <p class="example"><b>Example</b>Posted in 2015 — quite old for advice that changes fast, like event promotion.</p>
+      </div>
+      <div class="card">
+        <div class="badge" style="background:var(--teal)">R</div>
+        <h3>Relevance</h3>
+        <p>Does it actually match what you're researching?</p>
+        <p class="example"><b>Example</b>It's about promoting events in general, not about reaching schools across a whole country.</p>
+      </div>
+      <div class="card">
+        <div class="badge" style="background:var(--navy)">A</div>
+        <h3>Authority</h3>
+        <p>Who wrote it, and do they know the topic?</p>
+        <p class="example"><b>Example</b>No author name is given, so there's no way to know if they're qualified to say this.</p>
+      </div>
+      <div class="card">
+        <div class="badge" style="background:var(--maroon)">A</div>
+        <h3>Accuracy</h3>
+        <p>Can you check this information somewhere else?</p>
+        <p class="example"><b>Example</b>No links or sources are given for any of its tips — nothing to double-check.</p>
+      </div>
+      <div class="card">
+        <div class="badge" style="background:var(--purple)">P</div>
+        <h3>Purpose</h3>
+        <p>Why does this source exist — to inform, sell, or persuade?</p>
+        <p class="example"><b>Example</b>It looks like it mainly exists to get clicks and ad views, not to genuinely help schools.</p>
+      </div>
+    </div>
+
+    <span class="source-tag">Example source: a blog post, &ldquo;How to Promote School Events,&rdquo; 2015, no author listed</span>
+    <br>
+    <button class="reveal-btn no-print" id="revealBtn" type="button">See the full evaluation &darr;</button>
+    <div class="worked-box" id="workedBox">
+      <div class="worked-row"><div class="wl" style="background:var(--amber)">C</div><div class="wtext">Posted in 2015 — too old to trust for fast-changing promotion advice.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--teal)">R</div><div class="wtext">Only loosely related — general event tips, not reaching schools nationwide.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--navy)">A</div><div class="wtext">No author listed — impossible to check who wrote it or why they'd know.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--maroon)">A</div><div class="wtext">No links or sources given — nothing to cross-check.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--purple)">P</div><div class="wtext">Seems designed for clicks and ads, not genuinely informing schools.</div></div>
+      <div class="worked-verdict">Verdict: fails 4 of 5 checks — look for a more recent, clearly authored source instead.</div>
+    </div>
+  </section>
+
+  <!-- ============ PRACTICE ============ -->
+  <section>
+    <h2>Practice</h2>
+    <p class="section-sub">Evaluate up to three sources from your own research (or add more). Mark each check, add a short note, and write a conclusion for each source.</p>
+
+    <div id="sourcesContainer"></div>
+
+    <div class="add-source-wrap no-print">
+      <button class="add-source-btn" id="addSourceBtn" type="button">+ Add another source</button>
+    </div>
+
+    <div class="actions no-print" style="margin-top:-6px;">
+      <button class="btn primary no-print" id="copyBtn" type="button">Copy evaluation</button>
+      <button class="btn no-print" id="clearBtn" type="button">Clear all</button>
+      <button class="btn no-print" id="printBtn" type="button">Print my evaluation</button>
+    </div>
+
+    <p class="note no-print">Printing only prints your name/class/date and your written evaluation below — not the Learn section above. Your evaluation isn't saved once you close this page — copy it into your workbook before you leave.</p>
+  </section>
+
+  <footer>MYP 1 · Design · Criterion A — Evaluating the credibility of your research sources.</footer>
+</div>
+
+<script>
+  const revealBtn = document.getElementById('revealBtn');
+  const workedBox = document.getElementById('workedBox');
+  revealBtn.addEventListener('click', () => {
+    const open = workedBox.classList.toggle('open');
+    revealBtn.textContent = open ? 'Hide the evaluation \u2191' : 'See the full evaluation \u2193';
+  });
+
+  const CRITERIA = [
+    { key: 'c',  letter: 'C', name: 'Currency',  question: 'Was this information published or updated within the last 3\u20135 years?' },
+    { key: 'r',  letter: 'R', name: 'Relevance', question: 'Does this directly relate to your specific problem and target audience?' },
+    { key: 'a1', letter: 'A', name: 'Authority', question: 'Who published this? Is it a reputable news outlet, NGO, school, or government body?' },
+    { key: 'a2', letter: 'A', name: 'Accuracy',  question: 'Does the source provide concrete facts, statistics, or measurable data (not just opinion)?' },
+    { key: 'p',  letter: 'P', name: 'Purpose',   question: 'Is the primary purpose to inform or educate the public about a real community need?' },
+  ];
+  const THEMES = ['green', 'amber', 'blue', 'purple'];
+  const TYPES = ['Article', 'Blog', 'NGO Report', 'Government Report'];
+
+  const sourcesContainer = document.getElementById('sourcesContainer');
+  const rowStates = {}; // "sourceId-critKey" -> "pass"|"unsure"|"fail"
+  let sourceCount = 0;
+
+  function buildSourceBlock(id, theme) {
+    const wrap = document.createElement('div');
+    wrap.className = 'source-block theme-' + theme;
+    wrap.dataset.source = id;
+
+    let rowsHtml = '';
+    CRITERIA.forEach(c => {
+      rowsHtml += `
+        <tr class="crit-row" data-source="${id}" data-crit="${c.key}">
+          <td class="crit-cell">${c.letter} \u2014 ${c.name}</td>
+          <td class="q-cell">${c.question}</td>
+          <td class="notes-cell">
+            <div class="toggle-group">
+              <button class="toggle-btn" data-val="pass" type="button">Pass</button>
+              <button class="toggle-btn" data-val="unsure" type="button">Unsure</button>
+              <button class="toggle-btn" data-val="fail" type="button">Fail</button>
+            </div>
+            <textarea class="notes" placeholder="Notes\u2026"></textarea>
+            <div class="print-mirror" id="mirror-${id}-${c.key}"></div>
+          </td>
+        </tr>`;
+    });
+
+    const typePills = TYPES.map((t, i) =>
+      `<button class="type-pill${i === 0 ? ' active' : ''}" type="button">${t}</button>`
+    ).join('');
+
+    wrap.innerHTML = `
+      <table class="source-table">
+        <colgroup><col style="width:20%"><col style="width:42%"><col style="width:38%"></colgroup>
+        <tr class="src-title-row">
+          <td>
+            <div class="src-name">
+              <span>Research Source ${id}</span>
+              ${id > 3 ? '<button class="src-remove no-print" type="button">Remove</button>' : ''}
+            </div>
+          </td>
+          <td colspan="2">
+            <div class="type-select">${typePills}</div>
+          </td>
+        </tr>
+        <tr class="col-head-row">
+          <td>CRAAP Criteria</td><td>Check Questions</td><td>Student Notes / Audit</td>
+        </tr>
+        ${rowsHtml}
+        <tr class="conclusion-row">
+          <td colspan="3">
+            <div class="meter-mini">
+              <p class="meter-label">Credibility meter</p>
+              <div class="meter-track" id="meterTrack-${id}">
+                <div class="meter-seg"></div><div class="meter-seg"></div><div class="meter-seg"></div><div class="meter-seg"></div><div class="meter-seg"></div>
+              </div>
+              <p class="meter-verdict" id="meterVerdict-${id}">Mark all five checks to see your verdict.</p>
+              <p class="meter-sub" id="meterSub-${id}">0 of 5 checks marked.</p>
+            </div>
+            <label class="conclusion-label">Final Conclusion on Credibility</label>
+            <textarea class="conclusion" data-source="${id}" placeholder="Write your own short conclusion for this source\u2026"></textarea>
+            <div class="print-mirror conclusion-mirror" id="mirror-conclusion-${id}"></div>
+          </td>
+        </tr>
+      </table>`;
+
+    return wrap;
+  }
+
+  function addSource() {
+    sourceCount++;
+    const theme = THEMES[(sourceCount - 1) % THEMES.length];
+    const block = buildSourceBlock(sourceCount, theme);
+    sourcesContainer.appendChild(block);
+    CRITERIA.forEach(c => { rowStates[sourceCount + '-' + c.key] = null; });
+    updateMeter(sourceCount);
+  }
+
+  // seed with 3 sources
+  for (let i = 0; i < 3; i++) addSource();
+
+  document.getElementById('addSourceBtn').addEventListener('click', addSource);
+
+  function updateMeter(id) {
+    const track = document.getElementById('meterTrack-' + id);
+    const verdictEl = document.getElementById('meterVerdict-' + id);
+    const subEl = document.getElementById('meterSub-' + id);
+    if (!track) return;
+    const vals = CRITERIA.map(c => rowStates[id + '-' + c.key]);
+    const marked = vals.filter(v => v !== null && v !== undefined);
+    const segs = track.querySelectorAll('.meter-seg');
+    segs.forEach((seg, i) => {
+      seg.className = 'meter-seg';
+      const v = vals[i];
+      if (v === 'pass') seg.classList.add('pass');
+      else if (v === 'unsure') seg.classList.add('unsure');
+      else if (v === 'fail') seg.classList.add('fail');
+    });
+
+    subEl.textContent = marked.length + ' of 5 checks marked.';
+
+    if (marked.length < 5) {
+      verdictEl.textContent = 'Mark all five checks to see your verdict.';
+      verdictEl.style.color = 'var(--ink)';
+      return;
+    }
+    const passCount = vals.filter(v => v === 'pass').length;
+    const failCount = vals.filter(v => v === 'fail').length;
+    if (failCount >= 2) {
+      verdictEl.textContent = 'Look for a better source \u2014 this one fails too many checks.';
+      verdictEl.style.color = 'var(--bad)';
+    } else if (passCount >= 4) {
+      verdictEl.textContent = 'Good to use \u2014 this source holds up well.';
+      verdictEl.style.color = 'var(--good)';
+    } else {
+      verdictEl.textContent = 'Use with caution \u2014 check it against a second source.';
+      verdictEl.style.color = 'var(--warn)';
+    }
+  }
+
+  // event delegation: type pills, toggle buttons, remove button
+  sourcesContainer.addEventListener('click', (e) => {
+    const pill = e.target.closest('.type-pill');
+    if (pill) {
+      pill.parentElement.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      return;
+    }
+    const toggle = e.target.closest('.toggle-btn');
+    if (toggle) {
+      const row = toggle.closest('.crit-row');
+      const id = row.dataset.source, key = row.dataset.crit;
+      const stateKey = id + '-' + key;
+      const val = toggle.dataset.val;
+      rowStates[stateKey] = (rowStates[stateKey] === val) ? null : val;
+      row.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      if (rowStates[stateKey]) {
+        row.querySelector('.toggle-btn[data-val="' + rowStates[stateKey] + '"]').classList.add('active');
+      }
+      updateMeter(id);
+      return;
+    }
+    const removeBtn = e.target.closest('.src-remove');
+    if (removeBtn) {
+      const block = removeBtn.closest('.source-block');
+      const id = block.dataset.source;
+      CRITERIA.forEach(c => { delete rowStates[id + '-' + c.key]; });
+      block.remove();
+      return;
+    }
+  });
+
+  // event delegation: notes + conclusion input -> print mirrors
+  sourcesContainer.addEventListener('input', (e) => {
+    if (e.target.classList.contains('notes')) {
+      const row = e.target.closest('.crit-row');
+      const id = row.dataset.source, key = row.dataset.crit;
+      document.getElementById('mirror-' + id + '-' + key).textContent = e.target.value;
+    } else if (e.target.classList.contains('conclusion')) {
+      const id = e.target.dataset.source;
+      document.getElementById('mirror-conclusion-' + id).textContent = e.target.value;
+    }
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    Object.keys(rowStates).forEach(k => rowStates[k] = null);
+    sourcesContainer.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    sourcesContainer.querySelectorAll('.notes, .conclusion').forEach(n => n.value = '');
+    sourcesContainer.querySelectorAll('.print-mirror').forEach(m => m.textContent = '');
+    sourcesContainer.querySelectorAll('.source-block').forEach(block => updateMeter(block.dataset.source));
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const labels = { c: 'Currency', r: 'Relevance', a1: 'Authority', a2: 'Accuracy', p: 'Purpose' };
+    const lines = [];
+    sourcesContainer.querySelectorAll('.source-block').forEach(block => {
+      const id = block.dataset.source;
+      const activeType = block.querySelector('.type-pill.active');
+      lines.push('=== Research Source ' + id + ' (' + (activeType ? activeType.textContent : 'Article') + ') ===');
+      block.querySelectorAll('.crit-row').forEach(row => {
+        const key = row.dataset.crit;
+        const note = row.querySelector('.notes').value.trim();
+        const verdict = rowStates[id + '-' + key] ? rowStates[id + '-' + key].toUpperCase() : 'NOT MARKED';
+        lines.push(labels[key] + ' [' + verdict + ']: ' + (note || '(no notes)'));
+      });
+      const conclusion = block.querySelector('.conclusion').value.trim();
+      lines.push('Final Conclusion on Credibility: ' + (conclusion || '(not written yet)'));
+      lines.push('');
+    });
+    const text = lines.join('\n').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    }).catch(() => {});
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => {
+    window.print();
+  });
+</script>
+</body>
+</html>
