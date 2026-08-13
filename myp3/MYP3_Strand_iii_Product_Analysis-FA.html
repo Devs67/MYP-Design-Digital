@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MYP 3 Design — Product Analysis</title>
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#4A5A78;
+    --line:#C7CEDA;
+    --line-soft:#E3E7EE;
+    --paper:#F7F8FA;
+    --panel:#FFFFFF;
+    --accent:#C4881F;
+    --accent-soft:#F3E4C6;
+    --area1:#EEF2F8;
+    --area2:#F4EFE6;
+    --area3:#EDF3EF;
+    --red:#B01E1E;
+    --red-bg:#FBEAEA;
+    --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0/100% 42px,
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px) 0 0/42px 100%,
+      var(--paper);
+    padding:28px 20px 60px;
+  }
+
+  .sheet{
+    max-width:1180px;
+    margin:0 auto;
+    background:var(--panel);
+    border:1px solid var(--line);
+    box-shadow: 0 1px 0 var(--line);
+  }
+
+  /* header */
+  .head{
+    padding:26px 32px 20px;
+    border-bottom:2px solid var(--ink);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .head .kicker{
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 6px;
+  }
+  .head h1{margin:0; font-size:26px; font-weight:700; letter-spacing:-.01em;}
+  .head .sub{margin:6px 0 0; font-size:13.5px; color:var(--ink-soft); max-width:56ch;}
+  .idbox{display:flex; gap:14px; font-size:12px; color:var(--ink-soft);}
+  .idbox label{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px; color:var(--ink-soft);}
+  .idbox input{
+    border:none; border-bottom:1px solid var(--line); background:transparent;
+    font-size:13px; padding:2px 2px 4px; width:140px; font-family:var(--sans); color:var(--ink);
+  }
+  .idbox input:focus{outline:none; border-bottom-color:var(--accent);}
+  .idbox input.field-missing{border-bottom-color:var(--red); background:var(--red-bg);}
+
+  /* legend */
+  .legend{
+    display:flex; gap:22px; flex-wrap:wrap; padding:14px 32px; background:var(--paper);
+    border-bottom:1px solid var(--line); font-size:12px; color:var(--ink-soft); align-items:center;
+  }
+  .legend b{color:var(--ink); font-weight:600;}
+
+  /* red instruction box */
+  .warn-box{
+    border:1.5px solid var(--red); background:var(--red-bg); color:#111;
+    padding:14px 18px; margin:18px 32px; font-size:13px; line-height:1.65;
+  }
+  .warn-box b{color:var(--red);}
+
+  /* print-blocker banner */
+  .print-warning{
+    display:none; border:1.5px solid var(--red); background:var(--red-bg); color:var(--red);
+    padding:12px 18px; margin:16px 32px; font-size:13px; font-weight:700; line-height:1.5;
+  }
+  .print-warning.show{display:block;}
+
+  /* site picker */
+  .sites{padding:18px 32px; border-bottom:1px solid var(--line);}
+  .sites h2, .reflect h2, .checklist h2{
+    font-size:13px; font-family:var(--mono); letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); margin:0 0 12px; font-weight:600;
+  }
+  .site-row{
+    display:flex; align-items:flex-start; gap:12px; padding:10px 12px;
+    border:1px solid var(--line-soft); margin-bottom:8px; background:var(--paper);
+  }
+  .site-row .st{flex:1;}
+  .site-row a{color:var(--ink); font-weight:700; text-decoration:none; border-bottom:1px solid var(--accent);}
+  .site-row .url{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-left:6px;}
+  .site-row .desc{font-size:12.5px; color:var(--ink-soft); margin-top:3px;}
+  .site-row.field-missing{border-color:var(--red);}
+
+  /* area block */
+  .area{border-bottom:1px solid var(--line);}
+  .area-head{display:flex; align-items:center; gap:14px; padding:14px 32px;}
+  .area:nth-of-type(1) .area-head{background:var(--area1);}
+  .area:nth-of-type(2) .area-head{background:var(--area2);}
+  .area:nth-of-type(3) .area-head{background:var(--area3);}
+  .area-num{
+    font-family:var(--mono); font-size:12px; color:var(--ink); background:var(--panel);
+    border:1px solid var(--ink); width:26px; height:26px; display:flex; align-items:center;
+    justify-content:center; flex:none;
+  }
+  .area-fields{flex:1;}
+  .area-fields .title{font-size:15px; font-weight:700; color:var(--ink);}
+  .area-fields .hint{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .area-body{padding:18px 32px;}
+
+  /* SWOT quadrant */
+  .swot-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line-soft);}
+  .swot-cell{border:1px solid var(--line-soft); padding:14px;}
+  .swot-label{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:3px; font-weight:700;}
+  .swot-cell:nth-child(1) .swot-label{color:#2E6B4F;}
+  .swot-cell:nth-child(2) .swot-label{color:#A03E3E;}
+  .swot-cell:nth-child(3) .swot-label{color:#1B5C9E;}
+  .swot-cell:nth-child(4) .swot-label{color:var(--accent);}
+  .swot-hint{font-size:11px; color:var(--ink-soft); margin-bottom:8px;}
+
+  /* framework table — 2 columns, resizable */
+  .ftable{width:100%; border-collapse:collapse; table-layout:fixed;}
+  .ftable th{
+    font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink-soft); text-align:left; font-weight:600; padding:8px 10px;
+    border-bottom:1px solid var(--line); border-top:1px solid var(--line); background:var(--paper);
+    position:relative;
+  }
+  .col-resizer{
+    position:absolute; top:0; right:-3px; width:6px; height:100%; cursor:col-resize; z-index:2;
+  }
+  .col-resizer:hover, .col-resizer.resizing{background:var(--accent-soft);}
+  .ftable td{padding:10px; border-bottom:1px solid var(--line-soft); vertical-align:top;}
+  .ftable td.flabel{font-size:13px;}
+  .ftable td.flabel .lname{font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:700; display:block; margin-bottom:3px;}
+  .ftable td.flabel .lhint{font-size:11.5px; color:var(--ink-soft); line-height:1.4;}
+
+  textarea, input:not([type=radio]):not([type=checkbox]), select{
+    border:none; background:transparent; font-size:13px; font-family:var(--sans); color:var(--ink);
+    line-height:1.4; width:100%;
+  }
+  input[type=radio], input[type=checkbox]{width:16px; height:16px; flex:none; accent-color:var(--accent);}
+
+  /* resizable answer cells */
+  .cell-input{resize:both; overflow:auto; min-width:120px; min-height:56px; width:100%; height:64px;}
+  .swot-cell .cell-input{height:76px;}
+  textarea.cell-input{border:1px solid transparent; padding:2px;}
+  textarea.cell-input:focus{outline:none; background:var(--accent-soft); border-color:var(--accent);}
+
+  /* per-cell image tools */
+  .cell-wrap{display:flex; flex-direction:column; gap:6px;}
+  .img-tools{display:flex; align-items:center; gap:8px;}
+  .img-add-btn{
+    font-family:var(--sans); font-size:10.5px; font-weight:600; color:var(--ink-soft);
+    background:var(--panel); border:1px dashed var(--line); padding:3px 9px; cursor:pointer;
+  }
+  .img-add-btn:hover{border-color:var(--accent); color:var(--accent);}
+  .cell-img-wrap{
+    display:none; resize:both; overflow:hidden; border:1px solid var(--line);
+    width:180px; height:120px; max-width:100%; position:relative; background:var(--paper);
+  }
+  .cell-img-wrap.has-img{display:block;}
+  .cell-img-wrap img{width:100%; height:100%; object-fit:contain; display:block;}
+  .img-remove-btn{
+    position:absolute; top:2px; right:2px; width:18px; height:18px; line-height:16px; text-align:center;
+    background:#fff; border:1px solid var(--red); color:var(--red); font-size:11px; font-weight:700;
+    cursor:pointer; padding:0; border-radius:2px;
+  }
+  .img-remove-btn:hover{background:var(--red); color:#fff;}
+
+  /* framework-level screenshot zone */
+  .shot{margin-top:14px; border:1px dashed var(--line); padding:14px; text-align:center; background:var(--paper);}
+  .shot input[type=file]{display:none;}
+  .shot-btn{
+    font-family:var(--sans); font-size:12px; font-weight:600; padding:7px 14px;
+    border:1px solid var(--ink); background:var(--panel); color:var(--ink); cursor:pointer;
+  }
+  .shot-btn:hover{background:var(--ink); color:#fff;}
+  .shot-caption-label{font-size:11px; color:var(--ink-soft); margin-top:6px;}
+  .shot-preview{max-width:100%; max-height:340px; margin-top:12px; border:1px solid var(--line); display:none;}
+  .shot-preview.has-img{display:inline-block;}
+  .shot-note{width:100%; margin-top:10px; border:1px solid var(--line-soft); padding:8px; font-size:12.5px; display:none; text-align:left;}
+  .shot-note.has-img{display:block;}
+  .shot-note label{display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px;}
+
+  /* reflection */
+  .reflect{padding:18px 32px;}
+  .reflect textarea{border:1px solid var(--line-soft); padding:10px; min-height:64px; resize:vertical;}
+
+  /* checklist */
+  .checklist{padding:20px 32px 30px;}
+  .checklist ul{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,1fr); gap:8px 30px;}
+  .checklist li{display:flex; gap:9px; align-items:flex-start; font-size:13px; color:var(--ink-soft);}
+  .checklist input[type=checkbox]{margin-top:3px; accent-color:var(--accent);}
+
+  .toolbar{max-width:1180px; margin:0 auto 16px; display:flex; justify-content:flex-end; gap:10px;}
+  .toolbar button{
+    font-family:var(--sans); font-size:12.5px; font-weight:600; padding:8px 16px;
+    border:1px solid var(--ink); background:var(--panel); color:var(--ink); cursor:pointer;
+  }
+  .toolbar button:hover{background:var(--ink); color:#fff;}
+
+  @media print{
+    body{background:#fff; padding:0;}
+    .toolbar{display:none;}
+    .back-nav{display:none;}
+    .print-warning{display:none !important;}
+    .sheet{border:none; box-shadow:none;}
+    textarea, input, select{color:#000 !important;}
+    textarea:focus, input:focus, select:focus{background:transparent !important; outline:none !important;}
+    .shot-btn, .img-add-btn, .img-remove-btn, .col-resizer{display:none !important;}
+    .shot{border-style:solid;}
+    .area{break-inside:avoid;}
+    .cell-input, .cell-img-wrap{resize:none !important;}
+  }
+
+  @media (max-width:720px){
+    .ftable{display:block; overflow-x:auto; white-space:nowrap;}
+  }
+</style>
+</head>
+<body id="artifacts-component-root-html">
+
+<div class="back-nav" style="max-width:1180px;margin:0 auto">
+  <a href="fa.html" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--ink-soft);text-decoration:none;margin-bottom:14px">&larr; Formative assessments</a>
+</div>
+
+<div class="toolbar">
+  <button onclick="saveCopy()">Save my copy (.html)</button>
+  <button onclick="tryPrint()">Print / Save as PDF</button>
+</div>
+
+<div class="sheet">
+
+  <div class="head">
+    <div>
+      <p class="kicker">MYP Design · Criterion A · Strand iii · Formative</p>
+      <h1>Product Analysis</h1>
+      <p class="sub">Choose one existing product and analyse it using three frameworks — SWOT, ACCESS FM, and CFPC — to build the skill you'll need for the Strand iii summative.</p>
+    </div>
+    <div class="idbox">
+      <div><label>Name</label><input type="text" id="fName" value=""></div>
+      <div><label>Class</label><input type="text" id="fClass" style="width:80px;" value=""></div>
+      <div><label>Date</label><input type="text" id="fDate" style="width:100px;" value=""></div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><b>Note:</b> this is formative — it builds the skill for your Strand iii summative, where you'll analyse a full group of products.</span>
+  </div>
+
+  <div class="print-warning" id="printWarning"></div>
+
+  <div class="sites" id="sitesSection">
+    <h2>Choose your website</h2>
+    <div class="site-row" data-site-row>
+      <input type="radio" name="site" value="LocalCircles">
+      <div class="st">
+        <a href="https://www.localcircles.com/a/home" target="_blank" rel="noopener">LocalCircles</a><span class="url">localcircles.com/a/home</span>
+        <div class="desc">An Indian community platform where citizens raise local issues, run polls, and engage with governance and daily life topics.</div>
+      </div>
+    </div>
+    <div class="site-row" data-site-row>
+      <input type="radio" name="site" value="Community Tool Box">
+      <div class="st">
+        <a href="https://ctb.ku.edu/en" target="_blank" rel="noopener">Community Tool Box</a><span class="url">ctb.ku.edu/en</span>
+        <div class="desc">A free global resource (University of Kansas) offering toolkits and step-by-step guidance for building healthier communities.</div>
+      </div>
+    </div>
+    <div class="site-row" data-site-row>
+      <input type="radio" name="site" value="UNICEF Voices of Youth">
+      <div class="st">
+        <a href="https://www.unicef.org/topics/voices-youth" target="_blank" rel="noopener">UNICEF Voices of Youth</a><span class="url">unicef.org/topics/voices-youth</span>
+        <div class="desc">A UNICEF platform that amplifies young people's voices and engagement on issues affecting their lives worldwide.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <b>SCREENSHOT + ANNOTATE:</b> as you work through each framework below, take a screenshot of the part of the website you're analysing, and annotate it (label what you're pointing to) to support your written answers. Use the <b>+ Image</b> button under any answer box to insert it directly into that cell, or attach one screenshot for the whole framework using the box at the bottom of each section. Drag the bottom-right corner of any answer box or image to resize it.
+  </div>
+
+  <!-- SWOT -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-num">01</div>
+      <div class="area-fields">
+        <div class="title">Framework 1 — SWOT</div>
+        <div class="hint">Strengths &amp; Weaknesses look INWARD at the product. Opportunities &amp; Threats look OUTWARD at its market and users.</div>
+      </div>
+    </div>
+    <div class="area-body">
+      <div class="swot-grid">
+        <div class="swot-cell"><div class="swot-label">Strengths</div><div class="swot-hint">what does this product do well?</div><div class="cell-wrap" data-cell></div></div>
+        <div class="swot-cell"><div class="swot-label">Weaknesses</div><div class="swot-hint">what does it do poorly, or what's missing?</div><div class="cell-wrap" data-cell></div></div>
+        <div class="swot-cell"><div class="swot-label">Opportunities</div><div class="swot-hint">what could it improve or add in future?</div><div class="cell-wrap" data-cell></div></div>
+        <div class="swot-cell"><div class="swot-label">Threats</div><div class="swot-hint">what could cause it to fail or lose users?</div><div class="cell-wrap" data-cell></div></div>
+      </div>
+      <div class="shot" data-key="swot">
+        <input type="file" accept="image/*" id="shot-swot">
+        <button type="button" class="shot-btn" onclick="document.getElementById('shot-swot').click()">Attach annotated screenshot (whole framework)</button>
+        <div class="shot-caption-label">PNG or JPG — for SWOT</div>
+        <img class="shot-preview" id="preview-swot">
+        <div class="shot-note" id="note-wrap-swot"><label>Caption</label><textarea id="caption-swot" placeholder="What does this screenshot show?"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCESS FM -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-num">02</div>
+      <div class="area-fields">
+        <div class="title">Framework 2 — ACCESS FM</div>
+        <div class="hint">Designed for physical products — adapt "Materials" to mean the technology, media, or content the product is built from.</div>
+      </div>
+    </div>
+    <div class="area-body">
+      <table class="ftable" id="accessfm-table">
+        <thead><tr>
+          <th style="width:260px;">Letter<span class="col-resizer"></span></th>
+          <th>Your answer</th>
+        </tr></thead>
+        <tbody id="accessfm-body"></tbody>
+      </table>
+      <div class="shot" data-key="accessfm">
+        <input type="file" accept="image/*" id="shot-accessfm">
+        <button type="button" class="shot-btn" onclick="document.getElementById('shot-accessfm').click()">Attach annotated screenshot (whole framework)</button>
+        <div class="shot-caption-label">PNG or JPG — for ACCESS FM</div>
+        <img class="shot-preview" id="preview-accessfm">
+        <div class="shot-note" id="note-wrap-accessfm"><label>Caption</label><textarea id="caption-accessfm" placeholder="What does this screenshot show?"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CFPC -->
+  <div class="area">
+    <div class="area-head">
+      <div class="area-num">03</div>
+      <div class="area-fields">
+        <div class="title">Framework 3 — CFPC</div>
+        <div class="hint">Looks at how the product is actually built and used — useful for understanding UX and app logic specifically.</div>
+      </div>
+    </div>
+    <div class="area-body">
+      <table class="ftable" id="cfpc-table">
+        <thead><tr>
+          <th style="width:260px;">Part<span class="col-resizer"></span></th>
+          <th>Your answer</th>
+        </tr></thead>
+        <tbody id="cfpc-body"></tbody>
+      </table>
+      <div class="shot" data-key="cfpc">
+        <input type="file" accept="image/*" id="shot-cfpc">
+        <button type="button" class="shot-btn" onclick="document.getElementById('shot-cfpc').click()">Attach annotated screenshot (whole framework)</button>
+        <div class="shot-caption-label">PNG or JPG — for CFPC</div>
+        <img class="shot-preview" id="preview-cfpc">
+        <div class="shot-note" id="note-wrap-cfpc"><label>Caption</label><textarea id="caption-cfpc" placeholder="What does this screenshot show?"></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reflect">
+    <h2>Quick reflection</h2>
+    <div style="font-size:13px; margin-bottom:6px;">What's ONE idea from this product you could adapt for your own app?</div>
+    <textarea placeholder="I could adapt..."></textarea>
+  </div>
+
+  <div class="checklist">
+    <h2>Self-check before submitting</h2>
+    <ul>
+      <li><input type="checkbox"><span>I have clearly selected which website I chose</span></li>
+      <li><input type="checkbox"><span>My SWOT is specific to this product — not generic, one-word answers</span></li>
+      <li><input type="checkbox"><span>My ACCESS FM covers all 8 letters, adapted sensibly for a digital product</span></li>
+      <li><input type="checkbox"><span>My CFPC clearly separates Component, Flow, Purpose, and Complexity</span></li>
+      <li><input type="checkbox"><span>I have attached at least one annotated screenshot</span></li>
+      <li><input type="checkbox"><span>I have noted one idea I could adapt for my own app</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+  let cellIdCounter = 0;
+
+  function buildCellInput(placeholder){
+    const id = 'cell-' + (cellIdCounter++);
+    const wrap = document.createElement('div');
+    wrap.className = 'cell-wrap';
+    wrap.innerHTML = `
+      <textarea class="cell-input" placeholder="${placeholder || ''}"></textarea>
+      <div class="img-tools">
+        <button type="button" class="img-add-btn" data-target="${id}">+ Image</button>
+        <input type="file" accept="image/*" class="cell-img-input" id="input-${id}" hidden>
+      </div>
+      <div class="cell-img-wrap" id="wrap-${id}">
+        <button type="button" class="img-remove-btn" data-target="${id}">&times;</button>
+        <img class="cell-img" id="img-${id}">
+      </div>
+    `;
+    return wrap;
+  }
+
+  function wireCellImage(wrap){
+    const addBtn = wrap.querySelector('.img-add-btn');
+    const fileInput = wrap.querySelector('.cell-img-input');
+    const imgWrap = wrap.querySelector('.cell-img-wrap');
+    const img = wrap.querySelector('.cell-img');
+    const removeBtn = wrap.querySelector('.img-remove-btn');
+
+    addBtn.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      resizeImage(file, 500, (dataUrl) => {
+        img.src = dataUrl;
+        imgWrap.classList.add('has-img');
+        addBtn.style.display = 'none';
+      });
+    });
+    removeBtn.addEventListener('click', () => {
+      img.src = '';
+      imgWrap.classList.remove('has-img');
+      fileInput.value = '';
+      addBtn.style.display = '';
+    });
+  }
+
+  function resizeImage(file, maxW, cb){
+    const reader = new FileReader();
+    reader.onload = e => {
+      const image = new Image();
+      image.onload = () => {
+        const scale = Math.min(1, maxW / image.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = image.width * scale;
+        canvas.height = image.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        cb(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      image.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  document.querySelectorAll('.swot-cell [data-cell]').forEach(slot => {
+    const cell = buildCellInput('...');
+    slot.appendChild(cell);
+    wireCellImage(cell);
+  });
+
+  const accessFM = [
+    ['A — Aesthetics', "how does it look and feel? Colours, layout, style?"],
+    ['C — Cost', "is it free, paid, or ad-supported? What's the cost to the user?"],
+    ['C — Customer', "who is this product actually designed for?"],
+    ['E — Environment', "where/when is it used? Impact on surroundings or community?"],
+    ['S — Size', "how big is its reach or scale — users, coverage, content?"],
+    ['S — Safety', "how does it protect user data, wellbeing, or safety?"],
+    ['F — Function', "what does it actually do? What problem does it solve?"],
+    ['M — Materials', "what tech, media, or content is it built from? (adapted for digital)"],
+  ];
+  const accessBody = document.getElementById('accessfm-body');
+  accessFM.forEach(([label, hint]) => {
+    const tr = document.createElement('tr');
+    const td1 = document.createElement('td');
+    td1.className = 'flabel';
+    td1.innerHTML = `<span class="lname">${label}</span><span class="lhint">${hint}</span>`;
+    const td2 = document.createElement('td');
+    const cell = buildCellInput('...');
+    td2.appendChild(cell);
+    tr.appendChild(td1); tr.appendChild(td2);
+    accessBody.appendChild(tr);
+    wireCellImage(cell);
+  });
+
+  const cfpc = [
+    ['Component', "what are the key parts/features/screens that make up this product?"],
+    ['Flow', "how does a user move through it? What's the step-by-step journey?"],
+    ['Purpose', "why does this product exist? What need does it meet?"],
+    ['Complexity', "how simple or complicated is it to use? Strength or weakness?"],
+  ];
+  const cfpcBody = document.getElementById('cfpc-body');
+  cfpc.forEach(([label, hint]) => {
+    const tr = document.createElement('tr');
+    const td1 = document.createElement('td');
+    td1.className = 'flabel';
+    td1.innerHTML = `<span class="lname">${label}</span><span class="lhint">${hint}</span>`;
+    const td2 = document.createElement('td');
+    const cell = buildCellInput('...');
+    td2.appendChild(cell);
+    tr.appendChild(td1); tr.appendChild(td2);
+    cfpcBody.appendChild(tr);
+    wireCellImage(cell);
+  });
+
+  document.querySelectorAll('.col-resizer').forEach(handle => {
+    let startX, startWidth, th;
+    handle.addEventListener('mousedown', (e) => {
+      th = handle.parentElement;
+      startX = e.pageX;
+      startWidth = th.offsetWidth;
+      handle.classList.add('resizing');
+      document.body.style.userSelect = 'none';
+      const onMove = (ev) => {
+        const newWidth = Math.max(90, startWidth + (ev.pageX - startX));
+        th.style.width = newWidth + 'px';
+      };
+      const onUp = () => {
+        handle.classList.remove('resizing');
+        document.body.style.userSelect = '';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+
+  ['swot','accessfm','cfpc'].forEach(key => {
+    document.getElementById('shot-' + key).addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      resizeImage(file, 900, (dataUrl) => {
+        const preview = document.getElementById('preview-' + key);
+        preview.src = dataUrl;
+        preview.classList.add('has-img');
+        document.getElementById('note-wrap-' + key).classList.add('has-img');
+      });
+    });
+  });
+
+  function tryPrint(){
+    const name = document.getElementById('fName');
+    const cls = document.getElementById('fClass');
+    const siteChecked = document.querySelector('input[name="site"]:checked');
+    const missing = [];
+
+    [name, cls].forEach(f => f.classList.remove('field-missing'));
+    document.querySelectorAll('[data-site-row]').forEach(r => r.classList.remove('field-missing'));
+
+    if (!name.value.trim()){ missing.push('your Name'); name.classList.add('field-missing'); }
+    if (!cls.value.trim()){ missing.push('your Class'); cls.classList.add('field-missing'); }
+    if (!siteChecked){
+      missing.push('a selected website');
+      document.querySelectorAll('[data-site-row]').forEach(r => r.classList.add('field-missing'));
+    }
+
+    const warningEl = document.getElementById('printWarning');
+    if (missing.length){
+      warningEl.textContent = '⚠ Before printing, please complete: ' + missing.join(', ') + '.';
+      warningEl.classList.add('show');
+      warningEl.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    warningEl.classList.remove('show');
+    window.print();
+  }
+
+  function saveCopy(){
+    const clone = document.documentElement.cloneNode(true);
+
+    const liveInputs = document.querySelectorAll('input');
+    clone.querySelectorAll('input').forEach((el, i) => {
+      const orig = liveInputs[i];
+      if(orig.type === 'checkbox' || orig.type === 'radio'){
+        if(orig.checked) el.setAttribute('checked',''); else el.removeAttribute('checked');
+      } else if (orig.type !== 'file') {
+        el.setAttribute('value', orig.value);
+      }
+    });
+
+    const liveTextareas = document.querySelectorAll('textarea');
+    clone.querySelectorAll('textarea').forEach((el, i) => {
+      el.textContent = liveTextareas[i].value;
+    });
+
+    const liveCellImgs = document.querySelectorAll('.cell-img');
+    clone.querySelectorAll('.cell-img').forEach((el, i) => {
+      const orig = liveCellImgs[i];
+      if (orig.src) el.setAttribute('src', orig.src);
+    });
+    const liveCellImgWraps = document.querySelectorAll('.cell-img-wrap');
+    clone.querySelectorAll('.cell-img-wrap').forEach((el, i) => {
+      if (liveCellImgWraps[i].classList.contains('has-img')) el.classList.add('has-img');
+    });
+    const liveAddBtns = document.querySelectorAll('.img-add-btn');
+    clone.querySelectorAll('.img-add-btn').forEach((el, i) => {
+      el.style.display = liveAddBtns[i].style.display;
+    });
+
+    const liveImgs = document.querySelectorAll('img.shot-preview');
+    clone.querySelectorAll('img.shot-preview').forEach((el, i) => {
+      const orig = liveImgs[i];
+      if (orig.src) el.setAttribute('src', orig.src);
+      if (orig.classList.contains('has-img')) el.classList.add('has-img');
+    });
+    const liveNotes = document.querySelectorAll('.shot-note');
+    clone.querySelectorAll('.shot-note').forEach((el, i) => {
+      if (liveNotes[i].classList.contains('has-img')) el.classList.add('has-img');
+    });
+
+    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+    const blob = new Blob([html], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const nameField = document.getElementById('fName');
+    const studentName = (nameField && nameField.value.trim())
+      ? nameField.value.trim().replace(/\s+/g,'_')
+      : 'MYP3_Product_Analysis';
+    a.href = url;
+    a.download = studentName + '_Product_Analysis.html';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>

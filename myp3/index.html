@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MYP 3 Design — Criterion guides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --moss:#2F6B4F; --moss-tint:#E8F1EC;
+  --a:#12707F; --b:#96700A; --c:#38722C; --d:#B23A2E;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+
+.mast{padding:56px 0 40px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:20ch}
+.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:60ch}
+
+.sec{padding:8px 0 0}
+
+.grid{display:flex;flex-wrap:wrap;gap:16px}
+.crit{flex:1 1 300px;background:var(--card);border:1px solid var(--rule);
+  border-left:4px solid var(--rule);border-radius:12px;padding:24px 26px 26px;
+  text-decoration:none;color:inherit;display:block;transition:.15s;position:relative}
+a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
+  box-shadow:0 4px 14px rgba(20,48,60,.07)}
+.crit--a{border-left-color:var(--a)}
+.crit--b{border-left-color:var(--b)}
+.crit--c{border-left-color:var(--c)}
+.crit--d{border-left-color:var(--d)}
+.crit--fw{border-left-color:var(--ink)}
+.crit--soon{opacity:.6;cursor:default}
+
+.crit__top{display:flex;gap:14px;align-items:center;margin-bottom:12px}
+.badge{width:46px;height:46px;border-radius:12px;flex:0 0 46px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-weight:700;font-size:22px;color:#fff}
+.crit--a .badge{background:var(--a)}
+.crit--b .badge{background:var(--b)}
+.crit--c .badge{background:var(--c)}
+.crit--d .badge{background:var(--d)}
+.crit--fw .badge{background:var(--ink);font-size:15px;letter-spacing:.03em}
+.crit h3{font-family:var(--display);font-size:20px;font-weight:600;margin:0;
+  letter-spacing:-.01em}
+.crit p{margin:0 0 16px;font-size:14.5px;color:var(--slate)}
+.strands{display:flex;gap:6px;flex-wrap:wrap}
+.st{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  padding:5px 10px;border-radius:7px;background:var(--rule-soft);color:var(--slate)}
+.st.live{background:var(--moss-tint);color:var(--moss)}
+.status{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--slate);margin-left:auto}
+.crit--soon .status{color:var(--amber)}
+
+@media (hover:hover){
+  a.crit:hover{transform:translateY(-3px) scale(1.008)}
+}
+
+footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+  .mast{padding:40px 0 28px}
+  .crit{padding:19px 18px 21px;border-left-width:3px}
+  .grid{gap:12px}
+  .badge{width:40px;height:40px;flex:0 0 40px;font-size:19px}
+  .crit h3{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="../index.html">&larr; Choose a different year group</a>
+    <p class="eyebrow">IB MYP Design &middot; Year 3</p>
+    <h1>What each criterion asks for, and how to get there.</h1>
+    <p class="sub">Task-specific clarification for MYP 3, built out one resource at a time.</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="grid">
+
+      <div class="crit crit--a crit--soon">
+        <div class="crit__top">
+          <span class="badge">A</span>
+          <h3>Inquiring and analysing</h3>
+          <span class="status">Coming</span>
+        </div>
+        <p>Content for this criterion is being developed.</p>
+        <div class="strands">
+          <span class="st">Strand i</span>
+          <span class="st">Strand ii</span>
+          <span class="st">Strand iii</span>
+          <span class="st">Strand iv</span>
+        </div>
+      </div>
+
+      <div class="crit crit--b crit--soon">
+        <div class="crit__top">
+          <span class="badge">B</span>
+          <h3>Developing ideas</h3>
+          <span class="status">Coming</span>
+        </div>
+        <p>Content for this criterion is being developed.</p>
+        <div class="strands">
+          <span class="st">Strand i</span>
+          <span class="st">Strand ii</span>
+          <span class="st">Strand iii</span>
+          <span class="st">Strand iv</span>
+        </div>
+      </div>
+
+      <div class="crit crit--c crit--soon">
+        <div class="crit__top">
+          <span class="badge">C</span>
+          <h3>Creating the solution</h3>
+          <span class="status">Coming</span>
+        </div>
+        <p>Content for this criterion is being developed.</p>
+        <div class="strands">
+          <span class="st">Strand i</span>
+          <span class="st">Strand ii</span>
+          <span class="st">Strand iii</span>
+          <span class="st">Strand iv</span>
+        </div>
+      </div>
+
+      <div class="crit crit--d crit--soon">
+        <div class="crit__top">
+          <span class="badge">D</span>
+          <h3>Evaluating</h3>
+          <span class="status">Coming</span>
+        </div>
+        <p>Content for this criterion is being developed.</p>
+        <div class="strands">
+          <span class="st">Strand i</span>
+          <span class="st">Strand ii</span>
+          <span class="st">Strand iii</span>
+          <span class="st">Strand iv</span>
+        </div>
+      </div>
+
+      <a class="crit crit--fw" href="fa.html">
+        <div class="crit__top">
+          <span class="badge">FA</span>
+          <h3>Formative assessments</h3>
+          <span class="status">Open</span>
+        </div>
+        <p>Practice tasks that build the skills each summative strand needs.</p>
+        <div class="strands">
+          <span class="st live">FA-1</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Dev — MYP Design Educator</span>
+    <span>MYP Year 3</span>
+  </div>
+</footer>
+
+</body>
+</html>

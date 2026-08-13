@@ -336,7 +336,8 @@ body::before{
 .gradebtn{flex:1 1 220px;background:var(--card);border:1px solid var(--rule);
   border-radius:16px;padding:32px 24px 26px;text-align:center;
   display:flex;flex-direction:column;align-items:center;gap:10px;
-  font-family:inherit;position:relative;overflow:hidden}
+  font-family:inherit;position:relative;overflow:hidden;
+  text-decoration:none;color:inherit}
 .gradebtn__n{font-family:var(--display);font-weight:700;font-size:42px;line-height:1;color:var(--slate)}
 .gradebtn h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0;color:var(--ink)}
 .gradebtn__status{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
@@ -418,7 +419,7 @@ body::before{
   <div class="wrap">
     <p class="eyebrow">Start here</p>
     <h2>Choose your year group</h2>
-    <p class="sub">Content is organised by MYP year band. MYP 4&ndash;5 is fully published; MYP 1&ndash;2 has an early resource live.</p>
+    <p class="sub">Content is organised by MYP year band. MYP 4&ndash;5 is fully published; MYP 1&ndash;2 and MYP 3 each have an early resource live.</p>
     <div class="gradepick">
 
       <a class="gradebtn gradebtn--open" href="myp1-2/index.html">
@@ -427,11 +428,11 @@ body::before{
         <span class="gradebtn__status">1 resource</span>
       </a>
 
-      <div class="gradebtn gradebtn--soon" aria-disabled="true">
+      <a class="gradebtn gradebtn--open" href="myp3/index.html">
         <span class="gradebtn__n">3</span>
         <h3>MYP 3</h3>
-        <span class="gradebtn__status">Coming</span>
-      </div>
+        <span class="gradebtn__status">1 resource</span>
+      </a>
 
       <button type="button" class="gradebtn gradebtn--open" id="gradeOpen45" aria-controls="critSec">
         <span class="gradebtn__n">4&ndash;5</span>
