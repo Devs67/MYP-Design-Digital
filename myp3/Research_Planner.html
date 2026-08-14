@@ -21,6 +21,7 @@
     --good-bg:#E8F1EC;
     --warn:#A03E3E;
     --warn-bg:#F8E9E6;
+    --other:#6D5BA8;
     --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
@@ -119,6 +120,7 @@
   .tag.f{color:#2E6B4F;border-color:#2E6B4F55;background:#2E6B4F11;}
   .tag.c{color:#1B5C9E;border-color:#1B5C9E55;background:#1B5C9E11;}
   .tag.d{color:#A03E3E;border-color:#A03E3E55;background:#A03E3E11;}
+  .tag.o{color:var(--other);border-color:#6D5BA855;background:#6D5BA811;}
 
   /* live type-coverage status */
   .type-status{
@@ -256,11 +258,18 @@
   .qtable select.t-fact{color:#2E6B4F;}
   .qtable select.t-conc{color:#1B5C9E;}
   .qtable select.t-debate{color:#A03E3E;}
+  .qtable select.t-other{color:var(--other);}
+  .type-other{
+    margin-top:6px;
+    border-top:1px dashed var(--line) !important;
+    padding-top:6px !important;
+  }
+  .src-cell select{margin-bottom:5px;}
   .col-num{width:26px;}
-  .col-q{width:21%;}
-  .col-type{width:9%;}
-  .col-src{width:18%;}
-  .col-just{width:29%;}
+  .col-q{width:23%;}
+  .col-type{width:11%;}
+  .col-src{width:25%;}
+  .col-just{width:34%;}
   .col-rm{width:32px;}
 
   .row-remove{
@@ -404,7 +413,8 @@
     <span><span class="tag f">FACT</span>establishes concrete data, definitions, specs</span>
     <span><span class="tag c">CONC</span>connects facts to a bigger idea or relationship</span>
     <span><span class="tag d">DEBATE</span>no single answer &mdash; weighs perspectives / trade-offs</span>
-    <span><b>Rule:</b> all three types must appear at least once across your questions.</span>
+    <span><span class="tag o">OTHER</span>doesn't fit the three &mdash; say what it is</span>
+    <span><b>Rule:</b> Fact, Concept and Debate must each appear at least once.</span>
     <span class="type-status" id="typeStatus"></span>
   </div>
 
@@ -432,8 +442,7 @@
             <th class="col-num"></th>
             <th class="col-q">Research question</th>
             <th class="col-type">Type</th>
-            <th class="col-src">Primary source — what exactly</th>
-            <th class="col-src">Secondary source — what exactly</th>
+            <th class="col-src">Source</th>
             <th class="col-just">Justification — how this helps my design</th>
             <th class="col-rm"></th>
           </tr>
@@ -448,10 +457,18 @@
                 <option>Factual</option>
                 <option>Conceptual</option>
                 <option>Debatable</option>
+                <option>Other</option>
               </select>
+              <input type="text" class="f-type-other" placeholder="Say what kind…" style="display:none">
             </td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
+            <td class="src-cell">
+              <select class="src-type">
+                <option value="" selected>–</option>
+                <option>Primary</option>
+                <option>Secondary</option>
+              </select>
+              <textarea placeholder="Name the specific source"></textarea>
+            </td>
             <td><textarea placeholder="How will the answer shape a decision in my design?"></textarea></td>
             <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
           </tr>
@@ -464,10 +481,18 @@
                 <option>Factual</option>
                 <option>Conceptual</option>
                 <option>Debatable</option>
+                <option>Other</option>
               </select>
+              <input type="text" class="f-type-other" placeholder="Say what kind…" style="display:none">
             </td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
+            <td class="src-cell">
+              <select class="src-type">
+                <option value="" selected>–</option>
+                <option>Primary</option>
+                <option>Secondary</option>
+              </select>
+              <textarea placeholder="Name the specific source"></textarea>
+            </td>
             <td><textarea></textarea></td>
             <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
           </tr>
@@ -500,8 +525,7 @@
             <th class="col-num"></th>
             <th class="col-q">Research question</th>
             <th class="col-type">Type</th>
-            <th class="col-src">Primary source — what exactly</th>
-            <th class="col-src">Secondary source — what exactly</th>
+            <th class="col-src">Source</th>
             <th class="col-just">Justification — how this helps my design</th>
             <th class="col-rm"></th>
           </tr>
@@ -516,10 +540,18 @@
                 <option>Factual</option>
                 <option>Conceptual</option>
                 <option>Debatable</option>
+                <option>Other</option>
               </select>
+              <input type="text" class="f-type-other" placeholder="Say what kind…" style="display:none">
             </td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
+            <td class="src-cell">
+              <select class="src-type">
+                <option value="" selected>–</option>
+                <option>Primary</option>
+                <option>Secondary</option>
+              </select>
+              <textarea placeholder="Name the specific source"></textarea>
+            </td>
             <td><textarea></textarea></td>
             <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
           </tr>
@@ -532,10 +564,18 @@
                 <option>Factual</option>
                 <option>Conceptual</option>
                 <option>Debatable</option>
+                <option>Other</option>
               </select>
+              <input type="text" class="f-type-other" placeholder="Say what kind…" style="display:none">
             </td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
+            <td class="src-cell">
+              <select class="src-type">
+                <option value="" selected>–</option>
+                <option>Primary</option>
+                <option>Secondary</option>
+              </select>
+              <textarea placeholder="Name the specific source"></textarea>
+            </td>
             <td><textarea></textarea></td>
             <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
           </tr>
@@ -568,8 +608,7 @@
             <th class="col-num"></th>
             <th class="col-q">Research question</th>
             <th class="col-type">Type</th>
-            <th class="col-src">Primary source — what exactly</th>
-            <th class="col-src">Secondary source — what exactly</th>
+            <th class="col-src">Source</th>
             <th class="col-just">Justification — how this helps my design</th>
             <th class="col-rm"></th>
           </tr>
@@ -584,10 +623,18 @@
                 <option>Factual</option>
                 <option>Conceptual</option>
                 <option>Debatable</option>
+                <option>Other</option>
               </select>
+              <input type="text" class="f-type-other" placeholder="Say what kind…" style="display:none">
             </td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
+            <td class="src-cell">
+              <select class="src-type">
+                <option value="" selected>–</option>
+                <option>Primary</option>
+                <option>Secondary</option>
+              </select>
+              <textarea placeholder="Name the specific source"></textarea>
+            </td>
             <td><textarea></textarea></td>
             <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
           </tr>
@@ -600,10 +647,18 @@
                 <option>Factual</option>
                 <option>Conceptual</option>
                 <option>Debatable</option>
+                <option>Other</option>
               </select>
+              <input type="text" class="f-type-other" placeholder="Say what kind…" style="display:none">
             </td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
+            <td class="src-cell">
+              <select class="src-type">
+                <option value="" selected>–</option>
+                <option>Primary</option>
+                <option>Secondary</option>
+              </select>
+              <textarea placeholder="Name the specific source"></textarea>
+            </td>
             <td><textarea></textarea></td>
             <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
           </tr>
@@ -627,7 +682,7 @@
       <li><input type="checkbox"><span>Each area has at least 2 questions</span></li>
       <li><input type="checkbox"><span>Across all my questions, at least one Factual, one Conceptual, one Debatable appears</span></li>
       <li><input type="checkbox"><span>No question can be answered by the first line of a search result</span></li>
-      <li><input type="checkbox"><span>Every question has a named primary AND secondary source</span></li>
+      <li><input type="checkbox"><span>Every question names a specific source and says whether it's primary or secondary</span></li>
       <li><input type="checkbox"><span>Every justification explains how the answer shapes a design decision</span></li>
     </ul>
   </div>
@@ -636,10 +691,14 @@
 
 <script>
 function colorType(sel){
-  sel.classList.remove('t-fact','t-conc','t-debate');
+  sel.classList.remove('t-fact','t-conc','t-debate','t-other');
+  var cell = sel.closest('td');
+  var otherInput = cell ? cell.querySelector('.f-type-other') : null;
   if(sel.value === 'Factual') sel.classList.add('t-fact');
   if(sel.value === 'Conceptual') sel.classList.add('t-conc');
   if(sel.value === 'Debatable') sel.classList.add('t-debate');
+  if(sel.value === 'Other') sel.classList.add('t-other');
+  if(otherInput) otherInput.style.display = (sel.value === 'Other') ? 'block' : 'none';
   updateTypeStatus();
 }
 
@@ -682,9 +741,8 @@ function makeRow(){
   tr.innerHTML =
     '<td class="qnum"></td>' +
     '<td><textarea placeholder="Type your question..."></textarea></td>' +
-    '<td><select class="f-type" onchange="colorType(this)"><option value="" selected>–</option><option>Factual</option><option>Conceptual</option><option>Debatable</option></select></td>' +
-    '<td><textarea></textarea></td>' +
-    '<td><textarea></textarea></td>' +
+    '<td><select class="f-type" onchange="colorType(this)"><option value="" selected>–</option><option>Factual</option><option>Conceptual</option><option>Debatable</option><option>Other</option></select><input type="text" class="f-type-other" placeholder="Say what kind…" style="display:none"></td>' +
+    '<td class="src-cell"><select class="src-type"><option value="" selected>–</option><option>Primary</option><option>Secondary</option></select><textarea placeholder="Name the specific source"></textarea></td>' +
     '<td><textarea placeholder="How will the answer shape a decision in my design?"></textarea></td>' +
     '<td><button type="button" class="row-remove" title="Remove this question">×</button></td>';
   return tr;
@@ -705,8 +763,7 @@ function makeArea(){
     '<table class="qtable">' +
       '<thead><tr>' +
         '<th class="col-num"></th><th class="col-q">Research question</th><th class="col-type">Type</th>' +
-        '<th class="col-src">Primary source — what exactly</th><th class="col-src">Secondary source — what exactly</th>' +
-        '<th class="col-just">Justification — how this helps my design</th><th class="col-rm"></th>' +
+        '<th class="col-src">Source</th><th class="col-just">Justification — how this helps my design</th><th class="col-rm"></th>' +
       '</tr></thead>' +
       '<tbody></tbody>' +
     '</table>' +
@@ -780,6 +837,8 @@ function saveCopy(){
     } else {
       el.setAttribute('value', orig.value);
     }
+    if(orig.style.display === 'none') el.style.display = 'none';
+    else if(orig.style.display === 'block') el.style.display = 'block';
   });
 
   var liveTextareas = document.querySelectorAll('textarea');
