@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MYP 3 Design — Research Planner</title>
+<style>
+  :root{
+    --ink:#1B2A4A;
+    --ink-soft:#4A5A78;
+    --line:#C7CEDA;
+    --line-soft:#E3E7EE;
+    --paper:#F7F8FA;
+    --panel:#FFFFFF;
+    --accent:#C4881F;
+    --accent-soft:#F3E4C6;
+    --area1:#EEF2F8;
+    --area2:#F4EFE6;
+    --area3:#EDF3EF;
+    --good:#2E6B4F;
+    --good-bg:#E8F1EC;
+    --warn:#A03E3E;
+    --warn-bg:#F8E9E6;
+    --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0/100% 42px,
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px) 0 0/42px 100%,
+      var(--paper);
+    padding:28px 20px 60px;
+  }
+
+  .sheet{
+    max-width:1180px;
+    margin:0 auto;
+    background:var(--panel);
+    border:1px solid var(--line);
+    box-shadow: 0 1px 0 var(--line);
+  }
+
+  /* header */
+  .head{
+    padding:26px 32px 20px;
+    border-bottom:2px solid var(--ink);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .head .kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 6px;
+  }
+  .head h1{
+    margin:0;
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+  .head .sub{
+    margin:6px 0 0;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    max-width:56ch;
+  }
+  .idbox{
+    display:flex;
+    gap:14px;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .idbox label{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px; color:var(--ink-soft);}
+  .idbox input{
+    border:none;
+    border-bottom:1px solid var(--line);
+    background:transparent;
+    font-size:13px;
+    padding:2px 2px 4px;
+    width:140px;
+    font-family:var(--sans);
+    color:var(--ink);
+  }
+  .idbox input:focus{outline:none; border-bottom-color:var(--accent);}
+
+  /* legend */
+  .legend{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    padding:14px 32px;
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-soft);
+    align-items:center;
+  }
+  .legend b{color:var(--ink); font-weight:600;}
+  .legend .tag{
+    font-family:var(--mono);
+    font-size:10px;
+    padding:1px 6px;
+    border-radius:2px;
+    border:1px solid var(--line);
+    margin-right:4px;
+  }
+  .tag.f{color:#2E6B4F;border-color:#2E6B4F55;background:#2E6B4F11;}
+  .tag.c{color:#1B5C9E;border-color:#1B5C9E55;background:#1B5C9E11;}
+  .tag.d{color:#A03E3E;border-color:#A03E3E55;background:#A03E3E11;}
+
+  /* live type-coverage status */
+  .type-status{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    padding:5px 11px;
+    border-radius:999px;
+    margin-left:auto;
+    white-space:nowrap;
+  }
+  .type-status.ok{background:var(--good-bg); color:var(--good);}
+  .type-status.warn{background:var(--warn-bg); color:var(--warn);}
+
+  /* area block */
+  .area{
+    border-bottom:1px solid var(--line);
+  }
+  .area-head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 32px;
+  }
+  .area:nth-of-type(3n+1) .area-head{background:var(--area1);}
+  .area:nth-of-type(3n+2) .area-head{background:var(--area2);}
+  .area:nth-of-type(3n+3) .area-head{background:var(--area3);}
+
+  .area-num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--ink);
+    background:var(--panel);
+    border:1px solid var(--ink);
+    width:26px;height:26px;
+    display:flex;align-items:center;justify-content:center;
+    flex:none;
+  }
+  .area-fields{
+    flex:1;
+    display:flex;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .area-fields .f{flex:1; min-width:220px;}
+  .area-fields label{
+    display:block;
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:3px;
+  }
+  .area-fields input{
+    width:100%;
+    border:none;
+    border-bottom:1px solid var(--ink);
+    background:transparent;
+    font-size:14px;
+    font-weight:600;
+    padding:2px 0 5px;
+    color:var(--ink);
+    font-family:var(--sans);
+  }
+  .area-fields input:focus{outline:none; border-bottom-color:var(--accent);}
+
+  .area-remove{
+    flex:none;
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:600;
+    padding:6px 12px;
+    border:1px solid var(--warn);
+    background:var(--panel);
+    color:var(--warn);
+    cursor:pointer;
+    border-radius:3px;
+  }
+  .area-remove:hover{background:var(--warn); color:#fff;}
+
+  /* table of questions per area */
+  .qtable{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
+  .qtable th{
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    text-align:left;
+    font-weight:600;
+    padding:8px 10px;
+    border-bottom:1px solid var(--line);
+    border-top:1px solid var(--line);
+    background:var(--paper);
+  }
+  .qtable td{
+    padding:10px;
+    border-bottom:1px solid var(--line-soft);
+    border-right:1px solid var(--line-soft);
+    vertical-align:top;
+  }
+  .qtable td:last-child{border-right:none;}
+  .qtable td.qnum{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--accent);
+    padding-top:12px;
+    width:26px;
+  }
+  .qtable textarea, .qtable input, .qtable select{
+    width:100%;
+    border:none;
+    background:transparent;
+    font-size:13px;
+    font-family:var(--sans);
+    color:var(--ink);
+    resize:none;
+    line-height:1.4;
+  }
+  .qtable textarea{min-height:56px;}
+  .qtable textarea:focus, .qtable input:focus, .qtable select:focus{
+    outline:none;
+    background:var(--accent-soft);
+  }
+  .qtable select{
+    padding:3px 2px;
+    font-weight:600;
+    color:var(--ink-soft);
+  }
+  .qtable select.t-fact{color:#2E6B4F;}
+  .qtable select.t-conc{color:#1B5C9E;}
+  .qtable select.t-debate{color:#A03E3E;}
+  .col-num{width:26px;}
+  .col-q{width:21%;}
+  .col-type{width:9%;}
+  .col-src{width:18%;}
+  .col-just{width:29%;}
+  .col-rm{width:32px;}
+
+  .row-remove{
+    font-family:var(--mono);
+    font-size:13px;
+    line-height:1;
+    width:22px; height:22px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    color:var(--ink-soft);
+    cursor:pointer;
+    border-radius:3px;
+  }
+  .row-remove:hover{background:var(--warn); color:#fff; border-color:var(--warn);}
+
+  .area-actions{
+    padding:12px 32px;
+    background:var(--paper);
+  }
+  .add-question, .add-area{
+    font-family:var(--sans);
+    font-size:12.5px;
+    font-weight:600;
+    padding:7px 14px;
+    border:1px dashed var(--ink-soft);
+    background:var(--panel);
+    color:var(--ink-soft);
+    cursor:pointer;
+    border-radius:3px;
+  }
+  .add-question:hover, .add-area:hover{border-color:var(--accent); color:var(--accent);}
+
+  .areas-actions{
+    padding:16px 32px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  .add-area{padding:9px 20px;}
+
+  /* footer checklist */
+  .checklist{
+    padding:20px 32px 30px;
+  }
+  .checklist h2{
+    font-size:13px;
+    font-family:var(--mono);
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:0 0 12px;
+    font-weight:600;
+  }
+  .checklist ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px 30px;
+  }
+  .checklist li{
+    display:flex;
+    gap:9px;
+    align-items:flex-start;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .checklist input[type=checkbox]{
+    margin-top:3px;
+    accent-color:var(--accent);
+  }
+
+  .toolbar{
+    max-width:1180px;
+    margin:0 auto 16px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+  }
+  .toolbar .back{
+    font-family:var(--sans);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.03em;
+    color:var(--ink-soft);
+    text-decoration:none;
+  }
+  .toolbar .btns{display:flex; gap:10px;}
+  .toolbar button{
+    font-family:var(--sans);
+    font-size:12.5px;
+    font-weight:600;
+    padding:8px 16px;
+    border:1px solid var(--ink);
+    background:var(--panel);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  .toolbar button:hover{background:var(--ink); color:#fff;}
+
+  @media print{
+    body{background:#fff; padding:0;}
+    .toolbar{display:none;}
+    .area-remove, .row-remove, .area-actions, .areas-actions{display:none;}
+    .sheet{border:none; box-shadow:none;}
+    textarea, input, select{color:#000 !important;}
+  }
+
+  @media (max-width:720px){
+    .qtable{display:block; overflow-x:auto; white-space:nowrap;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a class="back" href="frameworks.html">&larr; Frameworks</a>
+  <div class="btns">
+    <button type="button" onclick="saveCopy()">Save my copy (.html)</button>
+    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</div>
+
+<div class="sheet">
+
+  <div class="head">
+    <div>
+      <p class="kicker">MYP Design &middot; Criterion A &middot; Strand ii</p>
+      <h1>Research Planner</h1>
+      <p class="sub">Identify and prioritise the primary and secondary research needed to develop a solution to your problem.</p>
+    </div>
+    <div class="idbox">
+      <div><label>Name</label><input type="text" value=""></div>
+      <div><label>Class</label><input type="text" style="width:80px;" value=""></div>
+      <div><label>Date</label><input type="text" style="width:100px;" value=""></div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><span class="tag f">FACT</span>establishes concrete data, definitions, specs</span>
+    <span><span class="tag c">CONC</span>connects facts to a bigger idea or relationship</span>
+    <span><span class="tag d">DEBATE</span>no single answer &mdash; weighs perspectives / trade-offs</span>
+    <span><b>Rule:</b> all three types must appear at least once across your questions.</span>
+    <span class="type-status" id="typeStatus"></span>
+  </div>
+
+  <div class="areas" id="areasWrap">
+
+    <!-- AREA 1 -->
+    <div class="area">
+      <div class="area-head">
+        <div class="area-num">01</div>
+        <div class="area-fields">
+          <div class="f">
+            <label>Research area 1</label>
+            <input type="text" placeholder="e.g. Grip strength and hand size of Year 6 students" value="">
+          </div>
+          <div class="f">
+            <label>Why this matters to my problem</label>
+            <input type="text" placeholder="e.g. sets the physical constraints my handle design must meet" value="">
+          </div>
+        </div>
+        <button type="button" class="area-remove" title="Remove this research area">&times;</button>
+      </div>
+      <table class="qtable">
+        <thead>
+          <tr>
+            <th class="col-num"></th>
+            <th class="col-q">Research question</th>
+            <th class="col-type">Type</th>
+            <th class="col-src">Primary source — what exactly</th>
+            <th class="col-src">Secondary source — what exactly</th>
+            <th class="col-just">Justification — how this helps my design</th>
+            <th class="col-rm"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="qnum">1.1</td>
+            <td><textarea placeholder="Type your question..."></textarea></td>
+            <td>
+              <select class="f-type" onchange="colorType(this)">
+                <option value="" selected>–</option>
+                <option>Factual</option>
+                <option>Conceptual</option>
+                <option>Debatable</option>
+              </select>
+            </td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea placeholder="How will the answer shape a decision in my design?"></textarea></td>
+            <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
+          </tr>
+          <tr>
+            <td class="qnum">1.2</td>
+            <td><textarea placeholder="Type your question..."></textarea></td>
+            <td>
+              <select class="f-type" onchange="colorType(this)">
+                <option value="" selected>–</option>
+                <option>Factual</option>
+                <option>Conceptual</option>
+                <option>Debatable</option>
+              </select>
+            </td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="area-actions">
+        <button type="button" class="add-question">+ Add question</button>
+      </div>
+    </div>
+
+    <!-- AREA 2 -->
+    <div class="area">
+      <div class="area-head">
+        <div class="area-num">02</div>
+        <div class="area-fields">
+          <div class="f">
+            <label>Research area 2</label>
+            <input type="text" value="">
+          </div>
+          <div class="f">
+            <label>Why this matters to my problem</label>
+            <input type="text" value="">
+          </div>
+        </div>
+        <button type="button" class="area-remove" title="Remove this research area">&times;</button>
+      </div>
+      <table class="qtable">
+        <thead>
+          <tr>
+            <th class="col-num"></th>
+            <th class="col-q">Research question</th>
+            <th class="col-type">Type</th>
+            <th class="col-src">Primary source — what exactly</th>
+            <th class="col-src">Secondary source — what exactly</th>
+            <th class="col-just">Justification — how this helps my design</th>
+            <th class="col-rm"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="qnum">2.1</td>
+            <td><textarea></textarea></td>
+            <td>
+              <select class="f-type" onchange="colorType(this)">
+                <option value="" selected>–</option>
+                <option>Factual</option>
+                <option>Conceptual</option>
+                <option>Debatable</option>
+              </select>
+            </td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
+          </tr>
+          <tr>
+            <td class="qnum">2.2</td>
+            <td><textarea></textarea></td>
+            <td>
+              <select class="f-type" onchange="colorType(this)">
+                <option value="" selected>–</option>
+                <option>Factual</option>
+                <option>Conceptual</option>
+                <option>Debatable</option>
+              </select>
+            </td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="area-actions">
+        <button type="button" class="add-question">+ Add question</button>
+      </div>
+    </div>
+
+    <!-- AREA 3 -->
+    <div class="area">
+      <div class="area-head">
+        <div class="area-num">03</div>
+        <div class="area-fields">
+          <div class="f">
+            <label>Research area 3</label>
+            <input type="text" value="">
+          </div>
+          <div class="f">
+            <label>Why this matters to my problem</label>
+            <input type="text" value="">
+          </div>
+        </div>
+        <button type="button" class="area-remove" title="Remove this research area">&times;</button>
+      </div>
+      <table class="qtable">
+        <thead>
+          <tr>
+            <th class="col-num"></th>
+            <th class="col-q">Research question</th>
+            <th class="col-type">Type</th>
+            <th class="col-src">Primary source — what exactly</th>
+            <th class="col-src">Secondary source — what exactly</th>
+            <th class="col-just">Justification — how this helps my design</th>
+            <th class="col-rm"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="qnum">3.1</td>
+            <td><textarea></textarea></td>
+            <td>
+              <select class="f-type" onchange="colorType(this)">
+                <option value="" selected>–</option>
+                <option>Factual</option>
+                <option>Conceptual</option>
+                <option>Debatable</option>
+              </select>
+            </td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
+          </tr>
+          <tr>
+            <td class="qnum">3.2</td>
+            <td><textarea></textarea></td>
+            <td>
+              <select class="f-type" onchange="colorType(this)">
+                <option value="" selected>–</option>
+                <option>Factual</option>
+                <option>Conceptual</option>
+                <option>Debatable</option>
+              </select>
+            </td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><textarea></textarea></td>
+            <td><button type="button" class="row-remove" title="Remove this question">&times;</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="area-actions">
+        <button type="button" class="add-question">+ Add question</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="areas-actions">
+    <button type="button" class="add-area" id="addAreaBtn">+ Add research area</button>
+  </div>
+
+  <div class="checklist">
+    <h2>Self-check before submitting</h2>
+    <ul>
+      <li><input type="checkbox"><span>Each research area is clearly linked to my specific problem, not generic</span></li>
+      <li><input type="checkbox"><span>Each area has at least 2 questions</span></li>
+      <li><input type="checkbox"><span>Across all my questions, at least one Factual, one Conceptual, one Debatable appears</span></li>
+      <li><input type="checkbox"><span>No question can be answered by the first line of a search result</span></li>
+      <li><input type="checkbox"><span>Every question has a named primary AND secondary source</span></li>
+      <li><input type="checkbox"><span>Every justification explains how the answer shapes a design decision</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+function colorType(sel){
+  sel.classList.remove('t-fact','t-conc','t-debate');
+  if(sel.value === 'Factual') sel.classList.add('t-fact');
+  if(sel.value === 'Conceptual') sel.classList.add('t-conc');
+  if(sel.value === 'Debatable') sel.classList.add('t-debate');
+  updateTypeStatus();
+}
+
+// renumber area badges/labels and question numbers after any add/remove
+function renumberAll(){
+  var areas = document.querySelectorAll('#areasWrap .area');
+  areas.forEach(function(area, ai){
+    var areaNum = ai + 1;
+    var numEl = area.querySelector('.area-num');
+    if(numEl) numEl.textContent = (areaNum < 10 ? '0' : '') + areaNum;
+    var labelEl = area.querySelector('.area-fields label');
+    if(labelEl) labelEl.textContent = 'Research area ' + areaNum;
+    var rows = area.querySelectorAll('tbody tr');
+    rows.forEach(function(row, qi){
+      var qnumEl = row.querySelector('.qnum');
+      if(qnumEl) qnumEl.textContent = areaNum + '.' + (qi + 1);
+    });
+  });
+}
+
+function updateTypeStatus(){
+  var counts = { Factual: 0, Conceptual: 0, Debatable: 0 };
+  document.querySelectorAll('.f-type').forEach(function(sel){
+    if(counts.hasOwnProperty(sel.value)) counts[sel.value]++;
+  });
+  var statusEl = document.getElementById('typeStatus');
+  if(!statusEl) return;
+  var missing = Object.keys(counts).filter(function(k){ return counts[k] === 0; });
+  if(missing.length === 0){
+    statusEl.textContent = 'All three types covered';
+    statusEl.className = 'type-status ok';
+  } else {
+    statusEl.textContent = 'Still missing: ' + missing.join(', ');
+    statusEl.className = 'type-status warn';
+  }
+}
+
+function makeRow(){
+  var tr = document.createElement('tr');
+  tr.innerHTML =
+    '<td class="qnum"></td>' +
+    '<td><textarea placeholder="Type your question..."></textarea></td>' +
+    '<td><select class="f-type" onchange="colorType(this)"><option value="" selected>–</option><option>Factual</option><option>Conceptual</option><option>Debatable</option></select></td>' +
+    '<td><textarea></textarea></td>' +
+    '<td><textarea></textarea></td>' +
+    '<td><textarea placeholder="How will the answer shape a decision in my design?"></textarea></td>' +
+    '<td><button type="button" class="row-remove" title="Remove this question">×</button></td>';
+  return tr;
+}
+
+function makeArea(){
+  var div = document.createElement('div');
+  div.className = 'area';
+  div.innerHTML =
+    '<div class="area-head">' +
+      '<div class="area-num"></div>' +
+      '<div class="area-fields">' +
+        '<div class="f"><label></label><input type="text" placeholder="e.g. ..."></div>' +
+        '<div class="f"><label>Why this matters to my problem</label><input type="text"></div>' +
+      '</div>' +
+      '<button type="button" class="area-remove" title="Remove this research area">×</button>' +
+    '</div>' +
+    '<table class="qtable">' +
+      '<thead><tr>' +
+        '<th class="col-num"></th><th class="col-q">Research question</th><th class="col-type">Type</th>' +
+        '<th class="col-src">Primary source — what exactly</th><th class="col-src">Secondary source — what exactly</th>' +
+        '<th class="col-just">Justification — how this helps my design</th><th class="col-rm"></th>' +
+      '</tr></thead>' +
+      '<tbody></tbody>' +
+    '</table>' +
+    '<div class="area-actions"><button type="button" class="add-question">+ Add question</button></div>';
+  var tbody = div.querySelector('tbody');
+  tbody.appendChild(makeRow());
+  tbody.appendChild(makeRow());
+  return div;
+}
+
+document.addEventListener('click', function(e){
+  var addQ = e.target.closest('.add-question');
+  if(addQ){
+    var area = addQ.closest('.area');
+    area.querySelector('tbody').appendChild(makeRow());
+    renumberAll();
+    updateTypeStatus();
+    return;
+  }
+
+  var rmRow = e.target.closest('.row-remove');
+  if(rmRow){
+    var tbody = rmRow.closest('tbody');
+    if(tbody.querySelectorAll('tr').length > 1){
+      rmRow.closest('tr').remove();
+      renumberAll();
+      updateTypeStatus();
+    } else {
+      window.alert('Each research area needs at least one question.');
+    }
+    return;
+  }
+
+  if(e.target.closest('#addAreaBtn')){
+    document.getElementById('areasWrap').appendChild(makeArea());
+    renumberAll();
+    updateTypeStatus();
+    return;
+  }
+
+  var rmArea = e.target.closest('.area-remove');
+  if(rmArea){
+    if(document.querySelectorAll('#areasWrap .area').length > 1){
+      rmArea.closest('.area').remove();
+      renumberAll();
+      updateTypeStatus();
+    } else {
+      window.alert('You need at least one research area.');
+    }
+    return;
+  }
+});
+
+// auto-grow any textarea, including ones added later
+document.addEventListener('input', function(e){
+  if(e.target.tagName === 'TEXTAREA'){
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  }
+});
+
+// bake current answers into a fresh, standalone HTML file the student can keep/hand in
+function saveCopy(){
+  var clone = document.documentElement.cloneNode(true);
+
+  var liveInputs = document.querySelectorAll('input');
+  clone.querySelectorAll('input').forEach(function(el, i){
+    var orig = liveInputs[i];
+    if(orig.type === 'checkbox'){
+      if(orig.checked) el.setAttribute('checked',''); else el.removeAttribute('checked');
+    } else {
+      el.setAttribute('value', orig.value);
+    }
+  });
+
+  var liveTextareas = document.querySelectorAll('textarea');
+  clone.querySelectorAll('textarea').forEach(function(el, i){
+    el.textContent = liveTextareas[i].value;
+  });
+
+  var liveSelects = document.querySelectorAll('select');
+  clone.querySelectorAll('select').forEach(function(el, i){
+    var orig = liveSelects[i];
+    var opts = el.querySelectorAll('option');
+    opts.forEach(function(o){ o.removeAttribute('selected'); });
+    if(opts[orig.selectedIndex]) opts[orig.selectedIndex].setAttribute('selected','');
+    if(orig.className) el.className = orig.className;
+  });
+
+  var html = '<!DOCTYPE html>\n' + clone.outerHTML;
+  var blob = new Blob([html], {type:'text/html'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  var nameField = document.querySelector('.idbox input');
+  var studentName = (nameField && nameField.value.trim())
+    ? nameField.value.trim().replace(/\s+/g,'_')
+    : 'MYP3_Research_Planner';
+  a.href = url;
+  a.download = studentName + '_Research_Planner.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+renumberAll();
+updateTypeStatus();
+</script>
+
+</body>
+</html>
