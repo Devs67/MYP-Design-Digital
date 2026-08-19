@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SWOT — Analysing Existing Products</title>
+<style>
+  :root {
+    --navy: #1E2761;
+    --teal: #0F9488;
+    --amber: #C2750F;
+    --maroon: #9D174D;
+    --purple: #6D28D9;
+    --ink: #201C1A;
+    --muted: #6B6A66;
+    --paper: #FFFFFF;
+    --soft: #F7F8F7;
+    --line: #E4E2DD;
+    --good: #15803D;
+    --warn: #B45309;
+    --bad: #B91C1C;
+    --radius: 14px;
+
+    --strength: #15803D;
+    --weakness: #B45309;
+    --opportunity: #1B5C9E;
+    --threat: #9D174D;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.55;
+  }
+
+  .wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+  }
+
+  .eyebrow {
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(28px, 4.5vw, 42px);
+    line-height: 1.14;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+
+  .lede {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 660px;
+    margin: 0 0 8px;
+  }
+
+  .head-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 22px;
+  }
+  .idbox { display: flex; gap: 18px; flex: none; }
+  .idbox div { display: flex; flex-direction: column; }
+  .idbox label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 4px;
+  }
+  .idbox input {
+    border: none; border-bottom: 1px solid var(--line); background: transparent;
+    font-size: 13.5px; padding: 2px 2px 5px; width: 130px; font-family: inherit; color: var(--ink);
+  }
+  .idbox input:focus { outline: none; border-bottom-color: var(--amber); }
+  @media (max-width: 640px) { .head-row { flex-direction: column; align-items: flex-start; } }
+
+  .swot-mark { display: flex; gap: 10px; margin: 28px 0 4px; }
+  .swot-mark span {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #fff;
+  }
+
+  section { margin-top: 56px; }
+
+  h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 25px;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  h3.sub-head {
+    font-family: Georgia, serif;
+    font-size: 19px;
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 14.5px;
+    margin: 0 0 22px;
+    max-width: 660px;
+  }
+  p.body-text {
+    font-size: 14.5px;
+    color: var(--ink);
+    margin: 0 0 14px;
+    max-width: 700px;
+  }
+
+  .official-box {
+    border-left: 3px solid var(--ink);
+    background: var(--soft);
+    padding: 12px 16px;
+    font-size: 13.5px;
+    font-style: italic;
+    color: var(--muted);
+    margin: 0 0 20px;
+  }
+
+  /* ---- SWOT letter cards ---- */
+  .swot-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  @media (max-width: 820px) { .swot-cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .swot-cards { grid-template-columns: 1fr; } }
+
+  .swot-card {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .swot-badge {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif; font-weight: 700; color: #fff; font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .swot-card h4 { margin: 0 0 6px; font-size: 14.5px; }
+  .swot-card p { margin: 0; font-size: 12.5px; color: var(--muted); }
+
+  /* ---- W vs T comparison table ---- */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 18px;
+    font-size: 13px;
+  }
+  .compare-table th, .compare-table td {
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .compare-table th {
+    background: var(--soft);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+  }
+  .compare-table td.w-col { color: var(--weakness); font-weight: 600; }
+  .compare-table td.t-col { color: var(--threat); font-weight: 600; }
+
+  .test-box {
+    background: var(--soft);
+    border-radius: var(--radius);
+    padding: 18px 22px;
+    margin: 8px 0 20px;
+  }
+  .test-box .q {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    margin: 0 0 12px;
+  }
+  .test-answers { display: flex; gap: 14px; flex-wrap: wrap; }
+  .test-answers .yes, .test-answers .no {
+    font-size: 12.5px;
+    padding: 8px 14px;
+    border-radius: 999px;
+  }
+  .test-answers .yes { background: rgba(180,83,9,0.12); color: var(--weakness); }
+  .test-answers .no { background: rgba(157,23,77,0.1); color: var(--threat); }
+
+  .example-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  @media (max-width: 700px) { .example-pair { grid-template-columns: 1fr; } }
+  .example-card {
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+  .example-card.w { background: rgba(180,83,9,0.08); border: 1px solid rgba(180,83,9,0.25); }
+  .example-card.t { background: rgba(157,23,77,0.08); border: 1px solid rgba(157,23,77,0.25); }
+  .example-card b { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .example-card.w b { color: var(--weakness); }
+  .example-card.t b { color: var(--threat); }
+  .example-card .note { display: block; margin-top: 6px; font-style: italic; color: var(--muted); font-size: 12px; }
+
+  /* ---- reveal worked example ---- */
+  .reveal-btn {
+    font: inherit; font-size: 13.5px; font-weight: 600; color: var(--ink);
+    background: var(--soft); border: 1px solid var(--line); border-radius: 999px;
+    padding: 10px 18px; cursor: pointer; margin-top: 8px;
+  }
+  .reveal-btn:hover { background: #f0f0ee; }
+
+  .worked-grid {
+    display: none;
+    margin-top: 16px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .worked-grid.open { display: grid; }
+  @media (max-width: 700px) { .worked-grid { grid-template-columns: 1fr; } }
+  .worked-quad {
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 12.5px;
+  }
+  .worked-quad h5 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .worked-quad ul { margin: 0; padding-left: 18px; }
+  .worked-quad li { margin-bottom: 5px; }
+  .quad-s { background: rgba(21,128,61,0.08); border: 1px solid rgba(21,128,61,0.25); }
+  .quad-s h5 { color: var(--strength); }
+  .quad-w { background: rgba(180,83,9,0.08); border: 1px solid rgba(180,83,9,0.25); }
+  .quad-w h5 { color: var(--weakness); }
+  .quad-o { background: rgba(27,92,158,0.08); border: 1px solid rgba(27,92,158,0.25); }
+  .quad-o h5 { color: var(--opportunity); }
+  .quad-t { background: rgba(157,23,77,0.08); border: 1px solid rgba(157,23,77,0.25); }
+  .quad-t h5 { color: var(--threat); }
+
+  .bridge-line {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-style: italic;
+  }
+
+  .evidence-example {
+    border-left: 3px solid var(--ink);
+    padding: 12px 16px;
+    background: var(--soft);
+    font-size: 14px;
+    font-family: Georgia, serif;
+    font-style: italic;
+    margin-top: 8px;
+  }
+
+  /* ---- Practice: SWOT grid ---- */
+  .practice-swot {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 700px) { .practice-swot { grid-template-columns: 1fr; } }
+  .practice-quad {
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+  }
+  .practice-quad-head {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+  }
+  .practice-quad-head .dot {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-family: Georgia, serif; font-weight: 700; font-size: 13px; flex: none;
+  }
+  .practice-quad-head .name { font-weight: 700; font-size: 14.5px; }
+  .practice-quad-head .q { font-size: 11.5px; color: var(--muted); font-style: italic; margin-left: auto; }
+  textarea.swot-input {
+    width: 100%; min-height: 90px; resize: vertical; border: 1px solid var(--line);
+    background: var(--paper); border-radius: 8px; padding: 9px 11px; font: inherit; font-size: 13.5px; color: var(--ink);
+  }
+  textarea.swot-input:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+
+  .poster-block {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 22px 22px;
+    margin-bottom: 26px;
+  }
+  .poster-block-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .poster-block-head h3 {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    margin: 0;
+  }
+  .poster-remove {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 12px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .image-upload-area { margin-bottom: 18px; }
+  .upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 18px;
+    border: 1px dashed var(--muted);
+    border-radius: 999px;
+    cursor: pointer;
+    background: var(--soft);
+    color: var(--ink);
+  }
+  .upload-label:hover { background: #f0f0ee; }
+  input[type="file"] { display: none; }
+  .poster-image-wrap { margin-top: 12px; position: relative; display: none; }
+  .poster-image-wrap.has-image { display: block; }
+  .poster-image {
+    display: block;
+    max-width: 100%;
+    max-height: 340px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    object-fit: contain;
+    background: var(--soft);
+  }
+  .remove-image-btn {
+    margin-top: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+
+  .add-poster-wrap { text-align: center; margin: 20px 0 30px; }
+  .add-poster-btn {
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--soft);
+    border: 1px dashed var(--muted);
+    border-radius: 999px;
+    padding: 11px 22px;
+    cursor: pointer;
+  }
+  .add-poster-btn:hover { background: #f0f0ee; }
+
+  .actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+  .btn {
+    font: inherit; font-size: 13.5px; font-weight: 600; border-radius: 999px; padding: 10px 18px;
+    cursor: pointer; border: 1px solid var(--line); background: var(--paper); color: var(--ink);
+  }
+  .btn.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .btn:hover { opacity: 0.85; }
+
+  .note { margin-top: 32px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 18px; }
+  footer { margin-top: 56px; font-size: 12px; color: var(--muted); }
+
+  .print-mirror {
+    display: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 9px 11px;
+    font-size: 13.5px;
+    color: var(--ink);
+    min-height: 60px;
+  }
+  .print-mirror:empty::before { content: "(no answer written)"; color: var(--muted); font-style: italic; }
+
+  .resource-box {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 22px 22px;
+    margin-top: 28px;
+  }
+  .resource-box h3.sub-head { margin-bottom: 4px; }
+  .slide-embed {
+    position: relative;
+    width: 100%;
+    padding-top: 59.9%;
+    margin-top: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--soft);
+  }
+  .slide-embed iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  .resource-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .resource-link a { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  @media print {
+    .no-print { display: none !important; }
+    .print-hide { display: none !important; }
+    body { color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; }
+    .wrap { max-width: 100%; padding: 20px 28px; }
+    .practice-quad, .poster-block { break-inside: avoid; }
+    .poster-image { max-height: 260px; }
+    section { margin-top: 32px; }
+    textarea, input.evidence-input { display: none; }
+    .print-mirror { display: block !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head-row">
+    <div>
+      <p class="eyebrow">MYP 1 · Design · Criterion A, Strand iii</p>
+      <h1>SWOT: Analysing Existing Products</h1>
+      <p class="lede">Before you design your own poster, learn from posters that already exist — what works, what doesn't, and why.</p>
+    </div>
+    <div class="idbox">
+      <div><label>Name</label><input type="text"></div>
+      <div><label>Class</label><input type="text" style="width:80px;"></div>
+      <div><label>Date</label><input type="text" style="width:100px;"></div>
+    </div>
+  </div>
+
+  <div class="swot-mark no-print">
+    <span style="background:var(--strength)">S</span>
+    <span style="background:var(--weakness)">W</span>
+    <span style="background:var(--opportunity)">O</span>
+    <span style="background:var(--threat)">T</span>
+  </div>
+
+  <!-- ============ LEARN ============ -->
+  <section class="print-hide">
+    <h2>Learn</h2>
+    <p class="section-sub">What Strand iii actually asks you to do, and the tool that helps you do it.</p>
+
+    <h3 class="sub-head">What Strand iii Actually Asks For</h3>
+    <p class="body-text">Before you design your own poster, you need to look closely at posters that already exist — for Ignite or similar events — and figure out what actually works about them, and what doesn't. You're not copying them. You're learning from them.</p>
+    <div class="official-box">Official skill: "Analyse a range of existing products that inspire a solution to the problem."</div>
+    <p class="body-text">A lot of first-attempt designs repeat the same mistakes as what came before, simply because nobody stopped to look closely at what already exists. The key word is <b>analyse</b>, not just <i>look at</i>. Saying "I like it" isn't analysis — asking specific questions and finding real answers is. That's exactly what SWOT gives you a structure for.</p>
+
+    <h3 class="sub-head" style="margin-top:26px;">What SWOT Actually Means</h3>
+    <p class="body-text">Four angles to look at anything from — a poster, a product, an event.</p>
+    <div class="swot-cards">
+      <div class="swot-card">
+        <div class="swot-badge" style="background:var(--strength)">S</div>
+        <h4>Strengths</h4>
+        <p>What does this do well?</p>
+      </div>
+      <div class="swot-card">
+        <div class="swot-badge" style="background:var(--weakness)">W</div>
+        <h4>Weaknesses</h4>
+        <p>What doesn't work, or could be better?</p>
+      </div>
+      <div class="swot-card">
+        <div class="swot-badge" style="background:var(--opportunity)">O</div>
+        <h4>Opportunities</h4>
+        <p>What could be improved or added?</p>
+      </div>
+      <div class="swot-card">
+        <div class="swot-badge" style="background:var(--threat)">T</div>
+        <h4>Threats</h4>
+        <p>What outside factors could stop this from working?</p>
+      </div>
+    </div>
+    <p class="body-text" style="margin-top:14px;"><b>A useful way to think about it:</b> S and W look <i>inward</i> — at the poster itself. O and T look <i>outward</i> — at the world around the poster.</p>
+
+    <h3 class="sub-head" style="margin-top:26px;">Weakness vs. Threat — the confusing pair</h3>
+    <p class="body-text"><b>The one-line rule:</b> Weakness comes from <i>inside</i> the poster. Threat comes from <i>outside</i> it.</p>
+    <table class="compare-table">
+      <tr><th></th><th>Weakness</th><th>Threat</th></tr>
+      <tr><td>Where it comes from</td><td class="w-col">Inside — something about the poster itself</td><td class="t-col">Outside — something in the world around the poster</td></tr>
+      <tr><td>Can you control it?</td><td class="w-col">Yes — it's a design choice, you can fix it directly</td><td class="t-col">Not directly — it's a situation you design around</td></tr>
+      <tr><td>The question to ask</td><td class="w-col">"What's wrong with the poster?"</td><td class="t-col">"What could stop it working, even if it's good?"</td></tr>
+    </table>
+
+    <div class="test-box">
+      <p class="q">"If I redesigned this poster right now, would this problem disappear?"</p>
+      <div class="test-answers">
+        <span class="yes"><b>Yes</b> → Weakness (lives inside the design)</span>
+        <span class="no"><b>No</b> → Threat (lives outside the design)</span>
+      </div>
+    </div>
+
+    <div class="example-pair">
+      <div class="example-card w">
+        <b>Weakness</b>
+        "The poster is only in English."
+        <span class="note">A design choice — could be changed right now.</span>
+      </div>
+      <div class="example-card t">
+        <b>Threat</b>
+        "Schools outside Hyderabad may not trust or recognise the event if they've never heard of it before."
+        <span class="note">Still true even if the poster is redesigned perfectly.</span>
+      </div>
+    </div>
+
+    <div class="bridge-line">A weakness gets fixed by redesigning the poster. A threat like "unfamiliar schools won't trust it" is exactly why the promotion plan and brand guidelines matter just as much as the poster — some problems can't be drawn away, they have to be strategised around.</div>
+
+    <h3 class="sub-head" style="margin-top:30px;">Worked Example: Last Year's Ignite Poster</h3>
+    <p class="body-text">A full SWOT analysis of last year's Hyderabad-level poster.</p>
+    <button class="reveal-btn" id="revealBtn" type="button">See the full SWOT ↓</button>
+    <div class="worked-grid" id="workedGrid">
+      <div class="worked-quad quad-s">
+        <h5>Strengths</h5>
+        <ul>
+          <li>Bright, eye-catching colours that grab attention</li>
+          <li>Event name is large and easy to read from a distance</li>
+          <li>Clear date and location printed at the bottom</li>
+        </ul>
+      </div>
+      <div class="worked-quad quad-w">
+        <h5>Weaknesses</h5>
+        <ul>
+          <li>All text is in English only — no regional language versions</li>
+          <li>Doesn't say why a student should want to attend</li>
+          <li>No QR code or link — no easy way to register on the spot</li>
+        </ul>
+      </div>
+      <div class="worked-quad quad-o">
+        <h5>Opportunities</h5>
+        <ul>
+          <li>Could add a QR code linking straight to registration</li>
+          <li>Could be translated for schools in different states</li>
+          <li>Could explain what Ignite is for first-time viewers</li>
+        </ul>
+      </div>
+      <div class="worked-quad quad-t">
+        <h5>Threats</h5>
+        <ul>
+          <li>Other school events competing for attention at the same time</li>
+          <li>Unfamiliar schools may not trust an event they've never heard of</li>
+          <li>Without wider promotion, the poster alone may not be enough</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub-head" style="margin-top:30px;">Turning SWOT Into Strand iii Evidence</h3>
+    <p class="body-text">A completed SWOT chart isn't the finished analysis by itself — you need to say what it means for your own design. Notice something in an existing poster, then explain how it shapes your decision.</p>
+    <div class="evidence-example">"Because last year's poster had no QR code (a weakness), my poster will include one so students can register immediately instead of forgetting to look it up later."</div>
+
+    <div class="resource-box no-print">
+      <h3 class="sub-head">Resource: SWOT Slides</h3>
+      <p class="body-text" style="margin-bottom:0;">A walkthrough deck covering the same material, if you'd rather work through slides.</p>
+      <div class="slide-embed">
+        <iframe src="https://docs.google.com/presentation/d/1zinnu8RJv9-z_OCE26aGKzPvNDlI4tF_24laJnLrxp0/embed?start=false&loop=false&delayms=3000" allowfullscreen="true" title="SWOT slides"></iframe>
+      </div>
+      <p class="resource-link"><a href="https://docs.google.com/presentation/d/1zinnu8RJv9-z_OCE26aGKzPvNDlI4tF_24laJnLrxp0/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Slides &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ============ PRACTICE ============ -->
+  <section>
+    <h2>Practice</h2>
+    <p class="section-sub">Choose three existing posters (from Ignite or similar events) and analyse each one. Add a picture of each poster if you have one.</p>
+
+    <div id="postersContainer"></div>
+
+    <div class="add-poster-wrap no-print">
+      <button class="add-poster-btn" id="addPosterBtn" type="button">+ Add another poster</button>
+    </div>
+
+    <div class="actions no-print" style="margin-top:-6px;">
+      <button class="btn primary no-print" id="copyBtn" type="button">Copy my analysis</button>
+      <button class="btn no-print" id="clearBtn" type="button">Clear all</button>
+      <button class="btn no-print" id="printBtn" type="button">Print my analysis</button>
+    </div>
+
+    <p class="note no-print">Printing only prints your name/class/date and your written analysis below — not the Learn section above. Your work isn't saved once you close this page — copy it into your workbook before you leave.</p>
+  </section>
+
+  <footer>MYP 1 · Design · Criterion A, Strand iii — Analyse a range of existing products that inspire a solution to the problem.</footer>
+</div>
+
+<script>
+  const revealBtn = document.getElementById('revealBtn');
+  const workedGrid = document.getElementById('workedGrid');
+  revealBtn.addEventListener('click', () => {
+    const open = workedGrid.classList.toggle('open');
+    revealBtn.textContent = open ? 'Hide the SWOT \u2191' : 'See the full SWOT \u2193';
+  });
+
+  const QUADS = [
+    { key: 's', letter: 'S', name: 'Strengths',     question: 'What does this do well?',                         varName: '--strength' },
+    { key: 'w', letter: 'W', name: 'Weaknesses',    question: "What doesn't work, or could be better?",           varName: '--weakness' },
+    { key: 'o', letter: 'O', name: 'Opportunities', question: 'What could be improved or added?',                 varName: '--opportunity' },
+    { key: 't', letter: 'T', name: 'Threats',       question: 'What outside factors could stop this working?',   varName: '--threat' },
+  ];
+  const PLACEHOLDERS = {
+    s: 'e.g. Bright colours, clear event name\u2026',
+    w: 'e.g. Only in English, no QR code\u2026',
+    o: 'e.g. Add a QR code, translate it\u2026',
+    t: 'e.g. Competing events, unfamiliar schools\u2026',
+  };
+
+  const postersContainer = document.getElementById('postersContainer');
+  let posterCount = 0;
+
+  function buildPosterBlock(id) {
+    const wrap = document.createElement('div');
+    wrap.className = 'poster-block';
+    wrap.dataset.poster = id;
+
+    let quadsHtml = '';
+    QUADS.forEach(q => {
+      quadsHtml += `
+        <div class="practice-quad" style="border-color: var(${q.varName});">
+          <div class="practice-quad-head"><span class="dot" style="background:var(${q.varName})">${q.letter}</span><span class="name">${q.name}</span></div>
+          <p style="font-size:11.5px;color:var(--muted);font-style:italic;margin:0 0 8px;">${q.question}</p>
+          <textarea class="swot-input" data-poster="${id}" data-quad="${q.key}" placeholder="${PLACEHOLDERS[q.key]}"></textarea>
+          <div class="print-mirror" id="mirror-${id}-${q.key}"></div>
+        </div>`;
+    });
+
+    wrap.innerHTML = `
+      <div class="poster-block-head">
+        <h3>Poster ${id}</h3>
+        ${id > 3 ? '<button class="poster-remove no-print" type="button">Remove</button>' : ''}
+      </div>
+      <div class="image-upload-area">
+        <label class="upload-label no-print" for="img-input-${id}">+ Add image of this poster</label>
+        <input type="file" accept="image/*" id="img-input-${id}" data-poster="${id}">
+        <div class="poster-image-wrap" id="img-wrap-${id}">
+          <img class="poster-image" id="img-preview-${id}" alt="Poster ${id} image">
+          <button class="remove-image-btn no-print" type="button" data-poster="${id}">Remove image</button>
+        </div>
+      </div>
+      <div class="practice-swot">${quadsHtml}</div>`;
+
+    return wrap;
+  }
+
+  function addPoster() {
+    posterCount++;
+    const block = buildPosterBlock(posterCount);
+    postersContainer.appendChild(block);
+  }
+
+  for (let i = 0; i < 3; i++) addPoster();
+
+  document.getElementById('addPosterBtn').addEventListener('click', addPoster);
+
+  // event delegation: notes input -> print mirrors
+  postersContainer.addEventListener('input', (e) => {
+    if (e.target.classList.contains('swot-input')) {
+      const id = e.target.dataset.poster, key = e.target.dataset.quad;
+      document.getElementById('mirror-' + id + '-' + key).textContent = e.target.value;
+    }
+  });
+
+  // event delegation: image upload
+  postersContainer.addEventListener('change', (e) => {
+    if (e.target.matches('input[type="file"]')) {
+      const id = e.target.dataset.poster;
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const img = document.getElementById('img-preview-' + id);
+        const wrap = document.getElementById('img-wrap-' + id);
+        img.src = evt.target.result;
+        wrap.classList.add('has-image');
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // event delegation: remove image / remove poster
+  postersContainer.addEventListener('click', (e) => {
+    const removeImg = e.target.closest('.remove-image-btn');
+    if (removeImg) {
+      const id = removeImg.dataset.poster;
+      const img = document.getElementById('img-preview-' + id);
+      const wrap = document.getElementById('img-wrap-' + id);
+      const input = document.getElementById('img-input-' + id);
+      img.src = '';
+      wrap.classList.remove('has-image');
+      input.value = '';
+      return;
+    }
+    const removePoster = e.target.closest('.poster-remove');
+    if (removePoster) {
+      removePoster.closest('.poster-block').remove();
+      return;
+    }
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    postersContainer.querySelectorAll('.swot-input').forEach(f => f.value = '');
+    postersContainer.querySelectorAll('.print-mirror').forEach(m => m.textContent = '');
+    postersContainer.querySelectorAll('.poster-image-wrap').forEach(w => w.classList.remove('has-image'));
+    postersContainer.querySelectorAll('.poster-image').forEach(img => img.src = '');
+    postersContainer.querySelectorAll('input[type="file"]').forEach(inp => inp.value = '');
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', () => {
+    const labels = { s: 'Strengths', w: 'Weaknesses', o: 'Opportunities', t: 'Threats' };
+    const lines = [];
+    postersContainer.querySelectorAll('.poster-block').forEach(block => {
+      const id = block.dataset.poster;
+      lines.push('=== Poster ' + id + ' ===');
+      QUADS.forEach(q => {
+        const input = block.querySelector('.swot-input[data-quad="' + q.key + '"]');
+        lines.push(labels[q.key] + ': ' + (input.value.trim() || '(no answer written)'));
+      });
+      lines.push('');
+    });
+    const text = lines.join('\n').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      const original = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    }).catch(() => {});
+  });
+
+  document.getElementById('printBtn').addEventListener('click', () => {
+    window.print();
+  });
+</script>
+</body>
+</html>
