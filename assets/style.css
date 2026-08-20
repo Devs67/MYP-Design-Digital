@@ -108,6 +108,9 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   border-radius:12px;font-size:16.5px}
 .obj b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--slate);display:block;margin-bottom:8px;font-weight:500}
+.obj__head{display:flex;align-items:baseline;justify-content:space-between;
+  gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.obj__head b{margin-bottom:0}
 
 /* command terms */
 .terms{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
