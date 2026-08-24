@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ignite Investigation Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #17181c;
+    --muted: #6b6d76;
+    --muted-2: #9a9ba3;
+    --line: #dbdce2;
+    --line-strong: #b7b8c2;
+    --grid-line: rgba(23, 24, 28, 0.055);
+    --accent: #ff6b35;
+    --accent-ink: #ffffff;
+  }
+  /* Deliberately single-theme: this sheet always stays light paper, in print,
+     in a dark-mode browser, or with the viewer's theme toggle — a worksheet
+     needs to read the same way for every student regardless of device. */
+
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body {
+    margin: 0; background-color: var(--paper); color: var(--ink);
+    font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 56px 24px 90px; }
+
+  /* ---------- Header ---------- */
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11.5px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 16px;
+  }
+  h1.title {
+    font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.06; letter-spacing: -0.01em; margin: 0 0 10px; text-wrap: balance; color: var(--ink);
+  }
+  .subtitle { font-size: 15.5px; line-height: 1.55; color: var(--muted); max-width: 56ch; margin: 0 0 28px; }
+
+  .id-row { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 44px; padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+  .id-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 200px; }
+  .id-field label { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted-2); }
+  .id-field input {
+    font-family: "Public Sans", sans-serif; font-size: 15px; color: var(--ink);
+    background: transparent; border: none; border-bottom: 1px solid var(--line-strong);
+    padding: 4px 2px 8px; width: 100%;
+  }
+  .id-field input::placeholder { color: var(--muted-2); }
+  .id-field input:focus-visible { outline: none; border-bottom-color: var(--accent); }
+
+  /* ---------- Situation ---------- */
+  .situation { margin-bottom: 48px; padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .situation h3 {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-2); margin: 0 0 10px;
+  }
+  .situation p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--ink); max-width: 62ch; }
+  .situation strong { color: var(--ink); }
+
+  /* ---------- Parts ---------- */
+  .part { margin-bottom: 52px; }
+  .part-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
+  .part-num { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: 0.04em; }
+  .part-title { font-family: "Fraunces", Georgia, serif; font-weight: 600; font-size: 23px; margin: 0; color: var(--ink); }
+  .part-hint { font-size: 13.5px; font-style: italic; color: var(--muted); margin: 0 0 24px; line-height: 1.55; }
+
+  /* ---------- Question / answer block ---------- */
+  .qa { margin-bottom: 26px; }
+  .qa:last-child { margin-bottom: 0; }
+  .q-row { display: flex; gap: 10px; align-items: baseline; margin-bottom: 10px; }
+  .q-tag { font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600; color: var(--muted-2); flex: none; }
+  .q-text { font-size: 15px; line-height: 1.5; color: var(--ink); margin: 0; }
+  .q-text .sub { display: block; font-size: 12.5px; color: var(--muted); font-style: italic; margin-top: 4px; }
+
+  textarea, input.answer {
+    display: block; width: 100%; font-family: "Public Sans", sans-serif; font-size: 14.5px; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line-strong); border-radius: 6px;
+    padding: 12px 14px; resize: vertical; line-height: 1.65;
+  }
+  textarea:focus-visible, input.answer:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+  textarea::placeholder, input.answer::placeholder { color: var(--muted-2); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 620px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  .trio-item .q-tag { color: var(--accent); }
+
+  /* ---------- Checklist ---------- */
+  .checklist { border-top: 1px solid var(--line-strong); padding-top: 24px; margin: 8px 0 40px; }
+  .checklist h2 {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-2); margin: 0 0 16px;
+  }
+  .check-item { margin-bottom: 14px; }
+  .check-item:last-child { margin-bottom: 0; }
+  .check-item input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
+  .check-item label { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
+  .check-item .box {
+    flex: none; width: 19px; height: 19px; margin-top: 2px; border-radius: 4px;
+    border: 1.5px solid var(--line-strong); display: flex; align-items: center; justify-content: center;
+  }
+  .check-item input:checked + .box { background: var(--accent); border-color: var(--accent); }
+  .check-item .box svg { width: 11px; height: 11px; opacity: 0; }
+  .check-item input:checked + .box svg { opacity: 1; }
+  .check-item span.txt { font-size: 14.5px; line-height: 1.55; color: var(--ink); }
+
+  /* ---------- Utility ---------- */
+  .utility { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+  .btn {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 600; letter-spacing: 0.03em;
+    border-radius: 6px; padding: 10px 16px; cursor: pointer; border: 1px solid var(--line-strong);
+    background: var(--paper); color: var(--ink);
+  }
+  .btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.ghost { border-color: transparent; color: var(--muted); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .save-status { font-size: 11.5px; color: var(--muted-2); font-family: "IBM Plex Mono", monospace; }
+
+  .backlink {
+    display: inline-flex; align-items: center; gap: 6px; font-family: "IBM Plex Mono", monospace;
+    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+    text-decoration: none; margin-bottom: 24px;
+  }
+  .backlink:hover { color: var(--ink); }
+
+  footer {
+    max-width: 760px; margin: 30px auto 0; padding: 18px 24px 0; border-top: 1px solid var(--line);
+    font-size: 12px; color: var(--muted-2); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .check-item .box, .btn, textarea, input.answer, .id-field input { transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease; }
+  }
+
+  @media print {
+    body { background-image: none !important; background-color: #fff !important; color: #000 !important; }
+    .eyebrow, .part-num, .q-tag { color: #444 !important; }
+    .utility, .btn { display: none !important; }
+    textarea, input.answer, .id-field input { border-color: #999 !important; box-shadow: none !important; }
+    .check-item .box { border-color: #333 !important; }
+    .backlink { display: none !important; }
+    a { text-decoration: none; color: inherit; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="index.html">&larr; All criteria</a>
+  <p class="eyebrow">IB MYP Design &nbsp;·&nbsp; Year 1 &nbsp;·&nbsp; Criterion A, Strand i</p>
+  <h1 class="title">Identify The Problem</h1>
+  <p class="subtitle"><strong>Ignite Goes Pan-India</strong> — fill this in as your team investigates. Your answers save automatically on this device as you type.</p>
+
+  <div class="id-row">
+    <div class="id-field"><label for="fName">Name</label><input type="text" id="fName" placeholder="Your name"></div>
+    <div class="id-field"><label for="fTeam">Team / Class</label><input type="text" id="fTeam" placeholder="e.g. Team 3, MYP1-B"></div>
+  </div>
+
+  <div class="situation">
+    <h3>The Situation</h3>
+    <p>Last year, <strong>Ignite</strong> — Sreenidhi International's innovation event — ran successfully across Hyderabad. This year, the school wants Ignite to go <strong>pan-India</strong>: reaching students, teachers, and schools all across the country, not just here. Before your team can design Ignite's new brand and promotion, you need to find out exactly what's stopping that from happening right now.</p>
+  </div>
+
+  <div class="part">
+    <div class="part-head"><span class="part-num">01</span><h2 class="part-title">My Problem</h2></div>
+    <div class="qa">
+      <div class="q-row">
+        <p class="q-text">What is the problem, in your own words?
+          <span class="sub">Try: &ldquo;Right now, ____________________ don't know about Ignite because ____________________.&rdquo;</span>
+        </p>
+      </div>
+      <textarea rows="3" data-key="myProblem" placeholder="Write your answer here..."></textarea>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-head"><span class="part-num">02</span><h2 class="part-title">Who Is Affected?</h2></div>
+    <div class="qa">
+      <div class="q-row"><span class="q-tag">Q1</span><p class="q-text">Ignite needs to reach students, teachers, and school administrators. Which group is <em>least</em> likely to have already heard of Ignite — and why?</p></div>
+      <textarea rows="3" data-key="who1" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="qa">
+      <div class="q-row"><span class="q-tag">Q2</span><p class="q-text">Are they at a school like ours, or in a different city or state?</p></div>
+      <textarea rows="3" data-key="who2" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="qa">
+      <div class="q-row"><span class="q-tag">Q3</span><p class="q-text">How would a school outside Hyderabad normally hear about a national student event?</p></div>
+      <textarea rows="3" data-key="who3" placeholder="Write your answer here..."></textarea>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-head"><span class="part-num">03</span><h2 class="part-title">When / Where?</h2></div>
+    <div class="qa">
+      <div class="q-row"><span class="q-tag">Q1</span><p class="q-text">Before Ignite's registration window, or once it's already closing?</p></div>
+      <textarea rows="3" data-key="ww1" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="qa">
+      <div class="q-row"><span class="q-tag">Q2</span><p class="q-text">Through what channel — social media, an email to schools, word of mouth, a website?</p></div>
+      <textarea rows="3" data-key="ww2" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="qa">
+      <div class="q-row"><span class="q-tag">Q3</span><p class="q-text">Does it reach past Hyderabad and still get missed, or does it not really travel past Hyderabad at all?</p></div>
+      <textarea rows="3" data-key="ww3" placeholder="Write your answer here..."></textarea>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-head"><span class="part-num">04</span><h2 class="part-title">Prove It's Real</h2></div>
+    <p class="part-hint">The Rule of Three — collect one of each.</p>
+    <div class="grid-3">
+      <div class="qa trio-item">
+        <div class="q-row"><span class="q-tag">A NUMBER</span></div>
+        <p class="q-text sub" style="margin-bottom:10px;">e.g. how many cities/states were at Ignite last year vs. across India, or how many people you asked hadn't heard of it</p>
+        <input type="text" class="answer" data-key="proofNumber" placeholder="Your number...">
+      </div>
+      <div class="qa trio-item">
+        <div class="q-row"><span class="q-tag">A VOICE</span></div>
+        <p class="q-text sub" style="margin-bottom:10px;">e.g. a quote from someone about whether they'd heard of Ignite</p>
+        <textarea rows="3" data-key="proofVoice" placeholder="What they said..."></textarea>
+      </div>
+      <div class="qa trio-item">
+        <div class="q-row"><span class="q-tag">A NOTICING</span></div>
+        <p class="q-text sub" style="margin-bottom:10px;">e.g. something you noticed about how Ignite is currently promoted</p>
+        <textarea rows="3" data-key="proofNoticing" placeholder="What you noticed..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-head"><span class="part-num">05</span><h2 class="part-title">Why Does This Need Solving?</h2></div>
+    <div class="grid-2">
+      <div class="qa">
+        <div class="q-row"><p class="q-text">What happens if Ignite stays Hyderabad-only again?</p></div>
+        <textarea rows="3" data-key="whyNot" placeholder="Write your answer here..."></textarea>
+      </div>
+      <div class="qa">
+        <div class="q-row"><p class="q-text">What could happen if Ignite reaches students everywhere in India?</p></div>
+        <textarea rows="3" data-key="whyYes" placeholder="Write your answer here..."></textarea>
+      </div>
+    </div>
+    <div class="qa">
+      <div class="q-row"><p class="q-text">Who benefits most if this problem gets solved?</p></div>
+      <input type="text" class="answer" data-key="whoBenefits" placeholder="Write your answer here...">
+    </div>
+  </div>
+
+  <div class="checklist">
+    <h2>Before you move on, check</h2>
+    <div class="check-item">
+      <label>
+        <input type="checkbox" data-key="check1">
+        <span class="box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="var(--accent-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">My problem is about <strong>REACH</strong> — not the brand, logo, or poster yet. Designing those comes later, in Criterion B. No logo or poster ideas here!</span>
+      </label>
+    </div>
+    <div class="check-item">
+      <label>
+        <input type="checkbox" data-key="check2">
+        <span class="box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="var(--accent-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">I named exactly <strong>who</strong> is affected — students, teachers, or administrators — and where.</span>
+      </label>
+    </div>
+    <div class="check-item">
+      <label>
+        <input type="checkbox" data-key="check3">
+        <span class="box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="var(--accent-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="txt">I have at least <strong>one piece of real evidence</strong>.</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="utility">
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn primary" id="printBtn" type="button">Print this sheet</button>
+      <button class="btn ghost" id="clearBtn" type="button">Clear my answers</button>
+    </div>
+    <span class="save-status" id="saveStatus">saved on this device</span>
+  </div>
+
+  <footer>
+    <span>Criterion A · Strand i only — the logo, poster, and campaign come later</span>
+    <span>Ignite · Sreenidhi International</span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var KEY = 'ignite-identify-problem-v2';
+  var fields = Array.prototype.slice.call(document.querySelectorAll('[data-key]'));
+  var status = document.getElementById('saveStatus');
+
+  function load() {
+    try { var raw = localStorage.getItem(KEY); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; }
+  }
+  function save(state) {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function setStatus(msg) {
+    if (status) status.textContent = msg;
+  }
+
+  var state = load();
+  fields.forEach(function (el) {
+    var key = el.getAttribute('data-key');
+    if (state[key] !== undefined) {
+      if (el.type === 'checkbox') el.checked = !!state[key];
+      else el.value = state[key];
+    }
+    var evt = (el.tagName === 'TEXTAREA' || el.type === 'text') ? 'input' : 'change';
+    el.addEventListener(evt, function () {
+      var s = load();
+      s[key] = (el.type === 'checkbox') ? el.checked : el.value;
+      save(s);
+      setStatus('saved on this device ✓');
+    });
+  });
+
+  document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+  document.getElementById('clearBtn').addEventListener('click', function () {
+    if (!confirm('Clear everything you\'ve written on this sheet? This cannot be undone.')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    fields.forEach(function (el) {
+      if (el.type === 'checkbox') el.checked = false; else el.value = '';
+    });
+    setStatus('cleared');
+  });
+})();
+</script>
+
+</body>
+</html>
