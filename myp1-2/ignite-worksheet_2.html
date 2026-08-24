@@ -127,6 +127,8 @@
   .btn.ghost { border-color: transparent; color: var(--muted); }
   .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .save-status { font-size: 11.5px; color: var(--muted-2); font-family: "IBM Plex Mono", monospace; }
+  .print-hint { font-size: 12px; line-height: 1.55; color: var(--muted-2); margin: 10px 0 0; }
+  .print-hint.warn { color: var(--accent); }
 
   .backlink {
     display: inline-flex; align-items: center; gap: 6px; font-family: "IBM Plex Mono", monospace;
@@ -151,6 +153,7 @@
     textarea, input.answer, .id-field input { border-color: #999 !important; box-shadow: none !important; }
     .check-item .box { border-color: #333 !important; }
     .backlink { display: none !important; }
+    .print-hint { display: none !important; }
     a { text-decoration: none; color: inherit; }
   }
 </style>
@@ -290,6 +293,7 @@
     </div>
     <span class="save-status" id="saveStatus">saved on this device</span>
   </div>
+  <p class="print-hint" id="printHint">If tapping Print does nothing, open this page in Safari itself &mdash; not from a Home Screen icon &mdash; and try again.</p>
 
   <footer>
     <span>Criterion A · Strand i only — the logo, poster, and campaign come later</span>
@@ -330,7 +334,20 @@
     });
   });
 
-  document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+  // iOS Safari cannot print when a page is launched from a Home Screen icon —
+  // there is no browser chrome to host the print sheet, and window.print() just
+  // silently does nothing. Warn up front rather than leave the button looking dead.
+  var isStandalone = ('standalone' in window.navigator) && window.navigator.standalone;
+  var printHint = document.getElementById('printHint');
+  if (isStandalone && printHint) {
+    printHint.textContent = 'This page is open as a Home Screen app, which blocks printing on iPad. Open the link in Safari itself instead of the Home Screen icon, then print from there.';
+    printHint.className = 'print-hint warn';
+  }
+
+  document.getElementById('printBtn').addEventListener('click', function () {
+    if (isStandalone) { setStatus('Open this page in Safari itself to print — see the note below.'); return; }
+    try { window.print(); } catch (e) { setStatus('Could not open print — try Safari’s own Share button instead.'); }
+  });
   document.getElementById('clearBtn').addEventListener('click', function () {
     if (!confirm('Clear everything you\'ve written on this sheet? This cannot be undone.')) return;
     try { localStorage.removeItem(KEY); } catch (e) {}
