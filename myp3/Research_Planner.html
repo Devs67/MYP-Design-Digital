@@ -370,6 +370,14 @@
     cursor:pointer;
   }
   .toolbar button:hover{background:var(--ink); color:#fff;}
+  .print-hint{
+    max-width:1180px;
+    margin:-8px auto 16px;
+    font-family:var(--sans);
+    font-size:12px;
+    color:var(--warn);
+  }
+  @media print{ .print-hint{ display:none !important; } }
 
   @media print{
     body{background:#fff; padding:0;}
@@ -390,9 +398,10 @@
   <a class="back" href="frameworks.html">&larr; Frameworks</a>
   <div class="btns">
     <button type="button" onclick="saveCopy()">Save my copy (.html)</button>
-    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+    <button type="button" id="printBtn" onclick="handlePrint()">Print / Save as PDF</button>
   </div>
 </div>
+<p class="print-hint" id="printHint" hidden></p>
 
 <div class="sheet">
 
@@ -869,6 +878,25 @@ function saveCopy(){
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
+}
+
+// iOS Safari cannot print when a page is launched from a Home Screen icon —
+// there is no browser chrome to host the print sheet, and window.print() just
+// silently does nothing. Warn up front rather than leave the button looking dead.
+var isStandalone = ('standalone' in window.navigator) && window.navigator.standalone;
+var printHint = document.getElementById('printHint');
+if(isStandalone && printHint){
+  printHint.textContent = 'This page is open as a Home Screen app, which blocks printing on iPad. Open the link in Safari itself instead of the Home Screen icon, then print from there.';
+  printHint.hidden = false;
+}
+function handlePrint(){
+  if(isStandalone){
+    if(printHint) printHint.hidden = false;
+    return;
+  }
+  try { window.print(); } catch(e){
+    if(printHint){ printHint.textContent = 'Could not open print — try Safari\'s own Share button instead.'; printHint.hidden = false; }
+  }
 }
 
 renumberAll();

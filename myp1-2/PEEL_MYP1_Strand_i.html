@@ -356,6 +356,8 @@
     padding-top: 18px;
   }
 
+  .print-hint { margin-top: 10px; font-size: 12.5px; color: var(--amber); font-weight: 600; }
+
   footer {
     margin-top: 56px;
     font-size: 12px;
@@ -513,6 +515,7 @@
     </div>
 
     <p class="note no-print">Printing only prints your name/class/date and your written answers below — not the Learn section above. Your writing here isn't saved once you close this page — copy your paragraph into your workbook before you leave.</p>
+    <p class="print-hint no-print" id="printHint" hidden></p>
   </section>
 
   <footer>MYP 1 · Design · Criterion A, Strand i — Explain and justify the need for a solution.</footer>
@@ -609,8 +612,21 @@
     });
   });
 
+  // iOS Safari cannot print when a page is launched from a Home Screen icon —
+  // there is no browser chrome to host the print sheet, and window.print() just
+  // silently does nothing. Warn up front rather than leave the button looking dead.
+  const isStandalone = ('standalone' in window.navigator) && window.navigator.standalone;
+  const printHint = document.getElementById('printHint');
+  if (isStandalone && printHint) {
+    printHint.textContent = 'This page is open as a Home Screen app, which blocks printing on iPad. Open the link in Safari itself instead of the Home Screen icon, then print from there.';
+    printHint.hidden = false;
+  }
+
   document.getElementById('printBtn').addEventListener('click', () => {
-    window.print();
+    if (isStandalone) { if (printHint) printHint.hidden = false; return; }
+    try { window.print(); } catch (e) {
+      if (printHint) { printHint.textContent = 'Could not open print — try Safari\'s own Share button instead.'; printHint.hidden = false; }
+    }
   });
 
   render();

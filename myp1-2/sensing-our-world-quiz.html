@@ -300,6 +300,7 @@
       <button class="restart-btn" id="restartBtn" type="button">Restart System Check</button>
     </div>
     <p class="pdf-hint">Enter your name above and finish all three stages to unlock the results PDF (score, breakdown, and what to focus on next). You can also print this page any time and choose "Save as PDF" in the print dialog. Submit either file to your teacher.</p>
+    <p class="pdf-hint" id="printHint" style="color:var(--danger);font-weight:600;" hidden></p>
   </section>
 </main>
 
@@ -1164,7 +1165,21 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
   document.getElementById("checkMatchBtn").addEventListener("click", checkMatching);
   document.getElementById("checkFillBtn").addEventListener("click", checkFill);
   document.getElementById("downloadPdfBtn").addEventListener("click", generatePDF);
-  document.getElementById("printBtn").addEventListener("click", function(){ window.print(); });
+  // iOS Safari cannot print when a page is launched from a Home Screen icon —
+  // there is no browser chrome to host the print sheet, and window.print() just
+  // silently does nothing. Warn up front rather than leave the button looking dead.
+  var isStandalone = ("standalone" in window.navigator) && window.navigator.standalone;
+  var printHint = document.getElementById("printHint");
+  if (isStandalone && printHint) {
+    printHint.textContent = "This page is open as a Home Screen app, which blocks printing on iPad. Open the link in Safari itself instead of the Home Screen icon, then print from there.";
+    printHint.hidden = false;
+  }
+  document.getElementById("printBtn").addEventListener("click", function(){
+    if (isStandalone) { if (printHint) printHint.hidden = false; return; }
+    try { window.print(); } catch (e) {
+      if (printHint) { printHint.textContent = "Could not open print — try Safari's own Share button instead."; printHint.hidden = false; }
+    }
+  });
   document.getElementById("restartBtn").addEventListener("click", function(){ location.reload(); });
 })();
 </script>

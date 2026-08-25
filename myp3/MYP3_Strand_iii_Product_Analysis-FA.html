@@ -543,7 +543,21 @@
     });
   });
 
+  // iOS Safari cannot print when a page is launched from a Home Screen icon —
+  // there is no browser chrome to host the print sheet, and window.print() just
+  // silently does nothing. Catch it up front rather than leave the button looking dead.
+  const isStandalone = ('standalone' in window.navigator) && window.navigator.standalone;
+
   function tryPrint(){
+    const warningEl = document.getElementById('printWarning');
+
+    if (isStandalone){
+      warningEl.textContent = '⚠ This page is open as a Home Screen app, which blocks printing on iPad. Open the link in Safari itself instead of the Home Screen icon, then print from there.';
+      warningEl.classList.add('show');
+      warningEl.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
     const name = document.getElementById('fName');
     const cls = document.getElementById('fClass');
     const siteChecked = document.querySelector('input[name="site"]:checked');
@@ -559,7 +573,6 @@
       document.querySelectorAll('[data-site-row]').forEach(r => r.classList.add('field-missing'));
     }
 
-    const warningEl = document.getElementById('printWarning');
     if (missing.length){
       warningEl.textContent = '⚠ Before printing, please complete: ' + missing.join(', ') + '.';
       warningEl.classList.add('show');
@@ -567,7 +580,10 @@
       return;
     }
     warningEl.classList.remove('show');
-    window.print();
+    try { window.print(); } catch(e){
+      warningEl.textContent = '⚠ Could not open print — try Safari\'s own Share button instead.';
+      warningEl.classList.add('show');
+    }
   }
 
   function saveCopy(){
