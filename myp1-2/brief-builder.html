@@ -96,14 +96,6 @@
     border-radius:6px; border:1px solid var(--rule); color:var(--slate); background:var(--card);
   }
 
-  .teacher-note{
-    display:flex; gap:12px; align-items:flex-start; background:var(--card);
-    border:1px dashed var(--rule-strong); border-radius:10px; padding:14px 16px;
-    font-size:13.5px; color:var(--slate); margin-bottom:8px;
-  }
-  .teacher-note strong{ color:var(--ink); }
-  .teacher-note svg{ flex:none; width:17px; height:17px; margin-top:2px; color:var(--slate-2); }
-
   /* ---------------- Parts ---------------- */
   .part{ margin-top:52px; }
   .part-head{ display:flex; align-items:baseline; gap:13px; margin-bottom:16px; }
@@ -191,7 +183,8 @@
   .analysis-box{ margin-top:15px; padding-top:13px; border-top:1px dashed var(--rule); }
   .analysis-label{ font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; font-weight:700; color:var(--slate-2); margin-bottom:8px; }
   .analysis-textarea{
-    width:100%; min-height:100px; resize:vertical; font-family:var(--body); font-size:14px; color:var(--ink);
+    display:block; width:100%; min-height:100px; resize:none; overflow:hidden;
+    font-family:var(--body); font-size:14px; color:var(--ink);
     background:var(--card); border:1.5px solid var(--rule); border-radius:8px; padding:10px 12px; line-height:1.6;
   }
   .analysis-textarea:focus-visible{ outline:none; border-color:var(--coral); }
@@ -228,12 +221,13 @@
   }
   .fillcard-head h3{ font-size:15.5px; font-weight:700; }
 
-  .fillrow{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; font-size:14.5px; color:var(--slate); line-height:2.1; }
+  .fillrow{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 8px; font-size:14.5px; color:var(--slate); line-height:2.1; }
   .blank{
     font-family:var(--mono); font-size:13px; color:var(--ink); background:transparent; border:none;
-    border-bottom:2px dotted var(--slate-2); padding:2px 4px; min-width:120px; flex:1 1 120px;
+    border-bottom:2px dotted var(--slate-2); padding:2px 4px; margin:0;
+    flex:0 0 auto; width:120px; max-width:100%;
   }
-  .blank.wide{ min-width:180px; flex-basis:180px; }
+  .blank.wide{ width:180px; }
   .blank:focus-visible{ outline:none; border-bottom-color:var(--coral); border-bottom-style:solid; }
   .blank::placeholder{ color:var(--slate-2); font-style:italic; }
 
@@ -279,7 +273,7 @@
     body{ background-image:none !important; background-color:#fff !important; }
     .backlink, .utility, .print-hint{ display:none !important; }
     .example, .card, .callout, .fillcard, .evidence-card, .analysis-box, .reason{ break-inside:avoid; box-shadow:none; }
-    .analysis-textarea{ break-inside:avoid; }
+    .analysis-textarea, .blank{ break-inside:avoid; }
     .part{ break-inside:avoid; }
   }
 </style>
@@ -296,11 +290,6 @@
     <span class="tag">MYP 1</span>
     <span class="tag">Command term: Summarise</span>
     <span class="tag">No new research beyond this point</span>
-  </div>
-
-  <div class="teacher-note">
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg>
-    <p><strong>Note for the teacher:</strong> this sheet uses generic IB command-term language. Swap in the school's own TSC wording and success-criteria bands if they differ.</p>
   </div>
 
   <!-- PART 1 -->
@@ -590,32 +579,51 @@
     printHint.className = 'print-hint warn';
   }
 
-  // Safari (iPad and desktop) only prints the scrolled-into-view text inside a
-  // <textarea> — anything past its visible rows gets cut off on the printed page.
-  // Grow each box to fit its full value just before printing, then put it back.
-  function expandTextareasForPrint() {
-    var areas = document.querySelectorAll('.analysis-textarea');
-    for (var i = 0; i < areas.length; i++) {
-      areas[i].style.height = 'auto';
-      areas[i].style.height = areas[i].scrollHeight + 'px';
+  // The inline blanks stay on one line and grow sideways as you type, instead
+  // of wrapping — matches how you'd fill in a printed worksheet by hand.
+  var widthMirror = null;
+  function autoWidth(el) {
+    if (!widthMirror) {
+      widthMirror = document.createElement('span');
+      widthMirror.style.position = 'absolute';
+      widthMirror.style.left = '-9999px';
+      widthMirror.style.visibility = 'hidden';
+      widthMirror.style.whiteSpace = 'pre';
+      document.body.appendChild(widthMirror);
     }
+    var style = window.getComputedStyle(el);
+    widthMirror.style.fontFamily = style.fontFamily;
+    widthMirror.style.fontSize = style.fontSize;
+    widthMirror.style.fontWeight = style.fontWeight;
+    widthMirror.style.letterSpacing = style.letterSpacing;
+    widthMirror.textContent = el.value || el.getAttribute('placeholder') || '';
+    var min = el.classList.contains('wide') ? 180 : 120;
+    el.style.width = Math.max(min, widthMirror.offsetWidth + 16) + 'px';
   }
-  function restoreTextareasAfterPrint() {
-    var areas = document.querySelectorAll('.analysis-textarea');
-    for (var i = 0; i < areas.length; i++) {
-      areas[i].style.height = '';
-    }
+
+  // The analysis boxes are full paragraphs, so they grow downward instead —
+  // and because height always matches content, printing (which only renders
+  // a textarea's current on-screen height) shows the whole answer too.
+  function autoGrow(el) {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
   }
-  window.addEventListener('beforeprint', expandTextareasForPrint);
-  window.addEventListener('afterprint', restoreTextareasAfterPrint);
+
+  var blanks = document.querySelectorAll('.blank');
+  for (var b = 0; b < blanks.length; b++) {
+    autoWidth(blanks[b]);
+    blanks[b].addEventListener('input', function () { autoWidth(this); });
+  }
+  var areas = document.querySelectorAll('.analysis-textarea');
+  for (var a = 0; a < areas.length; a++) {
+    autoGrow(areas[a]);
+    areas[a].addEventListener('input', function () { autoGrow(this); });
+  }
 
   var printBtn = document.getElementById('printBtn');
   if (printBtn) {
     printBtn.addEventListener('click', function () {
       if (isStandalone) { return; }
-      // iOS opens the print sheet asynchronously and returns immediately, so any
-      // restore has to wait for 'afterprint' — never run it right after this call.
-      expandTextareasForPrint();
       try { window.print(); } catch (e) {}
     });
   }
@@ -624,10 +632,10 @@
   if (clearBtn) {
     clearBtn.addEventListener('click', function () {
       if (!confirm('Clear everything you\'ve written on this sheet? This cannot be undone.')) return;
-      var fields = document.querySelectorAll('.blank, .analysis-textarea, .checklist input[type="checkbox"]');
-      for (var i = 0; i < fields.length; i++) {
-        if (fields[i].type === 'checkbox') fields[i].checked = false; else fields[i].value = '';
-      }
+      for (var i = 0; i < blanks.length; i++) { blanks[i].value = ''; autoWidth(blanks[i]); }
+      for (var j = 0; j < areas.length; j++) { areas[j].value = ''; autoGrow(areas[j]); }
+      var checks = document.querySelectorAll('.checklist input[type="checkbox"]');
+      for (var k = 0; k < checks.length; k++) { checks[k].checked = false; }
     });
   }
 })();
