@@ -590,10 +590,32 @@
     printHint.className = 'print-hint warn';
   }
 
+  // Safari (iPad and desktop) only prints the scrolled-into-view text inside a
+  // <textarea> — anything past its visible rows gets cut off on the printed page.
+  // Grow each box to fit its full value just before printing, then put it back.
+  function expandTextareasForPrint() {
+    var areas = document.querySelectorAll('.analysis-textarea');
+    for (var i = 0; i < areas.length; i++) {
+      areas[i].style.height = 'auto';
+      areas[i].style.height = areas[i].scrollHeight + 'px';
+    }
+  }
+  function restoreTextareasAfterPrint() {
+    var areas = document.querySelectorAll('.analysis-textarea');
+    for (var i = 0; i < areas.length; i++) {
+      areas[i].style.height = '';
+    }
+  }
+  window.addEventListener('beforeprint', expandTextareasForPrint);
+  window.addEventListener('afterprint', restoreTextareasAfterPrint);
+
   var printBtn = document.getElementById('printBtn');
   if (printBtn) {
     printBtn.addEventListener('click', function () {
       if (isStandalone) { return; }
+      // iOS opens the print sheet asynchronously and returns immediately, so any
+      // restore has to wait for 'afterprint' — never run it right after this call.
+      expandTextareasForPrint();
       try { window.print(); } catch (e) {}
     });
   }
