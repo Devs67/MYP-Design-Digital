@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brief Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#F2F5F6;
+    --card:#FFFFFF;
+    --ink:#14303C;
+    --slate:#5A727B;
+    --slate-2:#8FA0A6;
+    --rule:#D3E0E5;
+    --rule-strong:#B7C8CE;
+    --grid-line:rgba(20,48,60,0.05);
+    --shadow:0 1px 2px rgba(20,48,60,0.05), 0 8px 22px rgba(20,48,60,0.06);
+
+    --coral:#B0431C;
+    --coral-soft:#FBEAE2;
+    --coral-line:#EFC3AC;
+
+    --indigo:#3E5C99;
+    --indigo-soft:#E9EDF7;
+    --indigo-line:#C4CFE8;
+
+    --teal:#0D7A70;
+    --teal-soft:#E1F2EF;
+    --teal-line:#A9DAD2;
+
+    --amber:#B05A1C;
+    --amber-soft:#FBEEE2;
+    --amber-line:#EFCE8E;
+
+    --display:"Fraunces",Georgia,"Times New Roman",serif;
+    --body:"Work Sans","Segoe UI",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  /* Deliberately single-theme: this worksheet always stays light paper,
+     in print, in a dark-mode browser — it needs to read the same way
+     for every student regardless of device. */
+
+  @page{ margin:0.6in; }
+
+  *{ box-sizing:border-box; }
+  html{ background:var(--paper); }
+  body{
+    margin:0;
+    background-color:var(--paper);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:28px 28px;
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{ max-width:800px; margin:0 auto; padding:56px 24px 96px; }
+
+  ::selection{ background:var(--coral); color:#fff; }
+  a{ color:var(--coral); }
+
+  h1,h2,h3{ font-family:var(--display); text-wrap:balance; margin:0; color:var(--ink); }
+  p{ margin:0 0 14px; color:var(--ink); }
+  p:last-child{ margin-bottom:0; }
+
+  .backlink{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--slate); text-decoration:none; margin-bottom:24px;
+  }
+  .backlink:hover{ color:var(--ink); }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--coral); margin:0 0 10px; display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--coral); display:inline-block; }
+
+  h1.title{
+    font-size:clamp(32px, 5vw, 44px); font-weight:700; line-height:1.08; margin:0 0 12px;
+  }
+  h1.title em{ font-style:italic; font-weight:500; color:var(--coral); }
+
+  .subtitle{ font-size:15.5px; color:var(--slate); max-width:60ch; margin:0 0 18px; }
+
+  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px; }
+  .tag{
+    font-family:var(--mono); font-size:11.5px; letter-spacing:0.03em; padding:5px 10px;
+    border-radius:6px; border:1px solid var(--rule); color:var(--slate); background:var(--card);
+  }
+
+  .teacher-note{
+    display:flex; gap:12px; align-items:flex-start; background:var(--card);
+    border:1px dashed var(--rule-strong); border-radius:10px; padding:14px 16px;
+    font-size:13.5px; color:var(--slate); margin-bottom:8px;
+  }
+  .teacher-note strong{ color:var(--ink); }
+  .teacher-note svg{ flex:none; width:17px; height:17px; margin-top:2px; color:var(--slate-2); }
+
+  /* ---------------- Parts ---------------- */
+  .part{ margin-top:52px; }
+  .part-head{ display:flex; align-items:baseline; gap:13px; margin-bottom:16px; }
+  .part-num{
+    font-family:var(--display); font-weight:900; font-size:14px; color:#fff; background:var(--ink);
+    width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+    flex:none; transform:translateY(2px);
+  }
+  .part h2{ font-size:24px; font-weight:700; }
+  .lede{ color:var(--slate); margin-bottom:16px; font-size:15px; }
+
+  .card{ background:var(--card); border:1px solid var(--rule); border-radius:12px; box-shadow:var(--shadow); padding:20px 22px; }
+
+  /* callouts */
+  .callout{ border-radius:12px; padding:16px 18px; border:1px solid; }
+  .callout-head{
+    display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11.5px;
+    letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:8px;
+  }
+  .callout p{ font-size:14.5px; }
+  .callout.coral{ background:var(--coral-soft); border-color:var(--coral-line); }
+  .callout.coral .callout-head{ color:var(--coral); }
+  .callout.teal{ background:var(--teal-soft); border-color:var(--teal-line); }
+  .callout.teal .callout-head{ color:var(--teal); }
+  .callout.amber{ background:var(--amber-soft); border-color:var(--amber-line); }
+  .callout.amber .callout-head{ color:var(--amber); }
+  .callout.indigo{ background:var(--indigo-soft); border-color:var(--indigo-line); }
+  .callout.indigo .callout-head{ color:var(--indigo); }
+
+  /* reason grid */
+  .reason-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:620px){ .reason-grid{ grid-template-columns:1fr; } }
+  .reason{ background:var(--card); border:1px solid var(--rule); border-radius:10px; padding:15px 17px; display:flex; gap:12px; }
+  .reason svg{ flex:none; width:21px; height:21px; margin-top:2px; }
+  .reason p{ font-size:14px; color:var(--slate); }
+  .reason p strong{ color:var(--ink); }
+  .reason.c1 svg{ color:var(--indigo); }
+  .reason.c2 svg{ color:var(--teal); }
+  .reason.c3 svg{ color:var(--amber); }
+  .reason.c4 svg{ color:var(--coral); }
+
+  /* builder steps */
+  .builder{ display:flex; flex-direction:column; }
+  .step{ display:grid; grid-template-columns:48px 1fr; gap:16px; }
+  .step-rail{ display:flex; flex-direction:column; align-items:center; }
+  .step-badge{
+    width:36px; height:36px; border-radius:50%; background:var(--ink); color:#fff;
+    font-family:var(--display); font-weight:700; font-size:15px;
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .step-line{ width:2px; flex:1; background:var(--rule-strong); margin:4px 0; min-height:30px; }
+  .step:last-child .step-line{ display:none; }
+  .step-body{ padding-bottom:28px; }
+  .step:last-child .step-body{ padding-bottom:0; }
+  .step-body h3{ font-size:17px; font-weight:700; margin-bottom:6px; }
+  .step-body p{ color:var(--slate); font-size:14.5px; }
+  .formula{
+    margin-top:10px; font-family:var(--mono); font-size:13px; color:var(--ink);
+    background:var(--rule)33; background:var(--paper); border:1px solid var(--rule-strong);
+    border-radius:8px; padding:10px 13px; line-height:1.6;
+  }
+
+  /* examples */
+  .example{ border-radius:12px; border:1px solid var(--rule); background:var(--card); box-shadow:var(--shadow); overflow:hidden; margin-bottom:18px; }
+  .example:last-child{ margin-bottom:0; }
+  .example-top{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 20px; border-bottom:1px solid var(--rule); }
+  .example.tag-indigo .example-top{ background:var(--indigo-soft); }
+  .example.tag-amber .example-top{ background:var(--amber-soft); }
+  .example.tag-teal .example-top{ background:var(--teal-soft); }
+  .example-name{ font-family:var(--display); font-weight:700; font-size:16.5px; }
+  .example.tag-indigo .example-name{ color:var(--indigo); }
+  .example.tag-amber .example-name{ color:var(--amber); }
+  .example.tag-teal .example-name{ color:var(--teal); }
+  .example-chip{ font-family:var(--mono); font-size:11px; letter-spacing:0.04em; color:var(--slate-2); }
+  .example-body{ padding:18px 20px 20px; }
+  .example-problem{ font-style:italic; color:var(--slate); font-size:14px; margin-bottom:14px; }
+
+  .field-row{ display:grid; grid-template-columns:120px 1fr; gap:10px; padding:9px 0; border-top:1px solid var(--rule); font-size:14px; }
+  .field-row:first-of-type{ border-top:none; }
+  .field-label{ font-family:var(--mono); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; font-weight:700; color:var(--slate-2); padding-top:2px; }
+
+  .analysis-questions{ margin:10px 0 0; padding-left:20px; display:flex; flex-direction:column; gap:6px; }
+  .analysis-questions li{ font-size:14px; color:var(--ink); padding-left:2px; }
+
+  .analysis-box{ margin-top:15px; padding-top:13px; border-top:1px dashed var(--rule); }
+  .analysis-label{ font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; font-weight:700; color:var(--slate-2); margin-bottom:8px; }
+  .analysis-textarea{
+    width:100%; min-height:100px; resize:vertical; font-family:var(--body); font-size:14px; color:var(--ink);
+    background:var(--card); border:1.5px solid var(--rule); border-radius:8px; padding:10px 12px; line-height:1.6;
+  }
+  .analysis-textarea:focus-visible{ outline:none; border-color:var(--coral); }
+  .analysis-textarea::placeholder{ color:var(--slate-2); font-style:italic; }
+  .example.tag-indigo .analysis-textarea:focus-visible{ border-color:var(--indigo); }
+  .example.tag-amber .analysis-textarea:focus-visible{ border-color:var(--amber); }
+  .example.tag-teal .analysis-textarea:focus-visible{ border-color:var(--teal); }
+
+  /* task */
+  .evidence-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin:16px 0 24px; }
+  @media (max-width:660px){ .evidence-grid{ grid-template-columns:1fr; } }
+  .evidence-card{ border-radius:10px; padding:13px 15px; border:1px solid; font-size:13.5px; }
+  .evidence-card .evidence-kind{ font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.07em; font-weight:700; margin-bottom:6px; display:block; }
+  .evidence-card.e-indigo{ background:var(--indigo-soft); border-color:var(--indigo-line); }
+  .evidence-card.e-indigo .evidence-kind{ color:var(--indigo); }
+  .evidence-card.e-teal{ background:var(--teal-soft); border-color:var(--teal-line); }
+  .evidence-card.e-teal .evidence-kind{ color:var(--teal); }
+  .evidence-card.e-amber{ background:var(--amber-soft); border-color:var(--amber-line); }
+  .evidence-card.e-amber .evidence-kind{ color:var(--amber); }
+
+  .wordbank{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .wordbank span{
+    font-family:var(--mono); font-size:12px; background:var(--card); border:1px solid var(--amber-line);
+    color:var(--amber); padding:5px 10px; border-radius:999px;
+  }
+
+  .fillcard{ margin-top:20px; }
+  .fillcard + .fillcard{ margin-top:14px; }
+  .fillcard-head{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .fillcard-badge{
+    width:24px; height:24px; border-radius:7px; background:var(--coral); color:#fff;
+    font-family:var(--mono); font-weight:700; font-size:12px;
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .fillcard-head h3{ font-size:15.5px; font-weight:700; }
+
+  .fillrow{ display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; font-size:14.5px; color:var(--slate); line-height:2.1; }
+  .blank{
+    font-family:var(--mono); font-size:13px; color:var(--ink); background:transparent; border:none;
+    border-bottom:2px dotted var(--slate-2); padding:2px 4px; min-width:120px; flex:1 1 120px;
+  }
+  .blank.wide{ min-width:180px; flex-basis:180px; }
+  .blank:focus-visible{ outline:none; border-bottom-color:var(--coral); border-bottom-style:solid; }
+  .blank::placeholder{ color:var(--slate-2); font-style:italic; }
+
+  /* checklist */
+  .checklist{ list-style:none; margin:14px 0 0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .check-item{ margin:0; }
+  .check-item input[type="checkbox"]{ position:absolute; opacity:0; pointer-events:none; }
+  .check-item label{ display:flex; gap:10px; align-items:flex-start; cursor:pointer; }
+  .check-item .box{
+    flex:none; width:19px; height:19px; margin-top:1px; border-radius:5px;
+    border:1.5px solid var(--coral-line); display:flex; align-items:center; justify-content:center;
+  }
+  .check-item input:checked + .box{ background:var(--coral); border-color:var(--coral); }
+  .check-item .box svg{ width:11px; height:11px; opacity:0; }
+  .check-item input:checked + .box svg{ opacity:1; }
+  .check-item span.txt{ font-size:14px; line-height:1.5; color:var(--slate); }
+  .check-item input:focus-visible + .box{ outline:2px solid var(--indigo); outline-offset:2px; }
+
+  /* utility */
+  .utility{ display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-top:26px; }
+  .btn{
+    font-family:var(--mono); font-size:12px; font-weight:600; letter-spacing:0.03em; border-radius:6px;
+    padding:10px 15px; cursor:pointer; border:1px solid var(--rule-strong); background:var(--paper); color:var(--ink);
+  }
+  .btn.primary{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .btn.ghost{ border-color:transparent; color:var(--slate); }
+  .btn:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
+  .print-hint{ font-size:12px; line-height:1.55; color:var(--slate-2); margin:10px 0 0; }
+  .print-hint.warn{ color:var(--coral); }
+
+  footer{
+    max-width:800px; margin:56px auto 0; padding:18px 0 0; border-top:1px solid var(--rule);
+    font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--slate-2); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .check-item .box, .btn, .blank{ transition:background 0.15s ease, border-color 0.15s ease, transform 0.15s ease; }
+    .check-item input:active + .box{ transform:scale(0.9); }
+  }
+
+  @media print{
+    body{ background-image:none !important; background-color:#fff !important; }
+    .backlink, .utility, .print-hint{ display:none !important; }
+    .example, .card, .callout, .fillcard, .evidence-card, .analysis-box, .reason{ break-inside:avoid; box-shadow:none; }
+    .analysis-textarea{ break-inside:avoid; }
+    .part{ break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <a class="backlink" href="index.html">&larr; All criteria</a>
+  <span class="eyebrow"><span class="dot"></span>IB MYP Design &nbsp;&middot;&nbsp; Year 1 &nbsp;&middot;&nbsp; Criterion A, Strand iv</span>
+  <h1 class="title">The <em>Brief</em> Builder</h1>
+  <p class="subtitle">A one-page toolkit for turning your research into a design brief — one clear paragraph that says exactly what you're going to design, and why.</p>
+  <div class="tags">
+    <span class="tag">MYP 1</span>
+    <span class="tag">Command term: Summarise</span>
+    <span class="tag">No new research beyond this point</span>
+  </div>
+
+  <div class="teacher-note">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="16" r="1" fill="currentColor"/></svg>
+    <p><strong>Note for the teacher:</strong> this sheet uses generic IB command-term language. Swap in the school's own TSC wording and success-criteria bands if they differ.</p>
+  </div>
+
+  <!-- PART 1 -->
+  <section class="part">
+    <div class="part-head"><span class="part-num">01</span><h2>What Is a Design Brief?</h2></div>
+    <p>A design brief is a short paragraph — usually just two or three sentences — that pulls together everything you found out while investigating your problem, and clearly states what you are going to design and why.</p>
+    <p style="margin-bottom:20px;">Think of it as the bridge between your research (Strands i&ndash;iii, where you proved a real problem exists) and your ideas (Criterion B, where you design a solution). The design brief is the last stop before you start designing.</p>
+
+    <div class="callout coral">
+      <div class="callout-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2 2 20h20L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+        Golden rule
+      </div>
+      <p>Strands i, ii and iii are <strong>never</strong> allowed to name a product. Strand iv is the very first place in your whole project where you're allowed to say what you will design — a poster, an app, a container, a game, anything. Before this strand, you were only proving the problem was real.</p>
+    </div>
+  </section>
+
+  <!-- PART 2 -->
+  <section class="part">
+    <div class="part-head"><span class="part-num">02</span><h2>Why Do We Write One?</h2></div>
+    <div class="reason-grid">
+      <div class="reason c1">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p><strong>It focuses messy research.</strong> Surveys, interviews and notes get pulled into one clear statement.</p>
+      </div>
+      <div class="reason c2">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <p><strong>It keeps you on track.</strong> Everything in Criterion B should aim at fulfilling this exact brief.</p>
+      </div>
+      <div class="reason c3">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 4V5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <p><strong>It tells someone else.</strong> A teacher, client or examiner can see exactly what and why, in a few sentences.</p>
+      </div>
+      <div class="reason c4">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 21c3-8 6-11 9-11s6 3 9 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
+        <p><strong>Real designers do this first.</strong> Before an architect or an app team starts, someone writes the brief.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART 3 -->
+  <section class="part">
+    <div class="part-head"><span class="part-num">03</span><h2>How Do We Write One?</h2></div>
+    <p class="lede">Use the 3-Part Brief Builder. Every design brief you write, for the rest of your MYP Design journey, can follow this same shape.</p>
+
+    <div class="builder">
+      <div class="step">
+        <div class="step-rail"><div class="step-badge">1</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Research Insight</h3>
+          <p>Summarise the ONE most important thing your research (Strands i&ndash;iii) told you. No new facts, no new numbers — only a summary of what you already found.</p>
+          <div class="formula">&ldquo;My research showed that ___ (who) ___ (problem), because ___ (evidence).&rdquo;</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-rail"><div class="step-badge">2</div><div class="step-line"></div></div>
+        <div class="step-body">
+          <h3>Design Question</h3>
+          <p>Turn your insight into a challenge, starting with &ldquo;How might we...?&rdquo; This keeps the question open — it does not name a product yet.</p>
+          <div class="formula">&ldquo;How might we ___ (do something) so that ___ (audience) can ___ (benefit)?&rdquo;</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-rail"><div class="step-badge">3</div></div>
+        <div class="step-body">
+          <h3>Design Statement</h3>
+          <p>Now, finally, name the TYPE of product you will design, and say why it will help — based directly on your insight and question.</p>
+          <div class="formula">&ldquo;I am going to design a ___ (type of product) that will ___ (do what), so that ___ (audience) can ___ (benefit).&rdquo;</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART 4 -->
+  <section class="part">
+    <div class="part-head"><span class="part-num">04</span><h2>Three Example Design Briefs</h2></div>
+    <p class="lede">Read each brief below, then write your own view underneath it — you're the one analysing now, not just reading.</p>
+
+    <div class="callout indigo" style="margin-bottom:20px;">
+      <div class="callout-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        How to analyse a brief
+      </div>
+      <p>Use these questions on every example:</p>
+      <ol class="analysis-questions">
+        <li>Does the Design Statement name ONE product, or more than one?</li>
+        <li>Can you point to the exact evidence in the Insight that the Statement is answering?</li>
+        <li>Does the Question stay open, or does it accidentally name the product too early?</li>
+        <li>What's the strongest part of this brief — and is anything missing?</li>
+      </ol>
+    </div>
+
+    <div class="example tag-indigo">
+      <div class="example-top">
+        <span class="example-name">Example 1 &mdash; Staying Hydrated</span>
+        <span class="example-chip">Upper-floor classrooms</span>
+      </div>
+      <div class="example-body">
+        <p class="example-problem">The problem, in short: students on the upper floors don't drink enough water because the fountain is far away.</p>
+        <div class="field-row"><span class="field-label">Insight</span><span>My research showed that 8 out of 12 students in my class don't drink enough water during the day, because the water fountain is on the ground floor and their classroom is on the third floor.</span></div>
+        <div class="field-row"><span class="field-label">Question</span><span>How might we help upper-floor students stay hydrated so that they don't need to leave class to get water?</span></div>
+        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design a portable, reusable water bottle carrier that clips onto a school bag, so that students can carry water with them all day without walking to the fountain.</span></div>
+        <div class="analysis-box">
+          <div class="analysis-label">Your analysis of Example 1</div>
+          <textarea class="analysis-textarea" rows="4" placeholder="Does the statement name one product? Which exact words in the insight is it responding to?"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="example tag-amber">
+      <div class="example-top">
+        <span class="example-name">Example 2 &mdash; Beating the Bell</span>
+        <span class="example-chip">Locker chaos</span>
+      </div>
+      <div class="example-body">
+        <p class="example-problem">The problem, in short: messy lockers make students late to class because they can't find their things.</p>
+        <div class="field-row"><span class="field-label">Insight</span><span>In my survey, 9 out of 15 Year 1 students said they are late to class at least once a week because they cannot find their books quickly in their locker.</span></div>
+        <div class="field-row"><span class="field-label">Question</span><span>How might we help students organise their lockers so that they can find their things quickly and get to class on time?</span></div>
+        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design a low-cost, foldable locker organiser that separates books, stationery, and personal items into clear sections, so that students can find what they need in a few seconds.</span></div>
+        <div class="analysis-box">
+          <div class="analysis-label">Your analysis of Example 2</div>
+          <textarea class="analysis-textarea" rows="4" placeholder="Is the evidence a real number or a guess? Does the statement stay at 'type of product' or jump ahead to exact details?"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="example tag-teal">
+      <div class="example-top">
+        <span class="example-name">Example 3 &mdash; Room to Focus</span>
+        <span class="example-chip">Noisy library</span>
+      </div>
+      <div class="example-body">
+        <p class="example-problem">The problem, in short: students avoid the library at lunch because the entrance area is too noisy to concentrate.</p>
+        <div class="field-row"><span class="field-label">Insight</span><span>My interviews showed that 7 out of 10 students avoid using the library during lunch because noise from the entrance area makes it hard to concentrate on reading or homework.</span></div>
+        <div class="field-row"><span class="field-label">Question</span><span>How might we create a quieter space inside the library so that students can focus on reading or homework during busy times?</span></div>
+        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design a portable &ldquo;Quiet Zone&rdquo; divider and signage system that library staff can set up near the entrance, so that students have a calmer space to study during lunch.</span></div>
+        <div class="analysis-box">
+          <div class="analysis-label">Your analysis of Example 3</div>
+          <textarea class="analysis-textarea" rows="4" placeholder="What exact cause does the insight name? Does the statement solve that exact cause, or something more general?"></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PART 5 -->
+  <section class="part">
+    <div class="part-head"><span class="part-num">05</span><h2>Now It's Your Turn</h2></div>
+    <p class="lede">Here's a hypothetical problem. The research has already been done for you — your only job in this task is to practise Strand iv: turning research into a design brief.</p>
+
+    <div class="callout coral">
+      <div class="callout-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        The problem
+      </div>
+      <p>During break time, the bins near the canteen are always overflowing by the end of lunch, and rubbish spills onto the ground before the bell rings for afternoon classes.</p>
+    </div>
+
+    <p class="lede" style="margin-top:22px;">Research findings you can use — don't add any new ones:</p>
+    <div class="evidence-grid">
+      <div class="evidence-card e-indigo">
+        <span class="evidence-kind">A number</span>
+        In a class survey, 14 out of 20 students said they'd seen overflowing bins near the canteen this week.
+      </div>
+      <div class="evidence-card e-teal">
+        <span class="evidence-kind">A voice</span>
+        A canteen staff member said: &ldquo;The bins are only emptied once a day, but lunch alone fills them completely.&rdquo;
+      </div>
+      <div class="evidence-card e-amber">
+        <span class="evidence-kind">A noticing</span>
+        Most of the overflow happens on the side of the canteen closest to the snack counter, not the lunch-tray counter.
+      </div>
+    </div>
+
+    <div class="callout amber">
+      <div class="callout-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Helpful word bank
+      </div>
+      <div class="wordbank">
+        <span>overflowing</span><span>bin</span><span>canteen</span><span>snack counter</span><span>lunch break</span><span>signage</span><span>schedule</span><span>capacity</span><span>rubbish</span><span>reusable</span><span>so that</span><span>how might we</span>
+      </div>
+    </div>
+
+    <div class="fillcard">
+      <div class="fillcard-head"><div class="fillcard-badge">1</div><h3>Your Research Insight</h3></div>
+      <div class="fillrow">
+        <span>My research showed that</span>
+        <input class="blank wide" type="text" placeholder="who / what problem">
+        <span>because</span>
+        <input class="blank wide" type="text" placeholder="evidence">
+        <span>.</span>
+      </div>
+    </div>
+
+    <div class="fillcard">
+      <div class="fillcard-head"><div class="fillcard-badge">2</div><h3>Your Design Question</h3></div>
+      <div class="fillrow">
+        <span>How might we</span>
+        <input class="blank" type="text" placeholder="do something">
+        <span>so that</span>
+        <input class="blank" type="text" placeholder="audience">
+        <span>can</span>
+        <input class="blank" type="text" placeholder="benefit">
+        <span>?</span>
+      </div>
+    </div>
+
+    <div class="fillcard">
+      <div class="fillcard-head"><div class="fillcard-badge">3</div><h3>Your Design Statement</h3></div>
+      <div class="fillrow">
+        <span>I am going to design a</span>
+        <input class="blank wide" type="text" placeholder="type of product">
+        <span>that will</span>
+        <input class="blank wide" type="text" placeholder="do what">
+        <span>, so that</span>
+        <input class="blank wide" type="text" placeholder="audience + benefit">
+        <span>.</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:26px;">
+      <div class="callout-head" style="color:var(--coral);">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Self-check — tick each box before you hand this in
+      </div>
+      <ul class="checklist">
+        <li class="check-item">
+          <label>
+            <input type="checkbox">
+            <span class="box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt">I have NOT added any brand-new research — I only used the findings given above.</span>
+          </label>
+        </li>
+        <li class="check-item">
+          <label>
+            <input type="checkbox">
+            <span class="box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt">My Research Insight is a summary, not a new fact.</span>
+          </label>
+        </li>
+        <li class="check-item">
+          <label>
+            <input type="checkbox">
+            <span class="box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt">My Design Question starts with &ldquo;How might we...?&rdquo; and does not already name a product.</span>
+          </label>
+        </li>
+        <li class="check-item">
+          <label>
+            <input type="checkbox">
+            <span class="box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt">My Design Statement names ONE type of product only — not two or three choices.</span>
+          </label>
+        </li>
+        <li class="check-item">
+          <label>
+            <input type="checkbox">
+            <span class="box"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="txt">This is the FIRST time I have named a product anywhere in this project.</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <div class="utility">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn primary" id="printBtn" type="button">Print this sheet</button>
+        <button class="btn ghost" id="clearBtn" type="button">Clear my answers</button>
+      </div>
+    </div>
+    <p class="print-hint" id="printHint">Answers on this sheet are not saved — print it or take a photo before you close the tab. If tapping Print does nothing on iPad, open this page in Safari itself, not from a Home Screen icon, and try again.</p>
+  </section>
+
+  <footer>
+    <span>MYP Design &middot; Criterion A &middot; Strand iv</span>
+    <span>Answers are not saved automatically</span>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var isStandalone = ('standalone' in window.navigator) && window.navigator.standalone;
+  var printHint = document.getElementById('printHint');
+  if (isStandalone && printHint) {
+    printHint.textContent = 'This page is open as a Home Screen app, which blocks printing on iPad. Open the link in Safari itself instead of the Home Screen icon, then print from there.';
+    printHint.className = 'print-hint warn';
+  }
+
+  var printBtn = document.getElementById('printBtn');
+  if (printBtn) {
+    printBtn.addEventListener('click', function () {
+      if (isStandalone) { return; }
+      try { window.print(); } catch (e) {}
+    });
+  }
+
+  var clearBtn = document.getElementById('clearBtn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function () {
+      if (!confirm('Clear everything you\'ve written on this sheet? This cannot be undone.')) return;
+      var fields = document.querySelectorAll('.blank, .analysis-textarea, .checklist input[type="checkbox"]');
+      for (var i = 0; i < fields.length; i++) {
+        if (fields[i].type === 'checkbox') fields[i].checked = false; else fields[i].value = '';
+      }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
