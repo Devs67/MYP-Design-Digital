@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brief Builder</title>
+<title>Brief Builder — Year 3</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -175,14 +175,6 @@
   .field-row:first-of-type{ border-top:none; }
   .field-label{ font-family:var(--mono); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; font-weight:700; color:var(--slate-2); padding-top:2px; }
 
-  /* slides embed */
-  .slide-embed{
-    position:relative; width:100%; height:0; padding-bottom:59.27%;
-    border-radius:12px; overflow:hidden; border:1px solid var(--rule); box-shadow:var(--shadow);
-    background:var(--card); margin-bottom:22px;
-  }
-  .slide-embed iframe{ position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
-
   /* CTA to the task sheet */
   .cta h3{ font-size:18px; font-weight:700; margin-bottom:6px; }
   .cta p{ color:var(--slate); font-size:14.5px; }
@@ -207,7 +199,7 @@
 
   @media print{
     body{ background-image:none !important; background-color:#fff !important; }
-    .backlink, .slide-embed, .cta{ display:none !important; }
+    .backlink, .cta{ display:none !important; }
     .example, .card, .callout, .reason{ break-inside:avoid; box-shadow:none; }
     .part{ break-inside:avoid; }
   }
@@ -218,27 +210,28 @@
 <div class="wrap">
 
   <a class="backlink" href="index.html">&larr; All criteria</a>
-  <span class="eyebrow"><span class="dot"></span>IB MYP Design &nbsp;&middot;&nbsp; Year 1 &nbsp;&middot;&nbsp; Criterion A, Strand iv</span>
+  <span class="eyebrow"><span class="dot"></span>IB MYP Design &nbsp;&middot;&nbsp; Year 3 &nbsp;&middot;&nbsp; Criterion A, Strand iv</span>
   <h1 class="title">The <em>Brief</em> Builder</h1>
-  <p class="subtitle">A one-page toolkit for turning your research into a design brief — one clear paragraph that says exactly what you're going to design, and why.</p>
+  <p class="subtitle">A one-page toolkit for turning your research — and your analysis of existing apps — into a design brief: one connected statement that names your app, says what it does, and cites every source it's built on.</p>
   <div class="tags">
-    <span class="tag">MYP 1</span>
-    <span class="tag">Command term: Summarise</span>
+    <span class="tag">MYP 3</span>
+    <span class="tag">Command term: Develop</span>
     <span class="tag">No new research beyond this point</span>
+    <span class="tag">Cite every source you use</span>
   </div>
 
   <!-- PART 1 -->
   <section class="part">
     <div class="part-head"><span class="part-num">01</span><h2>What Is a Design Brief?</h2></div>
-    <p>A design brief is a short paragraph — usually just two or three sentences — that pulls together everything you found out while investigating your problem, and clearly states what you are going to design and why.</p>
-    <p style="margin-bottom:20px;">Think of it as the bridge between your research (Strands i&ndash;iii, where you proved a real problem exists) and your ideas (Criterion B, where you design a solution). The design brief is the last stop before you start designing.</p>
+    <p>A design brief is a short, connected statement that pulls together everything you found out across Strands i&ndash;iii &mdash; the problem and who it affects, what your research plan told you, and what you learned from analysing existing apps &mdash; and states, with sources cited, which app you're going to design and why.</p>
+    <p style="margin-bottom:20px;">Think of it as the bridge between your investigation (Strands i&ndash;iii, where you proved a real problem exists and studied how other apps handle similar problems) and your ideas (Criterion B, where you actually design the screens and features). The design brief is the last stop before you start designing &mdash; and every claim in it should point back to evidence you already have.</p>
 
     <div class="callout coral">
       <div class="callout-head">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2 2 20h20L12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
         Golden rule
       </div>
-      <p>Strands i, ii and iii are <strong>never</strong> allowed to name a product. Strand iv is the very first place in your whole project where you're allowed to say what you will design — a poster, an app, a container, a game, anything. Before this strand, you were only proving the problem was real.</p>
+      <p>The task already tells you the <strong>format</strong> &mdash; you're designing an app. What you haven't said yet is <strong>which</strong> app, what it actually does, or who it's for. Strand iv is the first place in your whole project where you say that. Before this strand, your job was only to investigate the problem (Strand i), carry out your research plan (Strand ii), and study other apps (Strand iii) &mdash; never to describe your own solution.</p>
     </div>
   </section>
 
@@ -248,19 +241,19 @@
     <div class="reason-grid">
       <div class="reason c1">
         <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <p><strong>It focuses messy research.</strong> Surveys, interviews and notes get pulled into one clear statement.</p>
+        <p><strong>It connects three strands.</strong> Your problem, your research plan findings, and your app analysis get pulled into one clear statement.</p>
       </div>
       <div class="reason c2">
         <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-        <p><strong>It keeps you on track.</strong> Everything in Criterion B should aim at fulfilling this exact brief.</p>
+        <p><strong>It keeps you on track.</strong> Every screen and feature in Criterion B should trace back to this exact brief.</p>
       </div>
       <div class="reason c3">
         <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v11H8l-4 4V5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        <p><strong>It tells someone else.</strong> A teacher, client or examiner can see exactly what and why, in a few sentences.</p>
+        <p><strong>It proves your sources.</strong> A brief with no citations reads like an opinion; a brief with citations reads like an investigation.</p>
       </div>
       <div class="reason c4">
         <svg viewBox="0 0 24 24" fill="none"><path d="M3 21c3-8 6-11 9-11s6 3 9 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="3" stroke="currentColor" stroke-width="1.8"/></svg>
-        <p><strong>Real designers do this first.</strong> Before an architect or an app team starts, someone writes the brief.</p>
+        <p><strong>Real UX teams do this first.</strong> Before a design studio sketches a single screen, someone writes the brief the whole team builds from.</p>
       </div>
     </div>
   </section>
@@ -274,16 +267,16 @@
       <div class="step">
         <div class="step-rail"><div class="step-badge">1</div><div class="step-line"></div></div>
         <div class="step-body">
-          <h3>Research Insight</h3>
-          <p>Summarise the ONE most important thing your research (Strands i&ndash;iii) told you. No new facts, no new numbers — only a summary of what you already found.</p>
-          <div class="formula">&ldquo;My research showed that ___ (who) ___ (problem), because ___ (evidence).&rdquo;</div>
+          <h3>Connect Your Research</h3>
+          <p>Pull together the ONE most important thing each earlier strand told you: the problem from Strand i, what your research plan (Strand ii) confirmed, and what analysing an existing app (Strand iii) showed you should carry forward or avoid. Name a source every time &mdash; not just &ldquo;refer appendix&rdquo; on its own.</p>
+          <div class="formula">&ldquo;My research showed that ___ (problem/audience), confirmed by ___ (Strand ii finding, cite source). Analysing ___ (existing app) showed I should carry forward ___ but avoid ___ (cite source).&rdquo;</div>
         </div>
       </div>
       <div class="step">
         <div class="step-rail"><div class="step-badge">2</div><div class="step-line"></div></div>
         <div class="step-body">
           <h3>Design Question</h3>
-          <p>Turn your insight into a challenge, starting with &ldquo;How might we...?&rdquo; This keeps the question open — it does not name a product yet.</p>
+          <p>Turn your connected insight into a challenge, starting with &ldquo;How might we...?&rdquo; This keeps the question open &mdash; it does not name your app yet.</p>
           <div class="formula">&ldquo;How might we ___ (do something) so that ___ (audience) can ___ (benefit)?&rdquo;</div>
         </div>
       </div>
@@ -291,8 +284,8 @@
         <div class="step-rail"><div class="step-badge">3</div></div>
         <div class="step-body">
           <h3>Design Statement</h3>
-          <p>Now, finally, name the TYPE of product you will design, and say why it will help — based directly on your insight and question.</p>
-          <div class="formula">&ldquo;I am going to design a ___ (type of product) that will ___ (do what), so that ___ (audience) can ___ (benefit).&rdquo;</div>
+          <p>Now, finally, name the app: what it's called (or its type), its core feature, and who it's for &mdash; based directly on your insight and question. This is the first time your app appears anywhere in the project.</p>
+          <div class="formula">&ldquo;I am going to design an app called ___ that will ___ (core feature), so that ___ (audience) can ___ (benefit).&rdquo;</div>
         </div>
       </div>
     </div>
@@ -301,60 +294,55 @@
   <!-- PART 4 -->
   <section class="part">
     <div class="part-head"><span class="part-num">04</span><h2>Three Example Design Briefs</h2></div>
-    <p class="lede">Read all three. Each one follows the exact same three-part shape, and each names only ONE type of product — never a list of options. You'll analyse them properly on the Task Sheet.</p>
+    <p class="lede">Read all three. Each one connects a problem, a research finding, and an app analysis &mdash; with sources named &mdash; before naming ONE app. You'll analyse them properly on the Task Sheet.</p>
 
     <div class="example tag-indigo">
       <div class="example-top">
-        <span class="example-name">Example 1 &mdash; Staying Hydrated</span>
-        <span class="example-chip">Upper-floor classrooms</span>
+        <span class="example-name">Example 1 &mdash; Where Did It Go?</span>
+        <span class="example-chip">School lost property</span>
       </div>
       <div class="example-body">
-        <p class="example-problem">The problem, in short: students on the upper floors don't drink enough water because the fountain is far away.</p>
-        <div class="field-row"><span class="field-label">Insight</span><span>My research showed that 8 out of 12 students in my class don't drink enough water during the day, because the water fountain is on the ground floor and their classroom is on the third floor.</span></div>
-        <div class="field-row"><span class="field-label">Question</span><span>How might we help upper-floor students stay hydrated so that they don't need to leave class to get water?</span></div>
-        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design a portable, reusable water bottle carrier that clips onto a school bag, so that students can carry water with them all day without walking to the fountain.</span></div>
+        <p class="example-problem">The problem, in short: students who lose belongings around school have no way to check if someone's found them, other than asking around.</p>
+        <div class="field-row"><span class="field-label">Insight</span><span>My research showed that 16 out of 22 students surveyed had lost an item at school this term, confirmed by a lost-property audit with the front office finding that only 1 in 5 lost items are ever claimed (Refer Appendix A2). Analysing the school's existing paper lost-property log showed items go unclaimed mainly because students don't know it exists &mdash; a gap I should avoid repeating.</span></div>
+        <div class="field-row"><span class="field-label">Question</span><span>How might we help students check for lost items quickly so that they don't have to ask around or give up on finding them?</span></div>
+        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design an app called FoundIt that lets students search and report lost items by photo and location, so that students can find their belongings without relying on word of mouth.</span></div>
       </div>
     </div>
 
     <div class="example tag-amber">
       <div class="example-top">
-        <span class="example-name">Example 2 &mdash; Beating the Bell</span>
-        <span class="example-chip">Locker chaos</span>
+        <span class="example-name">Example 2 &mdash; Skip the Line</span>
+        <span class="example-chip">Canteen queues</span>
       </div>
       <div class="example-body">
-        <p class="example-problem">The problem, in short: messy lockers make students late to class because they can't find their things.</p>
-        <div class="field-row"><span class="field-label">Insight</span><span>In my survey, 9 out of 15 Year 1 students said they are late to class at least once a week because they cannot find their books quickly in their locker.</span></div>
-        <div class="field-row"><span class="field-label">Question</span><span>How might we help students organise their lockers so that they can find their things quickly and get to class on time?</span></div>
-        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design a low-cost, foldable locker organiser that separates books, stationery, and personal items into clear sections, so that students can find what they need in a few seconds.</span></div>
+        <p class="example-problem">The problem, in short: students queuing at the canteen during the short lunch break often don't get served before the bell.</p>
+        <div class="field-row"><span class="field-label">Insight</span><span>In a class survey, 18 out of 25 students said they'd missed part of a lesson because of canteen queues (Refer Appendix B1). Interviewing canteen staff confirmed the busiest 10 minutes see triple the normal order rate. Analysing a pre-order app used by a nearby school showed pre-ordering cuts counter time significantly, but its confusing menu screen is something I should avoid.</span></div>
+        <div class="field-row"><span class="field-label">Question</span><span>How might we reduce how long students spend queuing at the canteen so that they don't lose lesson time?</span></div>
+        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design an app called QuickBite that lets students pre-order and pay for canteen items from their classroom, so that students can collect their food immediately instead of queuing.</span></div>
       </div>
     </div>
 
     <div class="example tag-teal">
       <div class="example-top">
-        <span class="example-name">Example 3 &mdash; Room to Focus</span>
-        <span class="example-chip">Noisy library</span>
+        <span class="example-name">Example 3 &mdash; Study Match</span>
+        <span class="example-chip">Peer tutoring</span>
       </div>
       <div class="example-body">
-        <p class="example-problem">The problem, in short: students avoid the library at lunch because the entrance area is too noisy to concentrate.</p>
-        <div class="field-row"><span class="field-label">Insight</span><span>My interviews showed that 7 out of 10 students avoid using the library during lunch because noise from the entrance area makes it hard to concentrate on reading or homework.</span></div>
-        <div class="field-row"><span class="field-label">Question</span><span>How might we create a quieter space inside the library so that students can focus on reading or homework during busy times?</span></div>
-        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design a portable &ldquo;Quiet Zone&rdquo; divider and signage system that library staff can set up near the entrance, so that students have a calmer space to study during lunch.</span></div>
+        <p class="example-problem">The problem, in short: students struggling in a subject don't know which peers could help them, so requests for help happen randomly or not at all.</p>
+        <div class="field-row"><span class="field-label">Insight</span><span>A survey of 30 students found 21 wanted peer help in at least one subject but didn't know who to ask (Refer Appendix C3). A teacher interview confirmed informal peer tutoring already happens but is entirely word-of-mouth. Analysing a homework-help forum app showed anonymous posting increases participation, but its lack of subject filtering makes it hard to use &mdash; a feature to avoid.</span></div>
+        <div class="field-row"><span class="field-label">Question</span><span>How might we connect students who need help with peers who can give it, so that requests don't rely on chance conversations?</span></div>
+        <div class="field-row"><span class="field-label">Statement</span><span>I am going to design an app called StudyMatch that lets students list subjects they can help with or need help in, and matches requests automatically, so that students can find peer support without waiting for a chance conversation.</span></div>
       </div>
     </div>
   </section>
 
   <!-- PART 5 -->
   <section class="part">
-    <div class="part-head"><span class="part-num">05</span><h2>Watch It Explained</h2></div>
-    <p class="lede">A short walkthrough of everything above, slide by slide.</p>
-
-    <div class="slide-embed">
-      <iframe src="https://docs.google.com/presentation/d/1vefrGD2YZlT5cVkyJ24r4B_ocD1hC7cuuxAPbaSolYY/embed?start=false&amp;loop=false&amp;delayms=3000" allowfullscreen="true" loading="lazy" title="The Brief Builder — slides"></iframe>
-    </div>
+    <div class="part-head"><span class="part-num">05</span><h2>Ready to Build Yours?</h2></div>
 
     <div class="card cta">
       <h3>Ready to write your own brief?</h3>
-      <p>Head to the Task Sheet to turn a hypothetical problem into your own three-part design brief — the same shape you just read about above.</p>
+      <p>Head to the Task Sheet to turn a hypothetical problem into your own three-part design brief &mdash; the same shape you just read about above, with a citation reminder built in.</p>
       <a class="btn primary" href="brief-builder-task-sheet.html">Open the Task Sheet &rarr;</a>
     </div>
   </section>
