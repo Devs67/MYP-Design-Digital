@@ -4,7 +4,7 @@
 var GroupMaker = (function () {
   "use strict";
 
-  var API_URL = "REPLACE_WITH_YOUR_APPS_SCRIPT_URL";
+  var API_URL = "https://script.google.com/macros/s/AKfycbyQ9fjXC5J4resy0NEeaZuupAKldsYacWkJ1MRUT0nYb-EABM41XdSCWvb6zuGyNxO5/exec";
   var isDemo = API_URL.indexOf("REPLACE_WITH") !== -1;
   var demoStudents = [];
 
@@ -102,9 +102,17 @@ var GroupMaker = (function () {
       el.setAttribute("data-count", toValue);
       return;
     }
+    var settled = false;
+    function finish() {
+      if (settled) return;
+      settled = true;
+      el.textContent = toValue;
+      el.setAttribute("data-count", toValue);
+    }
     var start = null;
     var duration = 400;
     function step(ts) {
+      if (settled) return;
       if (!start) start = ts;
       var progress = Math.min(1, (ts - start) / duration);
       var value = Math.round(from + (toValue - from) * progress);
@@ -112,10 +120,13 @@ var GroupMaker = (function () {
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
-        el.setAttribute("data-count", toValue);
+        finish();
       }
     }
     requestAnimationFrame(step);
+    // Fallback for a throttled/backgrounded tab where requestAnimationFrame may
+    // never fire — guarantees the tile never sits stuck on a stale number.
+    setTimeout(finish, duration + 250);
   }
 
   return {
