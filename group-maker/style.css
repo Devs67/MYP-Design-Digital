@@ -1,0 +1,185 @@
+/* Shared styles for the Balanced Group Maker student + teacher pages. */
+
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF; --rule:#D3E0E5;
+  --slate:#5A727B; --amber:#B05A1C; --moss:#2F6B4F; --clay:#9C3E2F; --dev:#6A4C93;
+  --boy:#1C6FB0; --boy-tint:#E3EFF7;
+  --girl:#B0781C; --girl-tint:#F7EEE0;
+  --a:#1C7A8C; --b:#C99A2E; --c:#2F6B4F; --d:#9C3E2F;
+  --grad-1:#14303C; --grad-2:#1C5C6B; --grad-3:#B05A1C;
+}
+
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"Work Sans",system-ui,sans-serif;
+  line-height:1.5;
+}
+h1,h2,h3{ font-family:"Fraunces",serif; margin:0 0 8px; }
+.mono{ font-family:"IBM Plex Mono",monospace; letter-spacing:.02em; }
+a{ color:inherit; }
+.shape{ width:16px; height:16px; flex:0 0 auto; }
+
+/* ---- Gradient hero header, shared shape for both pages ---- */
+.hero{
+  background:linear-gradient(135deg, var(--grad-1), var(--grad-2) 60%, var(--grad-3));
+  color:#fff; text-align:center; padding:clamp(32px,7vw,56px) 20px;
+}
+.hero h1{ color:#fff; font-size:clamp(30px,6vw,46px); margin-bottom:6px; }
+.hero p{ color:#DCEAEE; margin:0; font-size:16px; }
+.hero .badge-demo{
+  display:inline-block; margin-top:14px; padding:5px 14px;
+  border-radius:99px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.4);
+  color:#fff; font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600;
+}
+
+main{ max-width:960px; margin:0 auto; padding:24px 16px 60px; display:grid; gap:22px; }
+
+.card{
+  background:var(--card); border:1px solid var(--rule); border-radius:16px;
+  padding:24px 22px; box-shadow:0 2px 10px rgba(20,48,60,.05);
+}
+.card h2{ font-size:21px; }
+.card .sub{ color:var(--slate); font-size:14px; margin:0 0 16px; }
+
+/* ---- Buttons ---- */
+button.primary{
+  width:100%; padding:18px; font-size:19px; font-weight:700; font-family:"Fraunces",serif;
+  border:none; border-radius:12px; background:var(--amber); color:#fff; cursor:pointer;
+  box-shadow:0 4px 0 #7A3E12;
+}
+button.primary:disabled{ background:var(--rule); color:var(--slate); box-shadow:none; cursor:not-allowed; }
+@media (prefers-reduced-motion:no-preference){
+  button.primary:not(:disabled){ transition:transform .12s ease, box-shadow .12s ease; }
+  button.primary:not(:disabled):active{ transform:translateY(3px); box-shadow:0 1px 0 #7A3E12; }
+}
+
+button.action{
+  padding:13px 22px; font-size:15px; font-weight:700; font-family:"Work Sans",sans-serif;
+  border-radius:10px; cursor:pointer; border:2px solid var(--rule); background:var(--paper); color:var(--ink);
+}
+button.action.go{ background:var(--dev); border-color:var(--dev); color:#fff; box-shadow:0 3px 0 #4B3568; }
+button.action.go:hover{ filter:brightness(1.08); }
+button.action.danger{ border-color:var(--clay); color:var(--clay); background:#fff; }
+button.action.danger:hover{ background:var(--clay); color:#fff; }
+@media (prefers-reduced-motion:no-preference){
+  button.action{ transition:transform .12s ease; }
+  button.action:active{ transform:translateY(2px); }
+}
+
+/* ---- Gender toggle (student page) ---- */
+.gender-toggle{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0; }
+.gender-btn{
+  padding:28px 12px; border-radius:16px; border:3px solid var(--rule);
+  background:var(--paper); font-family:"Fraunces",serif; font-size:22px; font-weight:700;
+  cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:10px;
+  color:var(--ink);
+}
+.gender-btn .shape{ width:34px; height:34px; }
+@media (prefers-reduced-motion:no-preference){
+  .gender-btn{ transition:transform .15s ease, border-color .15s ease, background .15s ease; }
+  .gender-btn:active{ transform:scale(.96); }
+}
+.gender-btn[data-gender="Boy"].active{ border-color:var(--boy); background:var(--boy-tint); color:var(--boy); }
+.gender-btn[data-gender="Girl"].active{ border-color:var(--girl); background:var(--girl-tint); color:var(--girl); }
+
+/* ---- Toasts ---- */
+.confirm-toast{
+  margin-top:12px; padding:12px 14px; border-radius:10px; background:var(--moss); color:#fff;
+  font-weight:600; text-align:center; opacity:0; transform:translateY(-4px);
+}
+@media (prefers-reduced-motion:no-preference){
+  .confirm-toast{ transition:opacity .4s ease, transform .4s ease; }
+}
+.confirm-toast.show{ opacity:1; transform:translateY(0); }
+.error-toast{
+  margin-top:12px; padding:12px 14px; border-radius:10px; background:var(--clay); color:#fff;
+  font-weight:600; text-align:center; display:none;
+}
+
+/* ---- Chips (teacher live roster) ---- */
+.roster{ display:flex; flex-wrap:wrap; gap:10px; min-height:40px; }
+.chip{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 18px; border-radius:99px; font-weight:700; font-size:16px;
+  border:none; color:#fff;
+}
+@media (prefers-reduced-motion:no-preference){
+  .chip{ animation:pop .35s cubic-bezier(.34,1.56,.64,1); }
+}
+@keyframes pop{ from{ opacity:0; transform:scale(.6); } to{ opacity:1; transform:scale(1); } }
+.chip.boy{ background:var(--boy); }
+.chip.girl{ background:var(--girl); }
+.roster-empty{ color:var(--slate); font-style:italic; }
+
+/* ---- Stat tiles (teacher dashboard) ---- */
+.stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:6px; }
+.stat-tile{
+  border-radius:14px; padding:18px 14px; text-align:center; border-top:5px solid var(--rule);
+  background:var(--paper);
+}
+.stat-tile .num{ font-family:"Fraunces",serif; font-size:clamp(30px,6vw,44px); font-weight:700; line-height:1; }
+.stat-tile .label{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--slate); margin-top:6px; text-transform:uppercase; letter-spacing:.05em; }
+.stat-tile.all{ border-top-color:var(--amber); }
+.stat-tile.all .num{ color:var(--amber); }
+.stat-tile.boys{ border-top-color:var(--boy); }
+.stat-tile.boys .num{ color:var(--boy); }
+.stat-tile.girls{ border-top-color:var(--girl); }
+.stat-tile.girls .num{ color:var(--girl); }
+
+/* ---- Teacher controls ---- */
+.teacher-row{ display:flex; flex-wrap:wrap; gap:14px; align-items:flex-end; }
+.field{ display:flex; flex-direction:column; gap:6px; }
+.field label{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--slate); }
+.field input[type="number"]{
+  width:90px; padding:11px 12px; font-size:16px; border:2px solid var(--rule);
+  border-radius:8px; background:var(--paper); color:var(--ink);
+}
+.btn-row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:4px; }
+
+/* ---- Group results ---- */
+#resultsCard{ display:none; }
+.groups{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; }
+.group-card{
+  border-radius:14px; padding:0 0 16px; background:var(--paper); overflow:hidden;
+  box-shadow:0 3px 12px rgba(20,48,60,.08);
+}
+@media (prefers-reduced-motion:no-preference){
+  .group-card{ animation:rise .5s cubic-bezier(.22,1,.36,1) backwards; }
+}
+@keyframes rise{ from{ opacity:0; transform:translateY(16px) scale(.97); } to{ opacity:1; transform:translateY(0) scale(1); } }
+.group-card .band{ height:8px; }
+.group-card .body{ padding:16px; }
+.group-card h3{ font-size:18px; margin-bottom:2px; }
+.group-tag{ font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--slate); margin-bottom:12px; }
+.group-members{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:7px; }
+.group-members li{
+  padding:9px 11px; border-radius:8px; background:var(--card); font-weight:600; font-size:14px;
+  display:flex; align-items:center; gap:8px; border-left:4px solid var(--rule);
+}
+.group-members li.boy{ border-left-color:var(--boy); }
+.group-members li.boy .shape{ color:var(--boy); }
+.group-members li.girl{ border-left-color:var(--girl); }
+.group-members li.girl .shape{ color:var(--girl); }
+
+footer{ text-align:center; color:var(--slate); font-size:13px; padding:8px 20px 28px; }
+
+/* ---- Student "you're in" takeover ---- */
+.joined-panel{ display:none; text-align:center; padding:20px 0; }
+.joined-panel .check{
+  width:72px; height:72px; border-radius:50%; background:var(--moss); color:#fff;
+  display:flex; align-items:center; justify-content:center; margin:0 auto 16px;
+}
+@media (prefers-reduced-motion:no-preference){
+  .joined-panel .check{ animation:pop .4s cubic-bezier(.34,1.56,.64,1); }
+}
+.joined-panel h2{ font-size:26px; }
+.joined-panel p{ color:var(--slate); }
+
+@media (max-width:520px){
+  main{ padding:16px 12px 48px; }
+  .teacher-row{ flex-direction:column; align-items:stretch; }
+  .stats{ grid-template-columns:1fr 1fr 1fr; gap:8px; }
+  .stat-tile{ padding:12px 6px; }
+}

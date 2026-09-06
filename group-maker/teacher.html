@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balanced Group Maker — Teacher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1>Balanced Group Maker</h1>
+  <p>Live class list — form gender-balanced groups when everyone's in.</p>
+  <span class="badge-demo mono" id="demoBadge" hidden>Local demo mode — not connected to a sheet</span>
+</header>
+
+<main>
+
+  <section class="card">
+    <div class="stats">
+      <div class="stat-tile all">
+        <div class="num" id="statAll" data-count="0">0</div>
+        <div class="label">Joined</div>
+      </div>
+      <div class="stat-tile boys">
+        <div class="num" id="statBoys" data-count="0">0</div>
+        <div class="label">Boys</div>
+      </div>
+      <div class="stat-tile girls">
+        <div class="num" id="statGirls" data-count="0">0</div>
+        <div class="label">Girls</div>
+      </div>
+    </div>
+    <div class="roster" id="roster">
+      <span class="roster-empty">No one yet — share the join link with your class.</span>
+    </div>
+  </section>
+
+  <section class="card" id="teacherCard">
+    <h2>Form groups</h2>
+    <p class="sub">Set a group size, then form groups once the class has joined.</p>
+    <div class="teacher-row">
+      <div class="field">
+        <label for="groupSize">GROUP SIZE</label>
+        <input type="number" id="groupSize" min="2" max="12" value="4">
+      </div>
+      <div class="btn-row">
+        <button class="action go" id="formGroupsBtn">Form Groups</button>
+        <button class="action danger" id="clearAllBtn">Clear all</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="resultsCard">
+    <h2>Groups</h2>
+    <div class="groups" id="groupsOut"></div>
+  </section>
+
+</main>
+
+<footer>Balanced Group Maker — teacher view. Students join at <span class="mono">index.html</span>.</footer>
+
+<script src="shared.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var BAND_COLORS = ["var(--a)", "var(--b)", "var(--c)", "var(--d)"];
+  var pollTimer = null;
+
+  var els = {
+    demoBadge: document.getElementById("demoBadge"),
+    statAll: document.getElementById("statAll"),
+    statBoys: document.getElementById("statBoys"),
+    statGirls: document.getElementById("statGirls"),
+    roster: document.getElementById("roster"),
+    groupSize: document.getElementById("groupSize"),
+    formGroupsBtn: document.getElementById("formGroupsBtn"),
+    clearAllBtn: document.getElementById("clearAllBtn"),
+    resultsCard: document.getElementById("resultsCard"),
+    groupsOut: document.getElementById("groupsOut")
+  };
+
+  if (GroupMaker.isDemo && els.demoBadge) els.demoBadge.hidden = false;
+
+  function renderRoster(students) {
+    var boys = students.filter(function (s) { return s.gender === "Boy"; }).length;
+    var girls = students.filter(function (s) { return s.gender === "Girl"; }).length;
+
+    GroupMaker.animateCount(els.statAll, students.length);
+    GroupMaker.animateCount(els.statBoys, boys);
+    GroupMaker.animateCount(els.statGirls, girls);
+
+    if (!students.length) {
+      els.roster.innerHTML = '<span class="roster-empty">No one yet — share the join link with your class.</span>';
+      return;
+    }
+
+    var html = "";
+    for (var i = 0; i < students.length; i++) {
+      var s = students[i];
+      var cls = s.gender === "Boy" ? "boy" : (s.gender === "Girl" ? "girl" : "");
+      html += '<span class="chip ' + cls + '">' + GroupMaker.genderShape(s.gender) + GroupMaker.escapeHtml(s.name) + "</span>";
+    }
+    els.roster.innerHTML = html;
+  }
+
+  function refreshRoster() {
+    return GroupMaker.fetchRoster().then(renderRoster);
+  }
+
+  function startPolling() {
+    if (pollTimer) clearInterval(pollTimer);
+    pollTimer = setInterval(refreshRoster, 2500);
+  }
+
+  function renderGroups(groups) {
+    var html = "";
+    for (var i = 0; i < groups.length; i++) {
+      var members = groups[i];
+      var boys = members.filter(function (s) { return s.gender === "Boy"; }).length;
+      var girls = members.filter(function (s) { return s.gender === "Girl"; }).length;
+      var band = BAND_COLORS[i % BAND_COLORS.length];
+
+      var memberHtml = "";
+      for (var m = 0; m < members.length; m++) {
+        var s = members[m];
+        var cls = s.gender === "Boy" ? "boy" : (s.gender === "Girl" ? "girl" : "");
+        memberHtml += "<li class=\"" + cls + "\">" + GroupMaker.genderShape(s.gender) + GroupMaker.escapeHtml(s.name) + "</li>";
+      }
+
+      html += '<div class="group-card" style="animation-delay:' + (i * 70) + 'ms">' +
+        '<div class="band" style="background:' + band + '"></div>' +
+        '<div class="body">' +
+        "<h3>Group " + (i + 1) + "</h3>" +
+        '<div class="group-tag">Boys: ' + boys + " · Girls: " + girls + "</div>" +
+        '<ul class="group-members">' + memberHtml + "</ul>" +
+        "</div></div>";
+    }
+    els.groupsOut.innerHTML = html;
+    els.resultsCard.style.display = "block";
+    els.resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  if (els.formGroupsBtn) {
+    els.formGroupsBtn.addEventListener("click", function () {
+      GroupMaker.fetchRoster().then(function (students) {
+        if (!students.length) return;
+        var size = parseInt(els.groupSize.value, 10) || 4;
+        renderGroups(GroupMaker.formGroups(students, size));
+      });
+    });
+  }
+
+  if (els.clearAllBtn) {
+    els.clearAllBtn.addEventListener("click", function () {
+      if (!confirm("Clear the whole roster? This cannot be undone.")) return;
+      var pin = prompt("Enter the teacher PIN to confirm:");
+      if (pin === null) return;
+      GroupMaker.clearAll(pin).then(function (result) {
+        if (!result || !result.ok) {
+          alert((result && result.error) || "Could not clear the roster.");
+          return;
+        }
+        els.resultsCard.style.display = "none";
+        els.groupsOut.innerHTML = "";
+        refreshRoster();
+      });
+    });
+  }
+
+  refreshRoster();
+  startPolling();
+})();
+</script>
+</body>
+</html>

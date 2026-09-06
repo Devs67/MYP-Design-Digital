@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balanced Group Maker — Join</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <h1>Join the group</h1>
+  <p>Enter your name, pick your gender, and you're on the list.</p>
+  <span class="badge-demo mono" id="demoBadge" hidden>Local demo mode — not connected to a sheet</span>
+</header>
+
+<main style="max-width:520px;">
+
+  <section class="card" id="joinCard">
+    <form id="joinForm" autocomplete="off">
+      <input type="text" id="nameInput" placeholder="Your name" maxlength="40" required
+        style="width:100%; padding:16px 18px; font-size:20px; font-family:inherit; border:2px solid var(--rule); border-radius:10px; background:var(--paper); color:var(--ink);">
+      <div class="gender-toggle" role="group" aria-label="Gender">
+        <button type="button" class="gender-btn" data-gender="Boy">
+          <svg class="shape" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+          Boy
+        </button>
+        <button type="button" class="gender-btn" data-gender="Girl">
+          <svg class="shape" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg>
+          Girl
+        </button>
+      </div>
+      <button type="submit" class="primary" id="joinSubmit" disabled>Join the list</button>
+      <div class="error-toast mono" id="joinError"></div>
+    </form>
+
+    <div class="joined-panel" id="joinedPanel">
+      <div class="check">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="4,13 9,18 20,6"/></svg>
+      </div>
+      <h2 id="joinedName">You're in!</h2>
+      <p>Your teacher can see you on the list now.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>Balanced Group Maker</footer>
+
+<script src="shared.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var selectedGender = null;
+
+  var els = {
+    demoBadge: document.getElementById("demoBadge"),
+    joinForm: document.getElementById("joinForm"),
+    nameInput: document.getElementById("nameInput"),
+    genderBtns: document.querySelectorAll(".gender-btn"),
+    joinSubmit: document.getElementById("joinSubmit"),
+    joinError: document.getElementById("joinError"),
+    joinCard: document.getElementById("joinCard"),
+    joinedPanel: document.getElementById("joinedPanel"),
+    joinedName: document.getElementById("joinedName")
+  };
+
+  if (GroupMaker.isDemo && els.demoBadge) els.demoBadge.hidden = false;
+
+  function updateGenderButtons() {
+    for (var i = 0; i < els.genderBtns.length; i++) {
+      var btn = els.genderBtns[i];
+      btn.classList.toggle("active", btn.getAttribute("data-gender") === selectedGender);
+    }
+    updateSubmitState();
+  }
+
+  function updateSubmitState() {
+    if (!els.joinSubmit) return;
+    els.joinSubmit.disabled = !(selectedGender && els.nameInput.value.trim());
+  }
+
+  for (var gi = 0; gi < els.genderBtns.length; gi++) {
+    els.genderBtns[gi].addEventListener("click", function (ev) {
+      selectedGender = ev.currentTarget.getAttribute("data-gender");
+      updateGenderButtons();
+    });
+  }
+
+  if (els.nameInput) els.nameInput.addEventListener("input", updateSubmitState);
+
+  if (els.joinForm) {
+    els.joinForm.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var name = els.nameInput.value.trim();
+      if (!name || !selectedGender) return;
+
+      els.joinSubmit.disabled = true;
+      els.joinError.style.display = "none";
+
+      GroupMaker.submitStudent(name, selectedGender).then(function (result) {
+        if (!result || !result.ok) {
+          els.joinError.textContent = (result && result.error) || "Something went wrong. Try again.";
+          els.joinError.style.display = "block";
+          els.joinSubmit.disabled = false;
+          return;
+        }
+        els.joinedName.textContent = "You're in, " + name + "!";
+        els.joinForm.style.display = "none";
+        els.joinedPanel.style.display = "block";
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
