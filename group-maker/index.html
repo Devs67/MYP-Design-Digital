@@ -13,7 +13,7 @@
 
 <header class="hero">
   <h1>Join the group</h1>
-  <p>Enter your name, pick your gender, and you're on the list.</p>
+  <p>Pick your name, pick your gender, and you're on the list.</p>
   <span class="badge-demo mono" id="demoBadge" hidden>Local demo mode — not connected to a sheet</span>
 </header>
 
@@ -21,8 +21,31 @@
 
   <section class="card" id="joinCard">
     <form id="joinForm" autocomplete="off">
-      <input type="text" id="nameInput" placeholder="Your name" maxlength="40" required
+      <select id="nameInput" required
         style="width:100%; padding:16px 18px; font-size:20px; font-family:inherit; border:2px solid var(--rule); border-radius:10px; background:var(--paper); color:var(--ink);">
+        <option value="" selected disabled>Select your name</option>
+        <option>Adith</option>
+        <option>Anirudh</option>
+        <option>Syeda Adeeba</option>
+        <option>Falak</option>
+        <option>Yukti</option>
+        <option>Amal</option>
+        <option>Parinitha</option>
+        <option>Aishika</option>
+        <option>Tatva</option>
+        <option>Rithvik</option>
+        <option>Yuvan Reddy</option>
+        <option>Jigyansa</option>
+        <option>Kavya</option>
+        <option>Shreshta</option>
+        <option>Pranav</option>
+        <option>Ameya</option>
+        <option>Atiksh</option>
+        <option>Iyansh</option>
+        <option>Srithan Reddy</option>
+        <option>Vihana</option>
+        <option>Varshil</option>
+      </select>
       <div class="gender-toggle" role="group" aria-label="Gender">
         <button type="button" class="gender-btn" data-gender="Boy">
           <svg class="shape" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
@@ -91,7 +114,7 @@
     });
   }
 
-  if (els.nameInput) els.nameInput.addEventListener("input", updateSubmitState);
+  if (els.nameInput) els.nameInput.addEventListener("change", updateSubmitState);
 
   if (els.joinForm) {
     els.joinForm.addEventListener("submit", function (ev) {
