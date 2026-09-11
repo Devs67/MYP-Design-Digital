@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criterion A — MYP 1 &amp; 2 Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --a:#12707F;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+
+.mast{padding:56px 0 30px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
+.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
+
+.tabs{padding:6px 0 0;border-bottom:1px solid var(--rule)}
+.tabs .wrap{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 16px;border:0;background:none;color:var(--slate);cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--a);border-bottom-color:var(--a);font-weight:600}
+.tab.todo{opacity:.5}
+
+.sec{padding:36px 0}
+.sec h2{font-family:var(--display);font-size:22px;font-weight:600;margin:0 0 14px;
+  letter-spacing:-.01em}
+
+.tplwrap{background:var(--card);border:1px solid var(--rule);border-radius:12px;
+  padding:24px 26px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.tpl__icon{width:44px;height:44px;flex:0 0 44px;border-radius:10px;background:var(--amber-tint);
+  display:flex;align-items:center;justify-content:center}
+.tpl__icon svg{width:22px;height:22px;stroke:var(--amber);fill:none;stroke-width:1.8}
+.tpl__txt{flex:1 1 260px}
+.tpl__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--slate);margin:0 0 4px}
+.tpl__txt h3{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 6px;
+  letter-spacing:-.01em}
+.tpl__txt p{margin:0;font-size:14px;color:var(--slate);line-height:1.55}
+.tpl__btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:#fff;background:var(--amber);
+  padding:11px 18px;border-radius:7px;white-space:nowrap;transition:.15s}
+.tpl__btn:hover{opacity:.88}
+.tpl__btn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+
+.notice{background:var(--card);border:1px dashed var(--rule);border-radius:12px;
+  padding:24px 26px;color:var(--slate);font-size:14.5px;line-height:1.6}
+
+footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+  .mast{padding:40px 0 22px}
+  .tplwrap{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="index.html">&larr; All criteria</a>
+    <p class="eyebrow">IB MYP Design &middot; Years 1 and 2</p>
+    <h1>Criterion A &mdash; Inquiring and analysing</h1>
+    <p class="sub">Establishing the need, planning the research, analysing existing products, and writing the design brief.</p>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Strand">
+  <div class="wrap">
+    <button class="tab on" data-s="i" aria-pressed="true">Strand i</button>
+    <button class="tab todo" data-s="ii" aria-pressed="false">Strand ii</button>
+    <button class="tab todo" data-s="iii" aria-pressed="false">Strand iii</button>
+    <button class="tab" data-s="iv" aria-pressed="false">Strand iv</button>
+  </div>
+</nav>
+
+<div data-panel="i">
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Strand i &middot; MYP 1</p>
+    <h2>Identify the problem</h2>
+    <div class="tplwrap">
+      <span class="tpl__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>
+      </span>
+      <div class="tpl__txt">
+        <p class="tpl__lbl">Guided worksheet</p>
+        <h3>Ignite Goes Pan-India</h3>
+        <p>Identify a real problem worth solving, worked through step by step. Answers save on the device as students type.</p>
+      </div>
+      <a class="tpl__btn" href="ignite-worksheet_2.html">
+        Open
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+</div>
+
+<div data-panel="ii" hidden>
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Strand ii</p>
+    <h2>Constructing a research plan</h2>
+    <div class="notice">Content for this strand is being developed.</div>
+  </div>
+</section>
+</div>
+
+<div data-panel="iii" hidden>
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Strand iii</p>
+    <h2>Analysing existing products</h2>
+    <div class="notice">Content for this strand is being developed.</div>
+  </div>
+</section>
+</div>
+
+<div data-panel="iv" hidden>
+<section class="sec">
+  <div class="wrap">
+    <p class="eyebrow">Strand iv &middot; MYP 1</p>
+    <h2>Writing the design brief</h2>
+    <div class="tplwrap">
+      <span class="tpl__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>
+      </span>
+      <div class="tpl__txt">
+        <p class="tpl__lbl">Guided walkthrough</p>
+        <h3>The Brief Builder</h3>
+        <p>Turn research into a design brief in three parts &mdash; insight, question, statement &mdash; with worked examples and a slides walkthrough.</p>
+      </div>
+      <a class="tpl__btn" href="brief-builder.html">
+        Open
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="tplwrap">
+      <span class="tpl__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </span>
+      <div class="tpl__txt">
+        <p class="tpl__lbl">Practise first</p>
+        <h3>Brief Builder task sheet</h3>
+        <p>Turn a hypothetical problem into your own three-part design brief before writing your real one.</p>
+      </div>
+      <a class="tpl__btn" href="brief-builder-task-sheet.html">
+        Open
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Design Team - SIS</span>
+    <span>MYP Years 1&ndash;2</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.tab');
+  var panels = document.querySelectorAll('[data-panel]');
+
+  function activateTab(t, opts){
+    opts = opts || {};
+    tabs.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
+    t.classList.add('on'); t.setAttribute('aria-pressed','true');
+    panels.forEach(function(p){ p.hidden = (p.dataset.panel !== t.dataset.s); });
+    if(!opts.silent) window.scrollTo({top:0, behavior:'smooth'});
+    if(!opts.noHash){
+      try{ window.location.hash = t.dataset.s; }catch(e){}
+    }
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ activateTab(t); });
+  });
+
+  (function(){
+    try{
+      var initStrand = window.location.hash.replace('#','');
+      if(!initStrand) return;
+      var initTab = document.querySelector('.tab[data-s="' + initStrand + '"]');
+      var initPanel = document.querySelector('[data-panel="' + initStrand + '"]');
+      if(initTab && initPanel) activateTab(initTab, {silent:true, noHash:true});
+    }catch(e){}
+  })();
+})();
+</script>
+
+</body>
+</html>
