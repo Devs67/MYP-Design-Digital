@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Units — MYP 3 Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --moss:#2F6B4F; --moss-tint:#E8F1EC;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+
+.mast{padding:56px 0 30px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
+.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
+
+.sec{padding:8px 0 32px}
+
+.units{display:flex;flex-wrap:wrap;gap:18px;margin:0}
+.unit{flex:1 1 420px;background:var(--card);border:1px solid var(--rule);border-radius:12px;
+  overflow:hidden}
+.unit__hd{padding:18px 24px;border-bottom:1px solid var(--rule-soft);display:flex;gap:14px;
+  align-items:center}
+.unit__badge{width:38px;height:38px;border-radius:10px;flex:0 0 38px;background:var(--amber);
+  color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  font-weight:600;font-size:13px}
+.unit__hd h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0;
+  letter-spacing:-.01em}
+.unit__hd p{margin:3px 0 0;font-size:12.5px;color:var(--slate);font-family:var(--mono);
+  letter-spacing:.02em}
+
+.unit__body{padding:20px 24px 24px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px;margin:0 0 16px}
+.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);align-self:baseline;padding-top:2px}
+.kv dd{margin:0;color:var(--ink)}
+
+.soi{background:var(--paper);border-radius:10px;padding:13px 16px;font-size:13.5px;
+  line-height:1.6;margin:0 0 16px;font-style:italic}
+
+.grasp{margin:0 0 16px}
+.grasp b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--amber);display:block;margin:10px 0 2px}
+.grasp b:first-child{margin-top:0}
+.grasp p{margin:0;font-size:13.5px;line-height:1.55}
+
+.objs{display:flex;gap:6px;flex-wrap:wrap;margin:0}
+.objs span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 9px;border-radius:7px;background:var(--moss-tint);color:var(--moss)}
+
+footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+  .mast{padding:40px 0 22px}
+  .unit__hd,.unit__body{padding:16px 18px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="index.html">&larr; All criteria</a>
+    <p class="eyebrow">IB MYP Design &middot; Year 3</p>
+    <h1>This year&rsquo;s units</h1>
+    <p class="sub">Unit 1 and Unit 2 &mdash; what each unit is, the concepts behind it, and the summative task.</p>
+  </div>
+</header>
+
+<section class="sec"><div class="wrap">
+  <div class="units">
+
+    <div class="unit">
+      <div class="unit__hd">
+        <span class="unit__badge">U1</span>
+        <div><h3>Creative App Design &amp; Logic</h3><p>Digital Design &middot; Start July, last week &middot; 19 weeks</p></div>
+      </div>
+      <div class="unit__body">
+        <dl class="kv">
+          <dt>Key concept</dt><dd>Development*</dd>
+          <dt>Related concepts</dt><dd>Evaluation, Adaptation</dd>
+          <dt>Global context</dt><dd>Scientific and technical innovation &mdash; adaptation, ingenuity and progress</dd>
+        </dl>
+        <p class="soi">&ldquo;The development of scientific and technical innovations is driven by the constant evaluation and adaptation of existing ideas.&rdquo;</p>
+        <div class="grasp">
+          <b>Goal</b><p>You are a junior UX designer at a student-led tech studio tasked with creating a functional app prototype that solves a real problem for your community (school, neighbourhood, or city).</p>
+          <b>Role</b><p>Junior UX/UI designer at a tech startup.</p>
+          <b>Audience</b><p>A panel of judges including your teacher, peers, and an invited community stakeholder (e.g. school librarian, local NGO representative).</p>
+          <b>Situation</b><p>Your studio is entering a local &ldquo;Youth Innovation Challenge.&rdquo; The most original, user-centred, and technically sound prototype wins funding for development.</p>
+          <b>Product</b><p>A multi-screen interactive app prototype (Figma, Marvel, or paper prototype) supported by a written design rationale (400&ndash;600 words) explaining your design choices, iterations made, and how feedback shaped your final design. Include a short pitch (2&ndash;3 min) on presentation day.</p>
+        </div>
+        <div class="objs">
+          <span>A &middot; Inquiring &amp; Analysing</span>
+          <span>B &middot; Developing Ideas</span>
+          <span>C &middot; Creating the Solution</span>
+          <span>D &middot; Evaluating</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit">
+      <div class="unit__hd">
+        <span class="unit__badge">U2</span>
+        <div><h3>Food Tech Innovators</h3><p>Food Design &middot; Start Jan 1st week &middot; 19 weeks</p></div>
+      </div>
+      <div class="unit__body">
+        <dl class="kv">
+          <dt>Key concept</dt><dd>Communities*</dd>
+          <dt>Related concepts</dt><dd>Resources, Collaboration</dd>
+          <dt>Global context</dt><dd>Personal and Cultural Expression &mdash; artistry, craft, creation, beauty</dd>
+        </dl>
+        <p class="soi">&ldquo;Effective collaboration and the sustainable management of resources allow communities to thrive.&rdquo;</p>
+        <div class="grasp">
+          <b>Goal</b><p>Design, develop, and present an innovative food product that responds to a real community need &mdash; focusing on sustainability, cultural identity, or resource-conscious cooking.</p>
+          <b>Role</b><p>A food innovator and product developer working within a small culinary team.</p>
+          <b>Audience</b><p>A panel of community judges including your teacher, peers, and an invited stakeholder (e.g. school canteen manager, local chef, or community health worker).</p>
+          <b>Situation</b><p>Your team has been commissioned to pitch a new food product to a community food initiative. The product must be practical, culturally meaningful, and made with sustainable or locally sourced ingredients.</p>
+          <b>Product</b><p>A tested and refined food product presented with a design portfolio including: a research report on the community need, annotated recipe development log showing iterations, a sustainability and resource analysis, and a 3-minute pitch to the panel with food tasting.</p>
+        </div>
+        <div class="objs">
+          <span>A &middot; Inquiring &amp; Analysing</span>
+          <span>B &middot; Developing Ideas</span>
+          <span>C &middot; Creating the Solution</span>
+          <span>D &middot; Evaluating</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Design Team - SIS</span>
+    <span>MYP Year 3</span>
+  </div>
+</footer>
+
+</body>
+</html>

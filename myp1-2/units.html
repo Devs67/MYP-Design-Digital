@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Units — MYP 1 &amp; 2 Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --moss:#2F6B4F; --moss-tint:#E8F1EC;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+
+.mast{padding:56px 0 30px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
+.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
+
+.gradehead{padding:36px 0 4px}
+.gradehead h2{font-family:var(--display);font-size:24px;font-weight:600;margin:0;
+  letter-spacing:-.01em}
+
+.units{display:flex;flex-wrap:wrap;gap:18px;margin:18px 0 0}
+.unit{flex:1 1 420px;background:var(--card);border:1px solid var(--rule);border-radius:12px;
+  overflow:hidden}
+.unit__hd{padding:18px 24px;border-bottom:1px solid var(--rule-soft);display:flex;gap:14px;
+  align-items:center}
+.unit__badge{width:38px;height:38px;border-radius:10px;flex:0 0 38px;background:var(--amber);
+  color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  font-weight:600;font-size:13px}
+.unit__hd h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0;
+  letter-spacing:-.01em}
+.unit__hd p{margin:3px 0 0;font-size:12.5px;color:var(--slate);font-family:var(--mono);
+  letter-spacing:.02em}
+
+.unit__body{padding:20px 24px 24px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px;margin:0 0 16px}
+.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);align-self:baseline;padding-top:2px}
+.kv dd{margin:0;color:var(--ink)}
+
+.soi{background:var(--paper);border-radius:10px;padding:13px 16px;font-size:13.5px;
+  line-height:1.6;margin:0 0 16px;font-style:italic}
+
+.grasp{margin:0 0 16px}
+.grasp b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--amber);display:block;margin:10px 0 2px}
+.grasp b:first-child{margin-top:0}
+.grasp p{margin:0;font-size:13.5px;line-height:1.55}
+
+.objs{display:flex;gap:6px;flex-wrap:wrap;margin:0}
+.objs span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:5px 9px;border-radius:7px;background:var(--moss-tint);color:var(--moss)}
+
+footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+  .mast{padding:40px 0 22px}
+  .unit__hd,.unit__body{padding:16px 18px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="index.html">&larr; All criteria</a>
+    <p class="eyebrow">IB MYP Design &middot; Years 1 and 2</p>
+    <h1>This year&rsquo;s units</h1>
+    <p class="sub">Unit 1 and Unit 2 for MYP 1 and MYP 2 &mdash; what each unit is, the concepts behind it, and the summative task.</p>
+  </div>
+</header>
+
+<!-- ================= MYP 1 ================= -->
+<section class="gradehead"><div class="wrap"><h2>MYP 1</h2></div></section>
+<section><div class="wrap">
+  <div class="units">
+
+    <div class="unit">
+      <div class="unit__hd">
+        <span class="unit__badge">U1</span>
+        <div><h3>Promoting Innovation through Digital Media</h3><p>Digital Design &middot; July, last week &middot; 19 weeks</p></div>
+      </div>
+      <div class="unit__body">
+        <dl class="kv">
+          <dt>Key concept</dt><dd>Communication*</dd>
+          <dt>Related concepts</dt><dd>Form, Collaboration</dd>
+          <dt>Global context</dt><dd>Identities &amp; Relationships</dd>
+        </dl>
+        <p class="soi">&ldquo;Communicating an idea effectively depends on considering diverse perspectives and using form deliberately to build relationships with individuals across different identities and communities.&rdquo;</p>
+        <div class="grasp">
+          <b>Goal</b><p>To design a complete brand and promotional campaign &mdash; logo, poster, and a set of promotional materials that communicates Ignite, the school&rsquo;s innovation event, to students and schools across India, maximizing pan-India registrations.</p>
+          <b>Role</b><p>You are in charge on a student branding and communications team helping launch Ignite as a national event for your school (Sreenidhi International).</p>
+          <b>Audience</b><p>Students (Pr), teachers (Sr), and school administrators across India who may register for or attend Ignite.</p>
+          <b>Situation</b><p>Last year, Ignite ran successfully at a Hyderabad level. This year the school wants to scale it pan-India, reaching more schools and students than ever before, and needs strong visual branding plus a strategic promotional plan to make that happen.</p>
+          <b>Product/Performance</b><p>Students design an event logo, a promotional poster, and a promotion plan. Concepts are tested with a real audience.</p>
+          <b>Standards</b><p>Assessed on all four MYP Design criteria (A&ndash;D).</p>
+        </div>
+        <div class="objs">
+          <span>A &middot; Inquiring &amp; Analysing</span>
+          <span>B &middot; Developing Ideas</span>
+          <span>C &middot; Creating the Solution</span>
+          <span>D &middot; Evaluating</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit">
+      <div class="unit__hd">
+        <span class="unit__badge">U2</span>
+        <div><h3>Pair and Glow</h3><p>Electrical Circuits &middot; July, last week &middot; 19 weeks</p></div>
+      </div>
+      <div class="unit__body">
+        <dl class="kv">
+          <dt>Key concept</dt><dd>Systems*</dd>
+          <dt>Related concepts</dt><dd>Innovation, Function</dd>
+          <dt>Global context</dt><dd>Scientific and Technical Innovation</dd>
+        </dl>
+        <p class="soi">&ldquo;Designing interactive systems requires understanding function and user interaction to create meaningful experiences.&rdquo;</p>
+        <p style="font-size:13.5px;color:var(--slate);margin:0 0 16px">GRASPS for this unit has not been written up here yet.</p>
+        <div class="objs">
+          <span>A &middot; Inquiring &amp; Analysing</span>
+          <span>B &middot; Developing Ideas</span>
+          <span>C &middot; Creating the Solution</span>
+          <span>D &middot; Evaluating</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<!-- ================= MYP 2 ================= -->
+<section class="gradehead"><div class="wrap"><h2>MYP 2</h2></div></section>
+<section><div class="wrap">
+  <div class="units">
+
+    <div class="unit">
+      <div class="unit__hd">
+        <span class="unit__badge">U1</span>
+        <div><h3>Wokwi &mdash; sensor unit</h3><p>Electronics &middot; &ldquo;Sensing Our World: Engineering Solutions for Community Wellbeing&rdquo; &middot; Jan 6th &middot; 19 weeks</p></div>
+      </div>
+      <div class="unit__body">
+        <dl class="kv">
+          <dt>Key concept</dt><dd>Communities*</dd>
+          <dt>Related concepts</dt><dd>Function, Innovation</dd>
+          <dt>Global context</dt><dd>Fairness and Development &mdash; imagining the hopeful future</dd>
+        </dl>
+        <p class="soi">&ldquo;Innovative systems function most meaningfully when they are designed to serve the needs of the communities they belong to.&rdquo;</p>
+        <div class="grasp">
+          <b>Goal</b><p>Design and simulate a sensor-based solution using Wokwi that addresses a real community need (e.g., air quality monitor, flood alert system, accessibility aid).</p>
+          <b>Role</b><p>You are a junior engineer at a social impact tech startup.</p>
+          <b>Audience</b><p>A local community board or NGO evaluating low-cost tech solutions.</p>
+          <b>Situation</b><p>Your community faces a recurring environmental or social challenge. Using Wokwi, prototype a sensor unit that monitors or responds to this issue and present it as a viable, fair solution.</p>
+          <b>Product/Performance</b><p>A working Wokwi simulation + a short pitch (written or presented) explaining how the system functions, who it serves, and why it promotes fairness.</p>
+        </div>
+        <div class="objs">
+          <span>A &middot; Inquiring &amp; Analysing</span>
+          <span>B &middot; Developing Ideas</span>
+          <span>C &middot; Creating the Solution</span>
+          <span>D &middot; Evaluating</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="unit">
+      <div class="unit__hd">
+        <span class="unit__badge">U2</span>
+        <div><h3>Pixels Through Time: Designing Games That Communicate History</h3><p>Digital Design &mdash; Coding &middot; Code.org, Game development &middot; July 22nd &middot; 19 weeks</p></div>
+      </div>
+      <div class="unit__body">
+        <dl class="kv">
+          <dt>Key concept</dt><dd>Communication*</dd>
+          <dt>Related concepts</dt><dd>Form, Adaptation</dd>
+          <dt>Global context</dt><dd>Orientation in time and space &mdash; epochs, eras, turning points and &lsquo;big history&rsquo;</dd>
+        </dl>
+        <p class="soi">&ldquo;Communication is shaped by how ideas are adapted and how form is used to represent and interpret history through interactive experiences.&rdquo;</p>
+        <div class="grasp">
+          <b>Goal</b><p>Design and build a playable game using Code.org that is set in or inspired by a significant historical era or turning point in &lsquo;big history&rsquo;.</p>
+          <b>Role</b><p>You are a game designer commissioned by a digital history museum.</p>
+          <b>Audience</b><p>Students aged 10&ndash;14 visiting the museum&rsquo;s interactive digital gallery.</p>
+          <b>Situation</b><p>The museum wants engaging games that help young visitors understand key turning points in history &mdash; not just facts, but the feel of an era. Your game must communicate the context of that time through its design, mechanics, and storytelling.</p>
+          <b>Product/Performance</b><p>A fully playable Code.org game with a short designer&rsquo;s note explaining: the historical era chosen, how the game&rsquo;s form and mechanics reflect that period, and what adaptations were made to make it accessible and engaging for the audience.</p>
+        </div>
+        <div class="objs">
+          <span>A &middot; Inquiring &amp; Analysing</span>
+          <span>B &middot; Developing Ideas</span>
+          <span>C &middot; Creating the Solution</span>
+          <span>D &middot; Evaluating</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div></section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Design Team - SIS</span>
+    <span>MYP Years 1&ndash;2</span>
+  </div>
+</footer>
+
+</body>
+</html>
