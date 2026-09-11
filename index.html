@@ -803,6 +803,16 @@ body::before{
     var back     = document.getElementById('backToGrades');
     if(!gradeSec || !critSec || !open45) return;
 
+    function clearHash(){
+      try{
+        if(window.history && window.history.replaceState){
+          window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        } else {
+          window.location.hash = '';
+        }
+      }catch(e){}
+    }
+
     function showCrit(smooth){
       gradeSec.hidden = true;
       critSec.hidden = false;
@@ -810,12 +820,16 @@ body::before{
       if(smooth) critSec.scrollIntoView({behavior:'smooth', block:'start'});
     }
 
-    open45.addEventListener('click', function(){ showCrit(true); });
+    open45.addEventListener('click', function(){
+      showCrit(true);
+      window.location.hash = 'myp4-5';
+    });
 
     if(back) back.addEventListener('click', function(){
       critSec.hidden = true;
       gradeSec.hidden = false;
       gradeSec.scrollIntoView({behavior:'smooth', block:'start'});
+      clearHash();
     });
 
     // arriving from a strand page's "All criteria" link goes straight back to the grid

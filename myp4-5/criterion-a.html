@@ -2320,17 +2320,35 @@
 (function(){
   var tabs = document.querySelectorAll('.tab');
   var panels = document.querySelectorAll('[data-panel]');
+
+  function activateTab(t, opts){
+    opts = opts || {};
+    tabs.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
+    t.classList.add('on'); t.setAttribute('aria-pressed','true');
+    panels.forEach(function(p){ p.hidden = (p.dataset.panel !== t.dataset.s); });
+    var vis = document.querySelector('[data-panel]:not([hidden])');
+    if(window.__buildJump) window.__buildJump(vis);
+    if(window.__armReveal) window.__armReveal(vis);
+    if(!opts.silent) window.scrollTo({top:0, behavior:'smooth'});
+    if(!opts.noHash){
+      try{ window.location.hash = t.dataset.s; }catch(e){}
+    }
+  }
+
   tabs.forEach(function(t){
-    t.addEventListener('click', function(){
-      tabs.forEach(function(x){ x.classList.remove('on'); x.setAttribute('aria-pressed','false'); });
-      t.classList.add('on'); t.setAttribute('aria-pressed','true');
-      panels.forEach(function(p){ p.hidden = (p.dataset.panel !== t.dataset.s); });
-      var vis = document.querySelector('[data-panel]:not([hidden])');
-      if(window.__buildJump) window.__buildJump(vis);
-      if(window.__armReveal) window.__armReveal(vis);
-      window.scrollTo({top:0, behavior:'smooth'});
-    });
+    t.addEventListener('click', function(){ activateTab(t); });
   });
+
+  // deep link — open the strand named in the URL hash, if it has been built
+  (function(){
+    try{
+      var initStrand = window.location.hash.replace('#','');
+      if(!initStrand) return;
+      var initTab = document.querySelector('.tab[data-s="' + initStrand + '"]');
+      var initPanel = document.querySelector('[data-panel="' + initStrand + '"]');
+      if(initTab && initPanel) activateTab(initTab, {silent:true, noHash:true});
+    }catch(e){}
+  })();
 
   // each strand panel gets its own independent checklist tracker
   document.querySelectorAll('[data-panel]').forEach(function(panel){
