@@ -934,7 +934,7 @@
     function update(){
       var n = 0;
       boxes.forEach(function(b){ if(b.checked) n++; });
-      bar.style.width = (n / total * 100) + '%';
+      bar.style.transform = 'scaleX(' + (n / total) + ')';
       if(count) count.textContent = n + ' of ' + total + ' checked';
     }
     boxes.forEach(function(b){ b.addEventListener('change', update); });

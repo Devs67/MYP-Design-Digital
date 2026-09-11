@@ -7,6 +7,7 @@
   --display:"Fraunces",Georgia,serif;
   --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --ease-out:cubic-bezier(.22,.61,.36,1);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
@@ -28,7 +29,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   border:0;background:var(--card);border-radius:50%;cursor:pointer;z-index:60;
   box-shadow:0 3px 14px rgba(20,48,60,.14);display:flex;align-items:center;
   justify-content:center;opacity:0;visibility:hidden;transform:translateY(10px);
-  transition:opacity .25s,transform .25s,visibility .25s}
+  transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
 .totop.show{opacity:1;visibility:visible;transform:translateY(0)}
 .totop:hover{box-shadow:0 5px 20px rgba(20,48,60,.2)}
 .totop svg{position:absolute;inset:0;width:52px;height:52px;transform:rotate(-90deg)}
@@ -70,7 +71,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .ctall summary::before{content:"+";font-size:14px;line-height:1;width:15px;height:15px;
   border:1px solid var(--rule);border-radius:7px;display:flex;align-items:center;
   justify-content:center;color:var(--slate)}
-.ctall[open] summary::before{content:"\2013"}
+.ctall[open] summary::before{transform:rotate(45deg)}
 .ctall summary:hover{color:var(--ink)}
 .ctgrid{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px}
 .ctg{flex:1 1 260px;background:var(--paper);border-radius:12px;padding:13px 15px}
@@ -214,7 +215,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .docwrap > summary::before{content:"+";font-family:var(--mono);font-size:16px;line-height:1;
   width:24px;height:24px;flex:0 0 24px;border:1px solid var(--rule);border-radius:7px;
   display:flex;align-items:center;justify-content:center;color:var(--amber)}
-.docwrap[open] > summary::before{content:"\2013"}
+.docwrap[open] > summary::before{transform:rotate(45deg)}
 .docwrap > summary:hover{background:var(--paper)}
 .docwrap[open] > summary{border-bottom:1px solid var(--rule-soft)}
 .docwrap > summary b{font-family:var(--display);font-size:18px;font-weight:600}
@@ -229,7 +230,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .fwgroup > summary::before{content:"+";font-family:var(--mono);font-size:15px;line-height:1;
   width:21px;height:21px;flex:0 0 21px;border:1px solid var(--rule);border-radius:7px;
   display:flex;align-items:center;justify-content:center;color:var(--amber);align-self:center}
-.fwgroup[open] > summary::before{content:"\2013"}
+.fwgroup[open] > summary::before{transform:rotate(45deg)}
 .fwgroup > summary:hover h3{color:var(--amber)}
 .fwgroup > summary i{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--slate);font-style:normal;margin-left:auto}
@@ -388,7 +389,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   .sechead::after{content:"+";font-family:var(--mono);font-size:17px;line-height:1;
     width:26px;height:26px;flex:0 0 26px;border:1px solid var(--rule);border-radius:7px;
     display:flex;align-items:center;justify-content:center;color:var(--amber)}
-  .sec.open .sechead::after{content:"\2013";background:var(--amber);color:#fff;
+  .sec.open .sechead::after{transform:rotate(45deg);background:var(--amber);color:#fff;
     border-color:var(--amber)}
   .sec.open .sechead{border-bottom-color:var(--amber)}
   .sec.open .sechead h2{color:var(--amber)}
@@ -445,7 +446,8 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 /* checklist */
 .clbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
 .meter{flex:1 1 200px;height:8px;background:var(--rule-soft);border-radius:99px;overflow:hidden}
-.meter i{display:block;height:100%;width:0;background:var(--moss);transition:width .25s}
+.meter i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);
+  background:var(--moss);transition:transform .25s ease-out}
 .count{font-family:var(--mono);font-size:12px;color:var(--slate);white-space:nowrap}
 .rst{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   border:1px solid var(--rule);background:var(--card);color:var(--slate);
@@ -596,13 +598,13 @@ html{scroll-behavior:smooth}
 
   /* scroll reveal - only armed once JS confirms support */
   .js-anim .reveal{opacity:0;transform:translateY(12px);
-    transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1);
+    transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);
     transition-delay:var(--d,0ms)}
   .js-anim .reveal.in{opacity:1;transform:none}
 
   /* masthead on load */
   .mast .eyebrow,.mast h1,.mast .sub,.mast .facts,.mast .ctbox,.homelink{
-    animation:riseIn .55s cubic-bezier(.22,.61,.36,1) both}
+    animation:riseIn .55s var(--ease-out) both}
   .homelink{animation-delay:.02s}
   .mast .eyebrow{animation-delay:.06s}
   .mast h1{animation-delay:.12s}
@@ -611,7 +613,7 @@ html{scroll-behavior:smooth}
   @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
   /* strand panel cross-fade */
-  [data-panel]:not([hidden]){animation:panelIn .38s cubic-bezier(.22,.61,.36,1) both}
+  [data-panel]:not([hidden]){animation:panelIn .38s var(--ease-out) both}
   @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
   /* dropdown + section open */
@@ -619,12 +621,13 @@ html{scroll-behavior:smooth}
   details[open] > .fwlist,
   details[open] > .pdfbox,
   details[open] > .ctgrid,
-  .sec.open > .wrap > .secbody{animation:openIn .34s cubic-bezier(.22,.61,.36,1) both}
+  .sec.open > .wrap > .secbody{animation:openIn .34s var(--ease-out) both}
   @keyframes openIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
 
   /* summary chevrons and toggles */
   .docwrap > summary::before,.fwgroup > summary::before,
-  .ctall summary::before,.sechead::after{transition:background .2s,color .2s,border-color .2s}
+  .ctall summary::before,.sechead::after{
+    transition:transform .2s var(--ease-out),background .2s,color .2s,border-color .2s}
   .docwrap > summary:hover::before,.fwgroup > summary:hover::before,
   .sechead:hover::after{background:var(--amber);color:#fff;border-color:var(--amber)}
 
@@ -632,7 +635,8 @@ html{scroll-behavior:smooth}
   .step,.fwc,.trap,.band,.clgroup{transition:box-shadow .25s ease,border-color .25s ease}
   .step:hover,.fwc:hover,.trap:hover{box-shadow:0 3px 16px rgba(20,48,60,.06)}
 
-  .tab{transition:background .2s ease,color .2s ease,border-color .2s ease}
+  .tab{transition:background .2s ease,color .2s ease,border-color .2s ease,
+    border-top-width .2s ease,padding-top .2s ease}
   .ck{transition:background .18s ease}
   .ck:hover{background:var(--paper)}
   .ck input{transition:transform .15s ease}
@@ -657,7 +661,7 @@ html{scroll-behavior:smooth}
 .ctile{flex:1 1 200px;min-width:170px;padding:0;border:0;background:none;
   cursor:pointer;perspective:1000px;font-family:inherit;text-align:left}
 .ctile__inner{display:grid;position:relative;width:100%;height:100%;
-  transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.4,1)}
+  transform-style:preserve-3d;transition:transform .4s cubic-bezier(.3,.7,.4,1)}
 .ctile.flipped .ctile__inner{transform:rotateY(180deg)}
 .ctile__face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;
   border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column;
@@ -679,7 +683,7 @@ html{scroll-behavior:smooth}
 /* ============ HOVER LIFT ============ */
 @media (hover:hover) and (prefers-reduced-motion: no-preference){
   .step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.crit,.pbox,.flip__side,.term{
-    transition:transform .22s cubic-bezier(.22,.61,.36,1),border-color .22s ease,box-shadow .22s ease}
+    transition:transform .22s var(--ease-out),border-color .22s ease,box-shadow .22s ease}
   .step:hover,.fwc:hover,.trap:hover,.band:hover,.clgroup:hover,.asp:hover,
   .mm__branch:hover,.pbox:hover,.flip__side:hover{
     transform:translateY(-3px) scale(1.006);border-color:var(--amber)}
@@ -723,3 +727,13 @@ html{scroll-behavior:smooth}
 .attrib{display:block;width:100%;margin-bottom:12px;font-family:var(--body);
   font-size:12px;letter-spacing:normal;text-transform:none;color:var(--slate)}
 .attrib a{color:var(--amber)}
+
+/* ============ PRESS FEEDBACK ============ */
+/* placed last so it wins over any earlier :hover transform on the same element */
+@media (prefers-reduced-motion: no-preference){
+  .tpl__btn:active,.sync__btn:active,#totop:active{
+    transform:scale(.97);transition:transform 140ms ease-out}
+  .tab:active,.homelink:active,
+  .docwrap > summary:active,.fwgroup > summary:active{
+    transform:scale(.98);transition:transform 140ms ease-out}
+}

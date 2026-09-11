@@ -17,6 +17,7 @@
   --display:"Fraunces",Georgia,serif;
   --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --ease-out:cubic-bezier(.22,.61,.36,1);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
@@ -30,7 +31,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   border:0;background:var(--card);border-radius:50%;cursor:pointer;z-index:60;
   box-shadow:0 3px 14px rgba(20,48,60,.14);display:flex;align-items:center;
   justify-content:center;opacity:0;visibility:hidden;transform:translateY(10px);
-  transition:opacity .25s,transform .25s,visibility .25s}
+  transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
 .totop.show{opacity:1;visibility:visible;transform:translateY(0)}
 .totop:hover{box-shadow:0 5px 20px rgba(20,48,60,.2)}
 .totop svg{position:absolute;inset:0;width:52px;height:52px;transform:rotate(-90deg)}
@@ -67,9 +68,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .grid{display:flex;flex-wrap:wrap;gap:16px}
 .crit{flex:1 1 330px;background:var(--card);border:1px solid var(--rule);
   border-left:4px solid var(--rule);border-radius:12px;padding:24px 26px 26px;
-  text-decoration:none;color:inherit;display:block;transition:.15s}
-a.crit:hover{border-color:var(--slate);transform:translateY(-2px);
-  box-shadow:0 4px 14px rgba(20,48,60,.07)}
+  text-decoration:none;color:inherit;display:block;position:relative;transition:.15s}
 .crit--a{border-left-color:var(--a)}
 .crit--b{border-left-color:var(--b)}
 .crit--c{border-left-color:var(--c)}
@@ -114,7 +113,6 @@ footer{margin-top:60px;padding:30px 0 60px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:7px}
-@media (prefers-reduced-motion:reduce){a.crit:hover{transform:none}}
 
 /* ============ MOTION ============ */
 html{scroll-behavior:smooth}
@@ -123,13 +121,13 @@ html{scroll-behavior:smooth}
 
   /* scroll reveal - only armed once JS confirms support */
   .js-anim .reveal{opacity:0;transform:translateY(12px);
-    transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1);
+    transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);
     transition-delay:var(--d,0ms)}
   .js-anim .reveal.in{opacity:1;transform:none}
 
   /* masthead on load */
   .mast .eyebrow,.mast h1,.mast .sub,.mast .facts,.mast .ctbox,.homelink{
-    animation:riseIn .55s cubic-bezier(.22,.61,.36,1) both}
+    animation:riseIn .55s var(--ease-out) both}
   .homelink{animation-delay:.02s}
   .mast .eyebrow{animation-delay:.06s}
   .mast h1{animation-delay:.12s}
@@ -138,7 +136,7 @@ html{scroll-behavior:smooth}
   @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 
   /* strand panel cross-fade */
-  [data-panel]:not([hidden]){animation:panelIn .38s cubic-bezier(.22,.61,.36,1) both}
+  [data-panel]:not([hidden]){animation:panelIn .38s var(--ease-out) both}
   @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
   /* dropdown + section open */
@@ -146,7 +144,7 @@ html{scroll-behavior:smooth}
   details[open] > .fwlist,
   details[open] > .pdfbox,
   details[open] > .ctgrid,
-  .sec.open > .wrap > .secbody{animation:openIn .34s cubic-bezier(.22,.61,.36,1) both}
+  .sec.open > .wrap > .secbody{animation:openIn .34s var(--ease-out) both}
   @keyframes openIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
 
   /* summary chevrons and toggles */
@@ -184,7 +182,7 @@ html{scroll-behavior:smooth}
 .ctile{flex:1 1 200px;min-width:170px;padding:0;border:0;background:none;
   cursor:pointer;perspective:1000px;font-family:inherit;text-align:left}
 .ctile__inner{display:grid;position:relative;width:100%;height:100%;
-  transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.4,1)}
+  transform-style:preserve-3d;transition:transform .4s cubic-bezier(.3,.7,.4,1)}
 .ctile.flipped .ctile__inner{transform:rotateY(180deg)}
 .ctile__face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;
   border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column;
@@ -206,11 +204,10 @@ html{scroll-behavior:smooth}
 /* ============ HOVER LIFT ============ */
 @media (hover:hover) and (prefers-reduced-motion: no-preference){
   .step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.crit,.pbox,.flip__side,.term{
-    transition:transform .22s cubic-bezier(.22,.61,.36,1),border-color .22s ease,box-shadow .22s ease}
+    transition:transform .22s var(--ease-out),border-color .22s ease,box-shadow .22s ease}
   .step:hover,.fwc:hover,.trap:hover,.band:hover,.clgroup:hover,.asp:hover,
   .mm__branch:hover,.pbox:hover,.flip__side:hover{
     transform:translateY(-3px) scale(1.006);border-color:var(--amber)}
-  a.crit:hover{transform:translateY(-3px) scale(1.008)}
   .jump button:hover,.tab:hover,.rst:hover,.homelink:hover{transform:translateY(-1px)}
   .pri,.pill,.spill,.st,.sq,.chip{transition:transform .18s ease,filter .18s ease}
   .step:hover .step__n,.fwc:hover .pill,.band:hover .sq{transform:translateY(-1px)}
@@ -266,10 +263,10 @@ body.wl-open{overflow:hidden}
 
 @media (prefers-reduced-motion: no-preference){
   .wl{animation:wlFade .35s ease both}
-  .wl__card{animation:wlRise .55s cubic-bezier(.22,.61,.36,1) both .06s}
-  .wl__quote{animation:wlRise .6s cubic-bezier(.22,.61,.36,1) both .2s}
-  .wl__who{animation:wlRise .6s cubic-bezier(.22,.61,.36,1) both .3s}
-  .wl__btn{animation:wlRise .6s cubic-bezier(.22,.61,.36,1) both .38s}
+  .wl__card{animation:wlRise .55s var(--ease-out) both .06s}
+  .wl__quote{animation:wlRise .6s var(--ease-out) both .2s}
+  .wl__who{animation:wlRise .6s var(--ease-out) both .3s}
+  .wl__btn{animation:wlRise .6s var(--ease-out) both .38s}
   .wl.closing{animation:wlFade .3s ease reverse both}
   @keyframes wlFade{from{opacity:0}to{opacity:1}}
   @keyframes wlRise{from{opacity:0;transform:translateY(16px) scale(.985)}
@@ -290,25 +287,25 @@ body.wl-open{overflow:hidden}
 .crit--dev{--tone:var(--dev)}
 
 @media (hover:hover) and (prefers-reduced-motion: no-preference){
-  .crit{position:relative;will-change:transform}
+  .crit{will-change:transform}
 
   .crit,a.crit{
-    transition:transform .38s cubic-bezier(.22,.61,.36,1),box-shadow .38s ease,
-               background .38s ease,border-color .38s ease,opacity .38s ease;
+    transition:transform .2s var(--ease-out),box-shadow .2s ease,
+               background .2s ease,border-color .2s ease,opacity .2s ease;
   }
 
   .grid:has(.crit:hover) .crit:not(:hover){
-    transform:scale(.93) !important;
-    opacity:.66;
+    transform:scale(.97);
+    opacity:.75;
   }
 
   .crit:hover,a.crit:hover{
     background:linear-gradient(160deg,
       color-mix(in srgb, var(--tone,var(--ink)) 26%, #fff),
-      color-mix(in srgb, var(--tone,var(--ink)) 10%, #fff)) !important;
-    border-color:var(--tone,var(--ink)) !important;
-    transform:translateY(-9px) scale(1.07) !important;
-    box-shadow:0 22px 44px rgba(20,48,60,.2) !important;
+      color-mix(in srgb, var(--tone,var(--ink)) 10%, #fff));
+    border-color:var(--tone,var(--ink));
+    transform:translateY(-4px) scale(1.02);
+    box-shadow:0 14px 28px rgba(20,48,60,.16);
     z-index:2;
   }
 
@@ -352,7 +349,7 @@ body::before{
   background:linear-gradient(140deg,rgba(176,90,28,.09),rgba(176,90,28,0) 60%)}
 
 @media (hover:hover) and (prefers-reduced-motion: no-preference){
-  .gradebtn--open{transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s ease}
+  .gradebtn--open{transition:transform .28s var(--ease-out),box-shadow .28s ease}
   .gradebtn--open:hover{transform:translateY(-5px) scale(1.02);
     box-shadow:0 16px 34px rgba(176,90,28,.18)}
 }
@@ -365,7 +362,7 @@ body::before{
 
 #critSec{transition:none}
 @media (prefers-reduced-motion: no-preference){
-  #critSec:not([hidden]){animation:panelIn .4s cubic-bezier(.22,.61,.36,1) both}
+  #critSec:not([hidden]){animation:panelIn .4s var(--ease-out) both}
 }
 
 .backlink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
@@ -384,6 +381,15 @@ body::before{
 .imgframe__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--slate)}
 @media (max-width:900px){.mast__images{display:none}}
+
+/* ============ PRESS FEEDBACK ============ */
+/* placed last so it wins over any earlier :hover transform on the same element */
+@media (prefers-reduced-motion: no-preference){
+  .wl__btn:active,#totop:active,.gradebtn--open:active{
+    transform:scale(.97);transition:transform 140ms ease-out}
+  .tab:active,.homelink:active,.backlink:active{
+    transform:scale(.98);transition:transform 140ms ease-out}
+}
 </style>
 </head>
 <body>
@@ -794,7 +800,7 @@ body::before{
         wl.hidden = true;
         wl.classList.remove('closing');
         document.body.classList.remove('wl-open');
-      }, 280);
+      }, 300);
     }
 
     if(enter) enter.addEventListener('click', close);
