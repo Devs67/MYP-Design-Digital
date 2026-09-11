@@ -39,37 +39,38 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .gradehead h2{font-family:var(--display);font-size:24px;font-weight:600;margin:0;
   letter-spacing:-.01em}
 
-.units{display:flex;flex-wrap:wrap;gap:18px;margin:18px 0 0}
-.unit{flex:1 1 420px;background:var(--card);border:1px solid var(--rule);border-radius:12px;
+.units{display:flex;flex-wrap:wrap;gap:18px;margin:18px 0 0;align-items:flex-start}
+.unit{flex:1 1 440px;background:var(--card);border:1px solid var(--rule);border-radius:12px;
   overflow:hidden}
-.unit__hd{padding:18px 24px;border-bottom:1px solid var(--rule-soft);display:flex;gap:14px;
+.unit--u1{border-top:4px solid var(--amber)}
+.unit--u2{border-top:4px solid var(--moss)}
+.unit__hd{padding:16px 22px;border-bottom:1px solid var(--rule-soft);display:flex;gap:14px;
   align-items:center}
-.unit__badge{width:38px;height:38px;border-radius:10px;flex:0 0 38px;background:var(--amber);
-  color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);
-  font-weight:600;font-size:13px}
-.unit__hd h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0;
+.unit--u1 .unit__hd{background:var(--amber-tint)}
+.unit--u2 .unit__hd{background:var(--moss-tint)}
+.unit__badge{width:34px;height:34px;border-radius:9px;flex:0 0 34px;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  font-weight:600;font-size:12px}
+.unit--u1 .unit__badge{background:var(--amber)}
+.unit--u2 .unit__badge{background:var(--moss)}
+.unit__hd h3{font-family:var(--display);font-size:18px;font-weight:600;margin:0;
   letter-spacing:-.01em}
-.unit__hd p{margin:3px 0 0;font-size:12.5px;color:var(--slate);font-family:var(--mono);
+.unit__hd p{margin:2px 0 0;font-size:12px;color:var(--slate);font-family:var(--mono);
   letter-spacing:.02em}
 
-.unit__body{padding:20px 24px 24px}
-.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px;margin:0 0 16px}
-.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);align-self:baseline;padding-top:2px}
-.kv dd{margin:0;color:var(--ink)}
-
-.soi{background:var(--paper);border-radius:10px;padding:13px 16px;font-size:13.5px;
-  line-height:1.6;margin:0 0 16px;font-style:italic}
-
-.grasp{margin:0 0 16px}
-.grasp b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--amber);display:block;margin:10px 0 2px}
-.grasp b:first-child{margin-top:0}
-.grasp p{margin:0;font-size:13.5px;line-height:1.55}
+.unittab{width:100%;border-collapse:collapse;font-size:13.5px}
+.unittab th{width:130px;text-align:left;vertical-align:top;
+  padding:11px 14px 11px 22px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--slate);font-weight:500;border-top:1px solid var(--rule-soft)}
+.unittab td{padding:11px 22px 11px 14px;vertical-align:top;border-top:1px solid var(--rule-soft);
+  line-height:1.55}
+.unittab tr:first-child th,.unittab tr:first-child td{border-top:0}
+.unittab tr.soi td{font-style:italic}
+.unittab tr.missing td{color:var(--slate)}
 
 .objs{display:flex;gap:6px;flex-wrap:wrap;margin:0}
 .objs span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
-  padding:5px 9px;border-radius:7px;background:var(--moss-tint);color:var(--moss)}
+  padding:5px 9px;border-radius:7px;background:var(--rule-soft);color:var(--slate)}
 
 footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
@@ -78,7 +79,16 @@ footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
 @media (max-width:760px){
   .wrap{padding:0 14px}
   .mast{padding:40px 0 22px}
-  .unit__hd,.unit__body{padding:16px 18px}
+  .unit__hd{padding:14px 16px}
+  .unittab th{padding-left:16px;width:104px}
+  .unittab td{padding-right:16px}
+}
+@media (max-width:600px){
+  .unittab,.unittab tbody,.unittab tr,.unittab th,.unittab td{display:block;width:auto}
+  .unittab tr{padding:10px 16px;border-top:1px solid var(--rule-soft)}
+  .unittab tr:first-child{border-top:0}
+  .unittab th,.unittab td{padding:0;border-top:0}
+  .unittab th{margin-bottom:3px}
 }
 </style>
 </head>
@@ -98,55 +108,53 @@ footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
 <section><div class="wrap">
   <div class="units">
 
-    <div class="unit">
+    <div class="unit unit--u1">
       <div class="unit__hd">
         <span class="unit__badge">U1</span>
         <div><h3>Promoting Innovation through Digital Media</h3><p>Digital Design &middot; July, last week &middot; 19 weeks</p></div>
       </div>
-      <div class="unit__body">
-        <dl class="kv">
-          <dt>Key concept</dt><dd>Communication*</dd>
-          <dt>Related concepts</dt><dd>Form, Collaboration</dd>
-          <dt>Global context</dt><dd>Identities &amp; Relationships</dd>
-        </dl>
-        <p class="soi">&ldquo;Communicating an idea effectively depends on considering diverse perspectives and using form deliberately to build relationships with individuals across different identities and communities.&rdquo;</p>
-        <div class="grasp">
-          <b>Goal</b><p>To design a complete brand and promotional campaign &mdash; logo, poster, and a set of promotional materials that communicates Ignite, the school&rsquo;s innovation event, to students and schools across India, maximizing pan-India registrations.</p>
-          <b>Role</b><p>You are in charge on a student branding and communications team helping launch Ignite as a national event for your school (Sreenidhi International).</p>
-          <b>Audience</b><p>Students (Pr), teachers (Sr), and school administrators across India who may register for or attend Ignite.</p>
-          <b>Situation</b><p>Last year, Ignite ran successfully at a Hyderabad level. This year the school wants to scale it pan-India, reaching more schools and students than ever before, and needs strong visual branding plus a strategic promotional plan to make that happen.</p>
-          <b>Product/Performance</b><p>Students design an event logo, a promotional poster, and a promotion plan. Concepts are tested with a real audience.</p>
-          <b>Standards</b><p>Assessed on all four MYP Design criteria (A&ndash;D).</p>
-        </div>
-        <div class="objs">
-          <span>A &middot; Inquiring &amp; Analysing</span>
-          <span>B &middot; Developing Ideas</span>
-          <span>C &middot; Creating the Solution</span>
-          <span>D &middot; Evaluating</span>
-        </div>
-      </div>
+      <table class="unittab">
+        <tr><th>Key concept</th><td>Communication*</td></tr>
+        <tr><th>Related concepts</th><td>Form, Collaboration</td></tr>
+        <tr><th>Global context</th><td>Identities &amp; Relationships</td></tr>
+        <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Communicating an idea effectively depends on considering diverse perspectives and using form deliberately to build relationships with individuals across different identities and communities.&rdquo;</td></tr>
+        <tr><th>Goal</th><td>To design a complete brand and promotional campaign &mdash; logo, poster, and a set of promotional materials that communicates Ignite, the school&rsquo;s innovation event, to students and schools across India, maximizing pan-India registrations.</td></tr>
+        <tr><th>Role</th><td>You are in charge on a student branding and communications team helping launch Ignite as a national event for your school (Sreenidhi International).</td></tr>
+        <tr><th>Audience</th><td>Students (Pr), teachers (Sr), and school administrators across India who may register for or attend Ignite.</td></tr>
+        <tr><th>Situation</th><td>Last year, Ignite ran successfully at a Hyderabad level. This year the school wants to scale it pan-India, reaching more schools and students than ever before, and needs strong visual branding plus a strategic promotional plan to make that happen.</td></tr>
+        <tr><th>Product/Performance</th><td>Students design an event logo, a promotional poster, and a promotion plan. Concepts are tested with a real audience.</td></tr>
+        <tr><th>Standards</th><td>Assessed on all four MYP Design criteria (A&ndash;D).</td></tr>
+        <tr><th>Criteria</th><td>
+          <div class="objs">
+            <span>A &middot; Inquiring &amp; Analysing</span>
+            <span>B &middot; Developing Ideas</span>
+            <span>C &middot; Creating the Solution</span>
+            <span>D &middot; Evaluating</span>
+          </div>
+        </td></tr>
+      </table>
     </div>
 
-    <div class="unit">
+    <div class="unit unit--u2">
       <div class="unit__hd">
         <span class="unit__badge">U2</span>
         <div><h3>Pair and Glow</h3><p>Electrical Circuits &middot; July, last week &middot; 19 weeks</p></div>
       </div>
-      <div class="unit__body">
-        <dl class="kv">
-          <dt>Key concept</dt><dd>Systems*</dd>
-          <dt>Related concepts</dt><dd>Innovation, Function</dd>
-          <dt>Global context</dt><dd>Scientific and Technical Innovation</dd>
-        </dl>
-        <p class="soi">&ldquo;Designing interactive systems requires understanding function and user interaction to create meaningful experiences.&rdquo;</p>
-        <p style="font-size:13.5px;color:var(--slate);margin:0 0 16px">GRASPS for this unit has not been written up here yet.</p>
-        <div class="objs">
-          <span>A &middot; Inquiring &amp; Analysing</span>
-          <span>B &middot; Developing Ideas</span>
-          <span>C &middot; Creating the Solution</span>
-          <span>D &middot; Evaluating</span>
-        </div>
-      </div>
+      <table class="unittab">
+        <tr><th>Key concept</th><td>Systems*</td></tr>
+        <tr><th>Related concepts</th><td>Innovation, Function</td></tr>
+        <tr><th>Global context</th><td>Scientific and Technical Innovation</td></tr>
+        <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Designing interactive systems requires understanding function and user interaction to create meaningful experiences.&rdquo;</td></tr>
+        <tr class="missing"><th>GRASPS</th><td>Not written up here yet.</td></tr>
+        <tr><th>Criteria</th><td>
+          <div class="objs">
+            <span>A &middot; Inquiring &amp; Analysing</span>
+            <span>B &middot; Developing Ideas</span>
+            <span>C &middot; Creating the Solution</span>
+            <span>D &middot; Evaluating</span>
+          </div>
+        </td></tr>
+      </table>
     </div>
 
   </div>
@@ -157,60 +165,56 @@ footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
 <section><div class="wrap">
   <div class="units">
 
-    <div class="unit">
+    <div class="unit unit--u1">
       <div class="unit__hd">
         <span class="unit__badge">U1</span>
         <div><h3>Wokwi &mdash; sensor unit</h3><p>Electronics &middot; &ldquo;Sensing Our World: Engineering Solutions for Community Wellbeing&rdquo; &middot; Jan 6th &middot; 19 weeks</p></div>
       </div>
-      <div class="unit__body">
-        <dl class="kv">
-          <dt>Key concept</dt><dd>Communities*</dd>
-          <dt>Related concepts</dt><dd>Function, Innovation</dd>
-          <dt>Global context</dt><dd>Fairness and Development &mdash; imagining the hopeful future</dd>
-        </dl>
-        <p class="soi">&ldquo;Innovative systems function most meaningfully when they are designed to serve the needs of the communities they belong to.&rdquo;</p>
-        <div class="grasp">
-          <b>Goal</b><p>Design and simulate a sensor-based solution using Wokwi that addresses a real community need (e.g., air quality monitor, flood alert system, accessibility aid).</p>
-          <b>Role</b><p>You are a junior engineer at a social impact tech startup.</p>
-          <b>Audience</b><p>A local community board or NGO evaluating low-cost tech solutions.</p>
-          <b>Situation</b><p>Your community faces a recurring environmental or social challenge. Using Wokwi, prototype a sensor unit that monitors or responds to this issue and present it as a viable, fair solution.</p>
-          <b>Product/Performance</b><p>A working Wokwi simulation + a short pitch (written or presented) explaining how the system functions, who it serves, and why it promotes fairness.</p>
-        </div>
-        <div class="objs">
-          <span>A &middot; Inquiring &amp; Analysing</span>
-          <span>B &middot; Developing Ideas</span>
-          <span>C &middot; Creating the Solution</span>
-          <span>D &middot; Evaluating</span>
-        </div>
-      </div>
+      <table class="unittab">
+        <tr><th>Key concept</th><td>Communities*</td></tr>
+        <tr><th>Related concepts</th><td>Function, Innovation</td></tr>
+        <tr><th>Global context</th><td>Fairness and Development &mdash; imagining the hopeful future</td></tr>
+        <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Innovative systems function most meaningfully when they are designed to serve the needs of the communities they belong to.&rdquo;</td></tr>
+        <tr><th>Goal</th><td>Design and simulate a sensor-based solution using Wokwi that addresses a real community need (e.g., air quality monitor, flood alert system, accessibility aid).</td></tr>
+        <tr><th>Role</th><td>You are a junior engineer at a social impact tech startup.</td></tr>
+        <tr><th>Audience</th><td>A local community board or NGO evaluating low-cost tech solutions.</td></tr>
+        <tr><th>Situation</th><td>Your community faces a recurring environmental or social challenge. Using Wokwi, prototype a sensor unit that monitors or responds to this issue and present it as a viable, fair solution.</td></tr>
+        <tr><th>Product/Performance</th><td>A working Wokwi simulation + a short pitch (written or presented) explaining how the system functions, who it serves, and why it promotes fairness.</td></tr>
+        <tr><th>Criteria</th><td>
+          <div class="objs">
+            <span>A &middot; Inquiring &amp; Analysing</span>
+            <span>B &middot; Developing Ideas</span>
+            <span>C &middot; Creating the Solution</span>
+            <span>D &middot; Evaluating</span>
+          </div>
+        </td></tr>
+      </table>
     </div>
 
-    <div class="unit">
+    <div class="unit unit--u2">
       <div class="unit__hd">
         <span class="unit__badge">U2</span>
         <div><h3>Pixels Through Time: Designing Games That Communicate History</h3><p>Digital Design &mdash; Coding &middot; Code.org, Game development &middot; July 22nd &middot; 19 weeks</p></div>
       </div>
-      <div class="unit__body">
-        <dl class="kv">
-          <dt>Key concept</dt><dd>Communication*</dd>
-          <dt>Related concepts</dt><dd>Form, Adaptation</dd>
-          <dt>Global context</dt><dd>Orientation in time and space &mdash; epochs, eras, turning points and &lsquo;big history&rsquo;</dd>
-        </dl>
-        <p class="soi">&ldquo;Communication is shaped by how ideas are adapted and how form is used to represent and interpret history through interactive experiences.&rdquo;</p>
-        <div class="grasp">
-          <b>Goal</b><p>Design and build a playable game using Code.org that is set in or inspired by a significant historical era or turning point in &lsquo;big history&rsquo;.</p>
-          <b>Role</b><p>You are a game designer commissioned by a digital history museum.</p>
-          <b>Audience</b><p>Students aged 10&ndash;14 visiting the museum&rsquo;s interactive digital gallery.</p>
-          <b>Situation</b><p>The museum wants engaging games that help young visitors understand key turning points in history &mdash; not just facts, but the feel of an era. Your game must communicate the context of that time through its design, mechanics, and storytelling.</p>
-          <b>Product/Performance</b><p>A fully playable Code.org game with a short designer&rsquo;s note explaining: the historical era chosen, how the game&rsquo;s form and mechanics reflect that period, and what adaptations were made to make it accessible and engaging for the audience.</p>
-        </div>
-        <div class="objs">
-          <span>A &middot; Inquiring &amp; Analysing</span>
-          <span>B &middot; Developing Ideas</span>
-          <span>C &middot; Creating the Solution</span>
-          <span>D &middot; Evaluating</span>
-        </div>
-      </div>
+      <table class="unittab">
+        <tr><th>Key concept</th><td>Communication*</td></tr>
+        <tr><th>Related concepts</th><td>Form, Adaptation</td></tr>
+        <tr><th>Global context</th><td>Orientation in time and space &mdash; epochs, eras, turning points and &lsquo;big history&rsquo;</td></tr>
+        <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Communication is shaped by how ideas are adapted and how form is used to represent and interpret history through interactive experiences.&rdquo;</td></tr>
+        <tr><th>Goal</th><td>Design and build a playable game using Code.org that is set in or inspired by a significant historical era or turning point in &lsquo;big history&rsquo;.</td></tr>
+        <tr><th>Role</th><td>You are a game designer commissioned by a digital history museum.</td></tr>
+        <tr><th>Audience</th><td>Students aged 10&ndash;14 visiting the museum&rsquo;s interactive digital gallery.</td></tr>
+        <tr><th>Situation</th><td>The museum wants engaging games that help young visitors understand key turning points in history &mdash; not just facts, but the feel of an era. Your game must communicate the context of that time through its design, mechanics, and storytelling.</td></tr>
+        <tr><th>Product/Performance</th><td>A fully playable Code.org game with a short designer&rsquo;s note explaining: the historical era chosen, how the game&rsquo;s form and mechanics reflect that period, and what adaptations were made to make it accessible and engaging for the audience.</td></tr>
+        <tr><th>Criteria</th><td>
+          <div class="objs">
+            <span>A &middot; Inquiring &amp; Analysing</span>
+            <span>B &middot; Developing Ideas</span>
+            <span>C &middot; Creating the Solution</span>
+            <span>D &middot; Evaluating</span>
+          </div>
+        </td></tr>
+      </table>
     </div>
 
   </div>

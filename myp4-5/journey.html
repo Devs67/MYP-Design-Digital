@@ -14,6 +14,7 @@
   --amber:#B05A1C; --amber-tint:#FBEEE2;
   --moss:#2F6B4F; --moss-tint:#E8F1EC;
   --clay:#9C3E2F; --clay-tint:#F8E9E6;
+  --fa:#6A4C93; --fa-tint:#EFEAF6;
   --display:"Fraunces",Georgia,serif;
   --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -79,6 +80,9 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .tlcard__outlbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--slate);display:block;margin-bottom:4px}
 .tlcard__outtext{font-size:14px;color:var(--slate);line-height:1.5}
+
+.tlcard--fa{border-left:4px solid var(--fa);background:linear-gradient(90deg,var(--fa-tint),var(--card) 14%)}
+.tlcard--fa .tlcard__strand{background:var(--fa-tint);color:var(--fa)}
 
 .tlrow.next .tlcard{border-style:dashed;border-color:var(--rule);opacity:.7}
 .tlrow.next h3{color:var(--slate)}
@@ -230,7 +234,7 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
 
       <div class="tlrow done">
         <span class="tldot">6</span>
-        <div class="tlcard">
+        <div class="tlcard tlcard--fa">
           <div class="tlcard__top">
             <span class="tlcard__len">Mon 10 Aug</span>
             <span class="tlcard__strand">Strand ii</span>
@@ -282,7 +286,7 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
 
       <div class="tlrow done">
         <span class="tldot">9</span>
-        <div class="tlcard">
+        <div class="tlcard tlcard--fa">
           <div class="tlcard__top">
             <span class="tlcard__len">Wed 9 Sep</span>
             <span class="tlcard__strand">Criterion B &middot; Strand i</span>

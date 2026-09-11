@@ -37,37 +37,38 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 
 .sec{padding:8px 0 32px}
 
-.units{display:flex;flex-wrap:wrap;gap:18px;margin:0}
-.unit{flex:1 1 420px;background:var(--card);border:1px solid var(--rule);border-radius:12px;
+.units{display:flex;flex-wrap:wrap;gap:18px;margin:0;align-items:flex-start}
+.unit{flex:1 1 440px;background:var(--card);border:1px solid var(--rule);border-radius:12px;
   overflow:hidden}
-.unit__hd{padding:18px 24px;border-bottom:1px solid var(--rule-soft);display:flex;gap:14px;
+.unit--u1{border-top:4px solid var(--amber)}
+.unit--u2{border-top:4px solid var(--moss)}
+.unit__hd{padding:16px 22px;border-bottom:1px solid var(--rule-soft);display:flex;gap:14px;
   align-items:center}
-.unit__badge{width:38px;height:38px;border-radius:10px;flex:0 0 38px;background:var(--amber);
-  color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);
-  font-weight:600;font-size:13px}
-.unit__hd h3{font-family:var(--display);font-size:19px;font-weight:600;margin:0;
+.unit--u1 .unit__hd{background:var(--amber-tint)}
+.unit--u2 .unit__hd{background:var(--moss-tint)}
+.unit__badge{width:34px;height:34px;border-radius:9px;flex:0 0 34px;color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);
+  font-weight:600;font-size:12px}
+.unit--u1 .unit__badge{background:var(--amber)}
+.unit--u2 .unit__badge{background:var(--moss)}
+.unit__hd h3{font-family:var(--display);font-size:18px;font-weight:600;margin:0;
   letter-spacing:-.01em}
-.unit__hd p{margin:3px 0 0;font-size:12.5px;color:var(--slate);font-family:var(--mono);
+.unit__hd p{margin:2px 0 0;font-size:12px;color:var(--slate);font-family:var(--mono);
   letter-spacing:.02em}
 
-.unit__body{padding:20px 24px 24px}
-.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px;margin:0 0 16px}
-.kv dt{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);align-self:baseline;padding-top:2px}
-.kv dd{margin:0;color:var(--ink)}
-
-.soi{background:var(--paper);border-radius:10px;padding:13px 16px;font-size:13.5px;
-  line-height:1.6;margin:0 0 16px;font-style:italic}
-
-.grasp{margin:0 0 16px}
-.grasp b{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--amber);display:block;margin:10px 0 2px}
-.grasp b:first-child{margin-top:0}
-.grasp p{margin:0;font-size:13.5px;line-height:1.55}
+.unittab{width:100%;border-collapse:collapse;font-size:13.5px}
+.unittab th{width:130px;text-align:left;vertical-align:top;
+  padding:11px 14px 11px 22px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--slate);font-weight:500;border-top:1px solid var(--rule-soft)}
+.unittab td{padding:11px 22px 11px 14px;vertical-align:top;border-top:1px solid var(--rule-soft);
+  line-height:1.55}
+.unittab tr:first-child th,.unittab tr:first-child td{border-top:0}
+.unittab tr.soi td{font-style:italic}
+.unittab tr.missing td{color:var(--slate)}
 
 .objs{display:flex;gap:6px;flex-wrap:wrap;margin:0}
 .objs span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
-  padding:5px 9px;border-radius:7px;background:var(--moss-tint);color:var(--moss)}
+  padding:5px 9px;border-radius:7px;background:var(--rule-soft);color:var(--slate)}
 
 footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
@@ -76,7 +77,16 @@ footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
 @media (max-width:760px){
   .wrap{padding:0 14px}
   .mast{padding:40px 0 22px}
-  .unit__hd,.unit__body{padding:16px 18px}
+  .unit__hd{padding:14px 16px}
+  .unittab th{padding-left:16px;width:104px}
+  .unittab td{padding-right:16px}
+}
+@media (max-width:600px){
+  .unittab,.unittab tbody,.unittab tr,.unittab th,.unittab td{display:block;width:auto}
+  .unittab tr{padding:10px 16px;border-top:1px solid var(--rule-soft)}
+  .unittab tr:first-child{border-top:0}
+  .unittab th,.unittab td{padding:0;border-top:0}
+  .unittab th{margin-bottom:3px}
 }
 </style>
 </head>
@@ -94,61 +104,57 @@ footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
 <section class="sec"><div class="wrap">
   <div class="units">
 
-    <div class="unit">
+    <div class="unit unit--u1">
       <div class="unit__hd">
         <span class="unit__badge">U1</span>
         <div><h3>Coding for Change</h3><p>Start July 22 &middot; 19 weeks</p></div>
       </div>
-      <div class="unit__body">
-        <dl class="kv">
-          <dt>Key concept</dt><dd>Systems*</dd>
-          <dt>Related concepts</dt><dd>Adaptation, Form</dd>
-          <dt>Global context</dt><dd>Identities and relationships &mdash; lifestyle choices</dd>
-        </dl>
-        <p class="soi">&ldquo;Systems are designed through adaptation and form to support human identities, relationships, and well-being by responding to changing physical, psychological, and social needs. Or systems and products can be created in different forms to support healthy lifestyle choices and improve well-being.&rdquo;</p>
-        <div class="grasp">
-          <b>Goal</b><p>Design and develop a functional multi-page HTML website that supports human identities, relationships, and well-being by responding to changing physical, psychological, and social needs.</p>
-          <b>Role</b><p>You are a junior web designer commissioned by a youth wellness organisation.</p>
-          <b>Audience</b><p>Teenagers aged 13&ndash;16, school community, parents.</p>
-          <b>Situation</b><p>Many young people struggle to access reliable and engaging information about health, transitions, and relationships. Your client needs an accessible website to support them.</p>
-          <b>Product/Performance</b><p>A coded HTML/CSS website (minimum 4 linked pages) with navigation, media, clear layout, and researched content.</p>
-          <b>Standards for Success</b><p>Effective inquiry, justified design ideas, functional code, visual consistency, accessibility, usability testing, and thoughtful evaluation.</p>
-        </div>
-        <div class="objs">
-          <span>A &middot; Inquiring &amp; Analysing</span>
-          <span>B &middot; Developing Ideas</span>
-          <span>C &middot; Creating the Solution</span>
-          <span>D &middot; Evaluating</span>
-        </div>
-      </div>
+      <table class="unittab">
+        <tr><th>Key concept</th><td>Systems*</td></tr>
+        <tr><th>Related concepts</th><td>Adaptation, Form</td></tr>
+        <tr><th>Global context</th><td>Identities and relationships &mdash; lifestyle choices</td></tr>
+        <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Systems are designed through adaptation and form to support human identities, relationships, and well-being by responding to changing physical, psychological, and social needs. Or systems and products can be created in different forms to support healthy lifestyle choices and improve well-being.&rdquo;</td></tr>
+        <tr><th>Goal</th><td>Design and develop a functional multi-page HTML website that supports human identities, relationships, and well-being by responding to changing physical, psychological, and social needs.</td></tr>
+        <tr><th>Role</th><td>You are a junior web designer commissioned by a youth wellness organisation.</td></tr>
+        <tr><th>Audience</th><td>Teenagers aged 13&ndash;16, school community, parents.</td></tr>
+        <tr><th>Situation</th><td>Many young people struggle to access reliable and engaging information about health, transitions, and relationships. Your client needs an accessible website to support them.</td></tr>
+        <tr><th>Product/Performance</th><td>A coded HTML/CSS website (minimum 4 linked pages) with navigation, media, clear layout, and researched content.</td></tr>
+        <tr><th>Standards for success</th><td>Effective inquiry, justified design ideas, functional code, visual consistency, accessibility, usability testing, and thoughtful evaluation.</td></tr>
+        <tr><th>Criteria</th><td>
+          <div class="objs">
+            <span>A &middot; Inquiring &amp; Analysing</span>
+            <span>B &middot; Developing Ideas</span>
+            <span>C &middot; Creating the Solution</span>
+            <span>D &middot; Evaluating</span>
+          </div>
+        </td></tr>
+      </table>
     </div>
 
-    <div class="unit">
+    <div class="unit unit--u2">
       <div class="unit__hd">
         <span class="unit__badge">U2</span>
         <div><h3>Designing for Everyone</h3><p>Start Nov 22 &middot; 19 weeks</p></div>
       </div>
-      <div class="unit__body">
-        <dl class="kv">
-          <dt>Key concept</dt><dd>Development*</dd>
-          <dt>Related concepts</dt><dd>Function, Ergonomics</dd>
-          <dt>Global context</dt><dd>Fairness and development &mdash; imagining the hopeful future (inclusivity focus)</dd>
-        </dl>
-        <p class="soi">&ldquo;Through development, designers use function and ergonomics to create fair and inclusive products that imagine a more hopeful future for diverse users.&rdquo;</p>
-        <div class="grasp">
-          <b>Goal</b><p>Design and prototype a product or solution that meets the functional and ergonomic needs of a user who is often overlooked by mainstream design &mdash; such as a person with a disability, an elderly user, a left-handed person, or someone from a non-dominant cultural background.</p>
-          <b>Role</b><p>An inclusive design consultant at a product development studio.</p>
-          <b>Audience</b><p>A community review panel including peers, teacher, and a guest representative from a disability, accessibility, or equity-focused organisation.</p>
-          <b>Situation</b><p>Your studio has been commissioned by a &ldquo;Design for All&rdquo; initiative to create a product prototype that demonstrates how inclusive, ergonomic thinking can lead to better outcomes for everyone &mdash; not just the target user.</p>
-          <b>Product</b><p>A physical or digital prototype of the inclusive product, accompanied by: a research report, annotated design development iterations, an ergonomic and functional analysis, and a 3-minute presentation to the panel explaining how the design imagines a more hopeful future.</p>
-        </div>
-        <div class="objs">
-          <span>A &middot; Inquiring &amp; Analysing</span>
-          <span>B &middot; Developing Ideas</span>
-          <span>C &middot; Creating the Solution</span>
-          <span>D &middot; Evaluating</span>
-        </div>
-      </div>
+      <table class="unittab">
+        <tr><th>Key concept</th><td>Development*</td></tr>
+        <tr><th>Related concepts</th><td>Function, Ergonomics</td></tr>
+        <tr><th>Global context</th><td>Fairness and development &mdash; imagining the hopeful future (inclusivity focus)</td></tr>
+        <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Through development, designers use function and ergonomics to create fair and inclusive products that imagine a more hopeful future for diverse users.&rdquo;</td></tr>
+        <tr><th>Goal</th><td>Design and prototype a product or solution that meets the functional and ergonomic needs of a user who is often overlooked by mainstream design &mdash; such as a person with a disability, an elderly user, a left-handed person, or someone from a non-dominant cultural background.</td></tr>
+        <tr><th>Role</th><td>An inclusive design consultant at a product development studio.</td></tr>
+        <tr><th>Audience</th><td>A community review panel including peers, teacher, and a guest representative from a disability, accessibility, or equity-focused organisation.</td></tr>
+        <tr><th>Situation</th><td>Your studio has been commissioned by a &ldquo;Design for All&rdquo; initiative to create a product prototype that demonstrates how inclusive, ergonomic thinking can lead to better outcomes for everyone &mdash; not just the target user.</td></tr>
+        <tr><th>Product</th><td>A physical or digital prototype of the inclusive product, accompanied by: a research report, annotated design development iterations, an ergonomic and functional analysis, and a 3-minute presentation to the panel explaining how the design imagines a more hopeful future.</td></tr>
+        <tr><th>Criteria</th><td>
+          <div class="objs">
+            <span>A &middot; Inquiring &amp; Analysing</span>
+            <span>B &middot; Developing Ideas</span>
+            <span>C &middot; Creating the Solution</span>
+            <span>D &middot; Evaluating</span>
+          </div>
+        </td></tr>
+      </table>
     </div>
 
   </div>
