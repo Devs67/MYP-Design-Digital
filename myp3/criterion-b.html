@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criterion B — MYP 3 Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --moss:#2F6B4F; --moss-tint:#E8F1EC;
+  --b:#96700A;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+
+.mast{padding:56px 0 30px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
+.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
+
+.tabs{padding:6px 0 0;border-bottom:1px solid var(--rule)}
+.tabs .wrap{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 16px;border:0;background:none;color:var(--slate);cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--b);border-bottom-color:var(--b);font-weight:600}
+.tab.todo{opacity:.5;cursor:default}
+
+.sec{padding:36px 0 0}
+.sec h2{font-family:var(--display);font-size:22px;font-weight:600;margin:0 0 14px;
+  letter-spacing:-.01em}
+
+.notice{background:var(--amber-tint);border-radius:12px;padding:15px 18px;
+  font-size:14px;line-height:1.6;color:var(--ink);margin:0 0 8px}
+.notice b{color:var(--amber)}
+
+/* pdf/doc embed */
+.docwrap{background:var(--card);border:1px solid var(--rule);border-radius:12px}
+.docwrap > summary{list-style:none;cursor:pointer;padding:20px 26px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.docwrap > summary::-webkit-details-marker{display:none}
+.docwrap > summary::before{content:"+";font-family:var(--mono);font-size:16px;line-height:1;
+  width:24px;height:24px;flex:0 0 24px;border:1px solid var(--rule);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;color:var(--amber)}
+.docwrap[open] > summary::before{content:"\2013"}
+.docwrap > summary:hover{background:var(--paper)}
+.docwrap[open] > summary{border-bottom:1px solid var(--rule-soft)}
+.docwrap > summary b{font-family:var(--display);font-size:18px;font-weight:600}
+.docwrap > summary i{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--slate);font-style:normal;margin-left:auto}
+.pdfbox{border:0;overflow:hidden;background:var(--card)}
+.pdfbox iframe{width:100%;height:720px;border:0;display:block;background:var(--paper)}
+.pdfbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:13px 18px;
+  border-top:1px solid var(--rule-soft);font-size:13px;color:var(--slate)}
+.pdfbar a{color:var(--amber);font-weight:600;text-decoration:underline;
+  text-decoration-color:var(--rule);text-underline-offset:3px}
+.pdfbar a:hover{text-decoration-color:var(--amber)}
+@media (max-width:700px){.pdfbox iframe{height:440px}}
+
+footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+  .mast{padding:40px 0 22px}
+  .docwrap > summary{padding:16px 18px}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="index.html">&larr; All criteria</a>
+    <p class="eyebrow">MYP 3 Design &middot; Task-specific clarification</p>
+    <h1>Criterion B — Developing ideas</h1>
+    <p class="sub">Design specifications and success criteria. Strand i is live below &mdash; strands ii&ndash;iv are still being developed.</p>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Strand">
+  <div class="wrap">
+    <button class="tab on" type="button">Strand i</button>
+    <span class="tab todo">Strand ii</span>
+    <span class="tab todo">Strand iii</span>
+    <span class="tab todo">Strand iv</span>
+  </div>
+</nav>
+
+<section class="sec">
+  <div class="wrap">
+    <p class="notice"><b>Strand i so far:</b> the slides walkthrough below. The full command terms, template, worked examples and checklist for this strand have not been written up here yet.</p>
+
+    <p class="eyebrow">Walkthrough</p>
+    <h2>Strand i slides</h2>
+    <details class="docwrap" open>
+      <summary><b>Specifications &amp; success criteria</b><i>Google Slides &middot; opens in page</i></summary>
+      <div class="pdfbox">
+        <iframe src="https://docs.google.com/presentation/d/1pUte3_9lo_8kBr8sJh0PWJUqPHHOKhOPeojy2srBHJM/embed?start=false&amp;loop=false&amp;delayms=3000" title="MYP 3 Criterion B strand i — specifications and success criteria" loading="lazy" allowfullscreen></iframe>
+      </div>
+      <div class="pdfbar">
+        <span>Blank or not loading?</span>
+        <a href="https://docs.google.com/presentation/d/1pUte3_9lo_8kBr8sJh0PWJUqPHHOKhOPeojy2srBHJM/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Slides</a>
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Design Team - SIS</span>
+    <span>MYP Year 3</span>
+  </div>
+</footer>
+
+</body>
+</html>
