@@ -20,47 +20,50 @@
 }
 :root.dark body{background:var(--paper);color:var(--ink)}
 
-/* ============ TOP BAR ============ */
+/* ============ TOP BAR ============
+   Fallback values are given on every var() here (unlike the rest of this
+   file) because the topbar renders on pages with a completely bespoke
+   palette (the worksheets) that never define --ink/--slate/etc at all. */
 .topbar{position:sticky;top:0;z-index:50;background:rgba(242,245,246,.88);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--rule);transition:background .2s ease,border-color .2s ease}
+  border-bottom:1px solid var(--rule,#D3E0E5);transition:background .2s ease,border-color .2s ease}
 :root.dark .topbar{background:rgba(12,26,32,.88)}
 .topbar__wrap{max-width:1320px;margin:0 auto;padding:0 30px;height:62px;
   display:flex;align-items:center;gap:14px}
 .topbar__brand{display:flex;align-items:center;gap:10px;text-decoration:none;
   color:inherit;flex:0 0 auto}
-.topbar__logo{width:33px;height:33px;border-radius:10px;background:var(--amber);color:#fff;
-  display:flex;align-items:center;justify-content:center;font-family:var(--display);
+.topbar__logo{width:33px;height:33px;border-radius:10px;background:var(--amber,#B05A1C);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--display,"Fraunces",Georgia,serif);
   font-weight:700;font-size:14px;flex:0 0 auto;transition:transform .2s ease}
 .topbar__brand:hover .topbar__logo{transform:scale(1.06)}
 .topbar__word{display:none;flex-direction:column;line-height:1.25}
-.topbar__word b{font-family:var(--display);font-weight:600;font-size:14px;color:var(--ink)}
-.topbar__word i{font-family:var(--mono);font-style:normal;font-size:9px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--slate)}
+.topbar__word b{font-family:var(--display,"Fraunces",Georgia,serif);font-weight:600;font-size:14px;color:var(--ink,#14303C)}
+.topbar__word i{font-family:var(--mono,"IBM Plex Mono",ui-monospace,Menlo,monospace);font-style:normal;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--slate,#5A727B)}
 @media (min-width:560px){.topbar__word{display:flex}}
 
-.topbar__crumb{display:none;align-items:center;gap:6px;font-family:var(--mono);
-  font-size:11px;color:var(--slate);min-width:0;overflow:hidden;white-space:nowrap}
-.topbar__crumb a{color:var(--ink);text-decoration:none;font-weight:600}
-.topbar__crumb a:hover{color:var(--amber)}
-.topbar__crumb .cur{color:var(--amber);text-transform:uppercase;letter-spacing:.07em;
+.topbar__crumb{display:none;align-items:center;gap:6px;font-family:var(--mono,"IBM Plex Mono",ui-monospace,Menlo,monospace);
+  font-size:11px;color:var(--slate,#5A727B);min-width:0;overflow:hidden;white-space:nowrap}
+.topbar__crumb a{color:var(--ink,#14303C);text-decoration:none;font-weight:600}
+.topbar__crumb a:hover{color:var(--amber,#B05A1C)}
+.topbar__crumb .cur{color:var(--amber,#B05A1C);text-transform:uppercase;letter-spacing:.07em;
   overflow:hidden;text-overflow:ellipsis}
 @media (min-width:780px){.topbar__crumb{display:flex}}
 
 .topbar__actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex:0 0 auto}
 .topbar__grades{display:none;gap:2px;padding:3px;border-radius:10px;
-  background:var(--rule-soft);border:1px solid var(--rule)}
-.topbar__grades a{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;
-  text-transform:uppercase;padding:6px 10px;border-radius:7px;color:var(--slate);
+  background:var(--rule-soft,#E7EEF0);border:1px solid var(--rule,#D3E0E5)}
+.topbar__grades a{font-family:var(--mono,"IBM Plex Mono",ui-monospace,Menlo,monospace);font-size:10.5px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;padding:6px 10px;border-radius:7px;color:var(--slate,#5A727B);
   text-decoration:none;transition:.15s}
-.topbar__grades a:hover{color:var(--ink)}
-.topbar__grades a.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(20,48,60,.14)}
+.topbar__grades a:hover{color:var(--ink,#14303C)}
+.topbar__grades a.on{background:var(--card,#FFF);color:var(--ink,#14303C);box-shadow:0 1px 3px rgba(20,48,60,.14)}
 @media (min-width:900px){.topbar__grades{display:flex}}
 
-.topbar__btn{width:35px;height:35px;border-radius:10px;border:1px solid var(--rule);
-  background:var(--card);color:var(--slate);display:flex;align-items:center;justify-content:center;
+.topbar__btn{width:35px;height:35px;border-radius:10px;border:1px solid var(--rule,#D3E0E5);
+  background:var(--card,#FFF);color:var(--slate,#5A727B);display:flex;align-items:center;justify-content:center;
   cursor:pointer;flex:0 0 auto;transition:.15s}
-.topbar__btn:hover{color:var(--amber);border-color:var(--amber)}
+.topbar__btn:hover{color:var(--amber,#B05A1C);border-color:var(--amber,#B05A1C)}
 .topbar__btn svg{width:16px;height:16px}
 .topbar__theme .i-moon{display:none}
 :root.dark .topbar__theme .i-sun{display:none}
@@ -69,26 +72,28 @@
 @media print{.topbar{display:none}}
 @media (prefers-reduced-motion:no-preference){.topbar__btn:active{transform:scale(.93)}}
 
-/* ============ QUOTE MODAL (shared, injected by theme.js) ============ */
+/* ============ QUOTE MODAL (shared, injected by theme.js) ============
+   Same reasoning as the top bar — fallbacks throughout since this modal
+   is reachable from every page, including bespoke-palette worksheets. */
 .qm{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
   padding:20px;background:rgba(20,48,60,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .qm[hidden]{display:none}
-.qm__card{max-width:440px;width:100%;background:var(--card);border-radius:16px;
+.qm__card{max-width:440px;width:100%;background:var(--card,#FFF);border-radius:16px;
   padding:34px 30px 28px;text-align:center;box-shadow:0 24px 60px rgba(20,48,60,.3);
-  border-top:4px solid var(--amber);position:relative}
-.qm__eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--amber);margin:0 0 14px;font-weight:600}
-.qm__quote{font-family:var(--display);font-size:20px;font-style:italic;line-height:1.5;
-  color:var(--ink);margin:0}
-.qm__who{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);margin:16px 0 0}
-.qm__btn{margin-top:22px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;padding:11px 22px;border:1px solid var(--ink);background:var(--ink);
+  border-top:4px solid var(--amber,#B05A1C);position:relative}
+.qm__eyebrow{font-family:var(--mono,"IBM Plex Mono",ui-monospace,Menlo,monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--amber,#B05A1C);margin:0 0 14px;font-weight:600}
+.qm__quote{font-family:var(--display,"Fraunces",Georgia,serif);font-size:20px;font-style:italic;line-height:1.5;
+  color:var(--ink,#14303C);margin:0}
+.qm__who{font-family:var(--mono,"IBM Plex Mono",ui-monospace,Menlo,monospace);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate,#5A727B);margin:16px 0 0}
+.qm__btn{margin-top:22px;font-family:var(--mono,"IBM Plex Mono",ui-monospace,Menlo,monospace);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;padding:11px 22px;border:1px solid var(--ink-fixed);background:var(--ink-fixed);
   color:#fff;border-radius:7px;cursor:pointer;transition:.2s}
-.qm__btn:hover{background:var(--amber);border-color:var(--amber)}
+.qm__btn:hover{background:var(--amber,#B05A1C);border-color:var(--amber,#B05A1C)}
 .qm__x{position:absolute;top:12px;right:12px;width:28px;height:28px;border:0;background:none;
-  color:var(--slate);font-size:18px;line-height:1;cursor:pointer;border-radius:7px;transition:.2s}
-.qm__x:hover{color:var(--ink);background:var(--paper)}
+  color:var(--slate,#5A727B);font-size:18px;line-height:1;cursor:pointer;border-radius:7px;transition:.2s}
+.qm__x:hover{color:var(--ink,#14303C);background:var(--paper,#F2F5F6)}
 @media (prefers-reduced-motion:no-preference){
   .qm{animation:qmFade .3s ease both}
   .qm__card{animation:qmRise .4s var(--ease-out,cubic-bezier(.22,.61,.36,1)) both .04s}

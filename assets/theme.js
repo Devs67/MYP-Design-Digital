@@ -20,18 +20,32 @@
   }
 
   function rewriteLinks(mode){
+    // Plain string surgery on the href as-authored (never resolve to an
+    // absolute URL and write that back) — this site is deployed under a
+    // subpath on GitHub Pages, so "../index.html" must stay relative,
+    // not become "/index.html" (which would 404 there).
     var links = document.querySelectorAll('a[href]');
     for(var i=0;i<links.length;i++){
       var a = links[i];
       var href = a.getAttribute('href');
       if(!href || href.charAt(0) === '#') continue;
       if(href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) continue;
-      try{
-        var u = new URL(href, window.location.href);
-        if(u.origin !== window.location.origin) continue;
-        u.searchParams.set('theme', mode);
-        a.setAttribute('href', u.pathname + '?' + u.searchParams.toString() + u.hash);
-      }catch(e){}
+      if(/^([a-z][a-z0-9+.-]*:)?\/\//i.test(href)) continue;
+
+      var hash = '';
+      var hashIdx = href.indexOf('#');
+      var main = href;
+      if(hashIdx !== -1){ hash = href.slice(hashIdx); main = href.slice(0, hashIdx); }
+
+      var qIdx = main.indexOf('?');
+      var pathPart = qIdx === -1 ? main : main.slice(0, qIdx);
+      var rawQuery = qIdx === -1 ? '' : main.slice(qIdx + 1);
+
+      var params = rawQuery.length ? rawQuery.split('&') : [];
+      params = params.filter(function(p){ return p && p.indexOf('theme=') !== 0; });
+      params.push('theme=' + mode);
+
+      a.setAttribute('href', pathPart + '?' + params.join('&') + hash);
     }
   }
 

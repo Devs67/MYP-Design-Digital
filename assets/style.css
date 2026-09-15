@@ -83,8 +83,8 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   .ctall summary::before{display:none}}
 
 /* strand tabs */
-.tabs{border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20;
-  background:rgba(242,245,246,.95);backdrop-filter:blur(6px)}
+.tabs{border-bottom:1px solid var(--rule);position:sticky;top:62px;z-index:20;
+  background:color-mix(in srgb, var(--paper) 92%, transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .tabs .wrap{display:flex;gap:6px;flex-wrap:wrap;padding-top:14px;padding-bottom:0;align-items:flex-end}
 .tab{font-family:var(--mono);font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;
   padding:11px 18px;border:1px solid var(--rule);border-bottom:none;
@@ -248,7 +248,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .mm__split{display:flex;gap:18px;flex-wrap:wrap}
 .mm__branch{flex:1 1 380px;background:var(--card);border:1px solid var(--rule);
   border-radius:12px;padding:18px 18px 20px}
-.mm__bhd{background:var(--ink);color:#fff;border-radius:7px;padding:9px 14px;
+.mm__bhd{background:var(--ink-fixed);color:#fff;border-radius:7px;padding:9px 14px;
   font-family:var(--body);font-size:14.5px;font-weight:600;text-align:center;margin-bottom:16px}
 .mm__cols{display:flex;gap:14px;flex-wrap:wrap}
 .mm__col{flex:1 1 150px}
@@ -263,7 +263,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 /* research plan tables */
 .tabwrap{border:1px solid var(--rule);border-radius:12px;overflow-x:auto;background:var(--card)}
 .rtab{width:100%;min-width:740px;border-collapse:collapse;font-size:13.5px}
-.rtab th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:9.5px;
+.rtab th{background:var(--ink-fixed);color:#fff;font-family:var(--mono);font-size:9.5px;
   letter-spacing:.12em;text-transform:uppercase;padding:11px 13px;text-align:left;font-weight:500}
 .rtab td{padding:12px 13px;border-bottom:1px solid var(--rule-soft);vertical-align:top;
   line-height:1.5}
@@ -291,7 +291,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 
 /* strength / weakness table */
 .swtab{width:100%;min-width:700px;border-collapse:collapse;font-size:13.5px}
-.swtab th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:9.5px;
+.swtab th{background:var(--ink-fixed);color:#fff;font-family:var(--mono);font-size:9.5px;
   letter-spacing:.12em;text-transform:uppercase;padding:11px 13px;text-align:left;font-weight:500}
 .swtab td{padding:12px 13px;border-bottom:1px solid var(--rule-soft);vertical-align:top;
   line-height:1.5;color:var(--slate)}
@@ -329,7 +329,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   font-size:14.5px;line-height:1.55;margin:0 0 20px}
 .cite-warn b{font-weight:600}
 .summ{width:100%;min-width:640px;border-collapse:collapse;font-size:13.5px}
-.summ th{background:var(--ink);color:#fff;font-family:var(--mono);font-size:9.5px;
+.summ th{background:var(--ink-fixed);color:#fff;font-family:var(--mono);font-size:9.5px;
   letter-spacing:.12em;text-transform:uppercase;padding:11px 13px;text-align:left;font-weight:500}
 .summ td{padding:12px 13px;border-bottom:1px solid var(--rule-soft);vertical-align:top;line-height:1.5}
 .summ tr:last-child td{border-bottom:0}
@@ -403,7 +403,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   .jump button{flex:0 0 auto;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
     text-transform:uppercase;padding:9px 13px;border:1px solid var(--rule);
     background:var(--card);color:var(--slate);border-radius:7px;cursor:pointer;white-space:nowrap}
-  .jump button:active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .jump button:active{background:var(--ink-fixed);color:#fff;border-color:var(--ink-fixed)}
 
   /* tables get a scroll hint */
   .tabwrap{position:relative}
@@ -437,7 +437,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .sq{font-family:var(--mono);font-size:10px;width:22px;height:22px;border-radius:7px;
   display:flex;align-items:center;justify-content:center;
   background:var(--rule-soft);color:var(--slate)}
-.sq.on{background:var(--ink);color:#fff}
+.sq.on{background:var(--ink-fixed);color:#fff}
 .band p{margin:0;font-size:15px;line-height:1.6}
 .band .diff{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--rule-soft);
   font-size:13.5px;color:var(--slate)}
@@ -520,7 +520,7 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
   gap:9px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
   padding:14px 22px;border-radius:7px;background:var(--amber);color:#fff;text-decoration:none;
   border:1px solid var(--amber);transition:background .2s,transform .2s,box-shadow .2s}
-.tpl__btn:hover{background:var(--ink);border-color:var(--ink);transform:translateY(-2px);
+.tpl__btn:hover{background:var(--ink-fixed);border-color:var(--ink-fixed);transform:translateY(-2px);
   box-shadow:0 6px 18px rgba(20,48,60,.15)}
 .tpl__btn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;
   stroke-linecap:round;stroke-linejoin:round}
@@ -564,7 +564,7 @@ footer{margin-top:54px;padding:30px 0 56px;border-top:1px solid var(--rule);
 .sync__row p{flex:1 1 260px}
 .sync__btn{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
   padding:10px 16px;border-radius:7px;cursor:pointer;border:1px solid var(--ink);
-  background:var(--ink);color:#fff;transition:background .2s,border-color .2s,transform .2s}
+  background:var(--ink-fixed);color:#fff;transition:background .2s,border-color .2s,transform .2s}
 .sync__btn:hover{background:var(--moss);border-color:var(--moss);transform:translateY(-1px)}
 .sync__btn--ghost{background:transparent;color:var(--slate);border-color:var(--rule)}
 .sync__btn--ghost:hover{background:transparent;color:var(--ink);border-color:var(--slate)}
@@ -669,7 +669,7 @@ html{scroll-behavior:smooth}
 .ctile__front{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--amber);
   transition:border-color .25s ease,box-shadow .25s ease}
 .ctile:hover .ctile__front{border-color:var(--amber);box-shadow:0 4px 16px rgba(20,48,60,.09)}
-.ctile__back{background:var(--ink);color:#E4EEF1;transform:rotateY(180deg);
+.ctile__back{background:var(--ink-fixed);color:#E4EEF1;transform:rotateY(180deg);
   border:1px solid var(--ink)}
 .ctile__band{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--slate);
   margin:0 0 8px}
