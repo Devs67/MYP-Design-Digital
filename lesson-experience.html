@@ -40,17 +40,32 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 
 /* class picker */
 .picker{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
-.cls{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;
-  text-transform:uppercase;min-height:44px;padding:0 14px;border-radius:7px;
-  border:1px solid var(--rule);background:var(--card);color:var(--slate);cursor:pointer;
-  display:inline-flex;align-items:center;gap:8px;transition:.15s}
-.cls:hover{border-color:var(--slate);color:var(--ink)}
+.cls{--tone:var(--moss);position:relative;overflow:hidden;isolation:isolate;
+  font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;min-height:44px;padding:0 16px;border-radius:12px;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;transition:border-color .2s ease}
+.cls.soon{--tone:var(--slate)}
+.cls > *{position:relative;z-index:1}
+/* corner light, same recipe as the year-group cards on the landing page */
+.cls::before{content:"";position:absolute;top:-22px;right:-22px;width:90px;height:90px;
+  border-radius:50%;background:var(--tone);opacity:.1;filter:blur(20px);pointer-events:none;z-index:0}
+.cls:hover{border-color:var(--tone)}
+.cls:hover::before{opacity:.28}
 .cls:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
-.cls[aria-pressed="true"]{background:var(--ink-fixed,#14303C);border-color:var(--ink-fixed,#14303C);color:#fff}
 .cls i{font-style:normal;font-size:9.5px;letter-spacing:.1em;padding:2px 7px;border-radius:99px;
   background:var(--moss-tint);color:var(--moss)}
 .cls.soon i{background:var(--rule-soft);color:var(--slate)}
-.cls[aria-pressed="true"] i{background:rgba(255,255,255,.16);color:#fff}
+/* selected: keeps the card colour so the text always reads, marked by the amber edge and light */
+.cls[aria-pressed="true"]{--tone:var(--amber);border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
+.cls[aria-pressed="true"]::before{opacity:.28}
+.cls[aria-pressed="true"] i{background:var(--amber-tint);color:var(--amber)}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .cls{transition:transform .2s var(--ease-out,cubic-bezier(.22,.61,.36,1)),box-shadow .2s ease,border-color .2s ease}
+  .cls::before{transition:opacity .3s ease}
+  .cls:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(20,48,60,.14)}
+  .cls[aria-pressed="true"]:hover{box-shadow:0 0 0 1px var(--amber),0 10px 22px rgba(20,48,60,.14)}
+}
 
 /* embedded log */
 .stage{border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--card)}
@@ -62,7 +77,6 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .soonbox p{margin:0;color:var(--slate);max-width:52ch}
 .stagebar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px;
   font-size:13px;color:var(--slate)}
-.stagebar[hidden]{display:none}
 .stagebar a{color:var(--amber);font-weight:600;text-decoration:underline;
   text-decoration-color:var(--rule);text-underline-offset:3px}
 .stagebar a:hover{text-decoration-color:var(--amber)}
@@ -140,11 +154,6 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
       </div>
     </div>
 
-    <p class="stagebar" id="lexBar" hidden>
-      <span>Not loading, or too small on your phone?</span>
-      <a id="lexOpen" href="lesson-experience/myp4.html" target="_blank" rel="noopener">Open in full page</a>
-    </p>
-
     <noscript>
       <p class="stagebar">This page needs JavaScript. Open a log directly:
         <a href="lesson-experience/myp2a.html">MYP 2A</a>
@@ -169,10 +178,8 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
   var frame  = document.getElementById('lexFrame');
   var soon   = document.getElementById('lexSoon');
   var soonNm = document.getElementById('lexSoonName');
-  var bar    = document.getElementById('lexBar');
-  var open   = document.getElementById('lexOpen');
   var picker = document.getElementById('lexPicker');
-  if(!frame || !soon || !bar || !open || !picker) return;
+  if(!frame || !soon || !picker) return;
 
   var btns = picker.querySelectorAll('.cls');
   var DEFAULT_ID = 'myp4';
@@ -240,15 +247,12 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
     var label = btn.getAttribute('data-label');
     if(src){
       soon.hidden = true;
-      bar.hidden = false;
-      open.setAttribute('href', src);
       frame.title = label + ' lesson log';
       frame.hidden = false;
       if(frame.getAttribute('src') !== src) frame.setAttribute('src', src);
       else { syncTheme(); fit(); }
     } else {
       frame.hidden = true;
-      bar.hidden = true;
       if(soonNm) soonNm.textContent = label;
       soon.hidden = false;
     }

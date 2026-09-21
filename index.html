@@ -291,6 +291,13 @@ body.wl-open{overflow:hidden}
 .crit--journey{--tone:var(--moss)}
 .crit--dev{--tone:var(--dev)}
 
+/* corner light, same recipe as the year-group cards in theme.css */
+.crit{overflow:hidden;isolation:isolate}
+.crit > *{position:relative;z-index:1}
+.crit::before{content:"";position:absolute;top:-34px;right:-34px;width:160px;height:160px;
+  border-radius:50%;background:var(--tone,var(--ink));opacity:.07;filter:blur(32px);
+  pointer-events:none;z-index:0}
+
 @media (hover:hover) and (prefers-reduced-motion: no-preference){
   .crit{will-change:transform}
 
@@ -298,6 +305,7 @@ body.wl-open{overflow:hidden}
     transition:transform .2s var(--ease-out),box-shadow .2s ease,
                background .2s ease,border-color .2s ease,opacity .2s ease;
   }
+  .crit::before{transition:opacity .3s ease}
 
   .grid:has(.crit:hover) .crit:not(:hover){
     transform:scale(.97);
@@ -305,14 +313,12 @@ body.wl-open{overflow:hidden}
   }
 
   .crit:hover,a.crit:hover{
-    background:linear-gradient(160deg,
-      color-mix(in srgb, var(--tone,var(--ink)) 26%, #fff),
-      color-mix(in srgb, var(--tone,var(--ink)) 10%, #fff));
     border-color:var(--tone,var(--ink));
     transform:translateY(-4px);
     box-shadow:0 14px 28px rgba(20,48,60,.16);
     z-index:2;
   }
+  .crit:hover::before{opacity:.18}
 
 }
 
@@ -356,10 +362,20 @@ body::before{
 @media (max-width:900px){.mast__images{display:none}.mast__aside{max-width:100%}}
 
 /* ============ LESSON EXPERIENCE BANNER ============ */
-.lexbar{display:flex;align-items:center;gap:16px;margin:20px 0 0;padding:18px 22px;
-  background:var(--card);border:2px solid var(--rule);border-left:5px solid var(--moss);
-  border-radius:12px;text-decoration:none;color:inherit;transition:border-color .2s ease}
+.lexbar{position:relative;overflow:hidden;isolation:isolate;display:flex;align-items:center;gap:16px;
+  margin:20px 0 0;padding:18px 22px;background:var(--card);border:2px solid var(--rule);
+  border-left:5px solid var(--moss);border-radius:12px;text-decoration:none;color:inherit;
+  transition:border-color .2s ease}
+.lexbar > *{position:relative;z-index:1}
+.lexbar::before{content:"";position:absolute;top:-34px;right:-34px;width:160px;height:160px;
+  border-radius:50%;background:var(--moss);opacity:.07;filter:blur(32px);pointer-events:none;z-index:0}
 .lexbar:hover{border-color:var(--moss)}
+.lexbar:hover::before{opacity:.18}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .lexbar{transition:transform .2s var(--ease-out,cubic-bezier(.22,.61,.36,1)),box-shadow .2s ease,border-color .2s ease}
+  .lexbar::before{transition:opacity .3s ease}
+  .lexbar:hover{transform:translateY(-3px);box-shadow:0 14px 28px rgba(20,48,60,.16)}
+}
 .lexbar__badge{width:40px;height:40px;border-radius:12px;flex:0 0 auto;background:var(--moss);color:#fff;
   display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:14px}
 .lexbar__text{display:flex;flex-direction:column;min-width:0;flex:1}
