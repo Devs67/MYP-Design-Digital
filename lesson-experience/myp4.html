@@ -1,0 +1,813 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Coding for Change Flow</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+  :root {
+    --bg: #f6f2e9;
+    --surface: #ffffff;
+    --surface-2: #fbf8f2;
+    --ink: #1e2a33;
+    --ink-soft: #5c6b74;
+    --ink-faint: #93a0a8;
+    --line: #ddd5c2;
+    --line-strong: #c7bda3;
+    --crit-a: #2f5d8a;
+    --crit-a-soft: #e7eff6;
+    --crit-b: #b5651d;
+    --crit-b-soft: #faece0;
+    --tag-bg: #ecf3e8;
+    --tag-ink: #3f6b3a;
+    --today-ring: #b5651d;
+    --gc: #3f7d6e;
+    --gc-soft: #e6f0ec;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12181d;
+      --surface: #182029;
+      --surface-2: #1c2530;
+      --ink: #eef1f3;
+      --ink-soft: #a3b1ba;
+      --ink-faint: #6c7982;
+      --line: #2b3742;
+      --line-strong: #3a4a56;
+      --crit-a: #7eb0e0;
+      --crit-a-soft: #1c2c3a;
+      --crit-b: #e6a35f;
+      --crit-b-soft: #2f2417;
+      --tag-bg: #1f2c1e;
+      --tag-ink: #8fbf86;
+      --today-ring: #e6a35f;
+      --gc: #7fc9ac;
+      --gc-soft: #1c2c26;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12181d;
+    --surface: #182029;
+    --surface-2: #1c2530;
+    --ink: #eef1f3;
+    --ink-soft: #a3b1ba;
+    --ink-faint: #6c7982;
+    --line: #2b3742;
+    --line-strong: #3a4a56;
+    --crit-a: #7eb0e0;
+    --crit-a-soft: #1c2c3a;
+    --crit-b: #e6a35f;
+    --crit-b-soft: #2f2417;
+    --tag-bg: #1f2c1e;
+    --tag-ink: #8fbf86;
+    --today-ring: #e6a35f;
+    --gc: #7fc9ac;
+    --gc-soft: #1c2c26;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    padding: 40px 16px 80px;
+  }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  header.hero {
+    margin-bottom: 44px;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+  }
+  h1 {
+    font-size: clamp(28px, 5vw, 38px);
+    line-height: 1.12;
+    margin: 0 0 14px;
+    font-weight: 700;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  .hero-sub {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    line-height: 1.6;
+    max-width: 58ch;
+    margin: 0 0 22px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    flex: none;
+  }
+  .swatch.a { background: var(--crit-a); }
+  .swatch.b { background: var(--crit-b); }
+  .swatch.today { background: var(--surface); border: 2px solid var(--today-ring); }
+
+  /* Unit frame */
+  .unit-frame {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 40px;
+  }
+  .unit-frame-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 14px;
+  }
+  .unit-frame-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .uf-item .uf-label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+  .uf-item .uf-value {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .uf-item .uf-value.gc { color: var(--gc); font-weight: 600; }
+  .soi {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    padding-top: 14px;
+    border-top: 1px solid var(--surface-2);
+    font-style: italic;
+  }
+  .uf-note {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--surface-2);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    line-height: 1.5;
+  }
+  @media (max-width: 560px) {
+    .unit-frame-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 380px) {
+    .unit-frame-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Per-lesson ATL / Learner Profile / GC meta */
+  .meta-block {
+    margin-top: 12px;
+    padding: 12px 14px 14px;
+    border-radius: 10px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+  }
+  .meta-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .meta-item .meta-label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+  .meta-item .meta-value {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .meta-item .meta-value.gc-yes { color: var(--gc); }
+  .meta-item .meta-value.gc-indirect { color: var(--ink-faint); font-style: italic; }
+  @media (max-width: 480px) {
+    .meta-grid { grid-template-columns: 1fr; gap: 10px; }
+  }
+
+  /* Section dividers between Criterion A and B */
+  .crit-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 46px 0 22px;
+  }
+  .crit-divider:first-of-type { margin-top: 0; }
+  .crit-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 5px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .crit-pill.a { background: var(--crit-a-soft); color: var(--crit-a); }
+  .crit-pill.b { background: var(--crit-b-soft); color: var(--crit-b); }
+  .crit-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .crit-label {
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    padding-left: 34px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--line-strong);
+  }
+
+  .node {
+    position: relative;
+    margin-bottom: 26px;
+  }
+  .node:last-child { margin-bottom: 0; }
+
+  .node-dot {
+    position: absolute;
+    left: -34px;
+    top: 22px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--crit-a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .node.crit-b .node-dot { border-color: var(--crit-b); }
+  .node-dot::after {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--crit-a);
+  }
+  .node.crit-b .node-dot::after { background: var(--crit-b); }
+  .node.today .node-dot {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--today-ring) 22%, transparent);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 18px 20px 20px;
+  }
+  .node.today .card {
+    border-color: var(--today-ring);
+    box-shadow: 0 0 0 1px var(--today-ring);
+  }
+
+  .card-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 10px;
+  }
+  .datetime {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+  }
+  .strand-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: var(--crit-a-soft);
+    color: var(--crit-a);
+  }
+  .node.crit-b .strand-badge { background: var(--crit-b-soft); color: var(--crit-b); }
+
+  .fa-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: var(--tag-bg);
+    color: var(--tag-ink);
+  }
+  .today-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: var(--today-ring);
+    color: var(--surface);
+    margin-left: auto;
+  }
+
+  .card h2 {
+    font-size: 18.5px;
+    line-height: 1.3;
+    margin: 0 0 12px;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  .field {
+    display: grid;
+    grid-template-columns: 74px 1fr;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.55;
+    padding: 7px 0;
+    border-top: 1px solid var(--surface-2);
+  }
+  .field:first-of-type { border-top: none; padding-top: 0; }
+  .field-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 2px;
+  }
+  .field-value { color: var(--ink); }
+  .field-value.soft { color: var(--ink-soft); }
+
+  .resources {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--surface-2);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .resource-chip {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 4px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .resource-chip svg { flex: none; opacity: 0.65; }
+  .stat-chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--tag-ink);
+    background: var(--tag-bg);
+    border-radius: 7px;
+    padding: 4px 10px;
+  }
+
+  @media (max-width: 480px) {
+    .field { grid-template-columns: 1fr; gap: 3px; }
+    .field-label { padding-top: 0; }
+  }
+
+  /* Gap marker */
+  .gap {
+    position: relative;
+    margin: 6px 0 32px;
+    padding-left: 4px;
+  }
+  .gap-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .gap-dash {
+    flex: none;
+    width: 2px;
+    height: 34px;
+    margin-left: -25px;
+    background-image: linear-gradient(var(--ink-faint), var(--ink-faint));
+    background-size: 2px 6px;
+    background-repeat: repeat-y;
+    opacity: 0.6;
+  }
+  .gap-note {
+    background: var(--surface-2);
+    border: 1px dashed var(--line-strong);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .gap-note strong {
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+
+<div class="page">
+  <header class="hero">
+    <p class="eyebrow mono">MYP4 Design &middot; Coding for Change</p>
+    <h1>From fishbone diagram to wireframe: how the unit's lessons connect</h1>
+    <p class="hero-sub">Six logged sessions tracing Criterion A (Investigating) into Criterion B (Developing Ideas) — each one building the evidence or template the next lesson depends on.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="swatch a"></span> Criterion A &middot; Inquiring &amp; Analysing</div>
+      <div class="legend-item"><span class="swatch b"></span> Criterion B &middot; Developing Ideas</div>
+      <div class="legend-item"><span class="swatch today"></span> Today's lesson</div>
+    </div>
+  </header>
+
+  <div class="unit-frame">
+    <p class="unit-frame-title">Unit 1 &middot; Coding for Change &middot; 19 weeks from Jul 22</p>
+    <div class="unit-frame-grid">
+      <div class="uf-item">
+        <span class="uf-label">Key Concept</span>
+        <span class="uf-value">Systems</span>
+      </div>
+      <div class="uf-item">
+        <span class="uf-label">Related Concepts</span>
+        <span class="uf-value">Adaptation &middot; Form</span>
+      </div>
+      <div class="uf-item">
+        <span class="uf-label">Global Context</span>
+        <span class="uf-value gc">Identities &amp; Relationships &mdash; lifestyle choices</span>
+      </div>
+      <div class="uf-item">
+        <span class="uf-label">Unit ATL clusters</span>
+        <span class="uf-value">I. Communication &middot; VII. Media literacy</span>
+      </div>
+      <div class="uf-item">
+        <span class="uf-label">Unit Learner Profile</span>
+        <span class="uf-value">Knowledgeable &middot; Reflective</span>
+      </div>
+      <div class="uf-item">
+        <span class="uf-label">Service opportunity</span>
+        <span class="uf-value">Websites supporting younger students &mdash; health awareness, stress, digital well-being, anti-bullying, transition</span>
+      </div>
+    </div>
+    <p class="soi">"Systems are designed through adaptation and form to support human identities, relationships, and well-being by responding to changing physical, psychological, and social needs." &mdash; or &mdash; "Systems and products can be created in different forms to support healthy lifestyle choices and improve well-being."</p>
+    <p class="uf-note">Each lesson below adds a suggested ATL skill focus, Learner Profile attribute, and note on whether it connects to this Global Context — these are proposed reads on the logged activity, not part of the original ManageBac entries, so worth checking against what actually happened in the room.</p>
+  </div>
+
+  <div class="crit-divider">
+    <span class="crit-pill a">CRITERION A</span>
+    <span class="crit-divider-line"></span>
+    <span class="crit-label">Strand i &rarr; iii</span>
+  </div>
+
+  <div class="timeline">
+
+    <div class="node crit-a">
+      <div class="node-dot"></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="datetime">Mon Aug 3 &middot; 8:45 AM</span>
+          <span class="strand-badge">STRAND I</span>
+        </div>
+        <h2>Digging Deeper with a Fishbone Diagram</h2>
+        <div class="field">
+          <span class="field-label">Purpose</span>
+          <span class="field-value">Move past a surface-level problem statement toward its underlying causes, using a fishbone (Ishikawa) diagram — six cause categories, wide search before depth.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Activity</span>
+          <span class="field-value soft">Each student populated an individual fishbone diagram, sorting possible causes into categories, then went back through to flag which were already evidence-backed and which were still guesses.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Produced</span>
+          <span class="field-value soft">One populated fishbone diagram per student.</span>
+        </div>
+        <div class="meta-block">
+          <p class="meta-eyebrow">Suggested ATL &middot; Learner Profile &middot; GC link</p>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">ATL focus</span>
+              <span class="meta-value">Critical thinking (Thinking skills) &mdash; gather and organise evidence to separate confirmed causes from assumptions.</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Learner profile</span>
+              <span class="meta-value">Inquirer, Knowledgeable</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">GC link</span>
+              <span class="meta-value gc-yes">Yes &mdash; the causes sorted here are the "changing physical, psychological, and social needs" the SOI names.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node crit-a">
+      <div class="node-dot"></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="datetime">Wed Aug 5 &middot; 10:05 AM</span>
+          <span class="strand-badge">STRAND I &amp; II</span>
+        </div>
+        <h2>Planning What Information Is Still Needed</h2>
+        <div class="field">
+          <span class="field-label">Purpose</span>
+          <span class="field-value">Turn the remaining gaps from the fishbone into a research plan matched to real, executable methods — the usual failure mode in Strand ii is a list of topics with no way to actually answer them.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Activity</span>
+          <span class="field-value soft">Students listed everything still needed to finish the strand, classified each item by the method that would genuinely produce it — survey, interview, existing-product analysis, secondary source — then began collecting information against that plan.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Produced</span>
+          <span class="field-value soft">An individual research plan matched to real methods, with the first primary data already coming in.</span>
+        </div>
+        <div class="meta-block">
+          <p class="meta-eyebrow">Suggested ATL &middot; Learner Profile &middot; GC link</p>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">ATL focus</span>
+              <span class="meta-value">Information literacy (Research skills) &mdash; match each information need to a real method for collecting it.</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Learner profile</span>
+              <span class="meta-value">Inquirer, Reflective</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">GC link</span>
+              <span class="meta-value gc-yes">Carries forward &mdash; the research plan still targets the same lifestyle-choices problem from Strand i.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="node crit-a">
+      <div class="node-dot"></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="datetime">Mon Aug 10 &middot; 8:45 AM</span>
+          <span class="strand-badge">STRAND II</span>
+          <span class="fa-tag">FORMATIVE</span>
+        </div>
+        <h2>Formative: Writing Research Questions</h2>
+        <div class="field">
+          <span class="field-label">Purpose</span>
+          <span class="field-value">Formative check on students' ability to write well-formed research questions, ahead of committing them to the actual Strand ii planning document.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Activity</span>
+          <span class="field-value soft">Covered the different kinds of research questions, then students practised writing their own for Strand ii. Watched for questions that were closed or leading rather than genuinely open, and that traced back to real gaps from Aug 5 rather than duplicating known facts.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Produced</span>
+          <span class="field-value soft">Practice research questions, feeding directly into the planning template.</span>
+        </div>
+        <div class="meta-block">
+          <p class="meta-eyebrow">Suggested ATL &middot; Learner Profile &middot; GC link</p>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">ATL focus</span>
+              <span class="meta-value">Information literacy (Research skills) &mdash; formulate genuinely open, well-focused questions rather than closed or leading ones.</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Learner profile</span>
+              <span class="meta-value">Reflective, Knowledgeable</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">GC link</span>
+              <span class="meta-value gc-yes">Carries forward &mdash; questions were checked against the real lifestyle-choices gaps from Aug 5, not generic prompts.</span>
+            </div>
+          </div>
+        </div>
+        <div class="resources">
+          <span class="resource-chip">FA1 &middot; Creating Research Questions (ATL Research Skills)</span>
+          <span class="stat-chip">19/21 students</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="node crit-a">
+      <div class="node-dot"></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="datetime">Mon Aug 17 &middot; 8:45 AM</span>
+          <span class="strand-badge">STRAND III</span>
+        </div>
+        <h2>Analysing Existing Products &mdash; CPFC Framework</h2>
+        <div class="field">
+          <span class="field-label">Purpose</span>
+          <span class="field-value">Analyse existing products that inspire a solution to the design problem, using a structured framework to identify what works, what doesn't, and why.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Activity</span>
+          <span class="field-value soft">Discussed how existing products should be analysed, then introduced CPFC (Components, Purposes, Flow, Complexities) as the working framework — the digital-product adaptation of the TSC's PPC, with Flow added since students are analysing app-based products. Briefly touched on SWOT and ACCESS FM as complementary tools.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Produced</span>
+          <span class="field-value soft">Analysis template introduced; next step is working through it individually toward the target product-count range.</span>
+        </div>
+        <div class="meta-block">
+          <p class="meta-eyebrow">Suggested ATL &middot; Learner Profile &middot; GC link</p>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">ATL focus</span>
+              <span class="meta-value">Media literacy (Research skills) &mdash; seek a range of perspectives across multiple existing products, this unit's own stated ATL strand.</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Learner profile</span>
+              <span class="meta-value">Open-minded, Knowledgeable</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">GC link</span>
+              <span class="meta-value gc-yes">Yes, where the products analysed are themselves health/lifestyle apps &mdash; same thread as the design problem.</span>
+            </div>
+          </div>
+        </div>
+        <div class="resources">
+          <span class="resource-chip">Crit-A-iii-PPT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gap">
+      <div class="gap-line">
+        <div class="gap-dash"></div>
+        <div class="gap-note"><strong>~3 WEEKS</strong> &middot; Strand iv (Design Brief) and the move into Criterion B happen in this window — not captured as logged lessons here.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="crit-divider">
+    <span class="crit-pill b">CRITERION B</span>
+    <span class="crit-divider-line"></span>
+    <span class="crit-label">Strand i</span>
+  </div>
+
+  <div class="timeline">
+
+    <div class="node crit-b">
+      <div class="node-dot"></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="datetime">Wed Sep 9 &middot; 10:15 AM</span>
+          <span class="strand-badge">STRAND I</span>
+          <span class="fa-tag">FORMATIVE</span>
+        </div>
+        <h2>Design Specification FA &mdash; SideKick Brief</h2>
+        <div class="field">
+          <span class="field-label">Purpose</span>
+          <span class="field-value">Turn evidence from a design brief into a testable design specification — a core skill for Criterion B (Developing Ideas), Strand i.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Activity</span>
+          <span class="field-value soft">Students read the "SideKick" design brief (a reusable water bottle for the school day, with survey data, interview insights, and a comparison of three existing bottles), then wrote 6–10 specification statements following "The solution must/should [requirement], verified by [method], because [finding]," labelling each MUST or SHOULD. Self-checked each statement for testability, a named verification method, and traceability to evidence in the brief.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Produced</span>
+          <span class="field-value soft">An individually written, self-checked design specification.</span>
+        </div>
+        <div class="meta-block">
+          <p class="meta-eyebrow">Suggested ATL &middot; Learner Profile &middot; GC link</p>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">ATL focus</span>
+              <span class="meta-value">Communication &mdash; paraphrase brief evidence accurately and concisely into testable statements, this unit's own stated Communication strand.</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Learner profile</span>
+              <span class="meta-value">Principled, Knowledgeable</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">GC link</span>
+              <span class="meta-value gc-indirect">Indirect &mdash; SideKick is a stand-in practice brief (a water bottle), not the class's own lifestyle-choices product, though hydration is itself a lifestyle choice.</span>
+            </div>
+          </div>
+        </div>
+        <div class="resources">
+          <span class="resource-chip">FA - Template</span>
+          <span class="resource-chip">FA2 &middot; Creating Design Specification</span>
+          <span class="stat-chip">18/21 students</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="node crit-b today">
+      <div class="node-dot"></div>
+      <div class="card">
+        <div class="card-top">
+          <span class="datetime">Mon Sep 21 &middot; 8:45 AM</span>
+          <span class="strand-badge">STRAND I &middot; B2</span>
+          <span class="today-tag">TODAY</span>
+        </div>
+        <h2>Wireframes, Flow Diagrams &amp; Annotation</h2>
+        <div class="field">
+          <span class="field-label">Purpose</span>
+          <span class="field-value">Complete a range of three feasible design ideas for the digital product, and check each one against the design specification from Sep 9.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Activity</span>
+          <span class="field-value soft">Students started their design ideas, each using a different navigation or layout approach, drawn as wireframes with annotated, connected flow diagrams, and wrote a short feasibility note for each idea.</span>
+        </div>
+        <div class="field">
+          <span class="field-label">Produced</span>
+          <span class="field-value soft">In progress &mdash; three wireframe + flow-diagram design ideas, each checked against the specification.</span>
+        </div>
+        <div class="meta-block">
+          <p class="meta-eyebrow">Suggested ATL &middot; Learner Profile &middot; GC link</p>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">ATL focus</span>
+              <span class="meta-value">Creative thinking (Thinking skills) &mdash; generate several genuinely different navigation/layout solutions rather than refining one early.</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Learner profile</span>
+              <span class="meta-value">Risk-taker, Reflective</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">GC link</span>
+              <span class="meta-value gc-yes">Yes &mdash; these wireframes are the actual form of the class's own digital product, the direct answer to the lifestyle-choices problem.</span>
+            </div>
+          </div>
+        </div>
+        <div class="resources">
+          <span class="resource-chip">Sample Webpage &amp; User Flow</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>Sources: ManageBac lesson log, Sep 2026</span>
+    <span>MYP4 Design &middot; Coding for Change</span>
+  </footer>
+</div>
+
+</body></html>

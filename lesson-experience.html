@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lesson Experience — MYP Design</title>
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --moss:#2F6B4F; --moss-tint:#E8F1EC;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+
+.mast{padding:52px 0 28px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0}
+.mast .sub{margin:14px 0 0;font-size:16px;color:var(--slate);max-width:60ch}
+
+.sec{padding:8px 0 32px}
+
+/* class picker */
+.picker{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.cls{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;min-height:44px;padding:0 14px;border-radius:7px;
+  border:1px solid var(--rule);background:var(--card);color:var(--slate);cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;transition:.15s}
+.cls:hover{border-color:var(--slate);color:var(--ink)}
+.cls:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.cls[aria-pressed="true"]{background:var(--ink-fixed,#14303C);border-color:var(--ink-fixed,#14303C);color:#fff}
+.cls i{font-style:normal;font-size:9.5px;letter-spacing:.1em;padding:2px 7px;border-radius:99px;
+  background:var(--moss-tint);color:var(--moss)}
+.cls.soon i{background:var(--rule-soft);color:var(--slate)}
+.cls[aria-pressed="true"] i{background:rgba(255,255,255,.16);color:#fff}
+
+/* embedded log */
+.stage{border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--card)}
+.stage iframe{display:block;width:100%;height:75vh;border:0}
+.stage iframe[hidden]{display:none}
+.soonbox{padding:44px 30px 48px}
+.soonbox[hidden]{display:none}
+.soonbox h2{font-family:var(--display);font-size:26px;font-weight:600;margin:8px 0 10px;letter-spacing:-.01em}
+.soonbox p{margin:0;color:var(--slate);max-width:52ch}
+.stagebar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px;
+  font-size:13px;color:var(--slate)}
+.stagebar[hidden]{display:none}
+.stagebar a{color:var(--amber);font-weight:600;text-decoration:underline;
+  text-decoration-color:var(--rule);text-underline-offset:3px}
+.stagebar a:hover{text-decoration-color:var(--amber)}
+
+footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+  .mast{padding:40px 0 24px}
+  .soonbox{padding:32px 20px 36px}
+}
+</style>
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__wrap">
+    <a class="topbar__brand" href="index.html">
+      <span class="topbar__logo">IB</span>
+      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+    </a>
+    <nav class="topbar__crumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>&rsaquo;</span>
+      <span class="cur">Lesson Experience</span>
+    </nav>
+    <div class="topbar__actions">
+      <div class="topbar__grades">
+        <a href="myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
+        <a href="myp3/index.html" data-g="myp3">3</a>
+        <a href="index.html#myp4-5" data-g="myp4-5">4&ndash;5</a>
+      </div>
+      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
+      </button>
+      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="index.html">&larr; Home</a>
+    <p class="eyebrow">Lesson Experience</p>
+    <h1>Lesson by lesson, class by class</h1>
+    <p class="sub">What each class has actually done, in order. Pick a class below. It is a record, not a plan.</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+
+    <!-- To add a class: set data-src to its page in lesson-experience/ and swap class="cls soon" for class="cls" and "Soon" for "Live". -->
+    <div class="picker" id="lexPicker" role="group" aria-label="Choose a class">
+      <button type="button" class="cls soon" data-id="myp1b" data-label="MYP 1B" aria-pressed="false">MYP 1B <i>Soon</i></button>
+      <button type="button" class="cls" data-id="myp2a" data-label="MYP 2A" data-src="lesson-experience/myp2a.html" aria-pressed="false">MYP 2A <i>Live</i></button>
+      <button type="button" class="cls" data-id="myp2d" data-label="MYP 2D" data-src="lesson-experience/myp2d.html" aria-pressed="false">MYP 2D <i>Live</i></button>
+      <button type="button" class="cls soon" data-id="myp3b" data-label="MYP 3B" aria-pressed="false">MYP 3B <i>Soon</i></button>
+      <button type="button" class="cls" data-id="myp4" data-label="MYP 4" data-src="lesson-experience/myp4.html" aria-pressed="false">MYP 4 <i>Live</i></button>
+    </div>
+
+    <div class="stage">
+      <iframe id="lexFrame" title="Lesson log" hidden></iframe>
+      <div class="soonbox" id="lexSoon" hidden>
+        <p class="eyebrow">Coming</p>
+        <h2 id="lexSoonName">This class</h2>
+        <p>No lesson log has been published for this class yet. It will appear here once lessons are logged.</p>
+      </div>
+    </div>
+
+    <p class="stagebar" id="lexBar" hidden>
+      <span>Not loading, or too small on your phone?</span>
+      <a id="lexOpen" href="lesson-experience/myp4.html" target="_blank" rel="noopener">Open in full page</a>
+    </p>
+
+    <noscript>
+      <p class="stagebar">This page needs JavaScript. Open a log directly:
+        <a href="lesson-experience/myp2a.html">MYP 2A</a>
+        <a href="lesson-experience/myp2d.html">MYP 2D</a>
+        <a href="lesson-experience/myp4.html">MYP 4</a>
+      </p>
+    </noscript>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Design Team - SIS</span>
+    <span>Lesson Experience</span>
+  </div>
+</footer>
+
+<script src="assets/theme.js"></script>
+<script>
+(function(){
+  var frame  = document.getElementById('lexFrame');
+  var soon   = document.getElementById('lexSoon');
+  var soonNm = document.getElementById('lexSoonName');
+  var bar    = document.getElementById('lexBar');
+  var open   = document.getElementById('lexOpen');
+  var picker = document.getElementById('lexPicker');
+  if(!frame || !soon || !bar || !open || !picker) return;
+
+  var btns = picker.querySelectorAll('.cls');
+  var DEFAULT_ID = 'myp4';
+  var ro = null;
+
+  // The log pages sit on the same origin, so the frame can follow this
+  // page's dark mode and size itself to its content. Off GitHub Pages
+  // (file://) the read is blocked and the frame just scrolls on its own.
+  function syncTheme(){
+    try{
+      var d = frame.contentDocument;
+      if(!d || !d.documentElement) return;
+      var dark = document.documentElement.classList.contains('dark');
+      d.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    }catch(e){}
+  }
+
+  function fit(){
+    try{
+      var d = frame.contentDocument;
+      if(!d || !d.documentElement || frame.hidden) return;
+      frame.style.height = d.documentElement.offsetHeight + 'px';
+    }catch(e){}
+  }
+
+  function watch(){
+    try{
+      if(ro){ ro.disconnect(); ro = null; }
+      var d = frame.contentDocument;
+      if(!d || !d.documentElement || !window.ResizeObserver) return;
+      ro = new ResizeObserver(fit);
+      ro.observe(d.documentElement);
+    }catch(e){}
+  }
+
+  frame.addEventListener('load', function(){
+    syncTheme();
+    fit();
+    watch();
+    window.setTimeout(fit, 500);
+  });
+  window.addEventListener('resize', fit);
+
+  if(window.MutationObserver){
+    new MutationObserver(syncTheme).observe(document.documentElement, {attributes:true, attributeFilter:['class']});
+  }
+
+  function setUrl(id){
+    try{
+      var parts = location.search.replace(/^\?/, '').split('&');
+      var keep = [];
+      for(var i=0;i<parts.length;i++){
+        if(parts[i] && parts[i].indexOf('class=') !== 0) keep.push(parts[i]);
+      }
+      keep.push('class=' + id);
+      window.history.replaceState(null, '', location.pathname + '?' + keep.join('&') + location.hash);
+    }catch(e){}
+  }
+
+  function select(btn){
+    for(var i=0;i<btns.length;i++){
+      btns[i].setAttribute('aria-pressed', btns[i] === btn ? 'true' : 'false');
+    }
+    var src = btn.getAttribute('data-src');
+    var label = btn.getAttribute('data-label');
+    if(src){
+      soon.hidden = true;
+      bar.hidden = false;
+      open.setAttribute('href', src);
+      frame.title = label + ' lesson log';
+      frame.hidden = false;
+      if(frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+      else { syncTheme(); fit(); }
+    } else {
+      frame.hidden = true;
+      bar.hidden = true;
+      if(soonNm) soonNm.textContent = label;
+      soon.hidden = false;
+    }
+    setUrl(btn.getAttribute('data-id'));
+  }
+
+  for(var b=0;b<btns.length;b++){
+    (function(btn){
+      btn.addEventListener('click', function(){ select(btn); });
+    })(btns[b]);
+  }
+
+  var m = /[?&]class=([a-z0-9]+)/.exec(location.search);
+  var want = m ? m[1] : DEFAULT_ID;
+  var start = null;
+  for(var s=0;s<btns.length;s++){
+    if(btns[s].getAttribute('data-id') === want) start = btns[s];
+  }
+  if(!start){
+    for(var d2=0;d2<btns.length;d2++){
+      if(btns[d2].getAttribute('data-id') === DEFAULT_ID) start = btns[d2];
+    }
+  }
+  if(start) select(start);
+})();
+</script>
+
+</body>
+</html>

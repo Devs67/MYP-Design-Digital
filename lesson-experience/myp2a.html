@@ -1,0 +1,259 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>MYP 2A Lesson Flow</title>
+<style>
+  :root{
+    --ground:#f4f7f6;
+    --sheet:#ffffff;
+    --line:#1c3f52;
+    --line-soft:#6f93a3;
+    --grid:#dbe6e9;
+    --accent:#c9622a;
+    --accent-soft:#f3ddc9;
+    --ink:#132732;
+    --ink-soft:#4c6472;
+    --chip-bg:#eef3f2;
+    --tag-a:#e7edf7; --tag-a-ink:#2c4a86;
+    --tag-b:#f3ecd8; --tag-b-ink:#8a6a1f;
+    --shadow:0 1px 0 rgba(19,39,50,0.08);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0b2430;
+      --sheet:#0f3247;
+      --line:#cfe6f0;
+      --line-soft:#7fa3b3;
+      --grid:#173a4c;
+      --accent:#f0975a;
+      --accent-soft:#2a4a3f;
+      --ink:#eaf3f6;
+      --ink-soft:#a9c2cc;
+      --chip-bg:#123646;
+      --tag-a:#1e2f4d; --tag-a-ink:#a9c1ee;
+      --tag-b:#3a3320; --tag-b-ink:#e3c878;
+      --shadow:0 1px 0 rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0b2430;
+    --sheet:#0f3247;
+    --line:#cfe6f0;
+    --line-soft:#7fa3b3;
+    --grid:#173a4c;
+    --accent:#f0975a;
+    --accent-soft:#2a4a3f;
+    --ink:#eaf3f6;
+    --ink-soft:#a9c2cc;
+    --chip-bg:#123646;
+    --tag-a:#1e2f4d; --tag-a-ink:#a9c1ee;
+    --tag-b:#3a3320; --tag-b-ink:#e3c878;
+    --shadow:0 1px 0 rgba(0,0,0,0.3);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:
+      linear-gradient(var(--ground),var(--ground)),
+      repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 32px);
+    color:var(--ink);
+    font-family:"Work Sans", "Segoe UI", sans-serif;
+    padding-inline:16px;
+    padding-block:28px 60px;
+  }
+  h1,h2,h3,.mono{ font-family:"IBM Plex Mono","JetBrains Mono",monospace; }
+  .wrap{max-width:860px;margin-inline:auto;}
+
+  .titleblock{
+    background:var(--sheet);
+    border:1.5px solid var(--line);
+    box-shadow:var(--shadow);
+    margin-bottom:30px;
+  }
+  .titleblock-main{ padding:20px 22px 16px; border-bottom:1.5px solid var(--line); }
+  .titleblock-main .eyebrow{
+    font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--accent); margin:0 0 6px;
+  }
+  .titleblock-main h1{ font-size:clamp(22px,4vw,30px); margin:0 0 6px; line-height:1.15; text-wrap:balance; }
+  .titleblock-main p{ margin:0; color:var(--ink-soft); font-size:14.5px; max-width:62ch; }
+  .titleblock-strip{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .titleblock-strip div{ padding:10px 14px; border-right:1px solid var(--grid); font-size:12px; }
+  .titleblock-strip div:last-child{border-right:none;}
+  .titleblock-strip span{ display:block; color:var(--ink-soft); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:3px; }
+  .titleblock-strip strong{ font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:12.5px; }
+  @media (max-width:560px){
+    .titleblock-strip{grid-template-columns:1fr 1fr;}
+    .titleblock-strip div:nth-child(2){border-right:none;}
+  }
+
+  /* Timeline of lessons */
+  .flow{ position:relative; padding-left:78px; }
+  .flow::before{
+    content:""; position:absolute; left:55px; top:6px; bottom:6px;
+    width:0; border-left:2px dashed var(--line-soft);
+  }
+  @media (max-width:520px){
+    .flow{ padding-left:58px; }
+    .flow::before{ left:35px; }
+  }
+
+  .lesson{ position:relative; margin-bottom:24px; }
+  .datebadge{
+    position:absolute; left:-78px; top:2px; width:64px; text-align:right;
+    font-family:"IBM Plex Mono",monospace; line-height:1.25;
+  }
+  .datebadge .day{ font-size:20px; font-weight:700; color:var(--ink); display:block; }
+  .datebadge .mon{ font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); display:block; }
+  .datebadge .time{ font-size:9.5px; color:var(--ink-soft); display:block; margin-top:2px; }
+  @media (max-width:520px){
+    .datebadge{ left:-58px; width:46px; }
+    .datebadge .day{ font-size:16px; }
+  }
+
+  .lesson::before{
+    content:""; position:absolute; left:-27px; top:4px; width:16px; height:16px;
+    border-radius:50%; background:var(--sheet); border:2px solid var(--line);
+  }
+  @media (max-width:520px){ .lesson::before{ left:-19px; width:14px; height:14px; } }
+
+  .card{ background:var(--sheet); border:1.5px solid var(--line); box-shadow:var(--shadow); padding:16px 18px; }
+  .card-head{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 16px; margin-bottom:8px; }
+  .card-head h2{ font-size:15.5px; margin:0; letter-spacing:0.01em; font-family:"Work Sans",sans-serif; font-weight:700; }
+  .tag{
+    font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600;
+    padding:3px 8px; white-space:nowrap; letter-spacing:0.02em;
+  }
+  .tag.a{ background:var(--tag-a); color:var(--tag-a-ink); }
+  .tag.b{ background:var(--tag-b); color:var(--tag-b-ink); }
+  .card p{ margin:0 0 8px; font-size:14px; color:var(--ink-soft); line-height:1.55; }
+  .card p:last-child{ margin-bottom:0; }
+  .strand-row{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+  .strand-chip{
+    font-family:"IBM Plex Mono",monospace; font-size:10.5px; color:var(--ink);
+    background:var(--chip-bg); border:1px solid var(--line-soft); padding:2px 7px;
+  }
+  .note{ margin-top:10px; padding-top:10px; border-top:1px dashed var(--grid); font-size:12.5px; color:var(--ink-soft); }
+  .note strong{ color:var(--ink); }
+  .today{ border-color:var(--accent); }
+  .today .card-head h2{ color:var(--accent); }
+
+  .resource{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-top:10px; padding:6px 10px;
+    border:1px solid var(--line-soft); background:var(--chip-bg);
+    font-size:12px; color:var(--ink); text-decoration:none;
+  }
+  .resource:hover{ border-color:var(--accent); color:var(--accent); }
+  .resource svg{ width:13px; height:13px; flex:none; }
+  .resource .rlabel{ color:var(--ink-soft); }
+  .no-resource{ margin-top:10px; font-size:11.5px; color:var(--ink-soft); font-style:italic; }
+
+  footer{
+    max-width:860px; margin:28px auto 0; padding-top:16px; border-top:1.5px solid var(--line);
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    font-size:12px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace;
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="titleblock">
+    <div class="titleblock-main">
+      <p class="eyebrow">Lesson Flow — Running Log</p>
+      <h1>Sensing Our World: MYP 2A</h1>
+      <p>Every logged class session in sequence, from global problem identification through to design specifications — tracking progress across Criteria A and B.</p>
+    </div>
+    <div class="titleblock-strip">
+      <div><span>Class</span><strong>MYP 2A Design</strong></div>
+      <div><span>Unit</span><strong>Sensing Our World</strong></div>
+      <div><span>Sessions</span><strong>4 logged</strong></div>
+      <div><span>Updated</span><strong>17 Sep 2026</strong></div>
+    </div>
+  </div>
+
+  <div class="flow">
+
+    <div class="lesson">
+      <div class="datebadge"><span class="day">08</span><span class="mon">Sep</span><span class="time">10:15</span></div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Global Problem Identification &amp; Product Analysis</h2>
+          <span class="tag a">Criterion A</span>
+        </div>
+        <div class="strand-row">
+          <span class="strand-chip">Strand i</span>
+          <span class="strand-chip">Strand ii</span>
+          <span class="strand-chip">Strand iii</span>
+        </div>
+        <p>Explored global problem identification and analysis, then how to write a strong research question and simple research plan. Introduced the three research question categories — people, planet, system — with examples for each.</p>
+        <p>Began product analysis: identifying an existing solution's components/parts and examining each one's purpose, function, and complexity, to surface gaps and opportunities for uniqueness.</p>
+        <div class="note"><strong>Follow-up:</strong> check students can distinguish the three research question types independently, and apply the same components/purpose/function/complexity breakdown to a product of their own choosing.</div>
+        <a class="resource" href="https://docs.google.com/presentation/d/1cmkAMoP3hZTt7UuMA4QYQolI8zhAL3j8jLdWA09wzdU/edit" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg>
+          <span class="rlabel">PPT ·</span> Existing Product Analysis &amp; Evaluation
+        </a>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="datebadge"><span class="day">10</span><span class="mon">Sep</span><span class="time">08:45</span></div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Product Analysis Using the PPC Framework</h2>
+          <span class="tag a">Criterion A</span>
+        </div>
+        <div class="strand-row"><span class="strand-chip">Strand iii · ongoing SA</span></div>
+        <p>Continued applying the PPC Framework (Purpose, Process, Complexity) to an existing product similar to each student's chosen problem — breaking it into components and examining every part's purpose, process, and complexity.</p>
+        <div class="note"><strong>Follow-up:</strong> check students apply all three PPC elements consistently across each component, not just purpose, and are starting to link complexity/process observations back to their own design problem.</div>
+        <div class="no-resource">No resource linked to this session.</div>
+      </div>
+    </div>
+
+    <div class="lesson">
+      <div class="datebadge"><span class="day">15</span><span class="mon">Sep</span><span class="time">10:15</span></div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Completing Strand iii &amp; Introducing Strand iv (Design Brief)</h2>
+          <span class="tag a">Criterion A</span>
+        </div>
+        <div class="strand-row">
+          <span class="strand-chip">Strand iii → complete</span>
+          <span class="strand-chip">Strand iv → introduced</span>
+        </div>
+        <p>Revisited and completed Strand iii — analysing existing sensor-based solutions for what works, what doesn't, and what to carry forward. Moved into Strand iv: the design brief must explicitly draw on findings from Strands i–iii rather than appear on its own.</p>
+        <div class="note"><strong>Follow-up:</strong> finish design briefs, then move into success criteria — sets up Criterion B.</div>
+        <a class="resource" href="https://docs.google.com/presentation/d/1cmkAMoP3hZTt7UuMA4QYQolI8zhAL3j8jLdWA09wzdU/edit" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg>
+          <span class="rlabel">PPT ·</span> Crit - A - iii - PPT
+        </a>
+      </div>
+    </div>
+
+    <div class="lesson today">
+      <div class="datebadge"><span class="day">17</span><span class="mon">Sep</span><span class="time">Today</span></div>
+      <div class="card today">
+        <div class="card-head">
+          <h2>Design Specifications, Testing &amp; Success Criteria</h2>
+          <span class="tag b">Criterion B</span>
+        </div>
+        <div class="strand-row"><span class="strand-chip">Strand i · introduced</span></div>
+        <p>Used a duster to model the workbook's six specification categories — Functional, User &amp; Safety, Sensor &amp; Input, Output/Feedback, Sustainability &amp; Community Impact, Practical Constraint — pairing each with a testable success criterion (Part A), then discussing how it would actually be tested (Part B).</p>
+        <p>Students began writing their own design specifications and success criteria for their sensor-based solution.</p>
+        <div class="note"><strong>Next:</strong> complete Part A across all six categories, then draft Part B testing criteria for each.</div>
+        <a class="resource" href="https://docs.google.com/presentation/d/1rTLNH1OPsKOWqsuyQb4VmKLf_9ZArzpZxLi6qrs0c38/edit" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07L11.5 4.5"/><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07L12.5 19.5"/></svg>
+          <span class="rlabel">PPT ·</span> Design Specifications &amp; Testing Criteria
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>MYP 2A · Sensing Our World</span>
+    <span>Criterion A → Criterion B in progress</span>
+  </footer>
+
+</div>
+
+</body></html>

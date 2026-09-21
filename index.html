@@ -355,6 +355,20 @@ body::before{
   text-transform:uppercase;color:var(--slate)}
 @media (max-width:900px){.mast__images{display:none}.mast__aside{max-width:100%}}
 
+/* ============ LESSON EXPERIENCE BANNER ============ */
+.lexbar{display:flex;align-items:center;gap:16px;margin:20px 0 0;padding:18px 22px;
+  background:var(--card);border:2px solid var(--rule);border-left:5px solid var(--moss);
+  border-radius:12px;text-decoration:none;color:inherit;transition:border-color .2s ease}
+.lexbar:hover{border-color:var(--moss)}
+.lexbar__badge{width:40px;height:40px;border-radius:12px;flex:0 0 auto;background:var(--moss);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:700;font-size:14px}
+.lexbar__text{display:flex;flex-direction:column;min-width:0;flex:1}
+.lexbar__text b{font-family:var(--display);font-size:18px;font-weight:600}
+.lexbar__text span{font-size:13.5px;color:var(--slate)}
+.lexbar__cta{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--moss);flex:0 0 auto}
+@media (max-width:560px){.lexbar{padding:16px;gap:12px}.lexbar__cta{display:none}}
+
 /* ============ PRESS FEEDBACK ============ */
 /* placed last so it wins over any earlier :hover transform on the same element */
 @media (prefers-reduced-motion: no-preference){
@@ -503,6 +517,12 @@ body::before{
       </button>
 
     </div>
+
+    <a class="lexbar" href="lesson-experience.html">
+      <span class="lexbar__badge">LE</span>
+      <span class="lexbar__text"><b>Lesson Experience</b><span>What each class has done, lesson by lesson. MYP 1B, 2A, 2D, 3B and 4.</span></span>
+      <span class="lexbar__cta">Open &rarr;</span>
+    </a>
   </div>
 </section>
 
@@ -662,6 +682,7 @@ body::before{
       <a href="myp3/index.html">MYP 3</a>
       <a href="#myp4-5">MYP 4 &amp; 5</a>
       <a href="myp4-5/frameworks.html">Frameworks</a>
+      <a href="lesson-experience.html">Lesson Experience</a>
       <a href="appendix-citations.html">MLA 9 &amp; appendix</a>
     </div>
   </div>
