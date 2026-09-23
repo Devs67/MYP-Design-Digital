@@ -462,7 +462,7 @@ body::before{
         <div class="herow"><i style="background:var(--b)">B</i>Developing ideas</div>
         <div class="herow"><i style="background:var(--c)">C</i>Creating the solution</div>
         <div class="herow"><i style="background:var(--d)">D</i>Evaluating</div>
-        <div class="herolegend__foot"><span>31 frameworks</span><span>IB aligned</span></div>
+        <div class="herolegend__foot"><span>37 frameworks</span><span>IB aligned</span></div>
       </div>
     </div>
   </div>
@@ -522,7 +522,7 @@ body::before{
         <p class="gradecard__tag">Senior portfolio &amp; full cycle</p>
         <p class="desc">Complete Criterion A, this year&rsquo;s units and summative tasks, the full framework index, and the class journey log.</p>
         <ul>
-          <li>Criterion A complete, Criterion B strand i</li>
+          <li>Criterion A complete, Criterion B strands i&ndash;ii</li>
           <li>This year&rsquo;s units &amp; summative tasks</li>
           <li>Our Journey class log</li>
         </ul>
@@ -580,10 +580,10 @@ body::before{
           <h3>Developing ideas</h3>
           <span class="status">Open</span>
         </div>
-        <p>Design specifications, a range of feasible ideas, justifying the chosen design, and planning drawings. Strand i complete.</p>
+        <p>Design specifications, a range of feasible ideas, justifying the chosen design, and planning drawings. Strands i&ndash;ii complete.</p>
         <div class="strands">
           <span class="st live">Strand i</span>
-          <span class="st">Strand ii</span>
+          <span class="st live">Strand ii</span>
           <span class="st">Strand iii</span>
           <span class="st">Strand iv</span>
         </div>
@@ -640,7 +640,7 @@ body::before{
         </div>
         <p>Every thinking tool mapped to the strand it serves, with how to apply it &mdash; plus PEEL and OPVL, which work across all four criteria.</p>
         <div class="strands">
-          <span class="st live">31 frameworks</span>
+          <span class="st live">37 frameworks</span>
           <span class="st live">Sourced</span>
         </div>
       </a>
@@ -975,7 +975,10 @@ body::before{
       var html = '';
       for(var i=0; i<list.length; i++){
         var r = list[i];
-        html += '<a class="herr" href="' + r.href + '?theme=' + theme + '">' +
+        var hi = r.href.indexOf('#');
+        var link = hi === -1 ? r.href + '?theme=' + theme
+                             : r.href.slice(0, hi) + '?theme=' + theme + r.href.slice(hi);
+        html += '<a class="herr" href="' + link + '">' +
           '<span class="herr__l"><span class="herr__b" style="background:var(--' + r.tone + ')">' + r.badge + '</span>' +
           '<span class="herr__t">' + r.t + '</span></span>' +
           '<span class="herr__g">' + r.grade + '</span></a>';
