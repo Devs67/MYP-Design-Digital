@@ -127,7 +127,7 @@ html{scroll-behavior:smooth}
   /* scroll reveal - only armed once JS confirms support */
   .js-anim .reveal{opacity:0;transform:translateY(12px);
     transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);
-    transition-delay:var(--d,0ms)}
+    transition-delay:var(--rd,0ms)}
   .js-anim .reveal.in{opacity:1;transform:none}
 
   /* masthead on load */
@@ -282,45 +282,7 @@ body.wl-open{overflow:hidden}
   .wl__card{padding:36px 24px 30px}
 }
 
-/* ============ TILE SPOTLIGHT HOVER ============ */
-.crit--a{--tone:var(--a)}
-.crit--b{--tone:var(--b)}
-.crit--c{--tone:var(--c)}
-.crit--d{--tone:var(--d)}
-.crit--fw{--tone:var(--ink)}
-.crit--journey{--tone:var(--moss)}
-.crit--dev{--tone:var(--dev)}
-
-/* corner light, same recipe as the year-group cards in theme.css */
-.crit{overflow:hidden;isolation:isolate}
-.crit > *{position:relative;z-index:1}
-.crit::before{content:"";position:absolute;top:-34px;right:-34px;width:160px;height:160px;
-  border-radius:50%;background:var(--tone,var(--ink));opacity:.07;filter:blur(32px);
-  pointer-events:none;z-index:0}
-
-@media (hover:hover) and (prefers-reduced-motion: no-preference){
-  .crit{will-change:transform}
-
-  .crit,a.crit{
-    transition:transform .2s var(--ease-out),box-shadow .2s ease,
-               background .2s ease,border-color .2s ease,opacity .2s ease;
-  }
-  .crit::before{transition:opacity .3s ease}
-
-  .grid:has(.crit:hover) .crit:not(:hover){
-    transform:scale(.97);
-    opacity:.75;
-  }
-
-  .crit:hover,a.crit:hover{
-    border-color:var(--tone,var(--ink));
-    transform:translateY(-4px);
-    box-shadow:0 14px 28px rgba(20,48,60,.16);
-    z-index:2;
-  }
-  .crit:hover::before{opacity:.18}
-
-}
+/* tile hover + corner light for every .grid > .crit tile lives in assets/theme.css */
 
 /* ============ PAGE GRID ============ */
 body{position:relative}
@@ -462,7 +424,7 @@ body::before{
         <div class="herow"><i style="background:var(--b)">B</i>Developing ideas</div>
         <div class="herow"><i style="background:var(--c)">C</i>Creating the solution</div>
         <div class="herow"><i style="background:var(--d)">D</i>Evaluating</div>
-        <div class="herolegend__foot"><span>37 frameworks</span><span>IB aligned</span></div>
+        <div class="herolegend__foot"><span>43 frameworks</span><span>IB aligned</span></div>
       </div>
     </div>
   </div>
@@ -522,7 +484,7 @@ body::before{
         <p class="gradecard__tag">Senior portfolio &amp; full cycle</p>
         <p class="desc">Complete Criterion A, this year&rsquo;s units and summative tasks, the full framework index, and the class journey log.</p>
         <ul>
-          <li>Criterion A complete, Criterion B strands i&ndash;ii</li>
+          <li>Criterion A complete, Criterion B strands i&ndash;iii</li>
           <li>This year&rsquo;s units &amp; summative tasks</li>
           <li>Our Journey class log</li>
         </ul>
@@ -580,11 +542,11 @@ body::before{
           <h3>Developing ideas</h3>
           <span class="status">Open</span>
         </div>
-        <p>Design specifications, a range of feasible ideas, justifying the chosen design, and planning drawings. Strands i&ndash;ii complete.</p>
+        <p>Design specifications, a range of feasible ideas, justifying the chosen design, and planning drawings. Strands i&ndash;iii complete.</p>
         <div class="strands">
           <span class="st live">Strand i</span>
           <span class="st live">Strand ii</span>
-          <span class="st">Strand iii</span>
+          <span class="st live">Strand iii</span>
           <span class="st">Strand iv</span>
         </div>
       </a>
@@ -640,7 +602,7 @@ body::before{
         </div>
         <p>Every thinking tool mapped to the strand it serves, with how to apply it &mdash; plus PEEL and OPVL, which work across all four criteria.</p>
         <div class="strands">
-          <span class="st live">37 frameworks</span>
+          <span class="st live">43 frameworks</span>
           <span class="st live">Sourced</span>
         </div>
       </a>
@@ -766,7 +728,7 @@ body::before{
         // stagger siblings in the same parent, capped so nothing waits long
         var par = el.parentNode;
         if(!par.__revealIdx) par.__revealIdx = 0;
-        el.style.setProperty('--d', Math.min(par.__revealIdx * 55, 220) + 'ms');
+        el.style.setProperty('--rd', Math.min(par.__revealIdx * 55, 220) + 'ms');
         par.__revealIdx++;
         io.observe(el);
       }

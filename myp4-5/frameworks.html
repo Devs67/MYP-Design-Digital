@@ -109,7 +109,7 @@ a{color:inherit}
 
 /* ---------- framework cards ---------- */
 .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.fw{
+.fw{scroll-margin-top:140px;
   background:var(--card);border:1px solid var(--rule);
   border-left-width:4px;border-radius:12px;
   padding:24px 26px 26px;position:relative;
@@ -227,7 +227,7 @@ html{scroll-behavior:smooth}
   /* scroll reveal - only armed once JS confirms support */
   .js-anim .reveal{opacity:0;transform:translateY(12px);
     transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1);
-    transition-delay:var(--d,0ms)}
+    transition-delay:var(--rd,0ms)}
   .js-anim .reveal.in{opacity:1;transform:none}
 
   /* masthead on load */
@@ -390,7 +390,7 @@ html{scroll-behavior:smooth}
     <button class="filt" data-f="b" aria-pressed="false">B · Developing</button>
     <button class="filt" data-f="c" aria-pressed="false">C · Creating</button>
     <button class="filt" data-f="d" aria-pressed="false">D · Evaluating</button>
-    <span class="filt__hint">37 frameworks</span>
+    <span class="filt__hint">43 frameworks</span>
   </div>
 </nav>
 
@@ -407,7 +407,7 @@ html{scroll-behavior:smooth}
 
     <div class="cards">
 
-      <article class="fw">
+      <article class="fw" id="fw-peel">
         <div class="fw__head">
           <h3>PEEL</h3>
           <span class="tag tag--borrow">From English</span>
@@ -864,7 +864,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw" id="fw-wdm">
         <div class="fw__head"><h3>Weighted decision matrix</h3><span class="tag tag--time">20 min</span></div>
         <p class="fw__what">Score each idea against weighted specification points to produce a defensible ranking.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii requires students to <em>justify</em> the selection. "I liked it best" is not justification; a matrix tied to the specification is. <span class="strandref">B iii</span></p></div>
@@ -876,6 +876,90 @@ html{scroll-behavior:smooth}
         </ol></div>
       <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
           <a href="https://asq.org/quality-resources/decision-matrix" target="_blank" rel="noopener">ASQ — decision matrix</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Evidence for a level</h3></div>
+        <p class="fw__what">Count it, time it, check it on the sketch, or ask someone — and name which you did.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>A level with nothing behind it is an opinion. Naming how you reached it is what the template means by explaining the level. <span class="strandref">B iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Pick the check that fits the spec: count, time, check the sketch, or ask.</li>
+          <li>Do it, and note the result.</li>
+          <li>Write the level with that evidence beside it.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="criterion-b.html#iii">This site — Criterion B, strand iii</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Descriptor-free justification</h3></div>
+        <p class="fw__what">Cover the descriptor text and explain the level in your own words.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>The template warns against justifications that "simply repeat the wording of the descriptor." <span class="strandref">B iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Cover the descriptor.</li>
+          <li>Say what you saw on the design that earns the level.</li>
+          <li>Uncover it and check you haven't just copied it.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="criterion-b.html#iii">This site — Criterion B, strand iii</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Spot the splitters</h3></div>
+        <p class="fw__what">Circle the specs where the designs' levels differ most.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>A total hides where the decision was really made. The specs that split the designs are where the justification should focus. <span class="strandref">B iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Read down each spec column of the summary table.</li>
+          <li>Circle where the levels differ most.</li>
+          <li>Build your justification around those specs.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="criterion-b.html#iii">This site — Criterion B, strand iii</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Feature harvest</h3></div>
+        <p class="fw__what">One strength from each runner-up, kept only if it serves a spec.</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii asks what you will change before you make the design, and which specification point each change satisfies. The runners-up are the obvious place to look. <span class="strandref">B iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>List one strength from each runner-up.</li>
+          <li>Keep it only if it serves a specification point.</li>
+          <li>Name that spec in your list of changes.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="criterion-b.html#iii">This site — Criterion B, strand iii</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Fidelity step-up</h3></div>
+        <p class="fw__what">Rough (ii) → clean mid-fidelity (iii) → high-fidelity Figma (iv).</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Keeps each strand at the right level of finish. Strand iii presents the chosen design as images; the full high-fidelity wireframe of every screen belongs to strand iv. <span class="strandref">B ii</span> <span class="strandref">B iii</span> <span class="strandref">B iv</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Strand ii: rough sketches.</li>
+          <li>Strand iii: clean, mid-fidelity images of the chosen design.</li>
+          <li>Strand iv: a high-fidelity Figma wireframe of every screen.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="criterion-b.html#iii">This site — Criterion B, strand iii</a>
+          </div>
+      </article>
+
+      <article class="fw">
+        <div class="fw__head"><h3>Runner-up rebuttal</h3></div>
+        <p class="fw__what">"Design [x] scored higher on Spec [n], but lost because [shortfall]. I'm keeping [feature] from it to meet Spec [n]."</p>
+        <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Saying why the runner-up lost, including where it scored higher, is what makes the justification critical rather than one-sided. <span class="strandref">B iii</span></p></div>
+        <div class="fw__block"><p class="fw__lbl">How to apply</p><ol>
+          <li>Name the runner-up and the spec it scored higher on.</li>
+          <li>Say why it still lost.</li>
+          <li>Name any feature you're keeping from it, and the spec it meets.</li>
+        </ol></div>
+      <div class="fw__block fw__src"><p class="fw__lbl">Resource</p>
+          <a href="criterion-b.html#iii">This site — Criterion B, strand iii</a>
           </div>
       </article>
 
@@ -1155,6 +1239,9 @@ html{scroll-behavior:smooth}
           <tr><td>Strength–limitation pair</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Evaluating each idea</td></tr>
           <tr><td>Explain-it-back and task walkthrough</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Proving ideas are correctly interpreted</td></tr>
           <tr><td>Weighted decision matrix</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Justifying the chosen design</td></tr>
+          <tr><td>Evidence for a level and descriptor-free justification</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Justifying each level awarded</td></tr>
+          <tr><td>Spot the splitters and runner-up rebuttal</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Critical justification of the choice</td></tr>
+          <tr><td>Feature harvest and fidelity step-up</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td>Presenting and improving the chosen design</td></tr>
           <tr><td>Gantt and production plan</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--c">●</span></td><td class="mk"><span class="dot">○</span></td><td>Showing efficient use of time</td></tr>
           <tr><td>Modification log and PDCA</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--c">●</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Justifying changes as they happen</td></tr>
           <tr><td>Testing methods matrix</td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--b">●</span></td><td class="mk"><span class="dot">○</span></td><td class="mk"><span class="dot dot--d">●</span></td><td>Linking every spec point to a test</td></tr>
@@ -1230,7 +1317,7 @@ html{scroll-behavior:smooth}
         // stagger siblings in the same parent, capped so nothing waits long
         var par = el.parentNode;
         if(!par.__revealIdx) par.__revealIdx = 0;
-        el.style.setProperty('--d', Math.min(par.__revealIdx * 55, 220) + 'ms');
+        el.style.setProperty('--rd', Math.min(par.__revealIdx * 55, 220) + 'ms');
         par.__revealIdx++;
         io.observe(el);
       }

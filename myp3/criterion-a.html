@@ -1203,7 +1203,7 @@
         el.classList.add('reveal');
         var par = el.parentNode;
         if(!par.__revealIdx) par.__revealIdx = 0;
-        el.style.setProperty('--d', Math.min(par.__revealIdx * 55, 220) + 'ms');
+        el.style.setProperty('--rd', Math.min(par.__revealIdx * 55, 220) + 'ms');
         par.__revealIdx++;
         io.observe(el);
       }
