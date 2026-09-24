@@ -15,6 +15,7 @@ var MYP_SEARCH_INDEX = [
   { t:"Units — MYP 1 & 2", d:"This year's units — concepts, global context, and the summative task.", grade:"MYP 1–2", href:"myp1-2/units.html", badge:"U", tone:"ink" },
   { t:"Summative Assessments — MYP 1–2", d:"Current-unit summative task materials for MYP 1 & 2.", grade:"MYP 1–2", href:"myp1-2/sa.html", badge:"SA", tone:"ink" },
   { t:"Criterion A — MYP 1 & 2", d:"Task-specific clarification for Criterion A, Years 1–2.", grade:"MYP 1–2", href:"myp1-2/criterion-a.html", badge:"A", tone:"a" },
+  { t:"Criterion B — MYP 1 & 2", d:"Developing ideas, Years 1–2: specifications and success criteria slides for strand i.", grade:"MYP 1–2", href:"myp1-2/criterion-b.html", badge:"B", tone:"b" },
 
   { t:"Criterion guides", d:"Criteria A–D hub for MYP 3, with strand tags per resource.", grade:"MYP 3", href:"myp3/index.html", badge:"3", tone:"b" },
   { t:"Criterion A — MYP 3", d:"Task-specific clarification across all four strands of Criterion A.", grade:"MYP 3", href:"myp3/criterion-a.html", badge:"A", tone:"a" },
