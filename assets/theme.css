@@ -233,9 +233,9 @@
 .step,.fwc{--tone:var(--amber)}
 .trap{--tone:var(--clay)}
 
-.grid > .crit,.fw,.step,.fwc,.trap{position:relative;overflow:hidden;isolation:isolate}
-.grid > .crit > *,.fw > *,.step > *,.fwc > *,.trap > *{position:relative;z-index:1}
-.grid > .crit::before,.fw::before,.step::before,.fwc::before,.trap::before{
+.grid > .crit,.fw,.step,.fwc,.trap,.lcard{position:relative;overflow:hidden;isolation:isolate}
+.grid > .crit > *,.fw > *,.step > *,.fwc > *,.trap > *,.lcard > *{position:relative;z-index:1}
+.grid > .crit::before,.fw::before,.step::before,.fwc::before,.trap::before,.lcard::before{
   content:"";position:absolute;top:-34px;right:-34px;width:160px;height:160px;
   border-radius:50%;background:var(--tone);opacity:.07;filter:blur(32px);
   pointer-events:none;z-index:0;transition:opacity .3s ease}
@@ -246,17 +246,17 @@
 :root.dark .crit--b:not(.crit--soon) .badge,:root.dark [data-crit="b"] .crit__badge{color:var(--ink-fixed)}
 
 @media (hover:hover){
-  .grid > a.crit:hover,.fw.fw:hover,.step.step:hover,.fwc.fwc:hover,.trap.trap:hover{
+  .grid > a.crit:hover,.fw.fw:hover,.step.step:hover,.fwc.fwc:hover,.trap.trap:hover,.lcard.lcard:hover{
     border-color:var(--tone)}
   .grid > a.crit:hover::before,.fw:hover::before,.step:hover::before,
-  .fwc:hover::before,.trap:hover::before{opacity:.18}
-  .grid > a.crit h3,.fw h3,.step h3,.fwc h4,.grid > a.crit .status{transition:color .22s ease}
-  .grid > a.crit:hover h3,.fw:hover h3,.step:hover h3,.fwc:hover h4,
+  .fwc:hover::before,.trap:hover::before,.lcard:hover::before{opacity:.18}
+  .grid > a.crit h3,.fw h3,.step h3,.fwc h4,.lcard h3,.grid > a.crit .status{transition:color .22s ease}
+  .grid > a.crit:hover h3,.fw:hover h3,.step:hover h3,.fwc:hover h4,.lcard:hover h3,
   .grid > a.crit:hover .status{color:var(--tone)}
 }
 /* lift: doubled classes so this beats the scroll-reveal rule (.js-anim .reveal.in) */
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
-  .grid > a.crit:hover,.fw.fw:hover,.step.step:hover,.fwc.fwc:hover,.trap.trap:hover{
+  .grid > a.crit:hover,.fw.fw:hover,.step.step:hover,.fwc.fwc:hover,.trap.trap:hover,.lcard.lcard:hover{
     transform:translateY(-4px);box-shadow:0 16px 32px rgba(20,48,60,.16);z-index:2;
     transition:transform .25s var(--ease-out,cubic-bezier(.22,.61,.36,1)),
                box-shadow .25s ease,border-color .25s ease,opacity .5s ease}

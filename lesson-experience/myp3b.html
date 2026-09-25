@@ -1,0 +1,376 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Criterion B Lesson Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f4ee;
+    --paper-raised: #ffffff;
+    --ink: #1d2126;
+    --ink-soft: #5a5f68;
+    --ink-faint: #8b8f96;
+    --line: #ddd7c8;
+    --line-soft: #e8e3d7;
+
+    --i-color: #2f5d8a;
+    --i-tint: #e8eef4;
+    --ii-color: #7a5c9e;
+    --ii-tint: #efeaf4;
+    --iii-color: #9a8358;
+    --iii-tint: #f1ebdd;
+    --iv-color: #2e7d5b;
+    --iv-tint: #e7f2ec;
+
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #16181b;
+      --paper-raised: #1e2125;
+      --ink: #eae7de;
+      --ink-soft: #a3a8b0;
+      --ink-faint: #6f747c;
+      --line: #34383e;
+      --line-soft: #2a2d32;
+
+      --i-color: #7fa8d6;
+      --i-tint: #1e2a35;
+      --ii-color: #b79fd6;
+      --ii-tint: #2a2333;
+      --iii-color: #cbb37f;
+      --iii-tint: #2c2718;
+      --iv-color: #7fceac;
+      --iv-tint: #1a2a22;
+      color-scheme: dark;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #16181b;
+    --paper-raised: #1e2125;
+    --ink: #eae7de;
+    --ink-soft: #a3a8b0;
+    --ink-faint: #6f747c;
+    --line: #34383e;
+    --line-soft: #2a2d32;
+
+    --i-color: #7fa8d6;
+    --i-tint: #1e2a35;
+    --ii-color: #b79fd6;
+    --ii-tint: #2a2333;
+    --iii-color: #cbb37f;
+    --iii-tint: #2c2718;
+    --iv-color: #7fceac;
+    --iv-tint: #1a2a22;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding-inline: 20px;
+    padding-block: 40px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .masthead {
+    margin-bottom: 44px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(28px, 5vw, 40px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    text-wrap: balance;
+  }
+
+  .subhead {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 54ch;
+    margin: 0;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+  }
+
+  .legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex: none;
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 1.5px;
+    background: var(--line);
+  }
+
+  .stage {
+    position: relative;
+    padding-bottom: 40px;
+  }
+
+  .stage:last-child {
+    padding-bottom: 0;
+  }
+
+  .stage-dot {
+    position: absolute;
+    left: -28px;
+    top: 6px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--dot, var(--i-color));
+    box-shadow: 0 0 0 4px var(--paper);
+  }
+
+  .stage.planned .stage-dot {
+    background: var(--paper);
+    border: 1.5px dashed var(--dot, var(--iii-color));
+    width: 8px;
+    height: 8px;
+  }
+
+  .stage-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .date {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    letter-spacing: 0.01em;
+  }
+
+  .tag {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--tint, var(--i-tint));
+    color: var(--dot, var(--i-color));
+  }
+
+  .status {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    border: 1px dashed var(--line);
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  .card {
+    background: var(--paper-raised);
+    border: 1px solid var(--line-soft);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+
+  .stage.planned .card {
+    background: transparent;
+    border-style: dashed;
+  }
+
+  .card h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.3;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+
+  .card p.body-text {
+    margin: 0 0 12px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  .card ul {
+    margin: 0 0 12px;
+    padding-left: 18px;
+  }
+
+  .card li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+
+  .card li::marker {
+    color: var(--dot, var(--i-color));
+  }
+
+  .quote {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-faint);
+    border-left: 2px solid var(--line);
+    padding-left: 11px;
+    margin: 0;
+  }
+
+  footer {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 420px) {
+    .card { padding: 15px 16px; }
+    .timeline { padding-left: 22px; }
+    .stage-dot { left: -22px; }
+  }
+</style>
+
+<div class="masthead">
+  <p class="eyebrow">MYP 3 Design &middot; Creative App Design &amp; Logic</p>
+  <h1>Criterion B — Lesson Flow</h1>
+  <p class="subhead">How the class has worked through Developing Ideas so far: specification, justification, and planning diagrams, strand by strand.</p>
+
+  <div class="legend">
+    <span class="legend-item"><span class="legend-dot" style="background:var(--i-color)"></span>Strand i — Specification</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--ii-color)"></span>Strand ii — Ideas &amp; justification</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--iii-color); border:1.5px dashed var(--iii-color); background:transparent;"></span>Strand iii — Planned</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--iv-color)"></span>Strand iv — Planning diagrams</span>
+  </div>
+</div>
+
+<div class="timeline">
+
+  <div class="stage" style="--dot: var(--i-color); --tint: var(--i-tint);">
+    <div class="stage-dot"></div>
+    <div class="stage-meta">
+      <span class="date">8 Sept 2026 &middot; 11:35</span>
+      <span class="tag">Strand i</span>
+    </div>
+    <div class="card">
+      <h2>Developing Design Specifications</h2>
+      <p class="body-text">Reviewed progress on the Design SA, then worked through the specification-development process using a water bottle as a shared example product.</p>
+      <ul>
+        <li>Writing specification points that are SMART — Specific, Measurable, Achievable, Realistic, Time-bound</li>
+        <li>Creating a testing method for each specification</li>
+        <li>Writing success criteria so the design can be objectively evaluated</li>
+      </ul>
+      <p class="quote">TSC — Strand i: &ldquo;develops a design spec outlining success criteria based on data collected&rdquo;</p>
+    </div>
+  </div>
+
+  <div class="stage" style="--dot: var(--ii-color); --tint: var(--ii-tint);">
+    <div class="stage-dot"></div>
+    <div class="stage-meta">
+      <span class="date">15 Sept 2026</span>
+      <span class="tag">Strands i &amp; ii</span>
+    </div>
+    <div class="card">
+      <h2>Justifying Ideas Against the Spec</h2>
+      <p class="body-text">Reviewed the Strand i TSC to confirm expectations, then unpacked how Strand ii should be approached — justifying a chosen idea and generating a genuine range of options.</p>
+      <ul>
+        <li>What "justifying against the specification" means — linking an idea back to specific spec points, not just describing it</li>
+        <li>What makes a range of ideas genuinely feasible, not small variations on one idea</li>
+      </ul>
+      <p class="quote">TSC — Strand ii: &ldquo;presents a range of feasible design ideas, correctly interpreted by others&rdquo;</p>
+    </div>
+  </div>
+
+  <div class="stage planned" style="--dot: var(--iii-color); --tint: var(--iii-tint);">
+    <div class="stage-dot"></div>
+    <div class="stage-meta">
+      <span class="date">Not yet delivered</span>
+      <span class="tag">Strand iii</span>
+      <span class="status">Planned</span>
+    </div>
+    <div class="card">
+      <h2>Present &amp; Justify the Chosen Design</h2>
+      <p class="body-text">Planned as a cut-and-paste wireframe activity: students trial several layout approaches with a printable UI-element kit before committing to one, then justify that choice against specific spec lines rather than aesthetic preference.</p>
+      <p class="quote">TSC — Strand iii: &ldquo;presents the chosen design and outlines reasons for its selection&rdquo;</p>
+    </div>
+  </div>
+
+  <div class="stage" style="--dot: var(--iv-color); --tint: var(--iv-tint);">
+    <div class="stage-dot"></div>
+    <div class="stage-meta">
+      <span class="date">22 Sept 2026 &middot; 11:35</span>
+      <span class="tag">Strand iv</span>
+    </div>
+    <div class="card">
+      <h2>Planning the App: User Flow Diagrams</h2>
+      <p class="body-text">Introduced user flow as a planning tool, modelled one in Figma using Spotify as the reference app, then students practiced building their own and received feedback on their portfolios.</p>
+      <ul>
+        <li>What a user flow (screen-flow diagram) is and how to build one in Figma</li>
+        <li>Worked example: mapping Spotify's user flow as a class</li>
+        <li>Independent practice, plus portfolio feedback</li>
+      </ul>
+      <p class="quote">TSC — Strand iv: &ldquo;develops accurate planning drawings/diagrams and outlines requirements for creation&rdquo;</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Criterion B, Strands i&ndash;iv &middot; MYP 3 Design, Sreenidhi International School<br>
+  Dashed card = planned, not yet delivered in class.
+</footer>
+
+</body></html>
