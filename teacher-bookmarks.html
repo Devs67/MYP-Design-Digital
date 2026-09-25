@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Teacher bookmarks — MYP Design</title>
+<!-- Teacher-only. Deliberately not linked from any page, the topbar or assets/search-index.js.
+     Open it from a browser bookmark. The repo is public, so this hides the page, it does not protect it. -->
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --dev:#6A4C93;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--dev);margin:0}
+
+.mast{padding:56px 0 32px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
+.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
+
+.sec{padding:8px 0 32px}
+.part{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:-.01em;
+  margin:0 0 16px;display:flex;align-items:center;gap:12px}
+.part span{font-family:var(--mono);font-size:12px;width:28px;height:28px;flex:0 0 28px;
+  border-radius:7px;background:var(--dev);color:#FFF;display:flex;align-items:center;justify-content:center}
+
+.group{background:var(--card);border:1px solid var(--rule);border-radius:12px;
+  padding:18px 22px 10px;margin-bottom:14px}
+.group h3{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--slate);margin:0 0 8px}
+.links{list-style:none;margin:0;padding:0;columns:2;column-gap:36px}
+.links li{break-inside:avoid;padding:7px 0;border-top:1px solid var(--rule-soft);
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.links a{color:var(--ink);font-weight:500;text-decoration:underline;
+  text-decoration-color:var(--rule);text-underline-offset:3px}
+.links a:hover{color:var(--dev);text-decoration-color:var(--dev)}
+.links i{font-family:var(--mono);font-size:10.5px;font-style:normal;color:var(--slate)}
+
+footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+  .mast{padding:40px 0 24px}
+  .group{padding:14px 16px 6px}
+  .links{columns:1}
+}
+</style>
+<link rel="stylesheet" href="assets/theme.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__wrap">
+    <a class="topbar__brand" href="index.html">
+      <span class="topbar__logo">IB</span>
+      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+    </a>
+    <nav class="topbar__crumb" aria-label="Breadcrumb">
+      <span class="cur">Teacher bookmarks</span>
+    </nav>
+    <div class="topbar__actions">
+      <div class="topbar__grades">
+        <a href="myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
+        <a href="myp3/index.html" data-g="myp3">3</a>
+        <a href="index.html#myp4-5" data-g="myp4-5">4&ndash;5</a>
+      </div>
+      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
+      </button>
+      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">Teacher only &middot; not linked from the site</p>
+    <h1>Teacher bookmarks</h1>
+    <p class="sub">Planning and design references for the Design Team. Every link opens in a new tab.</p>
+  </div>
+</header>
+
+<section class="sec">
+  <div class="wrap">
+    <h2 class="part"><span>A</span>IB / MYP Resources</h2>
+    <div class="group">
+      <h3>MYP Design curriculum and assessment</h3>
+      <ul class="links">
+        <li><a href="https://www.designmyp.com/" target="_blank" rel="noopener noreferrer">designmyp.com</a><i>designmyp.com</i></li>
+        <li><a href="https://sites.google.com/hisvietnam.com/time4design/welcome-home?authuser=0" target="_blank" rel="noopener noreferrer">Time4Design &ndash; MYP Design (HIS Vietnam)</a><i>sites.google.com</i></li>
+        <li><a href="https://sites.google.com/hisvietnam.com/time4design/welcome-home/marking-criteria/criterion-a/crit-a-sii-research-plan?authuser=0" target="_blank" rel="noopener noreferrer">Time4Design &ndash; Criterion A sii Research Plan</a><i>sites.google.com</i></li>
+        <li><a href="https://sites.google.com/unishanoi.org/unisdesign/home" target="_blank" rel="noopener noreferrer">UNIS Hanoi &ndash; MYP Design</a><i>sites.google.com</i></li>
+        <li><a href="https://mypdocs.vercel.app/index.html" target="_blank" rel="noopener noreferrer">MypDocs &ndash; MYP5 Resources &amp; Notes</a><i>mypdocs.vercel.app</i></li>
+        <li><a href="https://mypdocs.vercel.app/Design/exemplars/exemplar1.html" target="_blank" rel="noopener noreferrer">MypDocs &ndash; Design exemplar</a><i>mypdocs.vercel.app</i></li>
+        <li><a href="https://www.slideshare.net/slideshow/myp-design-cycle-resource/62781659" target="_blank" rel="noopener noreferrer">MYP Design Cycle Resource (SlideShare)</a><i>slideshare.net</i></li>
+        <li><a href="https://sites.google.com/gemsdaa.net/ibdt/ia" target="_blank" rel="noopener noreferrer">IB Design Technology &ndash; IA (GEMS)</a><i>sites.google.com</i></li>
+        <li><a href="https://www.mrwdpdesign.com/ibdp-design/topics-exams/topic-1" target="_blank" rel="noopener noreferrer">Mr W DP Design &ndash; Topic 1</a><i>mrwdpdesign.com</i></li>
+        <li><a href="https://guide.fariaedu.com/myp-personal-project" target="_blank" rel="noopener noreferrer">MYP Personal Project guide (Faria)</a><i>guide.fariaedu.com</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>IB planning: ATL and Global Contexts</h3>
+      <ul class="links">
+        <li><a href="https://docs.google.com/spreadsheets/d/1CPrLC-jpt60bolHCFTzIjWa3KkIEtrJsErQ8KaPOImk/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">IB Approaches to Learning (AtL) Toolkit</a><i>docs.google.com</i></li>
+        <li><a href="https://docs.google.com/spreadsheets/d/17rTStoEuFnUbcf3TmTy7sqYjPZmBXODfzS_sl6cg_Q4/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">AtL Posters</a><i>docs.google.com</i></li>
+        <li><a href="https://sites.google.com/ois-edu.com/oisunitplanning/atl" target="_blank" rel="noopener noreferrer">OIS ManageBac guide &ndash; ATL</a><i>sites.google.com</i></li>
+        <li><a href="https://www.toddleapp.com/learn/talk-post/global-contexts-as-a-lens-to-myp-unit-planning/" target="_blank" rel="noopener noreferrer">Toddle &ndash; Global Contexts as a Lens to MYP Unit Planning</a><i>toddleapp.com</i></li>
+        <li><a href="https://www.toddleapp.com/learn/blog-post/educator-tips-how-to-choose-an-appropriate-global-context-exploration/" target="_blank" rel="noopener noreferrer">Toddle &ndash; How to Choose a Global Context Exploration</a><i>toddleapp.com</i></li>
+        <li><a href="https://www.toddleapp.com/learn/myp/" target="_blank" rel="noopener noreferrer">Toddle Learn &ndash; MYP Resources, Articles &amp; Talks</a><i>toddleapp.com</i></li>
+        <li><a href="https://www.toddleapp.com/learn/" target="_blank" rel="noopener noreferrer">Toddle Learn &ndash; for IB</a><i>toddleapp.com</i></li>
+        <li><a href="https://learn.wab.edu/myp/myp/video" target="_blank" rel="noopener noreferrer">More about IB &ndash; WAB MYP videos</a><i>learn.wab.edu</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Inquiry, concepts and thinking routines</h3>
+      <ul class="links">
+        <li><a href="https://books.google.co.in/books?id=djKipn6tY40C" target="_blank" rel="noopener noreferrer">Concept-Based Curriculum and Instruction &ndash; H. Lynn Erickson</a><i>books.google.co.in</i></li>
+        <li><a href="https://jaymctighe.com/resources/articles/" target="_blank" rel="noopener noreferrer">McTighe &amp; Associates &ndash; Articles</a><i>jaymctighe.com</i></li>
+        <li><a href="https://www.kathmurdoch.com.au/" target="_blank" rel="noopener noreferrer">Kath Murdoch &ndash; Inquiry</a><i>kathmurdoch.com.au</i></li>
+        <li><a href="https://www.inspiringinquiry.com/learningteaching/inquiry-based-learning" target="_blank" rel="noopener noreferrer">Inspiring Inquiry &ndash; Inquiry-Based Learning</a><i>inspiringinquiry.com</i></li>
+        <li><a href="https://www.hmhco.com/blog/5e-instructional-model" target="_blank" rel="noopener noreferrer">5E Instructional Model (HMH)</a><i>hmhco.com</i></li>
+        <li><a href="https://sites.google.com/view/designandinquiry/home?authuser=0" target="_blank" rel="noopener noreferrer">Design and Inquiry</a><i>sites.google.com</i></li>
+        <li><a href="https://www.trevormackenzie.com/question-routines" target="_blank" rel="noopener noreferrer">Trevor MacKenzie &ndash; Question Routines</a><i>trevormackenzie.com</i></li>
+        <li><a href="https://pz.harvard.edu/thinking-routines" target="_blank" rel="noopener noreferrer">Project Zero &ndash; Thinking Routines</a><i>pz.harvard.edu</i></li>
+        <li><a href="https://pz.harvard.edu/resources/maker-centered-learning-empowering-young-people-to-shape-their-worlds" target="_blank" rel="noopener noreferrer">Project Zero &ndash; Maker-Centered Learning</a><i>pz.harvard.edu</i></li>
+        <li><a href="https://thinkingpathwayz.weebly.com/coloursymbolimage.html" target="_blank" rel="noopener noreferrer">Thinking Pathways &ndash; Colour Symbol Image</a><i>thinkingpathwayz.weebly.com</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Classroom engagement and learning spaces</h3>
+      <ul class="links">
+        <li><a href="https://www.educaplay.com/" target="_blank" rel="noopener noreferrer">Educaplay &ndash; educational games generator</a><i>educaplay.com</i></li>
+        <li><a href="https://www.playmeo.com/" target="_blank" rel="noopener noreferrer">playmeo &ndash; ice-breakers and team games</a><i>playmeo.com</i></li>
+        <li><a href="https://www.casieonline.org/left/" target="_blank" rel="noopener noreferrer">CASIE &ndash; Learning Environments for Tomorrow</a><i>casieonline.org</i></li>
+        <li><a href="https://www.vistathink.com/" target="_blank" rel="noopener noreferrer">VistaThink</a><i>vistathink.com</i></li>
+        <li><a href="https://www.teacherled.com/iresources/shapesapp/index.html" target="_blank" rel="noopener noreferrer">TeacherLED &ndash; Shapes and Measures</a><i>teacherled.com</i></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <h2 class="part"><span>B</span>Design Resources</h2>
+    <div class="group">
+      <h3>Design thinking and ideation</h3>
+      <ul class="links">
+        <li><a href="https://www.designkit.org/methods.html" target="_blank" rel="noopener noreferrer">IDEO Design Kit &ndash; Methods</a><i>designkit.org</i></li>
+        <li><a href="https://dschool.stanford.edu/" target="_blank" rel="noopener noreferrer">Stanford d.school</a><i>dschool.stanford.edu</i></li>
+        <li><a href="https://spencerauthor.com/the-launch-cycle/" target="_blank" rel="noopener noreferrer">The LAUNCH Cycle &ndash; K-12 design thinking</a><i>spencerauthor.com</i></li>
+        <li><a href="https://gamestorming.com/category/games-for-design/" target="_blank" rel="noopener noreferrer">Gamestorming &ndash; Games for design</a><i>gamestorming.com</i></li>
+        <li><a href="https://xplane.com/worksheet/empathetic-conversations-2/" target="_blank" rel="noopener noreferrer">XPLANE &ndash; Empathetic Conversations worksheet</a><i>xplane.com</i></li>
+        <li><a href="https://www.canva.com/design/DAFruAgnVK0/BsaghD94LEGdRYT4J4cFHg/view" target="_blank" rel="noopener noreferrer">Brainstorming Techniques (Canva)</a><i>canva.com</i></li>
+        <li><a href="https://www.canva.com/design/DAFsYH-lzMQ/udRMyrXDDhoiTBAQjsqiZg/view" target="_blank" rel="noopener noreferrer">Interview &amp; Observe (Canva)</a><i>canva.com</i></li>
+        <li><a href="https://razorpay.com/m/fix-my-itch/" target="_blank" rel="noopener noreferrer">Fix My Itch &ndash; Problems in India worth solving</a><i>razorpay.com</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Product design, materials and CAD</h3>
+      <ul class="links">
+        <li><a href="https://www.dsource.in/" target="_blank" rel="noopener noreferrer">D'source &ndash; Design learning (IDC, IIT Bombay)</a><i>dsource.in</i></li>
+        <li><a href="https://learning.edx.org/course/course-v1:USMx+ENES608.3+2T2021/block-v1:USMx+ENES608.3+2T2021+type@sequential+block@f2f998baf1d244f6b28f655ba8b375a9/block-v1:USMx+ENES608.3+2T2021+type@vertical+block@a69e036ae1ab42e4b7224d0e230d8616" target="_blank" rel="noopener noreferrer">edX &ndash; Introduction to Product Design and Development</a><i>learning.edx.org</i></li>
+        <li><a href="https://www.dimensions.com/" target="_blank" rel="noopener noreferrer">Dimensions.com &ndash; Dimensioned drawings</a><i>dimensions.com</i></li>
+        <li><a href="https://www.pacdora.com/dielines" target="_blank" rel="noopener noreferrer">Pacdora &ndash; Dieline templates</a><i>pacdora.com</i></li>
+        <li><a href="https://app.pitch.com/app/presentation/0a3c38b3-8be2-4dbd-be62-f062118ee0de/ddf28c6d-6ad7-4b5a-b0f9-99e89fc06200/366d1cdd-e4a4-40b9-b3ef-034dd8a189bb" target="_blank" rel="noopener noreferrer">Polymers (Pitch deck)</a><i>app.pitch.com</i></li>
+        <li><a href="https://cadcamguru.com/learn-catia-training-information/" target="_blank" rel="noopener noreferrer">Learn CATIA</a><i>cadcamguru.com</i></li>
+        <li><a href="https://makerworld.com/en/models/2169113-t-puzzle-6-pieces-puzzle-box" target="_blank" rel="noopener noreferrer">MakerWorld &ndash; T-puzzle 3D print model</a><i>makerworld.com</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>UI / UX and digital design</h3>
+      <ul class="links">
+        <li><a href="https://m3.material.io/" target="_blank" rel="noopener noreferrer">Material Design 3</a><i>m3.material.io</i></li>
+        <li><a href="https://m3.material.io/get-started" target="_blank" rel="noopener noreferrer">Material Design 3 &ndash; Get started</a><i>m3.material.io</i></li>
+        <li><a href="https://m3.material.io/styles/color/system/how-the-system-works" target="_blank" rel="noopener noreferrer">Material Design 3 &ndash; Color system</a><i>m3.material.io</i></li>
+        <li><a href="https://lawsofux.com/" target="_blank" rel="noopener noreferrer">Laws of UX</a><i>lawsofux.com</i></li>
+        <li><a href="https://www.interaction-design.org/literature/topics" target="_blank" rel="noopener noreferrer">IxDF &ndash; Design Compendium</a><i>interaction-design.org</i></li>
+        <li><a href="https://university.webflow.com/interactive-learning" target="_blank" rel="noopener noreferrer">Webflow University &ndash; Interactive learning</a><i>university.webflow.com</i></li>
+        <li><a href="https://ciechanow.ski/" target="_blank" rel="noopener noreferrer">Bartosz Ciechanowski &ndash; Interactive explainers</a><i>ciechanow.ski</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Visual and graphic design</h3>
+      <ul class="links">
+        <li><a href="https://paperform.co/blog/principles-of-design/" target="_blank" rel="noopener noreferrer">Principles of design (Paperform)</a><i>paperform.co</i></li>
+        <li><a href="https://www.thefutur.com/" target="_blank" rel="noopener noreferrer">The Futur</a><i>thefutur.com</i></li>
+        <li><a href="https://www.thefutur.com/content/color-resource-guide" target="_blank" rel="noopener noreferrer">The Futur &ndash; Ultimate Color Resource Guide</a><i>thefutur.com</i></li>
+        <li><a href="https://pigment.shapefactory.co/" target="_blank" rel="noopener noreferrer">Pigment &ndash; Color palette generator</a><i>pigment.shapefactory.co</i></li>
+        <li><a href="https://gradient.shapefactory.co/" target="_blank" rel="noopener noreferrer">Gradient &ndash; Chromatic gradient generator</a><i>gradient.shapefactory.co</i></li>
+        <li><a href="https://kigen.design/color" target="_blank" rel="noopener noreferrer">Kigen &ndash; Color generator</a><i>kigen.design</i></li>
+        <li><a href="https://feralui.dev/" target="_blank" rel="noopener noreferrer">Feral UI &ndash; Gradient generator</a><i>feralui.dev</i></li>
+        <li><a href="https://texturelabs.org/" target="_blank" rel="noopener noreferrer">Texturelabs &ndash; Free textures</a><i>texturelabs.org</i></li>
+        <li><a href="https://looka.com/explore" target="_blank" rel="noopener noreferrer">Looka &ndash; Logo maker</a><i>looka.com</i></li>
+        <li><a href="https://color.method.ac/" target="_blank" rel="noopener noreferrer">Method &ndash; Color game</a><i>color.method.ac</i></li>
+        <li><a href="https://shape.method.ac/" target="_blank" rel="noopener noreferrer">Method &ndash; Shape Type</a><i>shape.method.ac</i></li>
+        <li><a href="https://type.method.ac/" target="_blank" rel="noopener noreferrer">Method &ndash; Kern Type</a><i>type.method.ac</i></li>
+        <li><a href="https://cfrce.github.io/awesome-design/" target="_blank" rel="noopener noreferrer">Awesome Design</a><i>cfrce.github.io</i></li>
+        <li><a href="https://github.com/reinaldosimoes/design-resources" target="_blank" rel="noopener noreferrer">design-resources (GitHub)</a><i>github.com</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Drawing and sketching</h3>
+      <ul class="links">
+        <li><a href="https://drawabox.com/lesson/0" target="_blank" rel="noopener noreferrer">Drawabox &ndash; Lesson 0</a><i>drawabox.com</i></li>
+        <li><a href="https://practicedrawingthis.com/cgi-bin/carousel.cgi?section=free-online-drawing-course&amp;episode=article-practice-dexterity" target="_blank" rel="noopener noreferrer">Practice Drawing This &ndash; Dexterity</a><i>practicedrawingthis.com</i></li>
+        <li><a href="https://practicedrawingthis.com/cgi-bin/morning-sketches-app.cgi?warmup=0" target="_blank" rel="noopener noreferrer">Morning Sketches &ndash; Reference images</a><i>practicedrawingthis.com</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Design and animation software</h3>
+      <ul class="links">
+        <li><a href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva</a><i>canva.com</i></li>
+        <li><a href="https://www.affinity.studio/download" target="_blank" rel="noopener noreferrer">Affinity &ndash; Download</a><i>affinity.studio</i></li>
+        <li><a href="https://www.toonboom.com/teachers" target="_blank" rel="noopener noreferrer">Toon Boom &ndash; for Teachers</a><i>toonboom.com</i></li>
+        <li><a href="https://opentoonz.github.io/e/download/opentoonz.html" target="_blank" rel="noopener noreferrer">OpenToonz</a><i>opentoonz.github.io</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Making, robotics and electronics</h3>
+      <ul class="links">
+        <li><a href="https://github.com/sjpiper145/MakerSkillTree" target="_blank" rel="noopener noreferrer">MakerSkillTree (GitHub)</a><i>github.com</i></li>
+        <li><a href="https://github.com/sjpiper145/MakerSkillTree/blob/main/Coding%20Skill%20Tree/Coding%20Skill%20Tree.pdf" target="_blank" rel="noopener noreferrer">Coding Skill Tree (PDF)</a><i>github.com</i></li>
+        <li><a href="https://www.tinkercad.com/dashboard/designs/circuits" target="_blank" rel="noopener noreferrer">Tinkercad Circuits</a><i>tinkercad.com</i></li>
+        <li><a href="https://falstad.com/circuit/" target="_blank" rel="noopener noreferrer">Falstad &ndash; Circuit Simulator</a><i>falstad.com</i></li>
+        <li><a href="https://www.circuito.io/" target="_blank" rel="noopener noreferrer">circuito.io &ndash; Circuit design for makers</a><i>circuito.io</i></li>
+        <li><a href="https://spike.legoeducation.com/prime/project" target="_blank" rel="noopener noreferrer">LEGO SPIKE Prime</a><i>spike.legoeducation.com</i></li>
+        <li><a href="https://primelessons.org/en/Lessons.html" target="_blank" rel="noopener noreferrer">Prime Lessons</a><i>primelessons.org</i></li>
+        <li><a href="https://www.fischertechnik.de/en/schools/learning-material" target="_blank" rel="noopener noreferrer">fischertechnik &ndash; STEM learning materials</a><i>fischertechnik.de</i></li>
+        <li><a href="https://www.fischertechnik-cloud.com/designstudio/" target="_blank" rel="noopener noreferrer">fischertechnik &ndash; Design Studio</a><i>fischertechnik-cloud.com</i></li>
+        <li><a href="https://cardboard.lofirobot.com/microbit-control-app-info/" target="_blank" rel="noopener noreferrer">Micro:bit Cardboard Robots</a><i>cardboard.lofirobot.com</i></li>
+        <li><a href="https://roboflix.xair.live/" target="_blank" rel="noopener noreferrer">ROBOFLIX &ndash; Robotics projects</a><i>roboflix.xair.live</i></li>
+        <li><a href="https://www.skool.com/robonyx/need-help-with-the-reaction-time-project" target="_blank" rel="noopener noreferrer">Robonyx &ndash; Reaction-time project</a><i>skool.com</i></li>
+        <li><a href="https://espressif.github.io/esp32-c3-book-en/introduction.html" target="_blank" rel="noopener noreferrer">ESP32-C3 Wireless Adventure &ndash; IoT guide</a><i>espressif.github.io</i></li>
+        <li><a href="https://blynk.cloud/dashboard/628281/global/devices/1/organization/628281/devices/1964694/dashboard" target="_blank" rel="noopener noreferrer">Blynk Console</a><i>blynk.cloud</i></li>
+        <li><a href="https://www.tutorialspoint.com/difference-between-microprocessor-and-microcontroller" target="_blank" rel="noopener noreferrer">Microprocessor vs Microcontroller</a><i>tutorialspoint.com</i></li>
+        <li><a href="https://ocw.mit.edu/courses/6-002-circuits-and-electronics-spring-2007/" target="_blank" rel="noopener noreferrer">MIT OCW &ndash; Circuits and Electronics</a><i>ocw.mit.edu</i></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h3>Coding and app design</h3>
+      <ul class="links">
+        <li><a href="https://appinventor.mit.edu/explore/library" target="_blank" rel="noopener noreferrer">MIT App Inventor &ndash; Library</a><i>appinventor.mit.edu</i></li>
+        <li><a href="https://ai2.appinventor.mit.edu/reference/blocks/control.html" target="_blank" rel="noopener noreferrer">MIT App Inventor &ndash; Control Blocks</a><i>ai2.appinventor.mit.edu</i></li>
+        <li><a href="https://mit-cml.github.io/extensions/" target="_blank" rel="noopener noreferrer">MIT App Inventor &ndash; Extensions</a><i>mit-cml.github.io</i></li>
+        <li><a href="https://www.codedex.io/python/01-setting-up" target="_blank" rel="noopener noreferrer">Codédex &ndash; Python</a><i>codedex.io</i></li>
+        <li><a href="https://www.w3schools.com/html/html_intro.asp" target="_blank" rel="noopener noreferrer">W3Schools &ndash; HTML</a><i>w3schools.com</i></li>
+        <li><a href="https://learngitbranching.js.org/" target="_blank" rel="noopener noreferrer">Learn Git Branching</a><i>learngitbranching.js.org</i></li>
+        <li><a href="https://www.kirupa.com/developer/actionscript/flowchart.htm" target="_blank" rel="noopener noreferrer">Kirupa &ndash; Flowcharting</a><i>kirupa.com</i></li>
+        <li><a href="https://dev.codedesign.ai/app/builder?project=makerspace-project31xlxwk6iu#home" target="_blank" rel="noopener noreferrer">CodeDesign &ndash; Frontend builder</a><i>dev.codedesign.ai</i></li>
+        <li><a href="https://same.new/" target="_blank" rel="noopener noreferrer">same.new</a><i>same.new</i></li>
+        <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a><i>github.com</i></li>
+        <li><a href="https://skillsbuild.org/secondary-educators/teacher-toolkit" target="_blank" rel="noopener noreferrer">IBM SkillsBuild &ndash; Teacher Toolkit</a><i>skillsbuild.org</i></li>
+        <li><a href="https://alm.ibm.com/ibm-skillsbuildadult/trainingId/course:4058918/trainingInstanceId/course:4058918_4630713/en-US" target="_blank" rel="noopener noreferrer">IBM SkillsBuild &ndash; Training</a><i>alm.ibm.com</i></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Design Team - SIS</span>
+    <span>Teacher bookmarks</span>
+  </div>
+</footer>
+
+<script src="assets/theme.js"></script>
+</body>
+</html>
