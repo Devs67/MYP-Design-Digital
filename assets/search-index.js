@@ -41,7 +41,6 @@ var MYP_SEARCH_INDEX = [
   { t:"Summative Assessments — MYP 4 & 5", d:"Current-unit summative task materials for MYP 4.", grade:"MYP 4–5", href:"myp4-5/sa.html", badge:"SA", tone:"ink" },
   { t:"Class progress (Design Team)", d:"Class progress across all four strands — needs the teacher key.", grade:"MYP 4–5", href:"myp4-5/teacher.html", badge:"T", tone:"dev" },
 
-  { t:"Lesson Experience", d:"Lesson-by-lesson class logs — MYP 1B, 2A, 2D, 3B and 4.", grade:"All grades", href:"lesson-experience.html", badge:"LE", tone:"moss" },
   { t:"Appendix, Citations & Bibliography", d:"How to build your appendix, cite a source, and format MLA 9 — used across every grade.", grade:"All grades", href:"appendix-citations.html", badge:"AC", tone:"ink" },
   { t:"Task-specific Clarifications (TSC)", d:"The source wording each guide on this site is built from, for every grade and criterion published so far.", grade:"All grades", href:"tsc.html", badge:"TSC", tone:"ink" }
 ];
