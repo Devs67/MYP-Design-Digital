@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* dark: follows the .dark class set by the theme toggle, not only the system setting */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-display: "Fraunces", Georgia, serif;
+    --font-sans: "Work Sans", system-ui, -apple-system, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    
+    --bg-page: #f2f5f6;
+    --bg-card: #ffffff;
+    --bg-subtle: #e8eef0;
+    --ink-primary: #14303c;
+    --ink-secondary: #5a727b;
+    --border-color: #d3e0e5;
+    --border-soft: #e7eef0;
+    
+    --crit-a: #12707f;
+    --crit-a-soft: #e0f0f2;
+    --crit-b: #b05a1c;
+    --crit-b-soft: #fbeeeb;
+    --crit-c: #2f6b4f;
+    --crit-c-soft: #e8f1ec;
+    --crit-d: #b23a2e;
+    --crit-d-soft: #faecea;
+  }
+
+  .dark {
+    --bg-page: #0f1c22;
+    --bg-card: #162831;
+    --bg-subtle: #1c333e;
+    --ink-primary: #ecf3f6;
+    --ink-secondary: #90a8b2;
+    --border-color: #264350;
+    --border-soft: #1e3641;
+    
+    --crit-a: #43a8b8;
+    --crit-a-soft: #173842;
+    --crit-b: #e2803b;
+    --crit-b-soft: #382417;
+    --crit-c: #4da67c;
+    --crit-c-soft: #183325;
+    --crit-d: #e0655a;
+    --crit-d-soft: #3b1e1b;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-page);
+    color: var(--ink-primary);
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+@media print {
+  header.topbar, .no-print, button, input {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .card, article {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+}

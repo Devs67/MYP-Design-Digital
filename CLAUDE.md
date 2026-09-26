@@ -21,6 +21,8 @@ lost for that item and let Dev decide.
 **Do not add a build step.** No npm, no bundler, no framework. Plain HTML, CSS and vanilla JS,
 served straight from GitHub Pages. If a task seems to need React or a build pipeline, say so
 and explain the trade rather than introducing one.
+Exception, approved by Dev: `lesson-experience-app/` is a React + Vite app built into
+`lesson-experience/app/`. See its README before editing.
 
 **Do not edit files in `examples/`.** They are real student portfolios.
 
