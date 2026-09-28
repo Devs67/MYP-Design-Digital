@@ -358,7 +358,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       f: 'If you don’t know exactly who it is for, you can’t decide what they need to see.' },
     { s: 'i', spec: true, type: 'match', q: 'Match each design specification point to its ACCESS FM letter.',
       pairs: [['The poster must use Ignite’s brand colours and logo.', 'Aesthetics'], ['The poster must fit on an A3 school noticeboard.', 'Size'], ['The poster must appeal to school students across India.', 'Customer']],
-      choices: ['Aesthetics', 'Customer', 'Size', 'Cost', 'Safety', 'Function'],
+      choices: ['Aesthetics', 'Customer', 'Size', 'Cost', 'Safety', 'Function', 'Environment', 'Materials'],
       f: 'Aesthetics is how it looks, Size is how big it is, and Customer is who it is for.' },
     { s: 'i', spec: true, q: 'Which of these belongs in your design specification and NOT in your design ideas?',
       o: ['The poster must include a QR code or link to register', 'Put a rocket in the top corner', 'Use a purple background', 'Use a comic-style font'],
@@ -437,7 +437,8 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   if (qCount) qCount.textContent = TOTAL;
   var current = null;
   Q.forEach(function (item, idx) {
-    if (item.s !== current) {
+    // strand iii questions run on under strand ii without their own heading
+    if (item.s !== current && item.s !== 'iii') {
       current = item.s;
       var sec = el('section', 'strand');
       sec.appendChild(el('p', 'eyebrow', 'Strand ' + current));
