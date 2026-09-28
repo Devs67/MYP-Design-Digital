@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <style>
 :root{
   --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
@@ -196,10 +195,6 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .sbox--testing .k{color:var(--moss)}
 .sbox--sketch .k{color:var(--b)}
 .sbox--ipo .k{color:var(--a)}
-.submit-box{margin-top:20px;padding:18px 20px;border:1px dashed var(--amber);border-radius:12px;background:var(--amber-tint)}
-.submit-box h3{font-family:var(--display);font-size:18px;font-weight:600;margin:0 0 6px}
-.submit-box ol{margin:6px 0 16px;padding-left:20px;font-size:15px}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap}
 
 footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
@@ -231,7 +226,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   html:root.dark{--ink:#14303C;--paper:#F2F5F6;--card:#FFF;--rule:#D3E0E5;--rule-soft:#E7EEF0;--slate:#5A727B;
     --amber:#B05A1C;--amber-tint:#FBEEE2;--moss:#2F6B4F;--moss-tint:#E8F1EC;--clay:#9C3E2F;--clay-tint:#F8E9E6;
     --a:#12707F;--a-tint:#E1F1F3;--b:#96700A;--b-tint:#F8F0D9}
-  .progress,.actions,.btn-row,.homelink,.cm{display:none !important}
+  .progress,.actions,.homelink,.cm{display:none !important}
   body,html:root.dark body{background:#fff;color:#000}
   .opt.is-correct,.opt.is-wrong,.match-row.is-correct,.match-row.is-wrong{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .card,.q{break-inside:avoid;border-color:#bbb}
@@ -307,7 +302,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
         </select>
       </div>
     </div>
-    <p class="hint">Your name and section go on the result file you'll upload to ManageBac.</p>
+    <p class="hint">Your name and section appear on your result.</p>
   </section>
 
   <div class="progress" aria-live="polite">
@@ -330,18 +325,6 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     <div class="strands" id="resStrands"></div>
     <p class="msg" id="resMsg"></p>
 
-    <div class="submit-box">
-      <h3>Submit on ManageBac</h3>
-      <ol>
-        <li>Press <strong>Download my result (PDF)</strong>.</li>
-        <li>Open the <strong>Criterion B quiz</strong> task on ManageBac.</li>
-        <li>Upload the PDF and press submit.</li>
-      </ol>
-      <div class="btn-row">
-        <button class="btn" id="pdfBtn" type="button">Download my result (PDF)</button>
-        <button class="btn secondary" id="printBtn" type="button">Print / save as PDF</button>
-      </div>
-    </div>
     <p class="hint">Scroll down to see which answers were right and read the feedback on each question.</p>
   </section>
 
@@ -839,7 +822,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     nameEl.disabled = true; secEl.disabled = true;
     checkBtn.disabled = true; checkBtn.textContent = 'Score checked';
     var onceNote = document.getElementById('onceNote');
-    if (onceNote) onceNote.textContent = 'Your answers are locked. Download your result below.';
+    if (onceNote) onceNote.textContent = 'Your answers are locked. Your result is below.';
 
     when = when || new Date();
     result = { name: name, section: section, score: score, per: per, when: when };
@@ -888,74 +871,6 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   ready = true;
   save();
 
-  /* ---------- PDF ---------- */
-  function ascii(s) {
-    return String(s)
-      .replace(/[“”]/g, '"').replace(/[‘’]/g, "'")
-      .replace(/[–—]/g, '-').replace(/…/g, '...')
-      .replace(/→/g, '->').replace(/×/g, 'x').replace(/Ω/g, ' ohm')
-      .replace(/✓/g, 'Correct').replace(/✗/g, 'X')
-      .replace(/[^\x20-\x7E\n]/g, '');
-  }
-
-  var printBtn = document.getElementById('printBtn');
-  if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
-
-  var pdfBtn = document.getElementById('pdfBtn');
-  if (pdfBtn) pdfBtn.addEventListener('click', function () {
-    if (!result) return;
-    if (!window.jspdf || !window.jspdf.jsPDF) { window.print(); return; }
-    var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
-    var W = 210, M = 16, y = 18, maxW = W - 2 * M;
-    var AMBER = [176, 90, 28], MOSS = [47, 107, 79], CLAY = [156, 62, 47], SLATE = [90, 114, 123], INK = [20, 48, 60];
-    function need(h) { if (y + h > 282) { doc.addPage(); y = 18; } }
-    function line(text, size, style, color, gap) {
-      doc.setFont('helvetica', style || 'normal'); doc.setFontSize(size || 10);
-      var c = color || INK; doc.setTextColor(c[0], c[1], c[2]);
-      var parts = doc.splitTextToSize(ascii(text), maxW);
-      var h = parts.length * (size || 10) * 0.42;
-      need(h + 1);
-      doc.text(parts, M, y); y += h + (gap == null ? 2 : gap);
-    }
-    var P = result.per;
-    function frac(k) { return P[k][0] + ' / ' + P[k][1]; }
-
-    line('MYP 2 Design - Criterion B Quiz', 16, 'bold', AMBER, 1);
-    line('Unit 1: Sensing Our World (school garden soil-moisture alert)', 10, 'normal', SLATE, 5);
-    line('Name: ' + result.name, 12, 'bold', null, 1);
-    line('Section: ' + result.section, 12, 'normal', null, 1);
-    line('Completed: ' + result.when.toLocaleString(), 10, 'normal', SLATE, 5);
-
-    line('Score: ' + result.score + ' / ' + TOTAL + '  (' + Math.round(result.score / TOTAL * 100) + '%)', 14, 'bold', null, 2);
-    line('Strand i (specification & testing): ' + frac('i') + '     Strand ii (design ideas): ' + frac('ii') +
-         '     Strand iii (chosen design): ' + frac('iii') + '     Strand iv (planning): ' + frac('iv'), 10, 'normal', null, 1);
-    line('Spec: ' + frac('spec') + '     Testing: ' + frac('testing') + '     Sketches & drawings: ' + frac('sketch') + '     IPO: ' + frac('ipo'), 10, 'normal', null, 2);
-    line(result.msg, 10, 'italic', SLATE, 4);
-
-    doc.setDrawColor(211, 224, 229); doc.line(M, y, W - M, y); y += 6;
-
-    Q.forEach(function (item, idx) {
-      need(24);
-      line((idx + 1) + '. [Strand ' + item.s + '] ' + item.q, 10, 'bold', null, 1);
-      if (item.svg || item.img) line('(The picture for this question is on the website.)', 9, 'italic', SLATE, 1);
-      if (item.table) {
-        line(item.table.head.join('  |  '), 9, 'normal', SLATE, 0.5);
-        item.table.rows.forEach(function (r) { line(r.join('  |  '), 9, 'normal', SLATE, 0.5); });
-        line(item.table.foot.join('  |  '), 9, 'bold', SLATE, 1.5);
-      }
-      function show(v) {
-        if (item.type === 'match') return item.pairs.map(function (pr, r) { return '"' + pr[0] + '" -> ' + v[r]; }).join('   |   ');
-        if (item.type === 'multi') return v.join('   AND   ');
-        return v;
-      }
-      line('Your answer: ' + show(item.answer), 10, 'normal', item.ok ? MOSS : CLAY, 1);
-      if (!item.ok) line('Correct answer: ' + show(item.correct), 10, 'normal', MOSS, 1);
-      line((item.ok ? 'Correct' : 'Incorrect') + ' - ' + item.f, 9, 'italic', SLATE, 4);
-    });
-
-    var safe = ascii(result.name).replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'student';
-    doc.save('CritB_Quiz_MYP2_' + result.section.replace(/\s+/g, '') + '_' + safe + '.pdf');
-  });
 })();
 </script>
 
