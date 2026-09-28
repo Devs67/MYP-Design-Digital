@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Criterion B FA — MYP 2 Design</title>
+<title>Criterion B quiz — MYP 2 Design</title>
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -252,7 +252,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       <span>&rsaquo;</span>
       <a href="criterion-b.html">Criterion B</a>
       <span>&rsaquo;</span>
-      <span class="cur">MYP 2 FA</span>
+      <span class="cur">MYP 2 quiz</span>
     </nav>
     <div class="topbar__actions">
       <div class="topbar__grades">
@@ -274,7 +274,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 <header class="mast">
   <div class="wrap">
     <a class="homelink" href="criterion-b.html">&larr; Criterion B</a>
-    <p class="eyebrow">MYP 2 Design &middot; Formative assessment</p>
+    <p class="eyebrow">MYP 2 Design &middot; Quiz</p>
     <h1>Criterion B &mdash; Developing ideas</h1>
     <p class="sub">Unit 1 &middot; Sensing Our World &middot; <span id="qCount">30</span> questions &middot; Strands i to iv</p>
   </div>
@@ -334,7 +334,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       <h3>Submit on ManageBac</h3>
       <ol>
         <li>Press <strong>Download my result (PDF)</strong>.</li>
-        <li>Open the <strong>Criterion B FA</strong> task on ManageBac.</li>
+        <li>Open the <strong>Criterion B quiz</strong> task on ManageBac.</li>
         <li>Upload the PDF and press submit.</li>
       </ol>
       <div class="btn-row">
@@ -920,7 +920,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     var P = result.per;
     function frac(k) { return P[k][0] + ' / ' + P[k][1]; }
 
-    line('MYP 2 Design - Criterion B Formative Assessment', 16, 'bold', AMBER, 1);
+    line('MYP 2 Design - Criterion B Quiz', 16, 'bold', AMBER, 1);
     line('Unit 1: Sensing Our World (school garden soil-moisture alert)', 10, 'normal', SLATE, 5);
     line('Name: ' + result.name, 12, 'bold', null, 1);
     line('Section: ' + result.section, 12, 'normal', null, 1);
@@ -954,7 +954,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     });
 
     var safe = ascii(result.name).replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'student';
-    doc.save('CritB_FA_MYP2_' + result.section.replace(/\s+/g, '') + '_' + safe + '.pdf');
+    doc.save('CritB_Quiz_MYP2_' + result.section.replace(/\s+/g, '') + '_' + safe + '.pdf');
   });
 })();
 </script>
