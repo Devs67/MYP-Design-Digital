@@ -125,6 +125,24 @@ this repo and must never be committed. The D1 binding is `env.DB`.
 
 ---
 
+## Live quiz (Criterion B FA quiz, Level 2)
+
+```
+myp1-2/live-host.html  ──►  live quiz Worker  ──►  D1 (its own database)
+quiz page, ?level=2    ──►  myp-live-quiz.bachhudevenderchintu.workers.dev
+```
+
+A second, separate Worker. It never touches the progress database. Source is
+`live-quiz-worker.js`, tables are in `live-quiz-schema.sql`. Like the progress Worker it is
+deployed by pasting into the Cloudflare dashboard. Bindings: D1 as `DB`, secret `ADMIN_KEY`.
+
+The teacher opens `myp1-2/live-host.html`, enters the key, makes a 4-character join code and
+presses Start. Students on Level 2 press **Join live quiz**; the questions stay hidden until
+Start. The leaderboard (score, then time since Start) is only returned with the key.
+Scores are marked on the student's device and sent on Check.
+
+---
+
 ## Local development
 
 Open with VS Code Live Server, not by double-clicking the file. The Worker only accepts

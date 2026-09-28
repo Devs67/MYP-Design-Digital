@@ -139,6 +139,19 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .err{color:var(--clay);font-size:14px;margin:10px 0 0;min-height:1em}
 .once{color:var(--slate);font-size:13.5px;margin:10px 0 0;text-align:center}
 
+/* live class quiz (Level 2) */
+.livecard{border-left:4px solid var(--amber)}
+.liverow{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-top:14px}
+.liverow > div{flex:0 1 180px}
+#liveCode{font-family:var(--mono);font-size:20px;letter-spacing:.2em;text-transform:uppercase}
+#liveRetry{margin-top:14px}
+.livedot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--amber);margin-right:8px;vertical-align:1px}
+.live-waiting #quiz,.live-waiting .progress,.live-waiting .actions{display:none}
+@media (prefers-reduced-motion:no-preference){
+  .livedot{animation:livePulse 1.2s ease-in-out infinite}
+  @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.25}}
+}
+
 /* one-try confirmation */
 .cm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;display:flex;align-items:center;justify-content:center;
   padding:20px;background:rgba(20,48,60,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
@@ -199,7 +212,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   html:root.dark{--ink:#14303C;--paper:#F2F5F6;--card:#FFF;--rule:#D3E0E5;--rule-soft:#E7EEF0;--slate:#5A727B;
     --amber:#B05A1C;--amber-tint:#FBEEE2;--moss:#2F6B4F;--moss-tint:#E8F1EC;--clay:#9C3E2F;--clay-tint:#F8E9E6;
     --b:#96700A;--b-tint:#F8F0D9}
-  .progress,.actions,.btn-row,.homelink,.cm{display:none !important}
+  .progress,.actions,.btn-row,.homelink,.cm,.livecard{display:none !important}
   body,html:root.dark body{background:#fff;color:#000}
   .opt.is-correct,.opt.is-wrong,.match-row.is-correct,.match-row.is-wrong,
   .blank-line.is-correct,.blank-line.is-wrong{-webkit-print-color-adjust:exact;print-color-adjust:exact}
@@ -281,6 +294,21 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       </div>
     </div>
     <p class="hint">Your name and section go on the result file you'll upload to ManageBac.</p>
+  </section>
+
+  <section class="card livecard" id="liveCard" aria-live="polite" hidden>
+    <p class="eyebrow">Live class quiz</p>
+    <h2 id="liveTitle">Is your teacher running a live quiz?</h2>
+    <p id="liveText">Fill in your name and section above, type the code from your teacher's screen, then press <strong>Join live quiz</strong>. The questions appear when your teacher starts the quiz.</p>
+    <div class="liverow" id="liveForm">
+      <div>
+        <label class="f" for="liveCode">Code</label>
+        <input type="text" id="liveCode" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. K7QM">
+      </div>
+      <button class="btn" id="liveBtn" type="button">Join live quiz</button>
+    </div>
+    <button class="btn secondary" id="liveRetry" type="button" hidden>Send my score again</button>
+    <p class="err" id="liveErr" role="alert"></p>
   </section>
 
   <div class="progress" aria-live="polite">
@@ -669,14 +697,18 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   }
 
   /* ---------- Save and restore ---------- */
-  function save() {
-    var a = Q.map(function (item) {
+  function encodeAnswers() {
+    return Q.map(function (item) {
       if (item.type === 'match') return item.picks.map(function (p) { return p ? item.choices.indexOf(p).toString(36) : '-'; }).join('');
       return item.answer === null ? '-' : item.o.indexOf(item.answer).toString(36);
     }).join('.');
-    var parts = ['l=' + LEVEL, 's=' + seed0.toString(36), 'a=' + a,
+  }
+
+  function save() {
+    var parts = ['l=' + LEVEL, 's=' + seed0.toString(36), 'a=' + encodeAnswers(),
       'n=' + encodeURIComponent(nameEl.value), 'c=' + encodeURIComponent(secEl.value)];
     if (result) parts.push('d=' + result.when.getTime().toString(36));
+    if (live && live.player) parts.push('lc=' + live.code, 'lp=' + live.player, 'lx=' + (live.sent ? 1 : 0));
     try { history.replaceState(null, '', location.pathname + location.search + '#' + parts.join('&')); } catch (e) {}
   }
 
@@ -734,6 +766,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     checked = true;
     if (cm) cm.hidden = true;
     grade(nameEl.value.trim(), secEl.value);
+    if (live.player) submitLive();
   }
   if (cm && cmYes && cmNo) {
     cmYes.addEventListener('click', confirmed);
@@ -841,11 +874,134 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     scrollTo(res, 'start');
   }
 
+  /* ---------- Live class quiz (Level 2 only) ---------- */
+  // Students join a session the teacher runs from live-host.html. The teacher's Start
+  // reveals the questions; the score is sent on Check. Students never see the leaderboard.
+  var LIVE_API = 'https://myp-live-quiz.bachhudevenderchintu.workers.dev';
+  var live = { code: saved.lc || '', player: saved.lp || '', sent: saved.lx === '1' };
+  var livePoll = null;
+  var liveCard = document.getElementById('liveCard');
+  var liveCodeIn = document.getElementById('liveCode');
+  var liveBtn = document.getElementById('liveBtn');
+  var liveRetry = document.getElementById('liveRetry');
+  var liveErr = document.getElementById('liveErr');
+
+  function liveCall(method, path, body) {
+    var opts = { method: method };
+    if (body) { opts.headers = { 'Content-Type': 'application/json' }; opts.body = JSON.stringify(body); }
+    return fetch(LIVE_API + path, opts).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (d) { d._status = r.status; return d; });
+    });
+  }
+
+  function liveState(state) {
+    var title = document.getElementById('liveTitle'), text = document.getElementById('liveText');
+    var form = document.getElementById('liveForm');
+    if (!title || !text || !form) return;
+    form.hidden = state !== 'idle';
+    liveRetry.hidden = state !== 'failed';
+    if (state === 'waiting') document.body.classList.add('live-waiting');
+    else document.body.classList.remove('live-waiting');
+    text.textContent = '';
+    var copy = {
+      idle: ['Is your teacher running a live quiz?', null],
+      waiting: ['You’re in, ' + nameEl.value.trim(), 'Waiting for your teacher to start the quiz. Keep this page open.'],
+      live: ['Live quiz · code ' + live.code, 'Answer every question, then press Check my score. Your score goes to your teacher.'],
+      sending: ['Sending your score…', 'Keep this page open.'],
+      sent: ['Score sent', 'Your teacher can see your score. Download your result below for ManageBac.'],
+      failed: ['Your score was not sent', 'Check the internet connection, then press Send my score again.'],
+      closed: ['The live quiz has finished', result ? 'Your teacher ended the quiz before your score was sent. You can still download your result below.' : 'You can still answer the questions for practice.']
+    }[state];
+    title.textContent = copy[0];
+    if (state === 'idle') {
+      text.innerHTML = 'Fill in your name and section above, type the code from your teacher’s screen, then press <strong>Join live quiz</strong>. The questions appear when your teacher starts the quiz.';
+    } else {
+      if (state === 'waiting' || state === 'sending') text.appendChild(el('span', 'livedot'));
+      text.appendChild(document.createTextNode(copy[1]));
+    }
+  }
+
+  function resetAnswers() {
+    Q.forEach(function (item) {
+      item.answer = null;
+      if (item.picks) item.picks = item.picks.map(function () { return ''; });
+      var ins = item.optsEl.querySelectorAll('input'), sels = item.optsEl.querySelectorAll('select'), ch = item.optsEl.querySelectorAll('.chosen');
+      for (var i = 0; i < ins.length; i++) ins[i].checked = false;
+      for (var s = 0; s < sels.length; s++) sels[s].value = '';
+      for (var c = 0; c < ch.length; c++) ch[c].classList.remove('chosen');
+      item.box.classList.remove('missing');
+    });
+    updateProgress();
+  }
+
+  function stopLivePoll() { if (livePoll) { clearInterval(livePoll); livePoll = null; } }
+
+  function checkLive(first) {
+    liveCall('GET', '/live/status?code=' + live.code).then(function (d) {
+      if (d.status === 'live') { stopLivePoll(); liveState('live'); if (!first) scrollTo(quiz, 'start'); }
+      else if (d.status === 'ended' || d._status === 404) { stopLivePoll(); liveState('closed'); }
+    }).catch(function () {});
+  }
+
+  function waitForStart(first) {
+    liveState('waiting');
+    stopLivePoll();
+    checkLive(first);
+    livePoll = setInterval(function () { checkLive(false); }, 2000);
+  }
+
+  function submitLive() {
+    if (!result || !live.player || live.sent) return;
+    liveState('sending');
+    liveCall('POST', '/live/submit', { code: live.code, player: live.player, score: result.score, total: TOTAL, answers: encodeAnswers() })
+      .then(function (d) {
+        if (d.ok) { live.sent = true; save(); liveState('sent'); }
+        else if (d._status === 409 || d._status === 404) liveState('closed');
+        else liveState('failed');
+      })
+      .catch(function () { liveState('failed'); });
+  }
+
+  if (LEVEL === 2 && liveCard && liveCodeIn && liveBtn && liveRetry && liveErr) {
+    liveCard.hidden = false;
+    var qm = /[?&]live=([A-Za-z0-9]{4})/.exec(location.search);
+    if (qm) liveCodeIn.value = qm[1].toUpperCase();
+
+    liveBtn.addEventListener('click', function () {
+      liveErr.textContent = '';
+      if (checked) { liveErr.textContent = 'You have already checked your score on this page. Open Level 2 again to join.'; return; }
+      var name = nameEl.value.trim(), section = secEl.value;
+      var c = liveCodeIn.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (!name) { liveErr.textContent = 'Type your full name at the top first.'; nameEl.focus(); return; }
+      if (!section) { liveErr.textContent = 'Choose your section at the top first.'; secEl.focus(); return; }
+      if (c.length !== 4) { liveErr.textContent = 'Type the 4-character code from your teacher’s screen.'; liveCodeIn.focus(); return; }
+      liveBtn.disabled = true;
+      liveCall('POST', '/live/join', { code: c, name: name, section: section }).then(function (d) {
+        liveBtn.disabled = false;
+        if (!d.player) { liveErr.textContent = d.error || 'Could not join. Try again.'; return; }
+        resetAnswers();
+        live.code = c; live.player = d.player; live.sent = false;
+        nameEl.disabled = true; secEl.disabled = true;
+        save();
+        if (d.status === 'live') { liveState('live'); scrollTo(quiz, 'start'); } else waitForStart(true);
+      }).catch(function () { liveBtn.disabled = false; liveErr.textContent = 'Cannot reach the live quiz. Check the internet connection.'; });
+    });
+    liveCodeIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') liveBtn.click(); });
+    liveRetry.addEventListener('click', submitLive);
+  }
+
   nameEl.addEventListener('input', function () { if (ready) save(); });
   secEl.addEventListener('change', function () { if (ready) save(); });
   restore();
   ready = true;
   save();
+
+  // back after a refresh: carry on where the live quiz left off
+  if (LEVEL === 2 && live.player && liveCard && !liveCard.hidden) {
+    nameEl.disabled = true; secEl.disabled = true;
+    if (result) { if (live.sent) liveState('sent'); else submitLive(); }
+    else waitForStart(true);
+  }
 
   /* ---------- PDF ---------- */
   function ascii(s) {
