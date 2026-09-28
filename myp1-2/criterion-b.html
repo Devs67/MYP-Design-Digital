@@ -65,6 +65,9 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
   padding:11px 18px;border-radius:7px;white-space:nowrap;transition:.15s}
 .tpl__btn:hover{opacity:.88}
 .tpl__btn svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2}
+.tpl__btns{display:flex;gap:8px;flex-wrap:wrap}
+.tpl__btn--alt{background:var(--card);color:var(--amber);border:1px solid var(--amber)}
+.tpl__btn--alt svg{stroke:var(--amber)}
 
 .slidebox{background:var(--card);border:1px solid var(--rule);border-radius:12px;overflow:hidden}
 .slidebox iframe{width:100%;aspect-ratio:16/9;height:auto;border:0;display:block;background:var(--paper)}
@@ -139,12 +142,18 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
       <div class="tpl__txt">
         <p class="tpl__lbl">MYP 1 &middot; Formative assessment</p>
         <h3>Criterion B FA quiz</h3>
-        <p>25 self-marking questions on strands i to iii, including design specification and poster layout. You can check your score once, then download a PDF to upload to ManageBac.</p>
+        <p>Self-marking questions on strands i to iii, including design specification and poster layout. Start with Level 1, then try Level 2 for harder questions. You can check your score once, then download a PDF to upload to ManageBac.</p>
       </div>
-      <a class="tpl__btn" href="criterion-b-fa-quiz.html">
-        Start the quiz
-        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
+      <div class="tpl__btns">
+        <a class="tpl__btn" href="criterion-b-fa-quiz.html">
+          Level 1
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="tpl__btn tpl__btn--alt" href="criterion-b-fa-quiz.html?level=2">
+          Level 2 &middot; harder
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>

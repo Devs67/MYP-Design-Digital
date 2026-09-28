@@ -38,6 +38,11 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
   line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
 .mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
+.levels{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.levels a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:9px 15px;
+  border:1px solid var(--rule);border-radius:7px;background:var(--card);color:var(--slate);text-decoration:none}
+.levels a:hover{border-color:var(--slate);color:var(--ink)}
+.levels a.on{border-color:var(--amber);background:var(--amber-tint);color:var(--amber);font-weight:600}
 
 .card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:22px 24px;margin:16px 0}
 .card h2{font-family:var(--display);font-size:20px;font-weight:600;margin:6px 0 10px;letter-spacing:-.01em}
@@ -216,7 +221,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       <span>&rsaquo;</span>
       <a href="criterion-b.html">Criterion B</a>
       <span>&rsaquo;</span>
-      <span class="cur">FA quiz</span>
+      <span class="cur" id="lvlCrumb">FA quiz</span>
     </nav>
     <div class="topbar__actions">
       <div class="topbar__grades">
@@ -238,9 +243,13 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 <header class="mast">
   <div class="wrap">
     <a class="homelink" href="criterion-b.html">&larr; Criterion B</a>
-    <p class="eyebrow">MYP 1 Design &middot; Formative assessment</p>
+    <p class="eyebrow" id="lvlEyebrow">MYP 1 Design &middot; Formative assessment</p>
     <h1>Criterion B &mdash; Developing ideas</h1>
     <p class="sub">Unit 1 &middot; Promoting Innovation through Digital Media &middot; <span id="qCount">25</span> questions &middot; Strands i, ii and iii, including design specification and poster layout</p>
+    <nav class="levels" aria-label="Quiz level">
+      <a href="criterion-b-fa-quiz.html" data-l="1">Level 1</a>
+      <a href="criterion-b-fa-quiz.html?level=2" data-l="2">Level 2 &middot; harder</a>
+    </nav>
   </div>
 </header>
 
@@ -431,7 +440,107 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   ];
   var TOTAL = Q.length;
 
-  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  /* ---------- Level 2: harder questions, opened with ?level=2 ---------- */
+  // Same rules as above: first option is correct unless c is given.
+  var LEVEL2 = [
+    { s: 'i', spec: true, q: 'Aarav’s specification point says: “The poster must be eye-catching.” Which rewrite makes it testable?',
+      o: ['The poster must make 4 out of 5 students stop and look at it within 5 seconds on the noticeboard', 'The poster must use eye-catching colours', 'The poster must be very, very eye-catching', 'The poster must be eye-catching to everyone in India'],
+      f: 'A testable point says what to measure. “4 out of 5 students within 5 seconds” can be checked. “Eye-catching colours” still depends on opinion.' },
+    { s: 'i', spec: true, q: 'Your research found that most students see event posters on their phones, in the school WhatsApp group. Which specification point does this research support best?',
+      o: ['The poster must be readable on a phone screen without zooming in', 'The poster must be printed on A1 paper', 'The poster must use at least five colours', 'The poster must be finished in one lesson'],
+      f: 'Specification points should come from your research. If students see the poster on phones, it must work on a small screen.' },
+    { s: 'i', spec: true, type: 'match', q: 'Match each design specification point to its ACCESS FM letter.',
+      pairs: [['The poster must be made with free tools, so it costs nothing.', 'Cost'], ['The digital poster must not use fast flashing images that could make someone unwell.', 'Safety'], ['The printed poster must be on thick card so it does not tear on the noticeboard.', 'Materials'], ['The QR code must open the registration page when it is scanned.', 'Function']],
+      choices: ['Aesthetics', 'Cost', 'Customer', 'Environment', 'Safety', 'Size', 'Function', 'Materials'],
+      f: 'Cost is about money, Safety is about keeping people safe, Materials is what it is made from, and Function is what it must do.' },
+    { s: 'i', spec: true, q: 'Which pair of specification points pull against each other, so the designer has to choose a balance?',
+      o: ['“The poster must include every event detail in full” and “The poster must have plenty of white space”', '“The poster must show the event name” and “The poster must show the dates”', '“The logo must be clear when small” and “The logo must work in black and white”', '“The poster must fit on A3” and “The poster must have a QR code”'],
+      f: 'Putting every detail in full leaves little empty space. When two points pull against each other, the designer decides which matters more.' },
+    { s: 'i', spec: true, q: 'Riya writes: “The poster must be for students.” Which rewrite is the most specific?',
+      o: ['The poster must appeal to students aged 11 to 16 at schools across India', 'The poster must be for all students', 'The poster must be for students and teachers', 'The poster must be for young people'],
+      f: 'Naming the age range and where the students are tells you exactly who you are designing for.' },
+    { s: 'i', spec: true, q: 'Specification point: “The logo must still be recognisable in black and white.” Which is the fairest test?',
+      o: ['Print the logo in black and white and ask 3 people who have not seen it what it shows', 'Turn the logo black and white and decide for yourself that it looks fine', 'Look at the colour version on your screen', 'Ask a friend if they like black and white logos'],
+      f: 'A fair test uses the exact condition in the point (black and white) and people other than the designer, so the result is not just your opinion.' },
+    { s: 'i', spec: true, type: 'tf', q: 'True or false: “The poster must use Ignite’s official orange” is a design idea, not a specification point, because it is about colour.',
+      o: ['True', 'False'], c: 'False',
+      f: 'The client requires that colour, so it is a requirement and belongs in the specification. Choosing colours freely would be a design idea.' },
+    { s: 'i', spec: true, type: 'blank', q: 'Fill in the blank: choose the words that make this specification point measurable.',
+      before: 'The title must be readable from at least ', after: ' away.',
+      o: ['3 metres', 'far', 'a good distance', 'quite far'],
+      f: 'A number with a unit, like 3 metres, can be measured. “Far” means different things to different people.' },
+
+    { s: 'ii', layout: true, q: 'Your poster has four pieces of information. For a strong visual hierarchy, which order should they go in, from biggest to smallest?',
+      o: ['Event name, dates, how to register, contact details', 'Contact details, dates, event name, how to register', 'How to register, contact details, event name, dates', 'All four the same size, so nothing is missed'],
+      f: 'The event name grabs attention first. The dates and how to register tell students what to do. Contact details are for the few who need more.' },
+    { s: 'ii', q: 'Kabir draws three logo ideas: a flame, a rocket and a lightbulb. All three use the same font and colours. Why do they still count as a range of ideas?',
+      o: ['Each one uses a different symbol to show the idea of Ignite', 'They all use the same colours', 'He drew exactly three', 'They are all drawn neatly'],
+      f: 'A range means the ideas differ in an important way. Here the symbol changes each time, so they are real alternatives.' },
+    { s: 'ii', q: 'Aanya has two lessons left to make her poster. Which idea is the most feasible?',
+      o: ['A poster in Canva, starting from a template she changes to fit the Ignite brand', 'A hand-drawn poster with 20 detailed illustrations', 'An animated 3D video poster', 'A poster printed on a custom-made metal sheet'],
+      f: 'Feasible means she can make it with the time, tools and skills she has. Adapting a Canva template fits into two lessons.' },
+    { s: 'ii', layout: true, img: 'ignite-poster.jpg', imgW: 900, imgH: 1273,
+      alt: 'The Sreenidhi Ignite is back poster, which uses several different fonts: a serif for IGNITE, a script for “is back” and the slogan, and bold display fonts for the dates and registration line.',
+      q: 'Look at this poster. It uses many different fonts. What is the main problem this causes?',
+      o: ['The poster feels busy, and no single part stands out clearly', 'It uses too much ink', 'It makes the poster smaller', 'Nothing, more fonts always look more creative'],
+      f: 'Too many fonts compete for attention. Using 1–2 fonts helps the most important parts stand out.' },
+    { s: 'ii', layout: true, img: 'ignite-poster.jpg', imgW: 900, imgH: 1273,
+      alt: 'The Sreenidhi Ignite is back poster. It says “Registrations open now” and “For more details, contact: Design Department”.',
+      q: 'The poster says “Registrations open now”. What important information for students is missing?',
+      o: ['How to register, such as a QR code or a link', 'The event name', 'The dates of the event', 'A slogan'],
+      f: 'It tells students to register but not how. A QR code or link would make it easy to act straight away.' },
+    { s: 'ii', layout: true, type: 'match', q: 'Match each poster problem to the best fix.',
+      pairs: [['The text is hard to read on the busy background.', 'Increase the contrast'], ['The poster feels crowded.', 'Add more white space'], ['Students do not know where to look first.', 'Create a clear visual hierarchy'], ['The text boxes look messy and scattered.', 'Line things up (alignment)']],
+      choices: ['Increase the contrast', 'Add more white space', 'Create a clear visual hierarchy', 'Line things up (alignment)', 'Add more fonts'],
+      f: 'Contrast makes text readable, white space stops crowding, hierarchy shows what matters most, and alignment makes the layout tidy.' },
+    { s: 'ii', q: 'A classmate looks at your sketch and thinks your QR code is a picture of a maze. What should you do?',
+      o: ['Add a label or note so the sketch can be correctly interpreted', 'Nothing, you know what it is', 'Remove the QR code from your design', 'Colour it in so it looks nicer'],
+      f: 'If someone misreads your sketch, it cannot yet be correctly interpreted by others. A label fixes that without you having to explain it.' },
+    { s: 'ii', q: 'Which annotation OUTLINES a key feature?',
+      o: ['“QR code in the bottom corner so students can register straight away”', '“QR code, black and white squares, 3 cm wide, in the bottom right corner”', '“QR code”', '“I like the QR code”'],
+      f: 'An outline says briefly what the part does. The second option says how it looks, but not why it is there. “QR code” only labels it.' },
+    { s: 'ii', layout: true, type: 'tf', q: 'True or false: centring every line of text always gives the strongest poster layout.',
+      o: ['True', 'False'], c: 'False',
+      f: 'Centring can work, but not always. Lining text up to a strong edge often makes a poster cleaner and easier to scan.' },
+
+    { s: 'iii', q: 'Idea 1 has the strongest logo. Idea 3 has the clearest layout. What is the best way to present your chosen design?',
+      o: ['Combine the logo from Idea 1 with the layout from Idea 3, then describe its key features', 'Pick Idea 2 because it is in the middle', 'Present all three ideas as your chosen design', 'Choose whichever idea took the longest to draw'],
+      f: 'Your chosen design can combine the best parts of your ideas. Then describe its key features so others can picture it.' },
+    { s: 'iii', q: 'Which sentence best DESCRIBES the colours of a chosen logo?',
+      o: ['“The flame is orange, fading to yellow at the tip like a real fire, on a dark blue circle so it stands out”', '“It is orange.”', '“Nice bright colours.”', '“The colours are good because I like them.”'],
+      f: 'A description gives a detailed picture: which colours, where they are, and how they look together.' },
+    { s: 'iii', type: 'blank', q: 'Fill in the blank: choose the command word that matches this sentence.',
+      before: '“A flame logo.” This sentence only ', after: ' the feature.',
+      o: ['states', 'describes', 'outlines', 'explains'],
+      f: 'Stating names the feature. Describing gives a detailed picture of it.' },
+    { s: 'iii', q: 'Maya presents her chosen design as a photo of her sketch, with no notes. What is missing?',
+      o: ['A description of its key features, such as the colours, fonts, layout and logo', 'A longer title for the page', 'Photos of her other ideas', 'Nothing, a photo shows everything'],
+      f: 'The photo shows the design, but describing the key features tells others what each part is and looks like.' }
+  ];
+  var LEVEL = /[?&]level=2(&|$)/.test(location.search) ? 2 : 1;
+  if (LEVEL === 2) { Q = LEVEL2; TOTAL = Q.length; }
+
+  /* ---------- Autosave in the URL hash (this site never uses browser storage) ---------- */
+  // #l=level&s=seed&a=answers&n=name&c=section&d=checked-time. The hash stays on the device:
+  // a refresh keeps it, and it is never sent to a server.
+  function readHash() {
+    var out = {}, h = location.hash.replace(/^#/, '');
+    if (!h) return out;
+    h.split('&').forEach(function (kv) {
+      var i = kv.indexOf('=');
+      if (i > 0) { try { out[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); } catch (e) {} }
+    });
+    return out;
+  }
+  var saved = readHash();
+  if (saved.l !== String(LEVEL)) saved = {};
+  // seeded shuffle, so options stay in the same order after a refresh
+  var seed0 = parseInt(saved.s, 36);
+  if (!(seed0 > 0 && seed0 < 2147483647)) seed0 = Math.floor(Math.random() * 2147483646) + 1;
+  var seed = seed0;
+  function rand() { seed = seed * 16807 % 2147483647; return (seed - 1) / 2147483646; }
+
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rand() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
   /* ---------- Render ---------- */
@@ -439,6 +548,16 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   if (!quiz) return;
   var qCount = document.getElementById('qCount');
   if (qCount) qCount.textContent = TOTAL;
+  var lvlLinks = document.querySelectorAll('.levels a');
+  for (var li = 0; li < lvlLinks.length; li++) {
+    if (lvlLinks[li].getAttribute('data-l') === String(LEVEL)) { lvlLinks[li].classList.add('on'); lvlLinks[li].setAttribute('aria-current', 'page'); }
+  }
+  if (LEVEL === 2) {
+    var eb = document.getElementById('lvlEyebrow'), cur = document.getElementById('lvlCrumb');
+    if (eb) eb.textContent = 'MYP 1 Design · Formative assessment · Level 2';
+    if (cur) cur.textContent = 'FA quiz · Level 2';
+    document.title = 'Criterion B FA quiz, Level 2 — MYP 1 & 2 Design';
+  }
   var current = null;
   Q.forEach(function (item, idx) {
     // strand iii questions run on under strand ii without their own heading
@@ -531,7 +650,9 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     var b = document.getElementById('progBar');
     if (t) t.textContent = n + ' / ' + TOTAL + ' answered';
     if (b) b.style.transform = 'scaleX(' + (n / TOTAL) + ')';
+    if (ready) save();
   }
+  var ready = false;
   updateProgress();
 
   /* ---------- Check ---------- */
@@ -545,6 +666,54 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 
   function scrollTo(node, block) {
     try { node.scrollIntoView({ behavior: 'smooth', block: block }); } catch (e) { node.scrollIntoView(); }
+  }
+
+  /* ---------- Save and restore ---------- */
+  function save() {
+    var a = Q.map(function (item) {
+      if (item.type === 'match') return item.picks.map(function (p) { return p ? item.choices.indexOf(p).toString(36) : '-'; }).join('');
+      return item.answer === null ? '-' : item.o.indexOf(item.answer).toString(36);
+    }).join('.');
+    var parts = ['l=' + LEVEL, 's=' + seed0.toString(36), 'a=' + a,
+      'n=' + encodeURIComponent(nameEl.value), 'c=' + encodeURIComponent(secEl.value)];
+    if (result) parts.push('d=' + result.when.getTime().toString(36));
+    try { history.replaceState(null, '', location.pathname + location.search + '#' + parts.join('&')); } catch (e) {}
+  }
+
+  function restore() {
+    if (!saved.a) return;
+    if (saved.n) nameEl.value = saved.n;
+    if (saved.c) secEl.value = saved.c;
+    var toks = saved.a.split('.');
+    Q.forEach(function (item, i) {
+      var t = toks[i];
+      if (!t) return;
+      if (item.type === 'match') {
+        var sels = item.optsEl.querySelectorAll('select');
+        for (var r = 0; r < sels.length; r++) {
+          var v = item.choices[parseInt(t.charAt(r), 36)];
+          if (v) { sels[r].value = v; item.picks[r] = v; }
+        }
+        item.answer = item.picks.every(function (p) { return p; }) ? item.picks.slice() : null;
+        return;
+      }
+      var val = t === '-' ? undefined : item.o[parseInt(t, 36)];
+      if (val === undefined) return;
+      item.answer = val;
+      if (item.type === 'blank') { var s = item.optsEl.querySelector('select'); if (s) s.value = val; return; }
+      var labs = item.optsEl.children;
+      for (var k = 0; k < labs.length; k++) {
+        var inp = labs[k].querySelector('input');
+        if (inp && inp.value === val) { inp.checked = true; labs[k].classList.add('chosen'); }
+      }
+    });
+    updateProgress();
+    // they had already checked their score: show the locked result again
+    var when = parseInt(saved.d, 36);
+    if (when > 0 && nameEl.value.trim() && secEl.value && answeredCount() === TOTAL) {
+      checked = true;
+      grade(nameEl.value.trim(), secEl.value, new Date(when), true);
+    }
   }
 
   /* ---------- One-try confirmation ---------- */
@@ -599,7 +768,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     openConfirm();
   });
 
-  function grade(name, section) {
+  function grade(name, section, when, restoring) {
     var per = { i: [0, 0], ii: [0, 0], iii: [0, 0], S: [0, 0], L: [0, 0] };
     var score = 0;
     Q.forEach(function (item) {
@@ -637,8 +806,9 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     var onceNote = document.getElementById('onceNote');
     if (onceNote) onceNote.textContent = 'Your answers are locked. Download your result below.';
 
-    var when = new Date();
+    when = when || new Date();
     result = { name: name, section: section, score: score, per: per, when: when };
+    save();
 
     document.getElementById('resWho').textContent = name + ' · ' + section + ' · ' + when.toLocaleString();
     var big = document.getElementById('resScore');
@@ -647,13 +817,14 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 
     var sWrap = document.getElementById('resStrands'); sWrap.innerHTML = '';
     [['i', 'Strand i · Specification & success criteria'], ['ii', 'Strand ii · Design ideas'], ['iii', 'Strand iii · Chosen design'], ['S', 'Design specification'], ['L', 'Poster layout (across strands)']].forEach(function (p) {
+      if (!per[p[0]][1]) return;
       var b = el('div', p[0] === 'S' ? 'sbox sbox--s' : p[0] === 'L' ? 'sbox sbox--l' : 'sbox');
       b.appendChild(el('div', 'k', p[1]));
       b.appendChild(el('div', 'v', per[p[0]][0] + ' / ' + per[p[0]][1]));
       sWrap.appendChild(b);
     });
 
-    var weakest = ['i', 'ii', 'iii'].sort(function (a, b) { return per[a][0] / per[a][1] - per[b][0] / per[b][1]; })[0];
+    var weakest = ['i', 'ii', 'iii'].filter(function (s) { return per[s][1]; }).sort(function (a, b) { return per[a][0] / per[a][1] - per[b][0] / per[b][1]; })[0];
     var focus = { i: 'writing a design specification with specific, checkable success criteria', ii: 'drawing different, clearly labelled design ideas', iii: 'describing the key features of your chosen design' }[weakest];
     var msg;
     if (score === TOTAL) msg = 'Perfect score! You know what Criterion B strands i–iii are asking for.';
@@ -665,9 +836,16 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 
     var res = document.getElementById('results');
     res.classList.add('show');
+    if (restoring) return;
     try { res.focus({ preventScroll: true }); } catch (e) {}
     scrollTo(res, 'start');
   }
+
+  nameEl.addEventListener('input', function () { if (ready) save(); });
+  secEl.addEventListener('change', function () { if (ready) save(); });
+  restore();
+  ready = true;
+  save();
 
   /* ---------- PDF ---------- */
   function ascii(s) {
@@ -698,7 +876,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       doc.text(parts, M, y); y += h + (gap == null ? 2 : gap);
     }
 
-    line('MYP 1 Design - Criterion B Formative Assessment', 16, 'bold', AMBER, 1);
+    line('MYP 1 Design - Criterion B Formative Assessment' + (LEVEL === 2 ? ' - Level 2' : ''), 16, 'bold', AMBER, 1);
     line('Unit 1: Promoting Innovation through Digital Media (Ignite pan-India logo & poster)', 10, 'normal', SLATE, 5);
     line('Name: ' + result.name, 12, 'bold', null, 1);
     line('Section: ' + result.section, 12, 'normal', null, 1);
@@ -728,7 +906,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     });
 
     var safe = ascii(result.name).replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'student';
-    doc.save('CritB_FA_' + result.section.replace(/\s+/g, '') + '_' + safe + '.pdf');
+    doc.save('CritB_FA_' + (LEVEL === 2 ? 'L2_' : '') + result.section.replace(/\s+/g, '') + '_' + safe + '.pdf');
   });
 })();
 </script>

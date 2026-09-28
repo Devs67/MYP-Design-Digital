@@ -7,8 +7,11 @@ This file is the working rules.
 
 ## Hard rules
 
-**Never use `localStorage` or `sessionStorage`.** Not supported in this environment.
-State lives in the URL (`?code=...`), in memory, or in D1 via the Worker.
+**Browser storage (`localStorage`, `sessionStorage`) is allowed, approved by Dev.** Wrap every
+read and write in `try`/`catch`, and make the page work without it: private browsing and some
+school devices block it. Remember that school iPads are often shared, so anything stored is
+visible to the next student on that device. State that must follow a student between devices
+still lives in the URL (`?code=...`) or in D1 via the Worker.
 
 **Never commit the admin key.** `ADMIN_KEY` is a Cloudflare secret read via `env.ADMIN_KEY`.
 If you see a key literal appearing anywhere in a committed file, that is a bug — flag it.
