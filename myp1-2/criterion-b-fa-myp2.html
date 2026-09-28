@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criterion B FA — MYP 2 Design</title>
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+<style>
+:root{
+  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
+  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
+  --amber:#B05A1C; --amber-tint:#FBEEE2;
+  --moss:#2F6B4F; --moss-tint:#E8F1EC;
+  --clay:#9C3E2F; --clay-tint:#F8E9E6;
+  --a:#12707F; --a-tint:#E1F1F3;
+  --b:#96700A; --b-tint:#F8F0D9;
+  --display:"Fraunces",Georgia,serif;
+  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:0 30px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
+  text-transform:uppercase;color:var(--amber);margin:0}
+
+.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
+  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--card);margin-bottom:20px;transition:.15s}
+.homelink:hover{border-color:var(--slate);color:var(--ink)}
+
+.mast{padding:56px 0 20px}
+.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
+  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
+.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
+
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:22px 24px;margin:16px 0}
+.card h2{font-family:var(--display);font-size:20px;font-weight:600;margin:6px 0 10px;letter-spacing:-.01em}
+.card p{margin:0}
+.context{border-left:4px solid var(--b)}
+.context .eyebrow{color:var(--b)}
+
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label.f{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--slate);margin-bottom:6px}
+input[type=text],select{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--rule);border-radius:7px;padding:10px 12px}
+input[type=text]:disabled,select:disabled{opacity:.7}
+input[type=text]:focus,select:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber)}
+button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.hint{color:var(--slate);font-size:13.5px;margin:12px 0 0}
+
+.progress{position:sticky;top:62px;z-index:5;background:var(--paper);
+  padding:12px 0;display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
+.bar{flex:1;height:8px;background:var(--rule-soft);border:1px solid var(--rule);border-radius:99px;overflow:hidden}
+.bar > span{display:block;height:100%;width:100%;background:var(--moss);
+  transform:scaleX(0);transform-origin:left center}
+
+.strand{margin-top:34px}
+.strand .eyebrow{color:var(--b)}
+.strand h2{font-family:var(--display);font-size:22px;font-weight:600;margin:6px 0 4px;letter-spacing:-.01em}
+
+.q{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;
+  margin:14px 0;min-width:0;scroll-margin-top:120px}
+.q legend{padding:0;display:contents}
+.q.missing{border-color:var(--clay);box-shadow:0 0 0 2px var(--clay-tint)}
+.q-num{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--slate);margin:0 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.type-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--slate);border:1px solid var(--rule);border-radius:7px;padding:1px 7px}
+.chip{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  border-radius:7px;padding:2px 8px}
+.chip--spec{color:var(--amber);background:var(--amber-tint)}
+.chip--testing{color:var(--moss);background:var(--moss-tint)}
+.chip--sketch{color:var(--b);background:var(--b-tint)}
+.chip--ipo{color:var(--a);background:var(--a-tint)}
+.chip--wb{color:var(--slate);background:var(--rule-soft)}
+.q-text{font-weight:600;margin:0 0 14px;line-height:1.5}
+.multi-hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--slate);margin:-6px 0 10px}
+.multi-hint.warn{color:var(--clay)}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1px solid var(--rule);
+  border-radius:7px;cursor:pointer;background:var(--paper);font-size:15px;line-height:1.5}
+.opt:hover{border-color:var(--amber)}
+.opt input{margin-top:4px;accent-color:var(--amber);flex-shrink:0}
+.opt.chosen{border-color:var(--amber);background:var(--amber-tint)}
+.locked .opt{cursor:default}
+.locked .opt:hover{border-color:var(--rule)}
+.opt.is-correct,.locked .opt.is-correct:hover{border-color:var(--moss);background:var(--moss-tint)}
+.opt.is-wrong,.locked .opt.is-wrong:hover{border-color:var(--clay);background:var(--clay-tint)}
+.opt > span:not(.tag){flex:1;min-width:0}
+.tag{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:500;white-space:nowrap;padding-left:8px;padding-top:2px}
+.is-correct .tag{color:var(--moss)}
+.is-wrong .tag{color:var(--clay)}
+
+/* matching */
+.match{display:grid;gap:8px}
+.match-row{display:grid;grid-template-columns:1fr 220px;gap:12px;align-items:center;padding:11px 13px;
+  border:1px solid var(--rule);border-radius:7px;background:var(--paper);font-size:15px;line-height:1.5}
+.match-row select{width:100%;padding:5px 10px;font-weight:600;background:var(--card);line-height:1.4}
+.match-row > span{min-width:0}
+.match-row.is-correct{border-color:var(--moss);background:var(--moss-tint)}
+.match-row.is-wrong{border-color:var(--clay);background:var(--clay-tint)}
+.fix{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  font-weight:500;margin-top:4px;line-height:1.5}
+.is-correct .fix{color:var(--moss)}
+.is-wrong .fix{color:var(--clay)}
+
+/* decision matrix table */
+.q-tablewrap{overflow-x:auto;margin:0 0 16px}
+.q-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.4}
+.q-table th,.q-table td{border:1px solid var(--rule);padding:7px 10px;text-align:left}
+.q-table th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);
+  font-weight:500;background:var(--paper)}
+.q-table td + td,.q-table th + th{text-align:center;width:70px}
+.q-table tfoot td{font-weight:600;background:var(--paper)}
+
+/* photos and supplied images */
+.q-img{margin:0 0 16px}
+.q-img img{display:block;width:100%;max-width:600px;height:auto;border:1px solid var(--rule);border-radius:7px;background:#fff}
+
+/* diagrams (drawn inline so they follow light and dark mode) */
+.dg{margin:0 0 16px;color:var(--ink)}
+.dg svg{display:block;width:100%;height:auto;max-width:600px;background:var(--card);border:1px solid var(--rule);border-radius:7px}
+.dg .ln{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.dg .thin{stroke-width:1.2}
+.dg .fl{fill:var(--paper);stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.dg .brd{fill:var(--a-tint);stroke:currentColor;stroke-width:2}
+.dg .dark{fill:currentColor;opacity:.2}
+.dg .hdr{fill:currentColor;opacity:.8}
+.dg .pin{fill:var(--card)}
+.dg .dot{fill:currentColor}
+.dg .trk{fill:none;stroke:var(--clay);stroke-width:2.5}
+.dg .ac{fill:var(--amber)}
+.dg .lead{stroke:var(--amber);stroke-width:2}
+.dg .arrowhead{fill:currentColor}
+.dg text{fill:currentColor;font-family:var(--mono);font-size:11px}
+.dg text.sm{font-size:9.5px}
+.dg text.bd{font-family:var(--body);font-size:14px}
+.dg text.dim{fill:var(--slate);font-size:12px}
+.dg text.tl{fill:#fff;font-size:15px;font-weight:600}
+
+.fb{display:none;margin-top:14px;padding:11px 14px;border-radius:7px;font-size:14px;line-height:1.55;
+  background:var(--paper);border-left:3px solid var(--rule)}
+.locked .fb{display:block}
+.fb.good{border-left-color:var(--moss)}
+.fb.nope{border-left-color:var(--clay)}
+.fb strong.good{color:var(--moss)}
+.fb strong.nope{color:var(--clay)}
+
+.actions{margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;border-radius:7px;
+  padding:14px 22px;cursor:pointer;border:1px solid var(--amber);background:var(--amber);color:#fff}
+.btn:hover{opacity:.88}
+.btn.secondary{background:var(--card);color:var(--ink);border-color:var(--rule)}
+.btn.secondary:hover{opacity:1;border-color:var(--slate)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.wide{width:100%}
+.err{color:var(--clay);font-size:14px;margin:10px 0 0;min-height:1em}
+.once{color:var(--slate);font-size:13.5px;margin:10px 0 0;text-align:center}
+
+/* one-try confirmation */
+.cm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(20,48,60,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.cm[hidden]{display:none}
+.cm__card{max-width:460px;width:100%;background:var(--card);border-radius:12px;padding:28px 26px 24px;
+  box-shadow:0 24px 60px rgba(20,48,60,.3);border-top:4px solid var(--amber)}
+.cm__card h2{font-family:var(--display);font-size:22px;font-weight:600;margin:8px 0 10px;letter-spacing:-.01em}
+.cm__card p{margin:0 0 10px;font-size:15px}
+.cm__card ul{margin:0 0 18px;padding-left:20px;font-size:15px;color:var(--slate)}
+.cm__btns{display:flex;gap:10px;flex-wrap:wrap}
+.cm__btns .btn{flex:1 1 180px}
+
+#results{display:none;border-top:4px solid var(--amber)}
+#results.show{display:block}
+.who{color:var(--slate);font-size:14px;margin:6px 0 0 !important}
+.score-big{font-family:var(--display);font-size:clamp(44px,10vw,60px);font-weight:600;line-height:1;
+  letter-spacing:-.02em;margin:12px 0 4px !important}
+.score-big small{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--slate);font-weight:400}
+.msg{margin:14px 0 0 !important}
+.strands{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}
+.sbox{background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:12px 14px}
+.sbox .k{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);line-height:1.45}
+.sbox .v{font-family:var(--display);font-size:24px;font-weight:600;margin-top:4px}
+.sbox--spec .k{color:var(--amber)}
+.sbox--testing .k{color:var(--moss)}
+.sbox--sketch .k{color:var(--b)}
+.sbox--ipo .k{color:var(--a)}
+.submit-box{margin-top:20px;padding:18px 20px;border:1px dashed var(--amber);border-radius:12px;background:var(--amber-tint)}
+.submit-box h3{font-family:var(--display);font-size:18px;font-weight:600;margin:0 0 6px}
+.submit-box ol{margin:6px 0 16px;padding-left:20px;font-size:15px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+
+footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+
+@media (prefers-reduced-motion:no-preference){
+  .bar > span{transition:transform .3s ease}
+  .btn{transition:opacity .15s ease}
+  .cm{animation:cmFade .25s ease both}
+  .cm__card{animation:cmRise .35s cubic-bezier(.22,.61,.36,1) both .04s}
+  @keyframes cmFade{from{opacity:0}to{opacity:1}}
+  @keyframes cmRise{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+}
+
+@media (max-width:760px){
+  .wrap{padding:0 14px}
+  .mast{padding:40px 0 16px}
+  .card{padding:18px}
+  .q{padding:16px}
+}
+@media (max-width:560px){
+  .fields{grid-template-columns:1fr}
+  .opt{flex-wrap:wrap}
+  .tag{flex-basis:100%;margin-left:23px;padding-left:0}
+  .match-row{grid-template-columns:1fr}
+}
+
+@media print{
+  /* always print on the light palette: dark mode text would come out white on white paper */
+  html:root.dark{--ink:#14303C;--paper:#F2F5F6;--card:#FFF;--rule:#D3E0E5;--rule-soft:#E7EEF0;--slate:#5A727B;
+    --amber:#B05A1C;--amber-tint:#FBEEE2;--moss:#2F6B4F;--moss-tint:#E8F1EC;--clay:#9C3E2F;--clay-tint:#F8E9E6;
+    --a:#12707F;--a-tint:#E1F1F3;--b:#96700A;--b-tint:#F8F0D9}
+  .progress,.actions,.btn-row,.homelink,.cm{display:none !important}
+  body,html:root.dark body{background:#fff;color:#000}
+  .opt.is-correct,.opt.is-wrong,.match-row.is-correct,.match-row.is-wrong{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .card,.q{break-inside:avoid;border-color:#bbb}
+}
+</style>
+<link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body>
+
+<header class="topbar" data-grade="myp1-2">
+  <div class="topbar__wrap">
+    <a class="topbar__brand" href="../index.html">
+      <span class="topbar__logo">IB</span>
+      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+    </a>
+    <nav class="topbar__crumb" aria-label="Breadcrumb">
+      <a href="../myp1-2/index.html">MYP 1 &amp; 2</a>
+      <span>&rsaquo;</span>
+      <a href="criterion-b.html">Criterion B</a>
+      <span>&rsaquo;</span>
+      <span class="cur">MYP 2 FA</span>
+    </nav>
+    <div class="topbar__actions">
+      <div class="topbar__grades">
+        <a href="../myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
+        <a href="../myp3/index.html" data-g="myp3">3</a>
+        <a href="../index.html#myp4-5" data-g="myp4-5">4&ndash;5</a>
+      </div>
+      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
+      </button>
+      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="homelink" href="criterion-b.html">&larr; Criterion B</a>
+    <p class="eyebrow">MYP 2 Design &middot; Formative assessment</p>
+    <h1>Criterion B &mdash; Developing ideas</h1>
+    <p class="sub">Unit 1 &middot; Sensing Our World &middot; <span id="qCount">30</span> questions &middot; Strands i to iv</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="card context" aria-labelledby="ctxTitle">
+    <p class="eyebrow">The brief</p>
+    <h2 id="ctxTitle">Your design challenge</h2>
+    <p>The school gardener cannot tell when each garden bed is too dry, so plants are wilting. Your job is to design a <strong>soil-moisture alert</strong>, simulated in Wokwi, that tells the gardener when to water. Answer every question, then press <strong>Check my score</strong>.</p>
+  </section>
+
+  <section class="card" aria-labelledby="detailsTitle">
+    <p class="eyebrow">Before you start</p>
+    <h2 id="detailsTitle">Your details</h2>
+    <div class="fields">
+      <div>
+        <label class="f" for="stuName">Full name</label>
+        <input type="text" id="stuName" autocomplete="name" placeholder="e.g. Riya Sharma">
+      </div>
+      <div>
+        <label class="f" for="stuSection">Section</label>
+        <select id="stuSection">
+          <option value="">Choose your section…</option>
+          <option value="MYP 2A">MYP 2A</option>
+          <option value="MYP 2B">MYP 2B</option>
+          <option value="MYP 2C">MYP 2C</option>
+          <option value="MYP 2D">MYP 2D</option>
+        </select>
+      </div>
+    </div>
+    <p class="hint">Your name and section go on the result file you'll upload to ManageBac.</p>
+  </section>
+
+  <div class="progress" aria-live="polite">
+    <span id="progText">0 / 30 answered</span>
+    <div class="bar" aria-hidden="true"><span id="progBar"></span></div>
+  </div>
+
+  <main id="quiz"></main>
+
+  <div class="actions">
+    <button class="btn wide" id="checkBtn" type="button">Check my score</button>
+    <p class="err" id="err" role="alert"></p>
+    <p class="once" id="onceNote">You can only check your score once. Your answers lock after that.</p>
+  </div>
+
+  <section class="card" id="results" aria-live="polite" tabindex="-1">
+    <p class="eyebrow">Your result</p>
+    <p class="who" id="resWho"></p>
+    <p class="score-big" id="resScore"></p>
+    <div class="strands" id="resStrands"></div>
+    <p class="msg" id="resMsg"></p>
+
+    <div class="submit-box">
+      <h3>Submit on ManageBac</h3>
+      <ol>
+        <li>Press <strong>Download my result (PDF)</strong>.</li>
+        <li>Open the <strong>Criterion B FA</strong> task on ManageBac.</li>
+        <li>Upload the PDF and press submit.</li>
+      </ol>
+      <div class="btn-row">
+        <button class="btn" id="pdfBtn" type="button">Download my result (PDF)</button>
+        <button class="btn secondary" id="printBtn" type="button">Print / save as PDF</button>
+      </div>
+    </div>
+    <p class="hint">Scroll down to see which answers were right and read the feedback on each question.</p>
+  </section>
+
+</div>
+
+<div class="cm" id="confirmBox" role="dialog" aria-modal="true" aria-labelledby="cmTitle" aria-describedby="cmText" hidden>
+  <div class="cm__card">
+    <p class="eyebrow">One try only</p>
+    <h2 id="cmTitle">Check your score now?</h2>
+    <p id="cmText">You can only do this <strong>once</strong>. After you check:</p>
+    <ul>
+      <li>your answers lock and cannot be changed</li>
+      <li>you will see the right answers and feedback</li>
+    </ul>
+    <div class="cm__btns">
+      <button class="btn secondary" id="cmNo" type="button">Go back and review</button>
+      <button class="btn" id="cmYes" type="button">Yes, check my score</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
+    <span>Design Team - SIS</span>
+    <span>MYP Years 1&ndash;2</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* ---------- Diagrams for the image questions ---------- */
+  var DG = {};
+  DG.circuit = '<svg viewBox="0 0 580 330" xmlns="http://www.w3.org/2000/svg">' +
+    '<rect class="fl" x="24" y="30" width="150" height="260" rx="10"/><text class="bd" x="99" y="58" text-anchor="middle">Arduino Uno</text>' +
+    '<text x="164" y="94" text-anchor="end">5V</text><text x="164" y="134" text-anchor="end">A0</text><text x="164" y="184" text-anchor="end">Pin 8</text><text x="164" y="244" text-anchor="end">Pin 7</text><text x="164" y="274" text-anchor="end">GND</text>' +
+    '<circle class="dot" cx="174" cy="90" r="3.5"/><circle class="dot" cx="174" cy="130" r="3.5"/><circle class="dot" cx="174" cy="180" r="3.5"/><circle class="dot" cx="174" cy="240" r="3.5"/><circle class="dot" cx="174" cy="270" r="3.5"/>' +
+    // probe
+    '<text class="bd" x="470" y="70" text-anchor="middle">Moisture probe</text>' +
+    '<rect class="fl" x="430" y="78" width="64" height="64" rx="4"/>' +
+    '<text class="sm" x="436" y="94">VCC</text><text class="sm" x="436" y="134">SIG</text><text class="sm" x="468" y="136">GND</text>' +
+    '<path class="fl" d="M494 90h56l8 6l-8 6h-56z"/><path class="fl" d="M494 118h56l8 6l-8 6h-56z"/>' +
+    '<path class="ln" d="M174 90H430M174 130H430"/>' +
+    // LED straight from pin 8, no resistor
+    '<text class="bd" x="304" y="154" text-anchor="middle">Red LED</text>' +
+    '<path class="ln" d="M174 180H290"/><path class="fl" d="M290 166L316 180L290 194z"/><path class="ln" d="M318 164V196"/>' +
+    '<path class="ln thin" d="M302 164l8-10M310 168l8-10"/>' +
+    '<path class="ln" d="M318 180H380V304"/>' +
+    // buzzer from pin 7
+    '<text class="bd" x="306" y="214" text-anchor="middle">Buzzer</text>' +
+    '<path class="ln" d="M174 240H290"/><circle class="fl" cx="306" cy="240" r="16"/><path class="ln thin" d="M300 232a10 10 0 0 1 0 16M306 228a16 16 0 0 1 0 24"/>' +
+    '<path class="ln" d="M322 240H400V304"/>' +
+    // shared GND
+    '<path class="ln" d="M174 270H220V304H462V142"/>' +
+    '<circle class="dot" cx="380" cy="304" r="3.5"/><circle class="dot" cx="400" cy="304" r="3.5"/>' +
+    '</svg>';
+
+  /* ---------- Questions ---------- */
+  var STRANDS = {
+    i:   { title: 'Design specification and testing' },
+    ii:  { title: 'Design ideas' },
+    iii: { title: 'Chosen design' },
+    iv:  { title: 'Planning' }
+  };
+  var TAGS = { spec: 'Spec', testing: 'Testing', sketch: 'Sketches & drawings', ipo: 'IPO' };
+
+  // First option is correct (the first n for "choose two"); options are shuffled on screen.
+  var Q = [
+    { s: 'i', tags: ['spec'], q: 'The gardener says this spec point cannot be checked: “The system must warn the gardener when the soil is dry.” Which rewrite fixes that problem?',
+      o: ['The system must turn on a red LED within 2 seconds when soil moisture falls below 30%.', 'The system must warn the gardener quickly and clearly whenever the soil becomes too dry for plants.', 'The system must warn the gardener when the soil is dry, as our survey showed plants were dying.', 'The system must use a green case shaped like a leaf so it looks friendly in the school garden.'],
+      f: 'Only this rewrite gives a number and a condition (below 30%, within 2 seconds) that someone can check. “Quickly” and “too dry” are still vague, a reason does not make a point measurable, and a leaf-shaped case is a design idea.' },
+    { s: 'i', type: 'multi', n: 2, tags: ['spec'], q: 'Your class said a good spec point is specific, measurable and justified. Which TWO spec points pass all three tests?',
+      o: ['The system must light a red LED when moisture is below 30%, because the survey showed plants wilt below this level.', 'The system must check soil moisture every 10 minutes, because the gardener said plants dried out between his rounds.', 'The buzzer must be loud enough for the gardener to hear from the far end of the garden, because he works alone there.', 'The system must check moisture every 10 minutes and warn the gardener with an LED, a buzzer and a screen message.', 'The buzzer must stop after 30 seconds, because I think a buzzer that keeps going would get really annoying.'],
+      f: 'Both give a number and are backed by research (survey, gardener). “Loud enough” cannot be measured, the LED/buzzer/screen point has no justification, and “I think” is personal opinion, not data.' },
+    { s: 'i', tags: ['spec'], q: 'Survey finding: 7 out of 10 eco-club students said they do not know which garden bed needs water. Which spec point follows most directly from this finding?',
+      o: ['The system must show which garden bed is dry, using one LED for each bed labelled with the bed’s name.', 'The system must water the dry bed automatically using a small pump, so students do not need to know.', 'The system must send a daily report on the moisture of the whole garden to the eco-club teacher.', 'The system must measure soil moisture accurately to within 5%, so the eco club can trust every reading.'],
+      f: 'The problem is not knowing WHICH bed is dry, so the spec must identify each bed. A pump goes beyond the finding, a whole-garden report does not separate beds, and accuracy is a good point but is not linked to this finding.' },
+    { s: 'i', type: 'match', tags: ['spec'], q: 'Match each spec point to its category. Two categories are not used.',
+      pairs: [['The device should be able to show moisture as green, amber or red.', 'Output / Feedback'], ['The design must not have exposed wires students could touch while watering.', 'User & Safety'], ['The system must switch the sensor off between readings so the battery lasts a full term.', 'Sustainability'], ['The system must be simulated in Wokwi using only the parts in the class kit.', 'Practical Constraint'], ['The case should be painted to look like a flowerpot.', 'Not a spec (design idea)']],
+      choices: ['Output / Feedback', 'User & Safety', 'Sustainability', 'Practical Constraint', 'Not a spec (design idea)', 'Functional', 'Sensor & Input'],
+      f: 'Colour display = Output/Feedback; no exposed wires = User & Safety; saving battery = Sustainability; Wokwi + class kit = Practical Constraint. Painting it like a flowerpot decides what the product looks like, so it is a design idea.' },
+    { s: 'i', tags: ['spec'], q: 'Kiran’s spec list has one point that is really a design idea, not a specification. Which one?',
+      o: ['The system should use a yellow LED inside a flower-shaped case mounted on a wooden stake.', 'The system must be placed where the gardener can clearly see its alert from the garden gate.', 'The sensor should read soil moisture at root depth, about 10 cm below the surface.', 'The system must not need its battery changed more than once in a school term.'],
+      f: 'A spec says what the product must do or achieve; it should not decide the look. A flower-shaped case on a stake is one possible solution. The other three are requirements that many different designs could meet.' },
+    { s: 'i', tags: ['spec'], wb: true, q: 'In Criterion A, Priya’s PPC analysis found this limitation of Product 1, a plant-moisture meter: “It only shows a reading when someone presses its button, so the gardener often forgot to check it.” Which spec point best responds to this limitation?',
+      o: ['The system must alert the gardener automatically, with no button press, when moisture falls below 30%.', 'The system must have a bigger button than Product 1, so that the gardener finds it much easier to press.', 'The system must show the exact moisture reading on a clear screen, in the same way that Product 1 does.', 'The system must beep every morning to remind the gardener to press the button and check the soil.'],
+      f: 'The limitation is that the gardener has to remember to check. Only an automatic alert removes that problem. A bigger button or a morning reminder still depends on the gardener pressing it, and copying Product 1’s screen keeps the same problem.' },
+    { s: 'i', tags: ['testing'], q: 'Spec point: “The LED must turn red when moisture is below 30%, and stay off at 30% or above.” Which is the best way to test this?',
+      o: ['In Wokwi, set moisture to 29%, 30% and 31% in turn and record whether the LED is on, repeating each value 3 times.', 'In Wokwi, set moisture to 10% and check that the LED turns red, because 10% is clearly far below the 30% limit.', 'Run the Wokwi simulation for one minute without changing anything and watch whether the LED ever turns red.', 'Ask the gardener to look at the LED during the day and say whether it seems to come on at the right time.'],
+      f: 'The spec is about a limit (30%), so the test must check values just below, at and just above it, more than once. Testing only 10% misses the limit, nothing changes if you don’t change the value, and the gardener’s opinion is not objective.' },
+    { s: 'i', type: 'multi', n: 2, tags: ['testing'], q: 'Riya tested her spec “The buzzer must sound within 2 seconds when moisture drops below 30%.” Which TWO changes would make her test repeatable?',
+      o: ['Write down the exact moisture values and steps she used, so a classmate could follow them.', 'Do 5 trials with a stopwatch and record every time in a table, not just the best one.', 'Do the test only once, but very carefully, so that the one result she gets is correct.', 'Ask the gardener whether the buzzer seems quick enough, as he is the person who will use it.', 'Try a different moisture value each time so that she can see lots of different results.'],
+      f: 'A repeatable test can be done again by someone else and gives the same result: clear written steps and several recorded trials. One careful trial is still one trial, an opinion is not measurable, and changing the value each time means no trial can be compared.' },
+    { s: 'i', type: 'match', tags: ['testing'], q: 'Match each spec point to the best test method. Two methods are not used.',
+      pairs: [['The LED must turn red when moisture is below 30%.', 'Change sensor values in Wokwi and observe the output'], ['The gardener must be able to read the colour code without instructions.', 'User feedback'], ['The buzzer must stop after 30 seconds.', 'Time with a stopwatch across several trials'], ['The system must be simulated in Wokwi using only parts from the class kit.', 'Check the component list against the brief']],
+      choices: ['Change sensor values in Wokwi and observe the output', 'User feedback', 'Time with a stopwatch across several trials', 'Check the component list against the brief', 'Compare with an existing product', 'Measure it with a ruler'],
+      f: 'Changing the sensor value shows whether the LED reacts; only the user can say whether they understood the colours; a length of time needs timing over several trials; a parts limit is checked against the list in the brief.' },
+    { s: 'i', tags: ['spec'], q: 'Meera’s spec point says: “The buzzer must stop after 30 seconds.” Her teacher asks, “Why 30 seconds?” What should Meera add?',
+      o: ['The research it came from, e.g. “Teachers in the next classroom said a longer buzz disturbs lessons.”', 'A test for it, e.g. “Time the buzzer with a stopwatch across 3 trials and compare with 30 seconds.”', 'A category label for it, e.g. “Output / Feedback”, so the teacher can clearly see what type of spec it is.', 'A stronger sentence starter, e.g. changing “must” to “must always”, so the number is clearer.'],
+      f: '“Why?” asks for a justification, and a justification comes from research or user data. A test shows HOW you will check it, and a category or starter does not explain where the number came from.' },
+
+    { s: 'ii', type: 'multi', n: 2, tags: ['sketch'], q: 'Idea 1 is a moisture probe with one red LED in a box on a stake. Which TWO changes would make Idea 2 a truly different idea, not just a variation?',
+      o: ['Change the output to a 3-colour traffic light that shows how dry the soil is, not just dry or wet.', 'Mount the device on the garden tap so the gardener sees it when collecting water, not on a stake.', 'Paint the box blue instead of green and round off all the corners so it looks friendlier to students.', 'Swap the 5 mm red LED for a 10 mm red LED so the same alert can be seen from further away.', 'Move the LED from the front of the box to its lid so it points up towards the gardener’s face.'],
+      f: 'A different idea changes HOW the system works or is used: a new kind of output, or a new location and form. Colour, LED size and LED position are small changes to the same idea.' },
+    { s: 'ii', tags: ['sketch'], q: 'Karan’s three idea sketches each show a well-drawn, labelled case for the garden alert. What is still missing from his ideas?',
+      o: ['A circuit sketch for each idea showing which sensor and outputs connect to the Arduino.', 'A coloured final drawing of the chosen idea with front, top and side views.', 'A decision matrix comparing all three ideas against every point in the design specification.', 'The Arduino code for each idea, so the teacher can check that it will work.'],
+      f: 'In this unit every idea needs two aspects: the outer appearance AND the circuit. Front/top/side views come later in planning drawings, the decision matrix is used to choose an idea, and code comes when you create.' },
+    { s: 'ii', tags: ['sketch'], q: 'Four students annotated the moisture probe on their idea sketches. Which annotation would help someone else understand the idea without asking?',
+      o: ['Moisture probe: pushed 10 cm into the soil so it reads at root depth, where plants take up water.', 'Moisture probe (capacitive type, 2 prongs, connected to analog pin A0 on the Arduino Uno board).', 'Moisture probe: this is the most important part of my whole design and I think it looks really cool.', 'Moisture probe, red LED, buzzer, box, lid, stake, battery pack, jumper wires and the Arduino Uno.'],
+      f: 'A useful annotation explains what the feature does and why it is there. The pin details only label the part, the third is opinion, and a list names parts without explaining any of them.' },
+    { s: 'ii', tags: ['sketch'], q: 'A feasible idea can be made with the time, skills and resources you have. Which garden-alert idea is the LEAST feasible for this unit?',
+      o: ['A sensor that predicts tomorrow’s watering needs from an online weather forecast, simulated in Wokwi on an ESP32.', 'A sensor with three LEDs that show wet, okay and dry, simulated in Wokwi with parts from the class kit.', 'A sensor with a buzzer that beeps faster as the soil gets drier, simulated in Wokwi with class-kit parts.', 'A sensor with an LCD screen that shows the moisture percentage, simulated in Wokwi with class-kit parts.'],
+      f: 'Forecast prediction needs internet data and coding well beyond this unit’s skills and time. The other three use simple inputs and outputs from the class kit.' },
+    { s: 'ii', type: 'match', tags: ['ipo'], q: 'Match each part of the garden alert to its role in the system. Two roles are not used.',
+      pairs: [['The soil in bed 3 dries to 25% moisture.', 'Event'], ['The probe sends a reading to pin A0.', 'Input'], ['The controller compares the reading with 30%.', 'Process'], ['The red LED turns on.', 'Output'], ['The gardener waters bed 3.', 'Result']],
+      choices: ['Event', 'Input', 'Process', 'Output', 'Result', 'Power', 'Storage'],
+      f: 'EVENT (soil dries) → INPUT (sensor reading) → PROCESS (the controller’s decision) → OUTPUT (LED) → RESULT (what changes in the real world).' },
+    { s: 'ii', type: 'match', tags: ['ipo'], img: 'myp2-q16-sensors.jpg', imgW: 1400, imgH: 467,
+      alt: 'Four sensors labelled P, Q, R and S. P is a blue board with two round mesh cylinders. Q is a flat orange disc with a wavy track and two legs. R is a red board with two long prongs. S is a green board with a white faceted dome.',
+      q: 'The eco club wants to add more sensors to the garden alert. Match each sensor to what it measures. Two options are not used.',
+      pairs: [['Sensor P', 'Distance to an object'], ['Sensor Q', 'Light level'], ['Sensor R', 'Soil moisture'], ['Sensor S', 'Movement of a warm body']],
+      choices: ['Distance to an object', 'Light level', 'Soil moisture', 'Movement of a warm body', 'Air temperature', 'Sound level'],
+      f: 'P is an ultrasonic sensor (times an echo), Q is an LDR (resistance changes with light), R is a soil-moisture probe, and S is a PIR sensor (detects infrared from warm moving bodies).' },
+    { s: 'ii', tags: ['sketch'], wb: true, q: 'Under each idea, the workbook asks you to describe how the concept addresses your design specifications. Kabir’s specs include: the gardener must read the alert without instructions, and there must be no exposed wires. Which description of Idea 2 does this best?',
+      o: ['Idea 2 uses a traffic-light LED, so the gardener can read it without instructions, and all wires are sealed inside the stake.', 'Idea 2 is my most creative idea because it looks like a tall flower, and everyone in the garden will love the way it looks.', 'Idea 2 has a moisture probe, an Arduino Uno, three LEDs and a buzzer, all wired together inside a waterproof stake.', 'Idea 2 meets all of my design specifications, so it will work well in the garden and fully solve the gardener’s problem.'],
+      f: 'A good description names the spec points and shows HOW the idea meets each one. Saying it “meets all specs” gives no evidence, a parts list does not link to the specs, and “everyone will love it” is opinion.' },
+    { s: 'ii', tags: ['ipo'], img: 'myp2-q18-controller.jpg', imgW: 1200, imgH: 800,
+      alt: 'An Arduino Uno board. P marks the row of digital pins 13 to 2 along the top edge. Q marks the 5V pin on the power header. R marks the analog pins A0 to A5. S marks the USB port on the left edge.',
+      q: 'The soil-moisture probe gives a reading between 0 and 1023 that changes smoothly as the soil dries. Which labelled part of the controller should its signal wire connect to?',
+      o: ['Part R, because pins A0–A5 can read a range of values, not just on or off.', 'Part P, because pins 2–13 can read the probe and also switch the LED and buzzer.', 'Part Q, because the probe’s reading comes from the 5V pin that powers it.', 'Part S, because the board receives all of its sensor data through the USB port.'],
+      f: 'A reading from 0 to 1023 is an analog value, so it goes to an analog input pin (A0–A5). The pins in P are digital (HIGH or LOW only), Q supplies power, and the USB port connects to a computer.' },
+
+    { s: 'iii', q: 'In the decision matrix, Ideas A and B tie on 10 points. Idea B scored 3 on spec point 1 (alert within 2 s), the gardener’s top priority; Idea A scored 1. Which reason for choosing refers to the spec best?',
+      o: ['I chose B because it scored 3 on spec point 1, the gardener’s top priority, while A scored only 1.', 'I chose B because it had the highest total score in the decision matrix, so it is the best idea.', 'I chose A because it scored 3 on looks, and the gardener will use it more if it is attractive.', 'I chose B because its circuit uses fewer parts, so it will be much quicker for me to build in Wokwi.'],
+      f: 'When totals tie, the spec point that matters most decides. B did not have a higher total, looks were not the priority, and “quicker for me” is not a spec point.' },
+    { s: 'iii', type: 'multi', n: 2, q: 'Which TWO reasons for choosing a final design are NOT linked to the specification?',
+      o: ['It was the idea my group liked the most when we voted for our favourite sketch in class.', 'It is the idea I spent the most time drawing, so it is the most detailed and complete one.', 'It meets spec point 3 because the buzzer stops after 30 seconds, so it won’t disturb classes.', 'It uses a traffic-light LED, which meets the spec that the gardener reads it without instructions.', 'It fits the practical constraint, because it only uses parts that are on the class kit list.'],
+      f: 'A vote and time spent drawing do not show the design meets any spec point. The other three each name a spec point and show how the design meets it.' },
+    { s: 'iii', q: 'Kavya writes: “I chose Idea 2 because it meets the spec.” How can she make this reason stronger?',
+      o: ['Give a reason for each key spec point, showing how Idea 2 meets it, using the decision matrix scores.', 'Write the reason as a full paragraph starting with the sentence starter “I chose this design because…”.', 'Add a coloured final sketch of Idea 2 with labels on every part of the case and the circuit.', 'Explain why Ideas 1 and 3 would not work at all, so that Idea 2 is the only choice left.'],
+      f: 'A strong reason goes from the decision matrix back to each spec point. A longer sentence or a nicer sketch adds no reasons, and ruling out other ideas does not show how Idea 2 meets the spec.' },
+    { s: 'iii', tags: ['ipo'], q: 'Which is the strongest description of a chosen design for someone who has not seen it?',
+      o: ['When the probe reads below 30%, the Arduino turns the LED red and beeps 3 times, so the gardener knows to water.', 'My chosen design has a soil-moisture probe, an Arduino Uno, a red LED, a buzzer and a waterproof green case.', 'My chosen design is a smart garden helper that will make watering much easier and help all of the plants grow better.', 'My chosen design scored 11 out of 12 in the decision matrix, which was higher than both of my other two ideas.'],
+      f: 'It explains how the system works from input to process to output and result. A list of parts does not say how they work together, “smart helper” is vague, and a score is a reason for choosing, not a description.' },
+    { s: 'iii', tags: ['testing'], q: 'Which spec point for the chosen design CANNOT be proved inside Wokwi alone and needs a different kind of test?',
+      o: ['The gardener must be able to understand the colour code without any instructions.', 'The LED must turn red within 2 seconds when moisture falls below 30%.', 'The buzzer must beep 3 times and then stay silent until the next dry reading is taken.', 'The LED must stay off whenever moisture is at 30% or above.'],
+      f: 'Whether a person understands something can only be tested with user feedback. The other three are behaviours you can trigger and measure in the simulation.' },
+    { s: 'iii', wb: true, q: 'Look at Arjun’s decision matrix (0 = does not meet, 3 = fully meets). Which idea should he choose?',
+      table: { head: ['Spec', 'Idea 1', 'Idea 2', 'Idea 3'],
+        rows: [['1. Alert within 2 s when moisture < 30% (must)', '3', '0', '2'], ['2. Gardener reads it without instructions', '2', '3', '3'], ['3. No exposed wires (must not)', '3', '3', '2'], ['4. Battery lasts a full term (should)', '2', '3', '2'], ['5. Uses class-kit parts only', '1', '3', '2']],
+        foot: ['Total', '11', '12', '11'] },
+      o: ['Idea 1, because Idea 2 scores 0 on a “must” spec, and Idea 1 fully meets both “must” points.', 'Idea 2, because it has the highest total score, so it meets the specification best overall.', 'Idea 3, because it never scores 0 or 3, which makes it the most balanced and reliable choice.', 'Any of them, because the totals are within 1 point, so the matrix cannot separate the ideas.'],
+      f: 'A “must” spec is not optional. Idea 2 has the highest total but fails spec 1 completely, so it cannot be chosen. Idea 1 ties with Idea 3 on total but scores higher on both “must” specs.' },
+
+    { s: 'iv', img: 'myp2-q25-flowchart.jpg', imgW: 700, imgH: 1050, imgMax: 340,
+      alt: 'Anya’s making flowchart: Start, then Write code, then Test in Wokwi, then Add buzzer, then Connect moisture probe, then End.',
+      q: 'This is Anya’s making flowchart for the circuit. What is the main problem?',
+      o: ['The parts are added after the code is tested, so the test cannot check the full circuit.', 'It should start with a decision diamond asking “Is the soil dry?” before any other steps.', 'It is missing the front, top and side views that show how the circuit fits inside the case.', 'It should give the time each step takes, otherwise the plan cannot be counted as accurate.'],
+      f: 'Steps must be in a sensible making order: connect the parts, then write the code, then test. The decision diamond belongs in a program flowchart, and front/top/side views are technical drawings, not part of a making flowchart.' },
+    { s: 'iv', type: 'match', q: 'Your making flowchart has two sections. Where does each step belong?',
+      pairs: [['Connect the moisture probe to pin A0.', 'Circuit section'], ['Mark and cut a hole in the lid for the LED.', 'Product (case) section'], ['Upload the code and run it in Wokwi.', 'Circuit section'], ['Glue the case onto the wooden stake.', 'Product (case) section'], ['Score each idea in the decision matrix.', 'Not part of the making flowchart'], ['Sketch three different case ideas.', 'Not part of the making flowchart']],
+      choices: ['Circuit section', 'Product (case) section', 'Not part of the making flowchart'],
+      f: 'The making flowchart plans how to build the chosen design: circuit steps and case steps. Scoring ideas and sketching ideas happen before the plan.' },
+    { s: 'iv', tags: ['sketch'], img: 'myp2-q27-views.jpg', imgW: 1400, imgH: 700,
+      alt: 'Three drawings of the case. View 1 is 12 cm by 8 cm with the red LED in the middle. View 2 is 12 cm by 5 cm with the LED on top and the probe coming out of the base. View 3 is 8 cm by 5 cm with the LED on top and the probe coming out of the base.',
+      q: 'The alert’s case is 12 cm wide, 8 cm deep and 5 cm tall. The LED hole is in the lid and the probe comes out of the base. Which drawing is the side view?',
+      o: ['View 3, because a side view shows the depth and the height of the case.', 'View 2, because a side view shows the case’s full width and its height.', 'View 1, because a side view has to show the hole for the LED clearly.', 'None of them, because a side view must show all three measurements.'],
+      f: 'The side view shows depth (8 cm) × height (5 cm). View 2 is the front view and View 1 is the top view. Each view shows only two measurements, so you need all three views together.' },
+    { s: 'iv', type: 'multi', n: 2, tags: ['ipo'], q: 'Which TWO things must Karan’s circuit diagram show that his quick idea sketch did not need to?',
+      o: ['Which Arduino pin each part connects to, for example the probe to A0 and the LED to pin 8.', 'The resistor in series with the LED, labelled with its value, for example 220 Ω.', 'The colour, material and finish of the case that will be built around the whole circuit.', 'The if-statement in the code that decides exactly when the red LED should turn on.', 'Front, top and side views of the Arduino board with its measurements.'],
+      f: 'A circuit diagram must be accurate enough to wire from: exact pin connections and every component with its value. Case finish belongs on technical drawings, code is not part of a circuit diagram, and the board does not need its own views.' },
+    { s: 'iv', q: 'Which requirements list is complete enough for someone else to start building from?',
+      o: ['Arduino Uno, moisture probe, red LED, 220 Ω resistor, buzzer, jumper wires, 12×8×5 cm case, glue gun; 3 lessons.', 'Arduino Uno, moisture probe, red LED, buzzer, some wires, a box, and anything else we find we need along the way.', 'Wokwi, Tinkercad, Canva, Google Slides and ManageBac, so the whole project can be planned and built digitally.', 'A moisture probe, because it reads the soil, and a red LED, because it shows the gardener when to water the bed.'],
+      f: 'A full requirements list names every component with its value, the materials and sizes, the tools and the time needed. “Some wires” and “anything else” are vague, apps are not build requirements, and two parts is incomplete.' },
+    { s: 'iv', tags: ['sketch'], svg: DG.circuit,
+      alt: 'Karan’s circuit diagram. The moisture probe connects to 5V, A0 and GND. Pin 8 connects straight to the red LED, then to GND. Pin 7 connects to the buzzer, then to GND. The LED and the buzzer share one GND line.',
+      q: 'Karan drew this circuit diagram for his garden alert. What must he fix before building it with real parts?',
+      o: ['Add a resistor (e.g. 220 Ω) in series with the LED, or too much current will flow through it.', 'Move the LED to an analog pin such as A1, because pin 8 cannot turn an LED on and off.', 'Give the buzzer and the LED separate GND pins, because two parts cannot share a GND line.', 'Connect the LED to the 5V pin instead of pin 8, because a pin cannot give the LED enough power.'],
+      f: 'An LED always needs a current-limiting resistor, or it can burn out and damage the pin. Digital pins can switch LEDs, parts can share GND, and wiring the LED to 5V would leave it on all the time.' }
+  ];
+  var TOTAL = Q.length;
+
+  /* ---------- Autosave in the URL hash ---------- */
+  // #q=m2&s=seed&a=answers&n=name&c=section&d=checked-time. A refresh keeps it; it never leaves the device.
+  function readHash() {
+    var out = {}, h = location.hash.replace(/^#/, '');
+    if (!h) return out;
+    h.split('&').forEach(function (kv) {
+      var i = kv.indexOf('=');
+      if (i > 0) { try { out[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); } catch (e) {} }
+    });
+    return out;
+  }
+  var saved = readHash();
+  if (saved.q !== 'm2') saved = {};
+  // seeded shuffle, so options stay in the same order after a refresh
+  var seed0 = parseInt(saved.s, 36);
+  if (!(seed0 > 0 && seed0 < 2147483647)) seed0 = Math.floor(Math.random() * 2147483646) + 1;
+  var seed = seed0;
+  function rand() { seed = seed * 16807 % 2147483647; return (seed - 1) / 2147483646; }
+
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rand() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  /* ---------- Render ---------- */
+  var quiz = document.getElementById('quiz');
+  if (!quiz) return;
+  var qCount = document.getElementById('qCount');
+  if (qCount) qCount.textContent = TOTAL;
+  var current = null;
+  Q.forEach(function (item, idx) {
+    if (item.s !== current) {
+      current = item.s;
+      var sec = el('section', 'strand');
+      sec.appendChild(el('p', 'eyebrow', 'Strand ' + current));
+      sec.appendChild(el('h2', null, STRANDS[current].title));
+      quiz.appendChild(sec);
+    }
+    item.type = item.type || 'mcq';
+    item.answer = null;
+    if (item.type === 'match') item.correct = item.pairs.map(function (pr) { return pr[1]; });
+    else if (item.type === 'multi') item.correct = item.o.slice(0, item.n);
+    else item.correct = item.o[0];
+    if (item.o) item.order = shuffle(item.o.slice());
+
+    var box = el('fieldset', 'q'); box.id = 'q' + idx;
+    var legend = el('legend', null);
+    var qn = el('p', 'q-num', 'Question ' + (idx + 1) + ' of ' + TOTAL);
+    qn.appendChild(el('span', 'type-tag', { mcq: 'Multiple choice', multi: 'Choose two', match: 'Matching' }[item.type]));
+    (item.tags || []).forEach(function (t) { qn.appendChild(el('span', 'chip chip--' + t, TAGS[t])); });
+    if (item.wb) qn.appendChild(el('span', 'chip chip--wb', 'From workbook'));
+    legend.appendChild(qn);
+    legend.appendChild(el('p', 'q-text', item.q));
+    box.appendChild(legend);
+
+    if (item.img) {
+      var pfig = el('figure', 'q-img');
+      var pic = document.createElement('img');
+      pic.src = item.img; pic.alt = item.alt || '';
+      if (item.imgW) { pic.width = item.imgW; pic.height = item.imgH; }
+      if (item.imgMax) pic.style.maxWidth = item.imgMax + 'px';
+      pfig.appendChild(pic);
+      box.appendChild(pfig);
+    }
+    if (item.svg) {
+      var fig = el('figure', 'dg');
+      fig.setAttribute('role', 'img');
+      fig.setAttribute('aria-label', item.alt || '');
+      fig.innerHTML = item.svg;   // authored above, never user input
+      box.appendChild(fig);
+    }
+    if (item.table) {
+      var tw = el('div', 'q-tablewrap'), tb = el('table', 'q-table');
+      var th = el('thead'), hr = el('tr');
+      item.table.head.forEach(function (h) { hr.appendChild(el('th', null, h)); });
+      th.appendChild(hr); tb.appendChild(th);
+      var bd = el('tbody');
+      item.table.rows.forEach(function (row) { var tr = el('tr'); row.forEach(function (c) { tr.appendChild(el('td', null, c)); }); bd.appendChild(tr); });
+      tb.appendChild(bd);
+      var ft = el('tfoot'), fr = el('tr');
+      item.table.foot.forEach(function (c) { fr.appendChild(el('td', null, c)); });
+      ft.appendChild(fr); tb.appendChild(ft);
+      tw.appendChild(tb); box.appendChild(tw);
+    }
+
+    function makeSelect(options, placeholder) {
+      var sel = document.createElement('select');
+      var ph = document.createElement('option'); ph.value = ''; ph.textContent = placeholder; sel.appendChild(ph);
+      options.forEach(function (o) { var op = document.createElement('option'); op.value = o; op.textContent = o; sel.appendChild(op); });
+      return sel;
+    }
+    var opts = el('div', item.type === 'match' ? 'match' : 'opts');
+    if (item.type === 'match') {
+      item.picks = item.pairs.map(function () { return ''; });
+      item.rowEls = [];
+      item.pairs.forEach(function (pr, r) {
+        var row = el('div', 'match-row');
+        var txt = el('span', null, pr[0]);
+        var msel = makeSelect(shuffle(item.choices.slice()), 'choose…');
+        msel.setAttribute('aria-label', 'Match for: ' + pr[0]);
+        msel.addEventListener('change', function () {
+          item.picks[r] = msel.value;
+          item.answer = item.picks.every(function (v) { return v; }) ? item.picks.slice() : null;
+          box.classList.remove('missing'); updateProgress();
+        });
+        row.appendChild(txt); row.appendChild(msel); opts.appendChild(row); item.rowEls.push(row);
+      });
+    } else if (item.type === 'multi') {
+      item.picked = [];
+      var hint = el('p', 'multi-hint', 'Choose two answers.');
+      box.appendChild(hint);
+      item.order.forEach(function (text) {
+        var lab = el('label', 'opt');
+        var inp = document.createElement('input'); inp.type = 'checkbox'; inp.value = text;
+        inp.addEventListener('change', function () {
+          if (inp.checked && item.picked.length >= item.n) {
+            inp.checked = false;
+            hint.textContent = 'Choose only two. Untick one first.'; hint.classList.add('warn');
+            return;
+          }
+          hint.textContent = 'Choose two answers.'; hint.classList.remove('warn');
+          if (inp.checked) { item.picked.push(text); lab.classList.add('chosen'); }
+          else { item.picked.splice(item.picked.indexOf(text), 1); lab.classList.remove('chosen'); }
+          item.answer = item.picked.length === item.n ? item.picked.slice() : null;
+          box.classList.remove('missing'); updateProgress();
+        });
+        lab.appendChild(inp);
+        lab.appendChild(el('span', null, text));
+        opts.appendChild(lab);
+      });
+    } else item.order.forEach(function (text) {
+      var lab = el('label', 'opt');
+      var inp = document.createElement('input'); inp.type = 'radio'; inp.name = 'q' + idx; inp.value = text;
+      inp.addEventListener('change', function () {
+        item.answer = text;
+        Array.prototype.forEach.call(opts.children, function (c) { c.classList.remove('chosen'); });
+        lab.classList.add('chosen'); box.classList.remove('missing'); updateProgress();
+      });
+      lab.appendChild(inp);
+      lab.appendChild(el('span', null, text));
+      opts.appendChild(lab);
+    });
+    box.appendChild(opts);
+    var fb = el('div', 'fb'); box.appendChild(fb);
+    item.box = box; item.fbEl = fb; item.optsEl = opts;
+    quiz.appendChild(box);
+  });
+
+  function answeredCount() { return Q.filter(function (q) { return q.answer !== null; }).length; }
+  function updateProgress() {
+    var n = answeredCount();
+    var t = document.getElementById('progText');
+    var b = document.getElementById('progBar');
+    if (t) t.textContent = n + ' / ' + TOTAL + ' answered';
+    if (b) b.style.transform = 'scaleX(' + (n / TOTAL) + ')';
+    if (ready) save();
+  }
+  var ready = false;
+  updateProgress();
+
+  /* ---------- Check ---------- */
+  var nameEl = document.getElementById('stuName');
+  var secEl = document.getElementById('stuSection');
+  var errEl = document.getElementById('err');
+  var checkBtn = document.getElementById('checkBtn');
+  var result = null;
+  var checked = false;
+  if (!nameEl || !secEl || !errEl || !checkBtn) return;
+
+  function scrollTo(node, block) {
+    try { node.scrollIntoView({ behavior: 'smooth', block: block }); } catch (e) { node.scrollIntoView(); }
+  }
+
+  /* ---------- Save and restore ---------- */
+  function encodeAnswers() {
+    return Q.map(function (item) {
+      if (item.type === 'match') return item.picks.map(function (p) { return p ? item.choices.indexOf(p).toString(36) : '-'; }).join('');
+      if (item.type === 'multi') return item.picked.length ? item.picked.map(function (p) { return item.o.indexOf(p).toString(36); }).sort().join('') : '-';
+      return item.answer === null ? '-' : item.o.indexOf(item.answer).toString(36);
+    }).join('.');
+  }
+
+  function save() {
+    var parts = ['q=m2', 's=' + seed0.toString(36), 'a=' + encodeAnswers(),
+      'n=' + encodeURIComponent(nameEl.value), 'c=' + encodeURIComponent(secEl.value)];
+    if (result) parts.push('d=' + result.when.getTime().toString(36));
+    try { history.replaceState(null, '', location.pathname + location.search + '#' + parts.join('&')); } catch (e) {}
+  }
+
+  function restore() {
+    if (!saved.a) return;
+    if (saved.n) nameEl.value = saved.n;
+    if (saved.c) secEl.value = saved.c;
+    var toks = saved.a.split('.');
+    Q.forEach(function (item, i) {
+      var t = toks[i];
+      if (!t || t === '-') return;
+      if (item.type === 'match') {
+        var sels = item.optsEl.querySelectorAll('select');
+        for (var r = 0; r < sels.length; r++) {
+          var v = item.choices[parseInt(t.charAt(r), 36)];
+          if (v) { sels[r].value = v; item.picks[r] = v; }
+        }
+        item.answer = item.picks.every(function (p) { return p; }) ? item.picks.slice() : null;
+        return;
+      }
+      var want = item.type === 'multi' ? t.split('') : [t];
+      var labs = item.optsEl.children;
+      for (var w = 0; w < want.length; w++) {
+        var val = item.o[parseInt(want[w], 36)];
+        if (val === undefined) continue;
+        for (var k = 0; k < labs.length; k++) {
+          var inp = labs[k].querySelector('input');
+          if (inp && inp.value === val) { inp.checked = true; labs[k].classList.add('chosen'); }
+        }
+        if (item.type === 'multi') { if (item.picked.length < item.n) item.picked.push(val); }
+        else item.answer = val;
+      }
+      if (item.type === 'multi') item.answer = item.picked.length === item.n ? item.picked.slice() : null;
+    });
+    updateProgress();
+    // they had already checked their score: show the locked result again
+    var when = parseInt(saved.d, 36);
+    if (when > 0 && nameEl.value.trim() && secEl.value && answeredCount() === TOTAL) {
+      checked = true;
+      grade(nameEl.value.trim(), secEl.value, new Date(when), true);
+    }
+  }
+
+  /* ---------- One-try confirmation ---------- */
+  var cm = document.getElementById('confirmBox');
+  var cmYes = document.getElementById('cmYes');
+  var cmNo = document.getElementById('cmNo');
+  function openConfirm() {
+    if (!cm || !cmYes || !cmNo) { if (window.confirm('You can only check your score once. Your answers will lock. Check now?')) confirmed(); return; }
+    cm.hidden = false;
+    cmNo.focus();
+  }
+  function closeConfirm() {
+    if (cm) cm.hidden = true;
+    if (!checked) checkBtn.focus();
+  }
+  function confirmed() {
+    if (checked) return;
+    checked = true;
+    if (cm) cm.hidden = true;
+    grade(nameEl.value.trim(), secEl.value);
+  }
+  if (cm && cmYes && cmNo) {
+    cmYes.addEventListener('click', confirmed);
+    cmNo.addEventListener('click', closeConfirm);
+    cm.addEventListener('click', function (e) { if (e.target === cm) closeConfirm(); });
+    document.addEventListener('keydown', function (e) {
+      if (cm.hidden) return;
+      if (e.key === 'Escape' || e.keyCode === 27) { closeConfirm(); return; }
+      if (e.key === 'Tab' || e.keyCode === 9) {
+        // keep focus on the two dialogue buttons
+        e.preventDefault();
+        (document.activeElement === cmNo ? cmYes : cmNo).focus();
+      }
+    });
+  }
+
+  checkBtn.addEventListener('click', function () {
+    if (checked) return;
+    errEl.textContent = '';
+    var name = nameEl.value.trim();
+    var section = secEl.value;
+    if (!name) { errEl.textContent = 'Type your full name at the top first.'; nameEl.focus(); scrollTo(nameEl, 'center'); return; }
+    if (!section) { errEl.textContent = 'Choose your section at the top first.'; secEl.focus(); scrollTo(secEl, 'center'); return; }
+    var missing = Q.filter(function (q) { return q.answer === null; });
+    if (missing.length) {
+      missing.forEach(function (q) { q.box.classList.add('missing'); });
+      var nums = missing.map(function (q) { return Q.indexOf(q) + 1; });
+      errEl.textContent = 'You still need to answer question' + (nums.length > 1 ? 's ' : ' ') + nums.join(', ') + '.';
+      scrollTo(missing[0].box, 'start');
+      return;
+    }
+    openConfirm();
+  });
+
+  function grade(name, section, when, restoring) {
+    var per = { i: [0, 0], ii: [0, 0], iii: [0, 0], iv: [0, 0], spec: [0, 0], testing: [0, 0], sketch: [0, 0], ipo: [0, 0] };
+    var score = 0;
+    Q.forEach(function (item) {
+      var ok;
+      if (item.type === 'match') ok = item.answer.every(function (v, r) { return v === item.correct[r]; });
+      else if (item.type === 'multi') ok = item.answer.length === item.n && item.answer.every(function (v) { return item.correct.indexOf(v) > -1; });
+      else ok = item.answer === item.correct;
+      item.ok = ok;
+      per[item.s][1]++;
+      if (ok) { per[item.s][0]++; score++; }
+      (item.tags || []).forEach(function (t) { per[t][1]++; if (ok) per[t][0]++; });
+      item.box.classList.add('locked');
+      Array.prototype.forEach.call(item.optsEl.querySelectorAll('input, select'), function (i) { i.disabled = true; });
+      if (item.type === 'match') {
+        item.rowEls.forEach(function (row, r) {
+          var good = item.answer[r] === item.correct[r];
+          row.classList.add(good ? 'is-correct' : 'is-wrong');
+          row.firstChild.appendChild(el('span', 'fix', good ? '✓ Correct' : '✗ Correct answer: ' + item.correct[r]));
+        });
+      } else {
+        var picks = item.type === 'multi' ? item.answer : [item.answer];
+        var rights = item.type === 'multi' ? item.correct : [item.correct];
+        Array.prototype.forEach.call(item.optsEl.children, function (lab) {
+          var val = lab.querySelector('input').value;
+          var mine = picks.indexOf(val) > -1;
+          if (rights.indexOf(val) > -1) { lab.classList.add('is-correct'); lab.appendChild(el('span', 'tag', mine ? '✓ Your answer' : '✓ Correct answer')); }
+          else if (mine) { lab.classList.add('is-wrong'); lab.appendChild(el('span', 'tag', '✗ Your answer')); }
+        });
+      }
+      item.fbEl.classList.add(ok ? 'good' : 'nope');
+      item.fbEl.appendChild(el('strong', ok ? 'good' : 'nope', ok ? 'Correct. ' : 'Not quite. '));
+      item.fbEl.appendChild(document.createTextNode(item.f));
+    });
+    nameEl.disabled = true; secEl.disabled = true;
+    checkBtn.disabled = true; checkBtn.textContent = 'Score checked';
+    var onceNote = document.getElementById('onceNote');
+    if (onceNote) onceNote.textContent = 'Your answers are locked. Download your result below.';
+
+    when = when || new Date();
+    result = { name: name, section: section, score: score, per: per, when: when };
+    save();
+
+    document.getElementById('resWho').textContent = name + ' · ' + section + ' · ' + when.toLocaleString();
+    var big = document.getElementById('resScore');
+    big.textContent = score + ' ';
+    big.appendChild(el('small', null, '/ ' + TOTAL + '  (' + Math.round(score / TOTAL * 100) + '%)'));
+
+    var sWrap = document.getElementById('resStrands'); sWrap.innerHTML = '';
+    [['i', 'Strand i · Specification & testing'], ['ii', 'Strand ii · Design ideas'], ['iii', 'Strand iii · Chosen design'], ['iv', 'Strand iv · Planning'],
+     ['spec', 'Spec'], ['testing', 'Testing'], ['sketch', 'Sketches & drawings'], ['ipo', 'IPO']].forEach(function (p) {
+      if (!per[p[0]][1]) return;
+      var b = el('div', TAGS[p[0]] ? 'sbox sbox--' + p[0] : 'sbox');
+      b.appendChild(el('div', 'k', p[1]));
+      b.appendChild(el('div', 'v', per[p[0]][0] + ' / ' + per[p[0]][1]));
+      sWrap.appendChild(b);
+    });
+
+    var weakest = ['i', 'ii', 'iii', 'iv'].filter(function (s) { return per[s][1]; }).sort(function (a, b) { return per[a][0] / per[a][1] - per[b][0] / per[b][1]; })[0];
+    var focus = {
+      i: 'writing spec points that are specific, measurable and justified, and planning repeatable tests',
+      ii: 'developing truly different ideas, with useful annotations and a circuit sketch for each',
+      iii: 'choosing your design by linking decision-matrix scores back to your spec points',
+      iv: 'planning in a sensible order: making flowchart, views, circuit diagram and requirements list'
+    }[weakest];
+    var msg;
+    if (score === TOTAL) msg = 'Perfect score! You know what Criterion B strands i–iv are asking for.';
+    else if (score / TOTAL >= 0.8) msg = 'Great work. Read the feedback on the ones you missed. Your next focus: ' + focus + '.';
+    else if (score / TOTAL >= 0.6) msg = 'Good start. Your next focus: ' + focus + '. Read the feedback below each question.';
+    else msg = 'Keep going. Read the feedback below each question carefully, then look back at the Criterion B slides. Start with ' + focus + '.';
+    result.msg = msg;
+    document.getElementById('resMsg').textContent = msg;
+
+    var res = document.getElementById('results');
+    res.classList.add('show');
+    if (restoring) return;
+    try { res.focus({ preventScroll: true }); } catch (e) {}
+    scrollTo(res, 'start');
+  }
+
+  nameEl.addEventListener('input', function () { if (ready) save(); });
+  secEl.addEventListener('change', function () { if (ready) save(); });
+  restore();
+  ready = true;
+  save();
+
+  /* ---------- PDF ---------- */
+  function ascii(s) {
+    return String(s)
+      .replace(/[“”]/g, '"').replace(/[‘’]/g, "'")
+      .replace(/[–—]/g, '-').replace(/…/g, '...')
+      .replace(/→/g, '->').replace(/×/g, 'x').replace(/Ω/g, ' ohm')
+      .replace(/✓/g, 'Correct').replace(/✗/g, 'X')
+      .replace(/[^\x20-\x7E\n]/g, '');
+  }
+
+  var printBtn = document.getElementById('printBtn');
+  if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+
+  var pdfBtn = document.getElementById('pdfBtn');
+  if (pdfBtn) pdfBtn.addEventListener('click', function () {
+    if (!result) return;
+    if (!window.jspdf || !window.jspdf.jsPDF) { window.print(); return; }
+    var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+    var W = 210, M = 16, y = 18, maxW = W - 2 * M;
+    var AMBER = [176, 90, 28], MOSS = [47, 107, 79], CLAY = [156, 62, 47], SLATE = [90, 114, 123], INK = [20, 48, 60];
+    function need(h) { if (y + h > 282) { doc.addPage(); y = 18; } }
+    function line(text, size, style, color, gap) {
+      doc.setFont('helvetica', style || 'normal'); doc.setFontSize(size || 10);
+      var c = color || INK; doc.setTextColor(c[0], c[1], c[2]);
+      var parts = doc.splitTextToSize(ascii(text), maxW);
+      var h = parts.length * (size || 10) * 0.42;
+      need(h + 1);
+      doc.text(parts, M, y); y += h + (gap == null ? 2 : gap);
+    }
+    var P = result.per;
+    function frac(k) { return P[k][0] + ' / ' + P[k][1]; }
+
+    line('MYP 2 Design - Criterion B Formative Assessment', 16, 'bold', AMBER, 1);
+    line('Unit 1: Sensing Our World (school garden soil-moisture alert)', 10, 'normal', SLATE, 5);
+    line('Name: ' + result.name, 12, 'bold', null, 1);
+    line('Section: ' + result.section, 12, 'normal', null, 1);
+    line('Completed: ' + result.when.toLocaleString(), 10, 'normal', SLATE, 5);
+
+    line('Score: ' + result.score + ' / ' + TOTAL + '  (' + Math.round(result.score / TOTAL * 100) + '%)', 14, 'bold', null, 2);
+    line('Strand i (specification & testing): ' + frac('i') + '     Strand ii (design ideas): ' + frac('ii') +
+         '     Strand iii (chosen design): ' + frac('iii') + '     Strand iv (planning): ' + frac('iv'), 10, 'normal', null, 1);
+    line('Spec: ' + frac('spec') + '     Testing: ' + frac('testing') + '     Sketches & drawings: ' + frac('sketch') + '     IPO: ' + frac('ipo'), 10, 'normal', null, 2);
+    line(result.msg, 10, 'italic', SLATE, 4);
+
+    doc.setDrawColor(211, 224, 229); doc.line(M, y, W - M, y); y += 6;
+
+    Q.forEach(function (item, idx) {
+      need(24);
+      line((idx + 1) + '. [Strand ' + item.s + '] ' + item.q, 10, 'bold', null, 1);
+      if (item.svg || item.img) line('(The picture for this question is on the website.)', 9, 'italic', SLATE, 1);
+      if (item.table) {
+        line(item.table.head.join('  |  '), 9, 'normal', SLATE, 0.5);
+        item.table.rows.forEach(function (r) { line(r.join('  |  '), 9, 'normal', SLATE, 0.5); });
+        line(item.table.foot.join('  |  '), 9, 'bold', SLATE, 1.5);
+      }
+      function show(v) {
+        if (item.type === 'match') return item.pairs.map(function (pr, r) { return '"' + pr[0] + '" -> ' + v[r]; }).join('   |   ');
+        if (item.type === 'multi') return v.join('   AND   ');
+        return v;
+      }
+      line('Your answer: ' + show(item.answer), 10, 'normal', item.ok ? MOSS : CLAY, 1);
+      if (!item.ok) line('Correct answer: ' + show(item.correct), 10, 'normal', MOSS, 1);
+      line((item.ok ? 'Correct' : 'Incorrect') + ' - ' + item.f, 9, 'italic', SLATE, 4);
+    });
+
+    var safe = ascii(result.name).replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '') || 'student';
+    doc.save('CritB_FA_MYP2_' + result.section.replace(/\s+/g, '') + '_' + safe + '.pdf');
+  });
+})();
+</script>
+
+<script src="../assets/theme.js"></script>
+</body>
+</html>
