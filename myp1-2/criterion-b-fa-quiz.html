@@ -79,6 +79,8 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
   color:var(--b);background:var(--b-tint);border-radius:7px;padding:2px 8px}
 .chip--spec{color:var(--amber);background:var(--amber-tint)}
 .q-text{font-weight:600;margin:0 0 14px;line-height:1.5}
+.q-img{margin:0 0 16px}
+.q-img img{display:block;width:100%;max-width:340px;height:auto;border-radius:7px;border:1px solid var(--rule)}
 .opts{display:grid;gap:8px}
 .opt{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1px solid var(--rule);
   border-radius:7px;cursor:pointer;background:var(--paper);font-size:15px;line-height:1.5}
@@ -391,7 +393,9 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     { s: 'ii', q: 'In MYP Design, a feasible idea is one you can create in the time you have, with the tools and facilities available to you. Which poster idea is NOT feasible?',
       o: ['A 3D hologram poster that floats in every school in India', 'A digital poster made in Canva', 'A printed A3 poster', 'A poster with a QR code'],
       f: 'A hologram needs technology and time you don’t have in this unit.' },
-    { s: 'ii', layout: true, q: 'Look at a poster for 3 seconds. What should students notice FIRST on the Ignite poster?',
+    { s: 'ii', layout: true, img: 'ignite-poster.jpg', imgW: 900, imgH: 1273,
+      alt: 'The Sreenidhi Ignite is back poster: the word IGNITE in large red letters at the top, then the dates, a slogan, prize and registration details, and a contact box at the bottom.',
+      q: 'Look at a poster for 3 seconds. What should students notice FIRST on the Ignite poster?',
       o: ['The event name, Ignite', 'The school address', 'The small print at the bottom', 'The page border'],
       f: 'The most important information should be the biggest and boldest so the eye goes there first. This is called visual hierarchy.' },
     { s: 'ii', layout: true, type: 'tf', q: 'True or false: white space on a poster must always be coloured white.',
@@ -462,6 +466,14 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     legend.appendChild(qn);
     legend.appendChild(el('p', 'q-text', item.q));
     box.appendChild(legend);
+    if (item.img) {
+      var fig = el('figure', 'q-img');
+      var pic = document.createElement('img');
+      pic.src = item.img; pic.alt = item.alt || '';
+      if (item.imgW) { pic.width = item.imgW; pic.height = item.imgH; }
+      fig.appendChild(pic);
+      box.appendChild(fig);
+    }
     function makeSelect(options, placeholder) {
       var sel = document.createElement('select');
       var ph = document.createElement('option'); ph.value = ''; ph.textContent = placeholder; sel.appendChild(ph);
