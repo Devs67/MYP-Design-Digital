@@ -73,8 +73,11 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .q.missing{border-color:var(--clay);box-shadow:0 0 0 2px var(--clay-tint)}
 .q-num{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--slate);margin:0 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.type-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--slate);border:1px solid var(--rule);border-radius:7px;padding:1px 7px}
 .chip{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
   color:var(--b);background:var(--b-tint);border-radius:7px;padding:2px 8px}
+.chip--spec{color:var(--amber);background:var(--amber-tint)}
 .q-text{font-weight:600;margin:0 0 14px;line-height:1.5}
 .opts{display:grid;gap:8px}
 .opt{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1px solid var(--rule);
@@ -91,6 +94,24 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
   font-weight:500;white-space:nowrap;padding-left:8px;padding-top:2px}
 .is-correct .tag{color:var(--moss)}
 .is-wrong .tag{color:var(--clay)}
+
+/* fill in the blank and matching */
+.blank-line{font-size:16px;line-height:2.3;background:var(--paper);border:1px solid var(--rule);
+  border-radius:7px;padding:10px 14px}
+.blank-line select,.match-row select{width:auto;display:inline-block;padding:5px 10px;font-weight:600;
+  background:var(--card);line-height:1.4;max-width:100%}
+.match{display:grid;gap:8px}
+.match-row{display:grid;grid-template-columns:1fr 200px;gap:12px;align-items:center;padding:11px 13px;
+  border:1px solid var(--rule);border-radius:7px;background:var(--paper);font-size:15px;line-height:1.5}
+.match-row select{width:100%}
+.match-row > span{min-width:0}
+.match-row.is-correct,.blank-line.is-correct{border-color:var(--moss);background:var(--moss-tint)}
+.match-row.is-wrong,.blank-line.is-wrong{border-color:var(--clay);background:var(--clay-tint)}
+.fix{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  font-weight:500;margin-top:4px;line-height:1.5}
+.is-correct .fix{color:var(--moss)}
+.is-wrong .fix{color:var(--clay)}
+
 .fb{display:none;margin-top:14px;padding:11px 14px;border-radius:7px;font-size:14px;line-height:1.55;
   background:var(--paper);border-left:3px solid var(--rule)}
 .locked .fb{display:block}
@@ -109,6 +130,19 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .btn.wide{width:100%}
 .err{color:var(--clay);font-size:14px;margin:10px 0 0;min-height:1em}
+.once{color:var(--slate);font-size:13.5px;margin:10px 0 0;text-align:center}
+
+/* one-try confirmation */
+.cm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(20,48,60,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.cm[hidden]{display:none}
+.cm__card{max-width:460px;width:100%;background:var(--card);border-radius:12px;padding:28px 26px 24px;
+  box-shadow:0 24px 60px rgba(20,48,60,.3);border-top:4px solid var(--amber)}
+.cm__card h2{font-family:var(--display);font-size:22px;font-weight:600;margin:8px 0 10px;letter-spacing:-.01em}
+.cm__card p{margin:0 0 10px;font-size:15px}
+.cm__card ul{margin:0 0 18px;padding-left:20px;font-size:15px;color:var(--slate)}
+.cm__btns{display:flex;gap:10px;flex-wrap:wrap}
+.cm__btns .btn{flex:1 1 180px}
 
 #results{display:none;border-top:4px solid var(--amber)}
 #results.show{display:block}
@@ -121,6 +155,7 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .sbox{background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:12px 14px}
 .sbox .k{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);line-height:1.45}
 .sbox .v{font-family:var(--display);font-size:24px;font-weight:600;margin-top:4px}
+.sbox--s .k{color:var(--amber)}
 .sbox--l .k{color:var(--b)}
 .submit-box{margin-top:20px;padding:18px 20px;border:1px dashed var(--amber);border-radius:12px;background:var(--amber-tint)}
 .submit-box h3{font-family:var(--display);font-size:18px;font-weight:600;margin:0 0 6px}
@@ -133,6 +168,10 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 @media (prefers-reduced-motion:no-preference){
   .bar > span{transition:transform .3s ease}
   .btn{transition:opacity .15s ease}
+  .cm{animation:cmFade .25s ease both}
+  .cm__card{animation:cmRise .35s cubic-bezier(.22,.61,.36,1) both .04s}
+  @keyframes cmFade{from{opacity:0}to{opacity:1}}
+  @keyframes cmRise{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
 }
 
 @media (max-width:760px){
@@ -145,11 +184,18 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   .fields{grid-template-columns:1fr}
   .opt{flex-wrap:wrap}
   .tag{flex-basis:100%;margin-left:23px;padding-left:0}
+  .match-row{grid-template-columns:1fr}
 }
 
 @media print{
-  .progress,.actions,.btn-row,.homelink{display:none !important}
-  body{background:#fff;color:#000}
+  /* always print on the light palette: dark mode text would come out white on white paper */
+  html:root.dark{--ink:#14303C;--paper:#F2F5F6;--card:#FFF;--rule:#D3E0E5;--rule-soft:#E7EEF0;--slate:#5A727B;
+    --amber:#B05A1C;--amber-tint:#FBEEE2;--moss:#2F6B4F;--moss-tint:#E8F1EC;--clay:#9C3E2F;--clay-tint:#F8E9E6;
+    --b:#96700A;--b-tint:#F8F0D9}
+  .progress,.actions,.btn-row,.homelink,.cm{display:none !important}
+  body,html:root.dark body{background:#fff;color:#000}
+  .opt.is-correct,.opt.is-wrong,.match-row.is-correct,.match-row.is-wrong,
+  .blank-line.is-correct,.blank-line.is-wrong{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .card,.q{break-inside:avoid;border-color:#bbb}
 }
 </style>
@@ -192,7 +238,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     <a class="homelink" href="criterion-b.html">&larr; Criterion B</a>
     <p class="eyebrow">MYP 1 Design &middot; Formative assessment</p>
     <h1>Criterion B &mdash; Developing ideas</h1>
-    <p class="sub">Unit 1 &middot; Promoting Innovation through Digital Media &middot; <span id="qCount">25</span> questions &middot; Strands i, ii and iii, including poster layout</p>
+    <p class="sub">Unit 1 &middot; Promoting Innovation through Digital Media &middot; <span id="qCount">25</span> questions &middot; Strands i, ii and iii, including design specification and poster layout</p>
   </div>
 </header>
 
@@ -236,6 +282,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   <div class="actions">
     <button class="btn wide" id="checkBtn" type="button">Check my score</button>
     <p class="err" id="err" role="alert"></p>
+    <p class="once" id="onceNote">You can only check your score once. Your answers lock after that.</p>
   </div>
 
   <section class="card" id="results" aria-live="polite" tabindex="-1">
@@ -262,6 +309,22 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 
 </div>
 
+<div class="cm" id="confirmBox" role="dialog" aria-modal="true" aria-labelledby="cmTitle" aria-describedby="cmText" hidden>
+  <div class="cm__card">
+    <p class="eyebrow">One try only</p>
+    <h2 id="cmTitle">Check your score now?</h2>
+    <p id="cmText">You can only do this <strong>once</strong>. After you check:</p>
+    <ul>
+      <li>your answers lock and cannot be changed</li>
+      <li>you will see the right answers and feedback</li>
+    </ul>
+    <div class="cm__btns">
+      <button class="btn secondary" id="cmNo" type="button">Go back and review</button>
+      <button class="btn" id="cmYes" type="button">Yes, check my score</button>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
     <span>Design Team - SIS</span>
@@ -273,37 +336,39 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 (function () {
   /* ---------- Questions ---------- */
   var STRANDS = {
-    i:   { title: 'Strand i: Success criteria',   obj: 'Year 1 objective: “develop a list of success criteria for the solution”' },
+    i:   { title: 'Strand i: Design specification and success criteria',   obj: 'Year 1 objective: “develop a list of success criteria for the solution”' },
     ii:  { title: 'Strand ii: Design ideas',       obj: 'Year 1 objective: “present feasible design ideas, which can be correctly interpreted by others”' },
     iii: { title: 'Strand iii: The chosen design', obj: 'Year 1 objective: “present the chosen design”' }
   };
 
   // First option in each list is the correct one; options are shuffled on screen.
   var Q = [
-    { s: 'i', q: 'What is a success criterion?',
-      o: ['A statement of what your design must do or have to be successful', 'A sketch of your poster', 'A list of apps you will use', 'Your teacher’s marks'],
-      f: 'Success criteria are the checklist you will use later to test your logo and poster.' },
-    { s: 'i', q: 'Which is the best success criterion for the Ignite poster?',
-      o: ['The poster must show the event name, dates and how to register', 'The poster must look nice', 'The poster will be the best in India', 'I will make it on Canva'],
-      f: 'A good criterion says exactly what the poster must include, and you can check it. “I will make it on Canva” is a tool choice, not a criterion.' },
-    { s: 'i', q: 'Which success criterion can you actually check when testing?',
+    { s: 'i', spec: true, q: 'What is a design specification?',
+      o: ['A list of the requirements your design must meet, like what it must show, who it is for, its size and its limits', 'A final drawing of your poster', 'A list of posters you found online', 'A timetable for making the poster'],
+      f: 'A design specification lists what your logo and poster must do or include, based on your Criterion A research. Each point becomes a success criterion you can check later.' },
+    { s: 'i', spec: true, type: 'blank', q: 'Fill in the blank: choose the best word to complete this design specification point.',
+      before: 'The poster ', after: ' show the event name, dates and how to register.',
+      o: ['must', 'might', 'could maybe', 'will probably'],
+      f: 'Specification points use clear, firm words like “must”. “Might” or “could maybe” can’t be checked later.' },
+    { s: 'i', spec: true, q: 'A good specification point can be tested. Which one can you actually check?',
       o: ['The logo must still be clear when shrunk to the size of a phone app icon', 'The logo should be cool', 'People will love it', 'It should look professional'],
       f: 'You can shrink the logo and look. You can’t test “cool”.' },
-    { s: 'i', q: 'Aarav writes: “My poster is for everyone.” What is the problem?',
-      o: ['“Everyone” is too broad, so he should name the group, like students at schools across India', 'Nothing, more people is better', 'He should write “people” instead', 'Posters don’t need an audience'],
+    { s: 'i', spec: true, q: 'Aarav’s design specification says: “The poster is for everyone.” What is the problem?',
+      o: ['“Everyone” is too broad, so he should name the group, like students at schools across India', 'Nothing, more people is better', 'He should write “people” instead', 'A specification doesn’t need an audience'],
       f: 'If you don’t know exactly who it is for, you can’t decide what they need to see.' },
-    { s: 'i', q: 'Where should your success criteria come from?',
-      o: ['Your Criterion A research and design brief', 'Guessing', 'A friend’s list', 'Whatever is easiest to make'],
-      f: 'Each criterion should link back to something you discovered in Criterion A.' },
-    { s: 'i', q: '“The poster must use Ignite’s brand colours and logo.” Which ACCESS FM letter does this belong to?',
-      o: ['Aesthetics', 'Cost', 'Safety', 'Function'],
-      f: 'Aesthetics is about how the design looks: colour, style, layout.' },
-    { s: 'i', q: 'Which of these is a success criterion and NOT a design idea?',
+    { s: 'i', spec: true, type: 'match', q: 'Match each design specification point to its ACCESS FM letter.',
+      pairs: [['The poster must use Ignite’s brand colours and logo.', 'Aesthetics'], ['The poster must fit on an A3 school noticeboard.', 'Size'], ['The poster must appeal to school students across India.', 'Customer']],
+      choices: ['Aesthetics', 'Customer', 'Size', 'Cost', 'Safety', 'Function'],
+      f: 'Aesthetics is how it looks, Size is how big it is, and Customer is who it is for.' },
+    { s: 'i', spec: true, q: 'Which of these belongs in your design specification and NOT in your design ideas?',
       o: ['The poster must include a QR code or link to register', 'Put a rocket in the top corner', 'Use a purple background', 'Use a comic-style font'],
-      f: 'A criterion says what is needed. The rocket, purple background and comic font are choices about how you will do it, so they belong in your design ideas.' },
-    { s: 'i', q: 'Riya’s success criteria page has only one line: “The poster must look good.” How can she move up the rubric?',
+      f: 'The specification says what is needed. The rocket, purple background and comic font are choices about how you will do it, so they belong in your design ideas.' },
+    { s: 'i', spec: true, q: 'Specification point: “The title must be readable from 3 metres away.” How will you test this?',
+      o: ['Stand 3 metres from the printed poster and ask 3 classmates to read the title', 'Ask a friend if they like the poster', 'Look at it up close on your laptop', 'Guess'],
+      f: 'A good test checks exactly what the specification says, and someone else could repeat it.' },
+    { s: 'i', spec: true, q: 'Riya’s design specification has only one line: “The poster must look good.” How can she move up the rubric?',
       o: ['Develop a list of success criteria that covers different things: what it shows, who it is for, size and look', 'Write it in a nicer colour', 'Make the sentence longer', 'Nothing, one is enough'],
-      f: 'One basic criterion matches the 1–2 band: “states one basic success criterion for a solution”. The 7–8 band asks you to “develop a list of success criteria for the solution”.' },
+      f: 'One basic point matches the 1–2 band: “states one basic success criterion for a solution”. The 7–8 band asks you to “develop a list of success criteria for the solution”.' },
     { s: 'i', layout: true, q: 'Which is a checkable success criterion about the poster’s layout?',
       o: ['The event name must be the biggest text on the poster and readable from 3 metres away', 'The layout must be good', 'The poster should be well organised', 'Everything should be big'],
       f: 'You can measure “biggest text” and test “3 metres away”. You can’t check “good” or “well organised”.' },
@@ -311,8 +376,8 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     { s: 'ii', q: 'Why do designers draw more than one logo idea?',
       o: ['To compare different options before choosing', 'To fill pages', 'Because the teacher says so', 'To use more colours'],
       f: 'Different ideas give you real choices.' },
-    { s: 'ii', q: '“Design ideas that can be correctly interpreted by others” means…',
-      o: ['Someone else can understand your idea without you explaining it', 'They are drawn neatly', 'They are done on a computer', 'They are coloured in'],
+    { s: 'ii', type: 'tf', q: 'True or false: “design ideas that can be correctly interpreted by others” means someone else can understand your idea without you explaining it.',
+      o: ['True', 'False'], c: 'True',
       f: 'Your sketch and labels should do the talking for you.' },
     { s: 'ii', q: 'Which poster idea would a classmate understand most easily?',
       o: ['A sketch with labels showing where the title, logo, dates, image and QR code go', 'A quick sketch with no labels', 'A paragraph with no drawing', 'A screenshot of another event’s poster'],
@@ -329,21 +394,23 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     { s: 'ii', layout: true, q: 'Look at a poster for 3 seconds. What should students notice FIRST on the Ignite poster?',
       o: ['The event name, Ignite', 'The school address', 'The small print at the bottom', 'The page border'],
       f: 'The most important information should be the biggest and boldest so the eye goes there first. This is called visual hierarchy.' },
-    { s: 'ii', layout: true, q: 'What is “white space” on a poster?',
-      o: ['Empty space around text and images that stops the poster feeling crowded', 'Space that must be coloured white', 'A mistake you should fill with more pictures', 'The back of the poster'],
+    { s: 'ii', layout: true, type: 'tf', q: 'True or false: white space on a poster must always be coloured white.',
+      o: ['True', 'False'], c: 'False',
       f: 'White space doesn’t have to be white. It gives the eye room to rest and helps the important parts stand out.' },
     { s: 'ii', layout: true, q: 'Kabir’s poster uses 6 different fonts and has text squeezed into every corner. What is the best fix?',
       o: ['Use 1–2 fonts and group related information together', 'Add more colours', 'Make every word bold', 'Add a seventh font for the title'],
       f: 'Fewer fonts and grouped information make a poster calm and easy to read.' },
-    { s: 'ii', layout: true, q: 'Which colour choice makes poster text easiest to read?',
-      o: ['Dark text on a light background', 'Yellow text on a white background', 'Light grey text on a white background', 'Red text on an orange background'],
-      f: 'Strong contrast between text and background makes text readable, especially from a distance.' },
+    { s: 'ii', layout: true, type: 'match', q: 'Match each poster layout idea to its name.',
+      pairs: [['The most important information is the biggest, so it is seen first.', 'Visual hierarchy'], ['Empty space that stops the poster feeling crowded.', 'White space'], ['A strong difference between text and background colours, so text is easy to read.', 'Contrast']],
+      choices: ['Visual hierarchy', 'White space', 'Contrast', 'Alignment'],
+      f: 'Visual hierarchy tells the eye where to look first, white space gives it room to rest, and contrast makes text readable from a distance.' },
     { s: 'ii', layout: true, q: 'Where is the best place for the QR code and registration details?',
       o: ['Together in one clear box, near the bottom where the reader finishes', 'Split up into different corners', 'Hidden behind the main image', 'In tiny text along the edge'],
       f: 'Keeping related details together, where the eye ends up, makes it easy for students to sign up.' },
 
-    { s: 'iii', q: 'When you present your chosen design, what does the top band ask you to do?',
-      o: ['Present the chosen design, describing its key features', 'Just write “Idea 2”', 'Redraw all your ideas', 'Say why the other ideas were bad'],
+    { s: 'iii', type: 'blank', q: 'Fill in the blank: what does the top band ask you to do with your chosen design?',
+      before: 'Present the chosen design and ', after: ' its key features.',
+      o: ['describe', 'hide', 'guess', 'copy'],
       f: 'The Year 1 7–8 band says “presents the chosen design describing the key features”.' },
     { s: 'iii', q: 'Which sentence DESCRIBES a key feature, not just states it?',
       o: ['“The logo is a flame shaped like a lightbulb, in orange and yellow, to show new ideas catching fire across India”', '“Logo.”', '“It has a logo.”', '“Colours.”'],
@@ -355,7 +422,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       o: ['Add detail, e.g. “a dark purple background with the white title and orange flame placed on top so they stand out”', 'Change the colour to blue', 'Delete the sentence', 'Add more exclamation marks'],
       f: 'A description gives a detailed picture of the feature, not just its name.' },
     { s: 'iii', q: 'True or false: your chosen design can combine the best parts of two of your ideas.',
-      o: ['True', 'False'], fixed: true,
+      type: 'tf', o: ['True', 'False'], c: 'True',
       f: 'Designers often mix strong features from different ideas.' }
   ];
   var TOTAL = Q.length;
@@ -378,19 +445,55 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       sec.appendChild(el('p', 'obj', STRANDS[current].obj));
       quiz.appendChild(sec);
     }
-    item.correct = item.o[0];
-    item.order = item.fixed ? item.o.slice() : shuffle(item.o.slice());
+    item.type = item.type || 'mcq';
     item.answer = null;
+    if (item.type === 'match') item.correct = item.pairs.map(function (pr) { return pr[1]; });
+    else item.correct = item.c || item.o[0];
+    if (item.o) item.order = item.type === 'tf' ? item.o.slice() : shuffle(item.o.slice());
 
     var box = el('fieldset', 'q'); box.id = 'q' + idx;
     var legend = el('legend', null);
     var qn = el('p', 'q-num', 'Question ' + (idx + 1) + ' of ' + TOTAL);
+    var typeName = { mcq: 'Multiple choice', tf: 'True or false', blank: 'Fill in the blank', match: 'Matching' }[item.type];
+    qn.appendChild(el('span', 'type-tag', typeName));
+    if (item.spec) qn.appendChild(el('span', 'chip chip--spec', 'Design specification'));
     if (item.layout) qn.appendChild(el('span', 'chip', 'Poster layout'));
     legend.appendChild(qn);
     legend.appendChild(el('p', 'q-text', item.q));
     box.appendChild(legend);
-    var opts = el('div', 'opts');
-    item.order.forEach(function (text) {
+    function makeSelect(options, placeholder) {
+      var sel = document.createElement('select');
+      var ph = document.createElement('option'); ph.value = ''; ph.textContent = placeholder; sel.appendChild(ph);
+      options.forEach(function (o) { var op = document.createElement('option'); op.value = o; op.textContent = o; sel.appendChild(op); });
+      return sel;
+    }
+    var opts = el('div', item.type === 'match' ? 'match' : 'opts');
+    if (item.type === 'blank') {
+      var line = el('div', 'blank-line');
+      line.appendChild(document.createTextNode(item.before));
+      var sel = makeSelect(item.order, 'choose…');
+      sel.setAttribute('aria-label', 'Missing word');
+      sel.addEventListener('change', function () { item.answer = sel.value || null; box.classList.remove('missing'); updateProgress(); });
+      line.appendChild(sel);
+      line.appendChild(document.createTextNode(item.after));
+      opts.appendChild(line);
+      item.rowEls = [line];
+    } else if (item.type === 'match') {
+      item.picks = item.pairs.map(function () { return ''; });
+      item.rowEls = [];
+      item.pairs.forEach(function (pr, r) {
+        var row = el('div', 'match-row');
+        var txt = el('span', null, pr[0]);
+        var msel = makeSelect(shuffle(item.choices.slice()), 'choose…');
+        msel.setAttribute('aria-label', 'Match for: ' + pr[0]);
+        msel.addEventListener('change', function () {
+          item.picks[r] = msel.value;
+          item.answer = item.picks.every(function (v) { return v; }) ? item.picks.slice() : null;
+          box.classList.remove('missing'); updateProgress();
+        });
+        row.appendChild(txt); row.appendChild(msel); opts.appendChild(row); item.rowEls.push(row);
+      });
+    } else item.order.forEach(function (text) {
       var lab = el('label', 'opt');
       var inp = document.createElement('input'); inp.type = 'radio'; inp.name = 'q' + idx; inp.value = text;
       inp.addEventListener('change', function () {
@@ -424,13 +527,49 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   var errEl = document.getElementById('err');
   var checkBtn = document.getElementById('checkBtn');
   var result = null;
+  var checked = false;
   if (!nameEl || !secEl || !errEl || !checkBtn) return;
 
   function scrollTo(node, block) {
     try { node.scrollIntoView({ behavior: 'smooth', block: block }); } catch (e) { node.scrollIntoView(); }
   }
 
+  /* ---------- One-try confirmation ---------- */
+  var cm = document.getElementById('confirmBox');
+  var cmYes = document.getElementById('cmYes');
+  var cmNo = document.getElementById('cmNo');
+  function openConfirm() {
+    if (!cm || !cmYes || !cmNo) { if (window.confirm('You can only check your score once. Your answers will lock. Check now?')) confirmed(); return; }
+    cm.hidden = false;
+    cmNo.focus();
+  }
+  function closeConfirm() {
+    if (cm) cm.hidden = true;
+    if (!checked) checkBtn.focus();
+  }
+  function confirmed() {
+    if (checked) return;
+    checked = true;
+    if (cm) cm.hidden = true;
+    grade(nameEl.value.trim(), secEl.value);
+  }
+  if (cm && cmYes && cmNo) {
+    cmYes.addEventListener('click', confirmed);
+    cmNo.addEventListener('click', closeConfirm);
+    cm.addEventListener('click', function (e) { if (e.target === cm) closeConfirm(); });
+    document.addEventListener('keydown', function (e) {
+      if (cm.hidden) return;
+      if (e.key === 'Escape' || e.keyCode === 27) { closeConfirm(); return; }
+      if (e.key === 'Tab' || e.keyCode === 9) {
+        // keep focus on the two dialogue buttons
+        e.preventDefault();
+        (document.activeElement === cmNo ? cmYes : cmNo).focus();
+      }
+    });
+  }
+
   checkBtn.addEventListener('click', function () {
+    if (checked) return;
     errEl.textContent = '';
     var name = nameEl.value.trim();
     var section = secEl.value;
@@ -444,21 +583,34 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       scrollTo(missing[0].box, 'start');
       return;
     }
-    grade(name, section);
+    openConfirm();
   });
 
   function grade(name, section) {
-    var per = { i: [0, 0], ii: [0, 0], iii: [0, 0], L: [0, 0] };
+    var per = { i: [0, 0], ii: [0, 0], iii: [0, 0], S: [0, 0], L: [0, 0] };
     var score = 0;
     Q.forEach(function (item) {
-      var ok = item.answer === item.correct;
+      var ok = item.type === 'match'
+        ? item.answer.every(function (v, r) { return v === item.correct[r]; })
+        : item.answer === item.correct;
       item.ok = ok;
       per[item.s][1]++;
       if (ok) { per[item.s][0]++; score++; }
+      if (item.spec) { per.S[1]++; if (ok) per.S[0]++; }
       if (item.layout) { per.L[1]++; if (ok) per.L[0]++; }
       item.box.classList.add('locked');
-      Array.prototype.forEach.call(item.optsEl.querySelectorAll('input'), function (i) { i.disabled = true; });
-      Array.prototype.forEach.call(item.optsEl.children, function (lab) {
+      Array.prototype.forEach.call(item.optsEl.querySelectorAll('input, select'), function (i) { i.disabled = true; });
+      if (item.type === 'blank') {
+        var bl = item.rowEls[0];
+        bl.classList.add(ok ? 'is-correct' : 'is-wrong');
+        bl.appendChild(el('span', 'fix', ok ? '✓ Correct' : '✗ The missing word is “' + item.correct + '”'));
+      } else if (item.type === 'match') {
+        item.rowEls.forEach(function (row, r) {
+          var good = item.answer[r] === item.correct[r];
+          row.classList.add(good ? 'is-correct' : 'is-wrong');
+          row.firstChild.appendChild(el('span', 'fix', good ? '✓ Correct' : '✗ Correct answer: ' + item.correct[r]));
+        });
+      } else Array.prototype.forEach.call(item.optsEl.children, function (lab) {
         var val = lab.querySelector('input').value;
         if (val === item.correct) { lab.classList.add('is-correct'); lab.appendChild(el('span', 'tag', val === item.answer ? '✓ Your answer' : '✓ Correct answer')); }
         else if (val === item.answer) { lab.classList.add('is-wrong'); lab.appendChild(el('span', 'tag', '✗ Your answer')); }
@@ -469,6 +621,8 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     });
     nameEl.disabled = true; secEl.disabled = true;
     checkBtn.disabled = true; checkBtn.textContent = 'Score checked';
+    var onceNote = document.getElementById('onceNote');
+    if (onceNote) onceNote.textContent = 'Your answers are locked. Download your result below.';
 
     var when = new Date();
     result = { name: name, section: section, score: score, per: per, when: when };
@@ -479,15 +633,15 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     big.appendChild(el('small', null, '/ ' + TOTAL + '  (' + Math.round(score / TOTAL * 100) + '%)'));
 
     var sWrap = document.getElementById('resStrands'); sWrap.innerHTML = '';
-    [['i', 'Strand i · Success criteria'], ['ii', 'Strand ii · Design ideas'], ['iii', 'Strand iii · Chosen design'], ['L', 'Poster layout (across strands)']].forEach(function (p) {
-      var b = el('div', p[0] === 'L' ? 'sbox sbox--l' : 'sbox');
+    [['i', 'Strand i · Specification & success criteria'], ['ii', 'Strand ii · Design ideas'], ['iii', 'Strand iii · Chosen design'], ['S', 'Design specification'], ['L', 'Poster layout (across strands)']].forEach(function (p) {
+      var b = el('div', p[0] === 'S' ? 'sbox sbox--s' : p[0] === 'L' ? 'sbox sbox--l' : 'sbox');
       b.appendChild(el('div', 'k', p[1]));
       b.appendChild(el('div', 'v', per[p[0]][0] + ' / ' + per[p[0]][1]));
       sWrap.appendChild(b);
     });
 
     var weakest = ['i', 'ii', 'iii'].sort(function (a, b) { return per[a][0] / per[a][1] - per[b][0] / per[b][1]; })[0];
-    var focus = { i: 'writing success criteria that are specific and checkable', ii: 'drawing different, clearly labelled design ideas', iii: 'describing the key features of your chosen design' }[weakest];
+    var focus = { i: 'writing a design specification with specific, checkable success criteria', ii: 'drawing different, clearly labelled design ideas', iii: 'describing the key features of your chosen design' }[weakest];
     var msg;
     if (score === TOTAL) msg = 'Perfect score! You know what Criterion B strands i–iii are asking for.';
     else if (score / TOTAL >= 0.8) msg = 'Great work. Read the feedback on the ones you missed. Your next focus: ' + focus + '.';
@@ -538,9 +692,10 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     line('Completed: ' + result.when.toLocaleString(), 10, 'normal', SLATE, 5);
 
     line('Score: ' + result.score + ' / ' + TOTAL + '  (' + Math.round(result.score / TOTAL * 100) + '%)', 14, 'bold', null, 2);
-    line('Strand i (success criteria): ' + result.per.i[0] + ' / ' + result.per.i[1] +
+    line('Strand i (specification & success criteria): ' + result.per.i[0] + ' / ' + result.per.i[1] +
          '     Strand ii (design ideas): ' + result.per.ii[0] + ' / ' + result.per.ii[1] +
          '     Strand iii (chosen design): ' + result.per.iii[0] + ' / ' + result.per.iii[1], 10, 'normal', null, 1);
+    line('Design specification questions: ' + result.per.S[0] + ' / ' + result.per.S[1], 10, 'normal', null, 1);
     line('Poster layout questions (across strands): ' + result.per.L[0] + ' / ' + result.per.L[1], 10, 'normal', null, 2);
     line(result.msg, 10, 'italic', SLATE, 4);
 
@@ -548,9 +703,14 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 
     Q.forEach(function (item, idx) {
       need(24);
-      line((idx + 1) + '. [Strand ' + item.s + (item.layout ? ' - poster layout' : '') + '] ' + item.q, 10, 'bold', null, 1);
-      line('Your answer: ' + item.answer, 10, 'normal', item.ok ? MOSS : CLAY, 1);
-      if (!item.ok) line('Correct answer: ' + item.correct, 10, 'normal', MOSS, 1);
+      line((idx + 1) + '. [Strand ' + item.s + (item.spec ? ' - design specification' : '') + (item.layout ? ' - poster layout' : '') + '] ' + item.q, 10, 'bold', null, 1);
+      function show(v) {
+        if (item.type === 'match') return item.pairs.map(function (pr, r) { return '"' + pr[0] + '" -> ' + v[r]; }).join('   |   ');
+        if (item.type === 'blank') return item.before + '[' + v + ']' + item.after;
+        return v;
+      }
+      line('Your answer: ' + show(item.answer), 10, 'normal', item.ok ? MOSS : CLAY, 1);
+      if (!item.ok) line('Correct answer: ' + show(item.correct), 10, 'normal', MOSS, 1);
       line((item.ok ? 'Correct' : 'Incorrect') + ' - ' + item.f, 9, 'italic', SLATE, 4);
     });
 
