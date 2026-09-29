@@ -141,6 +141,12 @@ presses Start. Students on Level 2 press **Join live quiz**; the questions stay 
 Start. The leaderboard (score, then time since Start) is only returned with the key.
 Scores are marked on the student's device and sent on Check.
 
+The same Worker also stores results for the MYP 2 Criterion B quiz (`criterion-b-fa-myp2.html`):
+`POST /quiz/result` when a student checks, `GET /quiz/results?quiz=critb-myp2` for the teacher
+page `myp1-2/quiz-results.html` (table `quiz_results`). **These routes have no key, by Dev's
+choice** — anyone with the results page link can read names and scores. The page is unlinked
+and marked `noindex`.
+
 ---
 
 ## Local development

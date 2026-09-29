@@ -167,6 +167,10 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .btn.wide{width:100%}
 .err{color:var(--clay);font-size:14px;margin:10px 0 0;min-height:1em}
 .once{color:var(--slate);font-size:13.5px;margin:10px 0 0;text-align:center}
+.sendnote{font-size:14px;margin:16px 0 0 !important;color:var(--slate)}
+.sendnote.ok{color:var(--moss)}
+.sendnote.bad{color:var(--clay)}
+#sendRetry{margin-top:10px}
 
 /* one-try confirmation */
 .cm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;display:flex;align-items:center;justify-content:center;
@@ -226,7 +230,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   html:root.dark{--ink:#14303C;--paper:#F2F5F6;--card:#FFF;--rule:#D3E0E5;--rule-soft:#E7EEF0;--slate:#5A727B;
     --amber:#B05A1C;--amber-tint:#FBEEE2;--moss:#2F6B4F;--moss-tint:#E8F1EC;--clay:#9C3E2F;--clay-tint:#F8E9E6;
     --a:#12707F;--a-tint:#E1F1F3;--b:#96700A;--b-tint:#F8F0D9}
-  .progress,.actions,.homelink,.cm{display:none !important}
+  .progress,.actions,.homelink,.cm,#sendRetry{display:none !important}
   body,html:root.dark body{background:#fff;color:#000}
   .opt.is-correct,.opt.is-wrong,.match-row.is-correct,.match-row.is-wrong{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .card,.q{break-inside:avoid;border-color:#bbb}
@@ -325,6 +329,8 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     <div class="strands" id="resStrands"></div>
     <p class="msg" id="resMsg"></p>
 
+    <p class="sendnote" id="sendNote" aria-live="polite"></p>
+    <button class="btn secondary" id="sendRetry" type="button" hidden>Send my score again</button>
     <p class="hint">Scroll down to see which answers were right and read the feedback on each question.</p>
   </section>
 
@@ -519,6 +525,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   }
   var saved = readHash();
   if (saved.q !== 'm2') saved = {};
+  var sent = saved.x === '1';   // score already stored on the teacher's results page
   // seeded shuffle, so options stay in the same order after a refresh
   var seed0 = parseInt(saved.s, 36);
   if (!(seed0 > 0 && seed0 < 2147483647)) seed0 = Math.floor(Math.random() * 2147483646) + 1;
@@ -690,6 +697,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     var parts = ['q=m2', 's=' + seed0.toString(36), 'a=' + encodeAnswers(),
       'n=' + encodeURIComponent(nameEl.value), 'c=' + encodeURIComponent(secEl.value)];
     if (result) parts.push('d=' + result.when.getTime().toString(36));
+    if (sent) parts.push('x=1');
     try { history.replaceState(null, '', location.pathname + location.search + '#' + parts.join('&')); } catch (e) {}
   }
 
@@ -751,6 +759,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     checked = true;
     if (cm) cm.hidden = true;
     grade(nameEl.value.trim(), secEl.value);
+    sendResult();
   }
   if (cm && cmYes && cmNo) {
     cmYes.addEventListener('click', confirmed);
@@ -865,11 +874,54 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     scrollTo(res, 'start');
   }
 
+  /* ---------- Send the score to the teacher's results page (quiz-results.html) ---------- */
+  var RESULTS_API = 'https://myp-live-quiz.bachhudevenderchintu.workers.dev';
+  var sendNote = document.getElementById('sendNote');
+  var sendRetry = document.getElementById('sendRetry');
+
+  function sayResult(state) {
+    if (!sendNote) return;
+    sendNote.className = 'sendnote' + (state === 'ok' ? ' ok' : state === 'bad' ? ' bad' : '');
+    sendNote.textContent = {
+      sending: 'Sending your score to your teacher…',
+      ok: '✓ Your score has been sent to your teacher.',
+      bad: 'Your score has not reached your teacher yet. Check the internet connection, then press Send my score again.'
+    }[state];
+    if (sendRetry) sendRetry.hidden = state !== 'bad';
+  }
+
+  function sendResult() {
+    if (!result || sent) return;
+    sayResult('sending');
+    var body = {
+      quiz: 'critb-myp2',
+      id: seed0.toString(36) + '-' + result.when.getTime().toString(36),
+      name: result.name, section: result.section,
+      score: result.score, total: TOTAL,
+      per: result.per,
+      marks: Q.map(function (q) { return q.ok ? '1' : '0'; }).join(''),
+      checked: result.when.getTime()
+    };
+    try {
+      fetch(RESULTS_API + '/quiz/result', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d && d.ok) { sent = true; save(); sayResult('ok'); }
+          else sayResult('bad');
+        })
+        .catch(function () { sayResult('bad'); });
+    } catch (e) { sayResult('bad'); }
+  }
+  if (sendRetry) sendRetry.addEventListener('click', sendResult);
+
   nameEl.addEventListener('input', function () { if (ready) save(); });
   secEl.addEventListener('change', function () { if (ready) save(); });
   restore();
   ready = true;
   save();
+  // checked earlier but the score never reached the teacher: try again now
+  if (result && !sent) sendResult();
+  else if (result && sent) sayResult('ok');
 
 })();
 </script>
