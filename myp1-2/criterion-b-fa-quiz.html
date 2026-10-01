@@ -156,6 +156,7 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .cm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;display:flex;align-items:center;justify-content:center;
   padding:20px;background:rgba(20,48,60,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .cm[hidden]{display:none}
+.levels[hidden]{display:none}
 .cm__card{max-width:460px;width:100%;background:var(--card);border-radius:12px;padding:28px 26px 24px;
   box-shadow:0 24px 60px rgba(20,48,60,.3);border-top:4px solid var(--amber)}
 .cm__card h2{font-family:var(--display);font-size:22px;font-weight:600;margin:8px 0 10px;letter-spacing:-.01em}
@@ -259,7 +260,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     <p class="eyebrow" id="lvlEyebrow">MYP 1 Design &middot; Formative assessment</p>
     <h1>Criterion B &mdash; Developing ideas</h1>
     <p class="sub">Unit 1 &middot; Promoting Innovation through Digital Media &middot; <span id="qCount">25</span> questions &middot; Strands i, ii and iii, including design specification and poster layout</p>
-    <nav class="levels" aria-label="Quiz level">
+    <nav class="levels" aria-label="Quiz level" hidden>
       <a href="criterion-b-fa-quiz.html" data-l="1">FA</a>
       <a href="criterion-b-fa-quiz.html?level=2" data-l="2">Level 2 &middot; harder</a>
     </nav>
@@ -267,6 +268,15 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
 </header>
 
 <div class="wrap">
+
+  <section class="card context" aria-labelledby="doneTitle">
+    <p class="eyebrow">Criterion B FA</p>
+    <h2 id="doneTitle">The FA is completed</h2>
+    <p>This formative assessment has closed. Ask your teacher if you have a question about your result.</p>
+  </section>
+
+  <!-- FA closed: quiz hidden. Remove hidden here and on .levels above to reopen it. -->
+  <div id="quizBody" hidden>
 
   <section class="card context" aria-labelledby="ctxTitle">
     <p class="eyebrow">The brief</p>
@@ -345,6 +355,8 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     </div>
     <p class="hint">Scroll down to see which answers were right and read the feedback on each question.</p>
   </section>
+
+  </div>
 
 </div>
 
