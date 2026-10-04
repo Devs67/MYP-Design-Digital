@@ -319,20 +319,20 @@ body::before{
 /* ============ MASTHEAD IMAGES ============ */
 .mast__row{display:flex;gap:32px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
 .mast__text{flex:1 1 420px}
-.mast__aside{flex:0 0 auto;display:flex;flex-direction:column;gap:16px;width:100%;max-width:440px}
-.mast__images{display:flex;gap:14px}
+.mast__aside{flex:0 0 auto;display:flex;flex-direction:column;gap:16px;width:100%;max-width:572px}
+.mast__images{display:flex;gap:14px;width:572px;height:455px}
 @media (max-width:900px){.mast__images{display:none}.mast__aside{max-width:100%}}
 
 /* ============ DESIGN CYCLE ============ */
 /* Geometry and motion come from the Figma file (node 7:48). Colours use the
    page palette so it follows light and dark mode. */
-.cycle{position:relative;flex:0 0 440px;width:440px;height:350px}
+.cycle{position:relative;flex:0 0 440px;width:440px;height:350px;transform:scale(1.3);transform-origin:0 0}
 .cycle svg{position:absolute;left:0;top:0;display:block;overflow:visible}
-.cycle__dots{fill:var(--rule)}
-.cycle__ring{stroke:var(--rule);transform-box:fill-box;transform-origin:center}
-.cycle__track{stroke:var(--rule)}
-.cycle__core{fill:var(--card);stroke:var(--rule);transform-box:fill-box;transform-origin:center}
-.cycle__arc{stroke-width:3}
+.cycle__dots{fill:var(--slate);opacity:.55}
+.cycle__ring{stroke:var(--slate);opacity:.7;transform-box:fill-box;transform-origin:center}
+.cycle__track{stroke:var(--slate);opacity:.6}
+.cycle__core{fill:var(--card);stroke:var(--slate);transform-box:fill-box;transform-origin:center}
+.cycle__arc{stroke-width:3.5}
 .cycle__tip{stroke-width:2}
 .cycle .is-a{stroke:var(--a);color:var(--a)}
 .cycle .is-b{stroke:var(--b);color:var(--b)}
@@ -390,22 +390,22 @@ body::before{
 @keyframes cyArcA{0%{animation-timing-function:ease-in-out;opacity:0}
   5%{animation-timing-function:ease-in-out;opacity:.3}8.75%{opacity:1}
   20%{animation-timing-function:ease-in-out;opacity:1}
-  23.75%{animation-timing-function:ease-in-out;opacity:.58}
+  23.75%{animation-timing-function:ease-in-out;opacity:.82}
   89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:0}}
 @keyframes cyArcB{0%{animation-timing-function:ease-in-out;opacity:0}
   25%{animation-timing-function:ease-in-out;opacity:.3}28.75%{opacity:1}
   40%{animation-timing-function:ease-in-out;opacity:1}
-  43.75%{animation-timing-function:ease-in-out;opacity:.58}
+  43.75%{animation-timing-function:ease-in-out;opacity:.82}
   89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:0}}
 @keyframes cyArcC{0%{animation-timing-function:ease-in-out;opacity:0}
   45%{animation-timing-function:ease-in-out;opacity:.3}48.75%{opacity:1}
   60%{animation-timing-function:ease-in-out;opacity:1}
-  63.75%{animation-timing-function:ease-in-out;opacity:.58}
+  63.75%{animation-timing-function:ease-in-out;opacity:.82}
   89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:0}}
 @keyframes cyArcD{0%{animation-timing-function:ease-in-out;opacity:0}
   65%{animation-timing-function:ease-in-out;opacity:.3}68.75%{opacity:1}
   80%{animation-timing-function:ease-in-out;opacity:1}
-  83.75%{animation-timing-function:ease-in-out;opacity:.58}
+  83.75%{animation-timing-function:ease-in-out;opacity:.82}
   89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:0}}
 @keyframes cyTrimA{0%{stroke-dasharray:0 1;visibility:hidden}
   5%{animation-timing-function:ease-in-out;stroke-dasharray:0 1;visibility:hidden}
@@ -427,38 +427,38 @@ body::before{
   78.75%{stroke-dasharray:1 1;visibility:visible}
   93.75%{animation-timing-function:step-end;stroke-dasharray:1 1;visibility:visible}
   100%{stroke-dasharray:0 1;visibility:hidden}}
-@keyframes cyTipA{0%{opacity:.18}14.375%{animation-timing-function:ease-in-out;opacity:.18}
+@keyframes cyTipA{0%{opacity:.5}14.375%{animation-timing-function:ease-in-out;opacity:.5}
   18.75%{animation-timing-function:ease-in-out;opacity:1}
-  23.75%{animation-timing-function:ease-in-out;opacity:.6}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.18}}
-@keyframes cyTipB{0%{opacity:.18}34.375%{animation-timing-function:ease-in-out;opacity:.18}
+  23.75%{animation-timing-function:ease-in-out;opacity:.85}
+  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.5}}
+@keyframes cyTipB{0%{opacity:.5}34.375%{animation-timing-function:ease-in-out;opacity:.5}
   38.75%{animation-timing-function:ease-in-out;opacity:1}
-  43.75%{animation-timing-function:ease-in-out;opacity:.6}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.18}}
-@keyframes cyTipC{0%{opacity:.18}54.375%{animation-timing-function:ease-in-out;opacity:.18}
+  43.75%{animation-timing-function:ease-in-out;opacity:.85}
+  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.5}}
+@keyframes cyTipC{0%{opacity:.5}54.375%{animation-timing-function:ease-in-out;opacity:.5}
   58.75%{animation-timing-function:ease-in-out;opacity:1}
-  63.75%{animation-timing-function:ease-in-out;opacity:.6}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.18}}
-@keyframes cyTipD{0%{opacity:.18}74.375%{animation-timing-function:ease-in-out;opacity:.18}
+  63.75%{animation-timing-function:ease-in-out;opacity:.85}
+  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.5}}
+@keyframes cyTipD{0%{opacity:.5}74.375%{animation-timing-function:ease-in-out;opacity:.5}
   78.75%{animation-timing-function:ease-in-out;opacity:1}
-  83.75%{animation-timing-function:ease-in-out;opacity:.6}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.18}}
-@keyframes cyLblA{0%{opacity:.58}5%{animation-timing-function:ease-in-out;opacity:.58}
+  83.75%{animation-timing-function:ease-in-out;opacity:.85}
+  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.5}}
+@keyframes cyLblA{0%{opacity:.82}5%{animation-timing-function:ease-in-out;opacity:.82}
   8.75%{opacity:1}18.75%{animation-timing-function:ease-in-out;opacity:1}
-  23.75%{animation-timing-function:ease-in-out;opacity:.58}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.58}}
-@keyframes cyLblB{0%{opacity:.58}25%{animation-timing-function:ease-in-out;opacity:.58}
+  23.75%{animation-timing-function:ease-in-out;opacity:.82}
+  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.82}}
+@keyframes cyLblB{0%{opacity:.82}25%{animation-timing-function:ease-in-out;opacity:.82}
   28.75%{opacity:1}38.75%{animation-timing-function:ease-in-out;opacity:1}
-  43.75%{animation-timing-function:ease-in-out;opacity:.58}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.58}}
-@keyframes cyLblC{0%{opacity:.58}45%{animation-timing-function:ease-in-out;opacity:.58}
+  43.75%{animation-timing-function:ease-in-out;opacity:.82}
+  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.82}}
+@keyframes cyLblC{0%{opacity:.82}45%{animation-timing-function:ease-in-out;opacity:.82}
   48.75%{opacity:1}58.75%{animation-timing-function:ease-in-out;opacity:1}
-  63.75%{animation-timing-function:ease-in-out;opacity:.58}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.58}}
-@keyframes cyLblD{0%{opacity:.58}65%{animation-timing-function:ease-in-out;opacity:.58}
+  63.75%{animation-timing-function:ease-in-out;opacity:.82}
+  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.82}}
+@keyframes cyLblD{0%{opacity:.82}65%{animation-timing-function:ease-in-out;opacity:.82}
   68.75%{opacity:1}78.75%{animation-timing-function:ease-in-out;opacity:1}
-  83.75%{animation-timing-function:ease-in-out;opacity:.58}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.58}}
+  83.75%{animation-timing-function:ease-in-out;opacity:.82}
+  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.82}}
 @keyframes cyPopA{0%{transform:scale(1)}5%{animation-timing-function:ease-in-out;transform:scale(1)}
   10.625%{animation-timing-function:ease-in-out;transform:scale(1.08)}
   21.25%{transform:scale(1)}100%{transform:scale(1)}}
@@ -540,8 +540,8 @@ body::before{
       <div class="mast__images">
         <div class="cycle" role="img" aria-label="The design cycle: A inquire, B develop, C create, D evaluate. A process, not a straight line.">
           <svg width="440" height="350" viewBox="0 0 440 350" fill="none" aria-hidden="true">
-            <defs><pattern id="cycleDots" x="13" y="18" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r=".75"/></pattern></defs>
-            <rect class="cycle__dots" x="13" y="18" width="408" height="312" style="fill:url(#cycleDots)"/>
+            <defs><pattern id="cycleDots" x="13" y="18" width="24" height="24" patternUnits="userSpaceOnUse"><circle class="cycle__dots" cx="12" cy="12" r=".75"/></pattern></defs>
+            <rect x="13" y="18" width="408" height="312" style="fill:url(#cycleDots)"/>
             <path class="cycle__ring" d="M220 302C292.902 302 352 242.902 352 170C352 97.0984 292.902 38 220 38C147.098 38 88 97.0984 88 170C88 242.902 147.098 302 220 302Z" stroke-dasharray="3 6"/>
             <path class="cycle__track" d="M220 255C266.944 255 305 216.944 305 170C305 123.056 266.944 85 220 85C173.056 85 135 123.056 135 170C135 216.944 173.056 255 220 255Z"/>
             <path class="cycle__arc is-a" pathLength="1" d="M101 160C103.248 132.009 115.321 105.716 135.086 85.7683C154.85 65.821 181.031 53.5056 209 51"/>
