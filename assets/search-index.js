@@ -35,6 +35,7 @@ var MYP_SEARCH_INDEX = [
   { t:"Criterion B strand ii — design ideas", d:"Sketch three different ideas, label the parts A–D, annotate and justify each label, and check someone else can read it.", grade:"MYP 4–5", href:"myp4-5/criterion-b.html#ii", badge:"B", tone:"b" },
   { t:"Sketch sheet & annotation table", d:"Table 1 (the sketch sheet) and Table 2 (label, annotation, justification) for Criterion B strand ii.", grade:"MYP 4–5", href:"myp4-5/criterion-b.html#ii", badge:"B", tone:"b" },
   { t:"Wireframe Workshop", d:"Formative task for Criterion B strand ii: three sketches, labelled tables and a peer read-back, plus the Figma user flow templates.", grade:"MYP 4–5", href:"myp4-5/criterion-b.html#ii", badge:"FA", tone:"amber" },
+  { t:"Criterion C — MYP 4 & 5", d:"Creating the solution: the logical plan (strand i), technical skills (strand ii), following the plan (strand iii) and justifying changes (strand iv), with two sample portfolios.", grade:"MYP 4–5", href:"myp4-5/criterion-c.html", badge:"C", tone:"c" },
   { t:"Framework Index", d:"Every thinking tool mapped to the strand it serves — 43 frameworks across Criteria A–D.", grade:"MYP 4–5", href:"myp4-5/frameworks.html", badge:"FW", tone:"ink" },
   { t:"Our Journey", d:"What we have actually done in class, lesson by lesson — a record, not a plan.", grade:"MYP 4–5", href:"myp4-5/journey.html", badge:"J", tone:"moss" },
   { t:"Units — MYP 4 & 5", d:"Unit 1 and Unit 2 — concepts, global context, and the summative task.", grade:"MYP 4–5", href:"myp4-5/units.html", badge:"U", tone:"ink" },
