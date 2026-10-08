@@ -28,6 +28,7 @@ var MYP_SEARCH_INDEX = [
   { t:"Brief Builder — Task Sheet (Y3)", d:"The practice task that goes with the Year 3 Brief Builder.", grade:"MYP 3", href:"myp3/brief-builder-task-sheet.html", badge:"B", tone:"a" },
   { t:"Units — MYP 3", d:"This year's units — concepts, global context, and the summative task.", grade:"MYP 3", href:"myp3/units.html", badge:"U", tone:"ink" },
 
+  { t:"MYP 4 & 5 workspace", d:"Criteria A–D, this year's units, summative tasks, frameworks and the class journey log.", grade:"MYP 4–5", href:"myp4-5/index.html", badge:"4–5", tone:"ink" },
   { t:"Criterion A — MYP 4 & 5", d:"All four strands complete: need, research, product analysis and design brief.", grade:"MYP 4–5", href:"myp4-5/criterion-a.html", badge:"A", tone:"a" },
   { t:"Criterion B — MYP 4 & 5", d:"Design specifications and success criteria (strand i), a range of feasible design ideas (strand ii), and the chosen design and its justification (strand iii).", grade:"MYP 4–5", href:"myp4-5/criterion-b.html", badge:"B", tone:"b" },
   { t:"Criterion B strand iii — chosen design", d:"Judge each design against your success criteria, summarise the levels, present the chosen design and justify it critically.", grade:"MYP 4–5", href:"myp4-5/criterion-b.html#iii", badge:"B", tone:"b" },

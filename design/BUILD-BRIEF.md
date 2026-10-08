@@ -159,12 +159,17 @@ Redirect pages (`criterion-a.html`, `criterion-b.html`, `frameworks.html`,
 
 Run each in a **fresh chat** to keep cost down. Each ends with a push, screenshots and a stop.
 
-**Status:** commit `bb3536d` did part of session 1 under the earlier reskin brief — `assets/glass.css`,
-backdrops, Lucide icons, `design/link-glass.js` (glass.css linked on 46 pages), Light/Dark
-control and Search dialog in `assets/theme.js`, new header and tools bar on Home and MYP 4–5
-Criterion A, `CLAUDE.md` house style. Build on that. Still to do for session 1: rebuild Home and
-`myp4-5/criterion-a.html` to their frames' layouts, create `myp4-5/index.html`, and restyle the
-progress-code dialogs (84–86).
+**Status:** session 1 is done. Commit `bb3536d` laid the foundation (`assets/glass.css`,
+backdrops, Lucide icons, `design/link-glass.js`, Light/Dark control and Search dialog in
+`assets/theme.js`, `CLAUDE.md` house style). The follow-up rebuilt Home and
+`myp4-5/criterion-a.html` to their frames, created `myp4-5/index.html`, and moved progress codes
+into `assets/progress.js` with the 84–86 dialogs. Every `#myp4-5` link on the site now points at
+the workspace; Home still redirects old `index.html#myp4-5` bookmarks.
+
+Reusable pieces for later sessions, all in `glass.css` section 10: `.myp-hero`, `.myp-panel`,
+`.myp-list` / `.myp-row`, `.myp-input`, `footer.myp-footer`, and the strand-page panel styles.
+Criteria B and C still carry their own inline sync code: in session 2, delete it and link
+`assets/progress.js` with `data-page="criterion-b"` / `"criterion-c"` (keep those keys).
 
 1. **Foundation + pilot:** `assets/glass.css`, dark backdrops, icons, shared header / tools bar /
    footer / search dialog / progress-code dialogs, `CLAUDE.md` house-style update. Then Home,

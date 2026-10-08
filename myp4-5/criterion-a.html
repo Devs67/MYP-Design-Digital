@@ -20,23 +20,18 @@
       <span class="topbar__logo">MYP</span>
       <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="../index.html#myp4-5">MYP 4 &amp; 5</a>
-      <span>&rsaquo;</span>
-      <span class="cur">Criterion A</span>
-    </nav>
     <div class="topbar__actions">
       <nav class="topbar__grades" aria-label="Year groups">
         <a href="../myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
         <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
-        <a href="../index.html#myp4-5" data-g="myp4-5" aria-current="true">MYP 4 &amp; 5</a>
+        <a href="index.html" data-g="myp4-5" aria-current="page">MYP 4 &amp; 5</a>
       </nav>
     </div>
   </div>
 </header>
 
 <nav class="myp-tools" aria-label="Page tools">
-  <a class="myp-tool" href="../index.html#myp4-5"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to workspace</a>
+  <a class="myp-tool" href="index.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to workspace</a>
   <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
   <a class="myp-tool" href="teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
   <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
@@ -47,12 +42,11 @@
 </nav>
 
 
-<header class="mast">
-  <div class="wrap">
-    <p class="eyebrow">MYP 4 Design · Task-specific clarification</p>
-    <h1>Criterion A — Inquiring and analysing</h1>
-    <p class="sub">What must be in each strand, the command term at every band, and a worked example.</p>
-  </div>
+<main id="main">
+<header class="myp-hero">
+  <p class="myp-eyebrow">MYP 4 Design · Task-specific clarification</p>
+  <h1 class="myp-title">Criterion A — Inquiring and analysing</h1>
+  <p class="myp-lede">What must be in each strand, the command term at every band, and a worked example.</p>
 </header>
 
 <nav class="tabs" aria-label="Strand">
@@ -69,6 +63,7 @@
 
 <section class="sec">
   <div class="wrap">
+    <h2>Strand guidance</h2>
     <div class="obj">
       <div class="obj__head">
         <b>Strand i — objective</b>
@@ -685,6 +680,7 @@
 
 <section class="sec">
   <div class="wrap">
+    <h2>Strand guidance</h2>
     <div class="obj">
       <div class="obj__head">
         <b>Strand ii &mdash; objective</b>
@@ -1363,6 +1359,7 @@
 
 <section class="sec">
   <div class="wrap">
+    <h2>Strand guidance</h2>
     <div class="obj">
       <div class="obj__head">
         <b>Strand iii &mdash; objective</b>
@@ -1881,6 +1878,7 @@
 
 <section class="sec">
   <div class="wrap">
+    <h2>Strand guidance</h2>
     <div class="obj">
       <div class="obj__head">
         <b>Strand iv &mdash; objective</b>
@@ -2334,12 +2332,12 @@
 </section>
 </div>
 
-<footer>
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
-    <span class="attrib">Some concepts adapted from <a href="https://sites.google.com/view/designandinquiry/home" target="_blank" rel="noopener">Design and Inquiry</a> by Aidan Hammond, CC BY-NC-ND 4.0</span>
-    <span>Design Team - SIS</span>
-    <span>Criterion A · MYP 4</span>
-  </div>
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 4 &amp; 5</a><span>Criterion A · MYP 4</span></p>
+  <p>Design Team - SIS</p>
+  <p class="attrib">Some concepts adapted from <a href="https://sites.google.com/view/designandinquiry/home" target="_blank" rel="noopener">Design and Inquiry</a> by Aidan Hammond, CC BY-NC-ND 4.0</p>
 </footer>
 
 
@@ -2514,6 +2512,13 @@
       if(nav.children.length) panel.insertBefore(nav, panel.firstChild);
     }
 
+    // the first section of each strand (strand guidance) starts open
+    var pans = document.querySelectorAll('[data-panel]');
+    for(var q=0; q<pans.length; q++){
+      var first = pans[q].querySelector('.sec[data-collapsible]');
+      if(first) first.classList.add('open');
+    }
+
     window.__buildJump = buildJump;
     buildJump(document.querySelector('[data-panel]:not([hidden])'));
   })();
@@ -2636,224 +2641,10 @@
     });
   })();
 
-
-  // --- progress sync (Cloudflare Worker + D1) ---
-  (function(){
-    var API  = 'https://myp-progress.bachhudevenderchintu.workers.dev';
-    var PAGE = 'criterion-a';
-
-    var state = { code:null, name:null, section:null };
-    var panels = [];
-
-    function hash(str){
-      var h = 5381;
-      for(var i=0;i<str.length;i++) h = ((h*33) ^ str.charCodeAt(i)) >>> 0;
-      return 'i' + h.toString(36);
-    }
-    function labelOf(input){
-      var sp = input.parentNode.querySelector('span');
-      return sp ? sp.textContent.replace(/\s+/g,' ').trim() : '';
-    }
-    function panelOf(el){
-      var p = el.closest('[data-panel]');
-      return p ? p.dataset.panel : 'x';
-    }
-
-    function api(path, opts){
-      return fetch(API + path, opts).then(function(r){
-        return r.json().then(function(d){
-          if(!r.ok) throw new Error(d && d.error ? d.error : 'Request failed');
-          return d;
-        });
-      });
-    }
-
-    function setStatus(txt, kind){
-      for(var i=0;i<panels.length;i++){
-        var s = panels[i].querySelector('.sync__status');
-        if(s){ s.textContent = txt || ''; s.className = 'sync__status' + (kind ? ' ' + kind : ''); }
-      }
-    }
-
-    function render(){
-      for(var i=0;i<panels.length;i++){
-        var box = panels[i];
-        var idle = box.querySelector('.sync__idle');
-        var form = box.querySelector('.sync__form-new');
-        var cf   = box.querySelector('.sync__form-code');
-        var on   = box.querySelector('.sync__on');
-        var live = !!state.code;
-        idle.hidden = live; form.hidden = true; cf.hidden = true; on.hidden = !live;
-        box.className = 'sync' + (live ? ' sync--on' : '');
-        if(live){
-          box.querySelector('.sync__who').textContent = state.name + ' \u00b7 ' + state.section;
-          box.querySelector('.sync__code').textContent = state.code;
-        }
-      }
-    }
-
-    function applyTicks(ticks){
-      var map = {};
-      for(var i=0;i<ticks.length;i++){
-        map[ticks[i].panel + '|' + ticks[i].item_id] = ticks[i].checked;
-      }
-      var boxes = document.querySelectorAll('.ck input');
-      for(var j=0;j<boxes.length;j++){
-        var b = boxes[j];
-        var key = panelOf(b) + '|' + hash(labelOf(b));
-        if(map[key] !== undefined) b.checked = !!map[key];
-      }
-      var evt;
-      try { evt = new Event('change', {bubbles:true}); } catch(e){ evt = null; }
-      if(evt && boxes.length) boxes[0].dispatchEvent(evt);
-      // refresh every panel meter
-      var all = document.querySelectorAll('.ck input');
-      for(var k=0;k<all.length;k++){
-        try { all[k].dispatchEvent(new Event('change', {bubbles:true})); } catch(e){}
-      }
-    }
-
-    function saveOne(input){
-      if(!state.code) return;
-      var label = labelOf(input);
-      setStatus('Saving\u2026');
-      api('/api/save', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          code: state.code, page: PAGE, panel: panelOf(input),
-          items: [{ id: hash(label), label: label, checked: input.checked }]
-        })
-      }).then(function(){ setStatus('Saved', 'ok'); })
-        .catch(function(e){ setStatus('Not saved', 'err'); });
-    }
-
-    function connect(code, name, section, silent){
-      state.code = code; state.name = name; state.section = section;
-      render();
-      try {
-        var u = new URL(window.location.href);
-        u.searchParams.set('code', code);
-        window.history.replaceState({}, '', u.toString());
-      } catch(e){}
-      if(!silent) setStatus('Connected', 'ok');
-    }
-
-    function loadCode(code, silent){
-      setStatus('Loading\u2026');
-      return api('/api/load?code=' + encodeURIComponent(code)).then(function(d){
-        connect(d.student.code, d.student.display_name, d.student.section, true);
-        applyTicks(d.ticks || []);
-        setStatus('Progress restored', 'ok');
-      }).catch(function(e){
-        setStatus(e.message || 'Code not found', 'err');
-        if(!silent) window.alert(e.message || 'That code was not recognised.');
-      });
-    }
-
-    function buildPanel(){
-      var box = document.createElement('div');
-      box.className = 'sync';
-      box.innerHTML =
-        '<div class="sync__idle">' +
-          '<div class="sync__row">' +
-            '<p><b>Save your progress.</b> Get a code so you can pick up where you left off, on any device.</p>' +
-            '<button type="button" class="sync__btn sync__new">Get my code</button>' +
-            '<button type="button" class="sync__btn sync__btn--ghost sync__has">I have a code</button>' +
-            '<span class="sync__status"></span>' +
-          '</div>' +
-        '</div>' +
-        '<div class="sync__form sync__form-new" hidden>' +
-          '<p class="sync__lbl">Your name and section</p>' +
-          '<input class="sync__name" type="text" placeholder="Name" maxlength="40" autocomplete="off">' +
-          '<input class="sync__sec" type="text" placeholder="Section, e.g. 4A" maxlength="20" autocomplete="off">' +
-          '<button type="button" class="sync__btn sync__go">Create</button>' +
-          '<button type="button" class="sync__btn sync__btn--ghost sync__cancel">Cancel</button>' +
-          '<span class="sync__status"></span>' +
-        '</div>' +
-        '<div class="sync__form sync__form-code" hidden>' +
-          '<p class="sync__lbl">Enter your code</p>' +
-          '<input class="sync__codein" type="text" placeholder="ABC-4A-K3M9" maxlength="20" autocomplete="off">' +
-          '<button type="button" class="sync__btn sync__load">See my progress</button>' +
-          '<button type="button" class="sync__btn sync__btn--ghost sync__cancel">Cancel</button>' +
-          '<span class="sync__status"></span>' +
-        '</div>' +
-        '<div class="sync__on" hidden>' +
-          '<div class="sync__row">' +
-            '<span class="sync__who"></span>' +
-            '<span class="sync__code"></span>' +
-            '<button type="button" class="sync__btn sync__btn--ghost sync__copy">Copy code</button>' +
-            '<span class="sync__status"></span>' +
-          '</div>' +
-          '<p class="sync__note">Ticks save automatically. Bookmark this page and your code travels with it \u2014 or write the code down to use on another device.</p>' +
-        '</div>';
-
-      box.querySelector('.sync__new').addEventListener('click', function(){
-        box.querySelector('.sync__idle').hidden = true;
-        box.querySelector('.sync__form-new').hidden = false;
-        box.querySelector('.sync__name').focus();
-      });
-      box.querySelector('.sync__has').addEventListener('click', function(){
-        box.querySelector('.sync__idle').hidden = true;
-        box.querySelector('.sync__form-code').hidden = false;
-        box.querySelector('.sync__codein').focus();
-      });
-      var cancels = box.querySelectorAll('.sync__cancel');
-      for(var c=0;c<cancels.length;c++){
-        cancels[c].addEventListener('click', function(){ render(); });
-      }
-      box.querySelector('.sync__go').addEventListener('click', function(){
-        var n = box.querySelector('.sync__name').value.trim();
-        var s = box.querySelector('.sync__sec').value.trim();
-        if(!n || !s){ window.alert('Please fill in both name and section.'); return; }
-        setStatus('Creating\u2026');
-        api('/api/register', {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ display_name:n, section:s })
-        }).then(function(d){
-          connect(d.code, d.display_name, d.section);
-          window.alert('Your code is ' + d.code + '\n\nWrite it down. You will need it to see your progress on another device.');
-        }).catch(function(e){ setStatus(e.message || 'Failed', 'err'); });
-      });
-      box.querySelector('.sync__load').addEventListener('click', function(){
-        var c = box.querySelector('.sync__codein').value.trim().toUpperCase();
-        if(!c) return;
-        loadCode(c);
-      });
-      box.querySelector('.sync__copy').addEventListener('click', function(){
-        var t = state.code || '';
-        if(navigator.clipboard) navigator.clipboard.writeText(t);
-        setStatus('Code copied', 'ok');
-      });
-      return box;
-    }
-
-    // drop one panel above every checklist
-    var bars = document.querySelectorAll('.clbar');
-    for(var i=0;i<bars.length;i++){
-      var p = buildPanel();
-      bars[i].parentNode.insertBefore(p, bars[i]);
-      panels.push(p);
-    }
-    if(!panels.length) return;
-    render();
-
-    // save on every tick
-    document.addEventListener('change', function(e){
-      var t = e.target;
-      if(t && t.type === 'checkbox' && t.parentNode && t.parentNode.className === 'ck') saveOne(t);
-    });
-
-    // ?code=XXX in the address bar restores automatically
-    try {
-      var qc = new URL(window.location.href).searchParams.get('code');
-      if(qc) loadCode(qc.toUpperCase(), true);
-    } catch(e){}
-  })();
-
 })();
 </script>
 
 <script src="../assets/theme.js"></script>
+<script src="../assets/progress.js" data-page="criterion-a"></script>
 </body>
 </html>

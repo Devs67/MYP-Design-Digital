@@ -4,29 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MYP Design — Criterion guides</title>
-<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
+<script>(function(){try{if(location.hash==='#myp4-5'){location.replace('myp4-5/index.html'+location.search);return;}var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/theme.css">
 <style>
+/* Page-only styles: the design cycle, the welcome overlay and back-to-top.
+   The layout and components come from assets/glass.css. */
 :root{
   --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
   --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
   --amber:#B05A1C; --amber-tint:#FBEEE2;
   --moss:#2F6B4F; --moss-tint:#E8F1EC;
   --a:#12707F; --b:#96700A; --c:#38722C; --d:#B23A2E; --dev:#6A4C93;
-  --display:"Fraunces",Georgia,serif;
+  --display:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
   --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --ease-out:cubic-bezier(.22,.61,.36,1);
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
-  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1320px;margin:0 auto;padding:0 30px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
-  text-transform:uppercase;color:var(--amber);margin:0}
+body{margin:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 
 /* back to top */
 .totop{position:fixed;right:26px;bottom:26px;width:52px;height:52px;padding:0;
@@ -45,198 +45,13 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 @media (max-width:600px){.totop{right:16px;bottom:16px;width:46px;height:46px}
   .totop svg{width:46px;height:46px}}
 
-@media (max-width:760px){
-  .wrap{padding:0 14px}
-  .mast{padding:44px 0 30px}
-  .mast .sub{font-size:16px}
-  .crit{padding:19px 18px 21px;border-left-width:3px}
-  .grid{gap:12px}
-  .badge{width:40px;height:40px;flex:0 0 40px;font-size:21px}
-  .crit h3{font-size:18px}
-  body{font-size:16px;line-height:1.65}
-}
-@media (max-width:400px){.wrap{padding:0 11px}}
 
-.mast{padding:70px 0 44px}
-.mast .eyebrow{font-weight:600;font-size:13px}
-.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,5.4vw,48px);
-  line-height:1.1;letter-spacing:-.02em;margin:14px 0 0;max-width:18ch}
-.mast .sub{margin:20px 0 0;font-size:17px;color:var(--slate);max-width:58ch}
-
-.sec{padding:12px 0 0}
-.sec h2{font-family:var(--display);font-weight:600;font-size:22px;margin:0 0 4px}
-.sec .note{margin:0 0 22px;font-size:14px;color:var(--slate)}
-
-.grid{display:flex;flex-wrap:wrap;gap:16px}
-.crit{flex:1 1 330px;background:var(--card);border:1px solid var(--rule);
-  border-left:4px solid var(--rule);border-radius:12px;padding:24px 26px 26px;
-  text-decoration:none;color:inherit;display:block;position:relative;transition:.15s}
-.crit--a{border-left-color:var(--a)}
-.crit--b{border-left-color:var(--b)}
-.crit--c{border-left-color:var(--c)}
-.crit--d{border-left-color:var(--d)}
-.crit--soon{cursor:default;border-left-color:var(--rule)}
-.crit--soon .badge{background:var(--rule-soft);color:var(--slate)}
-.crit--soon h3{color:var(--slate)}
-.crit--soon p{color:var(--slate)}
-
-.crit--dev{border-left-color:var(--dev);
-  background:linear-gradient(160deg,rgba(106,76,147,.09),rgba(106,76,147,0) 62%)}
-.crit--dev .badge{background:var(--dev);font-size:15px}
-.crit--dev .devname{color:var(--dev);font-size:27px;line-height:1.05;letter-spacing:-.02em}
-.crit--dev .devpre{display:block;font-family:var(--body);font-size:12.5px;font-weight:500;
-  letter-spacing:.02em;color:var(--slate);margin-bottom:3px}
-a.crit--dev:hover{border-color:var(--dev)}
-a.crit--dev:hover .devpre{color:var(--dev)}
-.crit--dev .status{color:var(--dev)}
-.crit--dev .st{background:rgba(106,76,147,.11);color:var(--dev)}
-.crit--fw{border-left-color:var(--ink)}
-.crit--fw .badge{background:var(--ink-fixed);font-size:16px;letter-spacing:.03em}
-.crit--journey{border-left-color:var(--moss)}
-.crit--journey .badge{background:var(--moss);font-size:16px}
-
-.crit__top{display:flex;gap:14px;align-items:center;margin-bottom:12px}
-.badge{width:46px;height:46px;border-radius:12px;flex:0 0 46px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);font-weight:700;font-size:24px;color:#fff}
-.crit--a .badge{background:var(--a)}
-.crit--b .badge{background:var(--b)}
-.crit--c .badge{background:var(--c)}
-.crit--d .badge{background:var(--d)}
-.crit h3{font-family:var(--display);font-size:20px;font-weight:600;margin:0;
-  letter-spacing:-.01em}
-.crit p{margin:0 0 16px;font-size:14.5px;color:var(--slate)}
-.strands{display:flex;gap:6px;flex-wrap:wrap}
-.st{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
-  padding:5px 10px;border-radius:7px;background:var(--rule-soft);color:var(--slate)}
-.st.live{background:var(--moss-tint);color:var(--moss)}
-.status{font-family:var(--mono);font-size:10px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--slate);margin-left:auto}
-.crit--soon .status{color:var(--d);font-weight:700}
-
-footer{margin-top:60px;padding:30px 0 60px;border-top:1px solid var(--rule);
-  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:7px}
-
-/* ============ MOTION ============ */
-html{scroll-behavior:smooth}
-
+/* scroll reveal: armed only once JS confirms support, so it fails visible */
 @media (prefers-reduced-motion: no-preference){
-
-  /* scroll reveal - only armed once JS confirms support */
   .js-anim .reveal{opacity:0;transform:translateY(12px);
     transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);
     transition-delay:var(--rd,0ms)}
   .js-anim .reveal.in{opacity:1;transform:none}
-
-  /* masthead on load */
-  .mast .eyebrow,.mast h1,.mast .sub,.mast .facts,.mast .ctbox,.homelink{
-    animation:riseIn .55s var(--ease-out) both}
-  .homelink{animation-delay:.02s}
-  .mast .eyebrow{animation-delay:.06s}
-  .mast h1{animation-delay:.12s}
-  .mast .sub{animation-delay:.2s}
-  .mast .ctbox,.mast .facts{animation-delay:.28s}
-  @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-
-  /* strand panel cross-fade */
-  [data-panel]:not([hidden]){animation:panelIn .38s var(--ease-out) both}
-  @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-  /* dropdown + section open */
-  details[open] > .doc,
-  details[open] > .fwlist,
-  details[open] > .pdfbox,
-  details[open] > .ctgrid,
-  .sec.open > .wrap > .secbody{animation:openIn .34s var(--ease-out) both}
-  @keyframes openIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
-
-  /* summary chevrons and toggles */
-  .docwrap > summary::before,.fwgroup > summary::before,
-  .ctall summary::before,.sechead::after{transition:background .2s,color .2s,border-color .2s}
-  .docwrap > summary:hover::before,.fwgroup > summary:hover::before,
-  .sechead:hover::after{background:var(--amber);color:#fff;border-color:var(--amber)}
-
-  /* interactive lift */
-  .step,.fwc,.trap,.band,.clgroup{transition:box-shadow .25s ease,border-color .25s ease}
-  .step:hover,.fwc:hover,.trap:hover{box-shadow:0 3px 16px rgba(20,48,60,.06)}
-
-  .tab{transition:background .2s ease,color .2s ease,border-color .2s ease}
-  .ck{transition:background .18s ease}
-  .ck:hover{background:var(--paper)}
-  .ck input{transition:transform .15s ease}
-  .ck input:active{transform:scale(.88)}
-  .ck span{transition:color .25s ease,text-decoration-color .25s ease}
-
-  .jump button{transition:background .18s ease,color .18s ease,border-color .18s ease}
-  .homelink{transition:border-color .2s ease,color .2s ease,transform .2s ease}
-  .homelink:hover{transform:translateX(-2px)}
-
-  .pri,.spill,.pill,.st,.chip{transition:transform .18s ease}
-  .fwc:hover .pill{transform:translateY(-1px)}
-}
-
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  .js-anim .reveal{opacity:1;transform:none}
-}
-
-/* ============ FLIP TILES ============ */
-.ctiles{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 4px}
-.ctile{flex:1 1 200px;min-width:170px;padding:0;border:0;background:none;
-  cursor:pointer;perspective:1000px;font-family:inherit;text-align:left}
-.ctile__inner{display:grid;position:relative;width:100%;height:100%;
-  transform-style:preserve-3d;transition:transform .4s cubic-bezier(.3,.7,.4,1)}
-.ctile.flipped .ctile__inner{transform:rotateY(180deg)}
-.ctile__face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;
-  border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column;
-  justify-content:center;min-height:132px}
-.ctile__front{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--amber);
-  transition:border-color .25s ease,box-shadow .25s ease}
-.ctile:hover .ctile__front{border-color:var(--amber);box-shadow:0 4px 16px rgba(20,48,60,.09)}
-.ctile__back{background:var(--ink-fixed);color:#E4EEF1;transform:rotateY(180deg);
-  border:1px solid var(--ink)}
-.ctile__band{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--slate);
-  margin:0 0 8px}
-.ctile__term{font-family:var(--display);font-size:23px;font-weight:600;color:var(--amber);
-  line-height:1.1;margin:0}
-.ctile__hint{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--slate);margin:12px 0 0;opacity:.75}
-.ctile__def{font-size:13.5px;line-height:1.5;margin:0}
-.ctile__back .ctile__band{color:var(--amber);margin-bottom:9px}
-
-/* ============ HOVER LIFT ============ */
-@media (hover:hover) and (prefers-reduced-motion: no-preference){
-  .step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.crit,.pbox,.flip__side,.term{
-    transition:transform .22s var(--ease-out),border-color .22s ease,box-shadow .22s ease}
-  .step:hover,.fwc:hover,.trap:hover,.band:hover,.clgroup:hover,.asp:hover,
-  .mm__branch:hover,.pbox:hover,.flip__side:hover{
-    transform:translateY(-3px) scale(1.006);border-color:var(--amber)}
-  .jump button:hover,.tab:hover,.rst:hover,.homelink:hover{transform:translateY(-1px)}
-  .pri,.pill,.spill,.st,.sq,.chip{transition:transform .18s ease,filter .18s ease}
-  .step:hover .step__n,.fwc:hover .pill,.band:hover .sq{transform:translateY(-1px)}
-  .mm__col li,.step li,.fwc ol li{transition:color .18s ease}
-  .step li:hover,.fwc ol li:hover,.mm__col li:hover{color:var(--amber)}
-  .totop:hover{transform:translateY(-2px) scale(1.05)}
-}
-
-/* ============ TAP TINT ============ */
-.tapfx{transition:background-image .35s ease,border-color .35s ease,box-shadow .35s ease}
-.tapfx[data-clicks="1"]{background-image:linear-gradient(160deg,rgba(176,90,28,.035),rgba(176,90,28,.075))}
-.tapfx[data-clicks="2"]{background-image:linear-gradient(160deg,rgba(176,90,28,.065),rgba(176,90,28,.13))}
-.tapfx[data-clicks="3"]{background-image:linear-gradient(160deg,rgba(176,90,28,.10),rgba(176,90,28,.19))}
-.tapfx[data-clicks="4"]{background-image:linear-gradient(160deg,rgba(176,90,28,.14),rgba(176,90,28,.25))}
-.tapfx[data-clicks="5"]{background-image:linear-gradient(160deg,rgba(176,90,28,.185),rgba(176,90,28,.31));
-  border-color:var(--amber);box-shadow:0 0 0 1px rgba(176,90,28,.25)}
-@media (prefers-reduced-motion: no-preference){
-  .tapfx:active{transform:scale(.995)}
-}
-
-@media (max-width:760px){
-  .ctile{flex:1 1 100%;min-width:0}
-  .ctile__face{min-height:0;padding:15px 16px}
-  .ctile__term{font-size:21px}
 }
 
 /* ============ WELCOME ============ */
@@ -282,44 +97,7 @@ body.wl-open{overflow:hidden}
   .wl__card{padding:36px 24px 30px}
 }
 
-/* tile hover + corner light for every .grid > .crit tile lives in assets/theme.css */
-
-/* ============ PAGE GRID ============ */
-body{position:relative}
-body::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;bottom:0;
-  z-index:-1;
-  pointer-events:none;
-  background-image:
-    linear-gradient(to right, rgba(20,48,60,.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(20,48,60,.06) 1px, transparent 1px);
-  background-size:26px 26px;
-  -webkit-mask-image:linear-gradient(to bottom, #000 0, transparent 1300px);
-  mask-image:linear-gradient(to bottom, #000 0, transparent 1300px);
-}
-:root.dark body::before{
-  background-image:
-    linear-gradient(to right, rgba(211,224,229,.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(211,224,229,.06) 1px, transparent 1px);
-}
-
-#critSec{transition:none}
-@media (prefers-reduced-motion: no-preference){
-  #critSec:not([hidden]){animation:panelIn .4s var(--ease-out) both}
-}
-
-.backlink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
-  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;
-  padding:10px 18px;border:1px solid var(--rule);border-radius:7px;
-  background:var(--rule-soft);color:var(--slate);margin-bottom:30px;transition:.15s}
-.backlink:hover{background:var(--card);border-color:var(--slate);color:var(--ink)}
-
 /* ============ MASTHEAD IMAGES ============ */
-.mast__row{display:flex;gap:32px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
-.mast__text{flex:1 1 420px}
-.mast__aside{flex:0 0 auto;display:flex;flex-direction:column;gap:16px;width:100%;max-width:572px}
 .mast__images{display:flex;gap:14px;width:572px;height:455px}
 @media (max-width:900px){.mast__images{display:none}.mast__aside{max-width:100%}}
 
@@ -473,12 +251,8 @@ body::before{
   81.25%{transform:scale(1)}100%{transform:scale(1)}}
 
 /* ============ PRESS FEEDBACK ============ */
-/* placed last so it wins over any earlier :hover transform on the same element */
 @media (prefers-reduced-motion: no-preference){
-  .wl__btn:active,#totop:active,.gradecard:active{
-    transform:scale(.97);transition:transform 140ms ease-out}
-  .tab:active,.homelink:active,.backlink:active{
-    transform:scale(.98);transition:transform 140ms ease-out}
+  .wl__btn:active,#totop:active{transform:scale(.97);transition:transform 140ms ease-out}
 }
 </style>
 <link rel="stylesheet" href="assets/glass.css">
@@ -487,23 +261,21 @@ body::before{
 
 <header class="topbar">
   <div class="topbar__wrap">
-    <a class="topbar__brand" href="index.html">
+    <a class="topbar__brand" href="index.html" aria-current="page">
       <span class="topbar__logo">MYP</span>
       <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb"></nav>
     <div class="topbar__actions">
       <nav class="topbar__grades" aria-label="Year groups">
         <a href="myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
         <a href="myp3/index.html" data-g="myp3">MYP 3</a>
-        <a href="#myp4-5" data-g="myp4-5">MYP 4 &amp; 5</a>
+        <a href="myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
       </nav>
     </div>
   </div>
 </header>
 
 <nav class="myp-tools" aria-label="Site tools">
-  <a class="myp-tool" href="index.html" aria-current="page"><span class="myp-icon myp-icon--house" aria-hidden="true"></span>Home</a>
   <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
   <a class="myp-tool" href="myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
   <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
@@ -525,24 +297,25 @@ body::before{
   </div>
 </div>
 
+<main id="main">
 
-<header class="mast">
-  <div class="wrap mast__row">
-    <div class="mast__text">
-      <p class="heropill"><i></i><span>International Baccalaureate &middot; Middle Years Programme</span></p>
-      <p class="eyebrow">IB MYP Design</p>
-      <h1>What each criterion asks for, and how to get there.</h1>
-      <p class="sub">Strand-by-strand guides: the command terms, the steps in order, the frameworks that produce each part, worked examples, and a checklist to run before submitting.</p>
-      <div class="herosearch">
-        <label class="herosearch__lbl" for="heroSearch">Search</label>
-        <div class="herosearch__box">
+<header class="myp-hero myp-hero--home">
+  <div class="myp-hero__text">
+    <p class="myp-eyebrow">IB MYP Design &middot; International Baccalaureate Middle Years Programme</p>
+    <h1 class="myp-title">What each criterion asks for, and how to get there.</h1>
+    <p class="myp-lede">Strand-by-strand guides: the command terms, the steps in order, the frameworks that produce each part, worked examples, and a checklist to run before submitting.</p>
+    <div class="myp-search">
+      <label class="myp-input" for="heroSearch">
+        <span class="myp-input__label">Search</span>
+        <span class="myp-input__row">
           <span class="myp-icon myp-icon--search" aria-hidden="true"></span>
-          <input type="text" id="heroSearch" placeholder="Search any criterion, framework or worksheet&hellip;" autocomplete="off">
-        </div>
-        <div class="herosearch__results" id="heroResults" hidden></div>
-      </div>
+          <input type="search" id="heroSearch" placeholder="Search any criterion, framework or worksheet&hellip;" autocomplete="off">
+        </span>
+      </label>
+      <div class="herosearch__results" id="heroResults" hidden></div>
     </div>
-    <div class="mast__aside">
+  </div>
+    <div class="myp-hero__aside">
       <div class="mast__images">
         <div class="cycle" role="img" aria-label="The design cycle: A inquire, B develop, C create, D evaluate. A process, not a straight line.">
           <svg width="440" height="350" viewBox="0 0 440 350" fill="none" aria-hidden="true">
@@ -579,237 +352,88 @@ body::before{
         <div class="herolegend__foot"><span>43 frameworks</span><span>IB aligned</span></div>
       </div>
     </div>
-  </div>
 </header>
 
-<section class="sec" id="gradeSec">
-  <div class="wrap">
-    <p class="eyebrow">Start here</p>
-    <h2>Choose your year group</h2>
-    <p class="sub">Content is organised by MYP year band. MYP 4&ndash;5 is the most complete; MYP 1&ndash;2 and MYP 3 each have a growing set of live resources too.</p>
-    <div class="gradecards">
-
-      <a class="gradecard gradecard--a" href="myp1-2/index.html">
-        <div class="gradecard__top">
-          <span class="gradecard__n">1&ndash;2</span>
-          <span class="gradecard__yr">Years 1 &amp; 2</span>
-        </div>
-        <h3>MYP 1 &amp; 2 Design</h3>
-        <p class="gradecard__tag">Foundations &amp; frameworks</p>
-        <p class="desc">This year&rsquo;s units, Criterion A underway, and thinking-tool practice for the earliest years of the programme.</p>
-        <ul>
-          <li>Criterion A, strands i &amp; iv &middot; Criterion B, strands i&ndash;ii</li>
-          <li>PEEL, CRAAP, SWOT &amp; Brief Builder frameworks</li>
-          <li>Sensing Our World interactive quiz</li>
-        </ul>
-        <div class="gradecard__foot">
-          <span class="gradecard__count">8 resources open</span>
-          <span class="gradecard__cta">Enter portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </div>
-      </a>
-
-      <a class="gradecard gradecard--b" href="myp3/index.html">
-        <div class="gradecard__top">
-          <span class="gradecard__n">3</span>
-          <span class="gradecard__yr">Year 3</span>
-        </div>
-        <h3>MYP 3 Design</h3>
-        <p class="gradecard__tag">Applied analysis &amp; planning</p>
-        <p class="desc">Criterion A complete, Criterion B underway, formative practice, and the frameworks that plan and pitch the work.</p>
-        <ul>
-          <li>Criterion A, all four strands</li>
-          <li>Criterion B, strand i</li>
-          <li>Brief Builder &amp; Research Planner</li>
-        </ul>
-        <div class="gradecard__foot">
-          <span class="gradecard__count">7 resources open</span>
-          <span class="gradecard__cta">Enter portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </div>
-      </a>
-
-      <button type="button" class="gradecard gradecard--amber" id="gradeOpen45" aria-controls="critSec">
-        <div class="gradecard__top">
-          <span class="gradecard__n">4&ndash;5</span>
-          <span class="gradecard__yr">Years 4 &amp; 5</span>
-        </div>
-        <h3>MYP 4 &amp; 5 Design</h3>
-        <p class="gradecard__tag">Senior portfolio &amp; full cycle</p>
-        <p class="desc">Complete Criterion A, this year&rsquo;s units and summative tasks, the full framework index, and the class journey log.</p>
-        <ul>
-          <li>Criterion A complete, Criterion B strands i&ndash;iii</li>
-          <li>This year&rsquo;s units &amp; summative tasks</li>
-          <li>Our Journey class log</li>
-        </ul>
-        <div class="gradecard__foot">
-          <span class="gradecard__count">7 resources open</span>
-          <span class="gradecard__cta">Enter portal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-        </div>
-      </button>
-
-    </div>
-
+<section class="myp-panel" id="gradeSec" aria-labelledby="gradeTitle">
+  <div class="myp-panel__head">
+    <p class="myp-eyebrow">Start here</p>
+    <h2 class="myp-panel__title" id="gradeTitle">Choose your year group</h2>
+    <p class="myp-panel__sub">Content is organised by MYP year band. MYP 4&ndash;5 is the most complete; MYP 1&ndash;2 and MYP 3 each have a growing set of live resources too.</p>
   </div>
+  <ul class="myp-list">
+    <li>
+      <a class="myp-row" href="myp1-2/index.html">
+        <span class="myp-row__lead" aria-hidden="true">1&ndash;2</span>
+        <span class="myp-row__text">
+          <span class="myp-row__meta">Years 1 &amp; 2 &middot; Foundations &amp; frameworks</span>
+          <span class="myp-row__title">MYP 1 &amp; 2 Design</span>
+          <span class="myp-row__body">This year&rsquo;s units, Criterion A underway, and thinking-tool practice for the earliest years of the programme.</span>
+          <span class="myp-row__points"><span>Criterion A, strands i &amp; iv &middot; Criterion B, strands i&ndash;ii</span><span>PEEL, CRAAP, SWOT &amp; Brief Builder frameworks</span><span>Sensing Our World interactive quiz</span></span>
+          <span class="myp-row__detail">8 resources open</span>
+        </span>
+        <span class="myp-row__go">Enter portal<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
+      </a>
+    </li>
+    <li>
+      <a class="myp-row" href="myp3/index.html">
+        <span class="myp-row__lead" aria-hidden="true">3</span>
+        <span class="myp-row__text">
+          <span class="myp-row__meta">Year 3 &middot; Applied analysis &amp; planning</span>
+          <span class="myp-row__title">MYP 3 Design</span>
+          <span class="myp-row__body">Criterion A complete, Criterion B underway, formative practice, and the frameworks that plan and pitch the work.</span>
+          <span class="myp-row__points"><span>Criterion A, all four strands</span><span>Criterion B, strand i</span><span>Brief Builder &amp; Research Planner</span></span>
+          <span class="myp-row__detail">7 resources open</span>
+        </span>
+        <span class="myp-row__go">Enter portal<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
+      </a>
+    </li>
+    <li>
+      <a class="myp-row" href="myp4-5/index.html">
+        <span class="myp-row__lead" aria-hidden="true">4&ndash;5</span>
+        <span class="myp-row__text">
+          <span class="myp-row__meta">Years 4 &amp; 5 &middot; Senior portfolio &amp; full cycle</span>
+          <span class="myp-row__title">MYP 4 &amp; 5 Design</span>
+          <span class="myp-row__body">Complete Criterion A, this year&rsquo;s units and summative tasks, the full framework index, and the class journey log.</span>
+          <span class="myp-row__points"><span>Criterion A complete, Criterion B strands i&ndash;iii</span><span>This year&rsquo;s units &amp; summative tasks</span><span>Our Journey class log</span></span>
+          <span class="myp-row__detail">7 resources open</span>
+        </span>
+        <span class="myp-row__go">Enter portal<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
+      </a>
+    </li>
+  </ul>
 </section>
 
-<section class="sec" id="critSec" hidden>
-  <div class="wrap">
-    <button type="button" class="homelink backlink" id="backToGrades">Choose a different year group</button>
-    <div class="grid">
-
-      <a class="crit crit--fw" href="myp4-5/units.html">
-        <div class="crit__top">
-          <span class="badge">&#9711;</span>
-          <h3>This year&rsquo;s units</h3>
-          <span class="status">Open</span>
-        </div>
-        <p>Unit 1 and Unit 2 &mdash; concepts, global context, and the summative task.</p>
-        <div class="strands">
-          <span class="st live">MYP 4</span>
-        </div>
+<section class="myp-panel" aria-labelledby="refTitle">
+  <h2 class="myp-panel__title" id="refTitle">Reference</h2>
+  <ul class="myp-list">
+    <li>
+      <a class="myp-row" href="appendix-citations.html">
+        <span class="myp-row__lead" aria-hidden="true"><span class="myp-icon myp-icon--file-text"></span></span>
+        <span class="myp-row__text">
+          <span class="myp-row__title">Appendix, citations &amp; bibliography</span>
+          <span class="myp-row__body">How to build your appendix, cite a source properly, and format your Bibliography &mdash; the mechanics that sit underneath every criterion, checked against the current MYP Design Guide.</span>
+        </span>
+        <span class="myp-row__go">Open<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
       </a>
-
-      <a class="crit crit--a" href="myp4-5/criterion-a.html">
-        <div class="crit__top">
-          <span class="badge">A</span>
-          <h3>Inquiring and analysing</h3>
-          <span class="status">Open</span>
-        </div>
-        <p>Establishing the need, planning the research, analysing existing products, and writing the design brief. All four strands complete.</p>
-        <div class="strands">
-          <span class="st live">Strand i</span>
-          <span class="st live">Strand ii</span>
-          <span class="st live">Strand iii</span>
-          <span class="st live">Strand iv</span>
-        </div>
+    </li>
+    <li>
+      <a class="myp-row" href="tsc.html">
+        <span class="myp-row__lead" aria-hidden="true"><span class="myp-icon myp-icon--book-open"></span></span>
+        <span class="myp-row__text">
+          <span class="myp-row__title">Task-specific clarifications</span>
+          <span class="myp-row__body">The source wording this site&rsquo;s guides are built from &mdash; MYP 1 Criterion A, MYP 2 Criteria A &amp; B, and MYP 3 Criteria A &amp; B.</span>
+        </span>
+        <span class="myp-row__go">Open<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
       </a>
-
-      <a class="crit crit--b" href="myp4-5/criterion-b.html">
-        <div class="crit__top">
-          <span class="badge">B</span>
-          <h3>Developing ideas</h3>
-          <span class="status">Open</span>
-        </div>
-        <p>Design specifications, a range of feasible ideas, justifying the chosen design, and planning drawings. Strands i&ndash;iii complete.</p>
-        <div class="strands">
-          <span class="st live">Strand i</span>
-          <span class="st live">Strand ii</span>
-          <span class="st live">Strand iii</span>
-          <span class="st">Strand iv</span>
-        </div>
-      </a>
-
-      <a class="crit crit--c" href="myp4-5/criterion-c.html">
-        <div class="crit__top">
-          <span class="badge">C</span>
-          <h3>Creating the solution</h3>
-          <span class="status">Open</span>
-        </div>
-        <p>The plan, technical skills, following the plan, and justifying every change made along the way.</p>
-        <div class="strands">
-          <span class="st live">Strand i</span>
-          <span class="st live">Strand ii</span>
-          <span class="st live">Strand iii</span>
-          <span class="st live">Strand iv</span>
-        </div>
-      </a>
-
-      <div class="crit crit--d crit--soon">
-        <div class="crit__top">
-          <span class="badge">D</span>
-          <h3>Evaluating</h3>
-          <span class="status">Coming</span>
-        </div>
-        <p>Testing methods that generate data, evaluating against the specification, improvements, and impact.</p>
-        <div class="strands">
-          <span class="st">Strand i</span>
-          <span class="st">Strand ii</span>
-          <span class="st">Strand iii</span>
-          <span class="st">Strand iv</span>
-        </div>
-      </div>
-
-
-      <a class="crit crit--fw" href="myp4-5/sa.html">
-        <div class="crit__top">
-          <span class="badge">SA</span>
-          <h3>Summative assessments</h3>
-          <span class="status">Open</span>
-        </div>
-        <p>Current-unit summative task materials for MYP 4.</p>
-        <div class="strands">
-          <span class="st live">MYP 4</span>
-        </div>
-      </a>
-
-      <a class="crit crit--fw" href="myp4-5/frameworks.html">
-        <div class="crit__top">
-          <span class="badge">FW</span>
-          <h3>Frameworks used</h3>
-          <span class="status">Open</span>
-        </div>
-        <p>Every thinking tool mapped to the strand it serves, with how to apply it &mdash; plus PEEL and OPVL, which work across all four criteria.</p>
-        <div class="strands">
-          <span class="st live">43 frameworks</span>
-          <span class="st live">Sourced</span>
-        </div>
-      </a>
-
-      <a class="crit crit--fw" href="appendix-citations.html">
-        <div class="crit__top">
-          <span class="badge">AC</span>
-          <h3>Appendix, citations &amp; bibliography</h3>
-          <span class="status">Open</span>
-        </div>
-        <p>How to build your appendix, cite a source properly, and format your Bibliography in MLA&nbsp;9 &mdash; the mechanics that sit underneath every criterion.</p>
-        <div class="strands">
-          <span class="st live">MLA 9</span>
-          <span class="st live">Reference</span>
-        </div>
-      </a>
-
-      <a class="crit crit--journey" href="myp4-5/journey.html">
-        <div class="crit__top">
-          <span class="badge">&#9711;</span>
-          <h3>Our journey</h3>
-          <span class="status">Open</span>
-        </div>
-        <p>What we have actually done in class, lesson by lesson &mdash; a record, not a plan.</p>
-        <div class="strands">
-          <span class="st live">Class log</span>
-        </div>
-      </a>
-
-
-      <a class="crit crit--dev" href="myp4-5/teacher.html">
-        <div class="crit__top">
-          <span class="badge">&#9679;</span>
-          <h3 class="devname"><span class="devpre">Click here if you are on the</span>Design Team</h3>
-          <span class="status">Teacher</span>
-        </div>
-        <p>Class progress across all four strands &mdash; who is where, and which checklist items the class is stuck on. Needs the teacher key.</p>
-        <div class="strands">
-          <span class="st">Key required</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
+    </li>
+  </ul>
 </section>
 
-<footer>
-  <div class="wrap" style="display:flex;flex-direction:column;gap:14px;width:100%">
-    <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
-      <span>Design Team - SIS</span>
-      <span>IB MYP Design &middot; Years 1&ndash;5</span>
-    </div>
-    <div class="footlinks">
-      <a href="myp1-2/index.html">MYP 1 &amp; 2</a>
-      <a href="myp3/index.html">MYP 3</a>
-      <a href="#myp4-5">MYP 4 &amp; 5</a>
-      <a href="myp4-5/frameworks.html">Frameworks</a>
-      <a href="appendix-citations.html">MLA 9 &amp; appendix</a>
-    </div>
-  </div>
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><span>Design Team - SIS</span><span>IB MYP Design &middot; Years 1&ndash;5</span></p>
+  <p class="myp-footer__links"><a href="myp1-2/index.html">MYP 1 &amp; 2</a><a href="myp3/index.html">MYP 3</a><a href="myp4-5/index.html">MYP 4 &amp; 5</a><a href="myp4-5/frameworks.html">Frameworks</a><a href="appendix-citations.html">MLA 9 &amp; appendix</a></p>
 </footer>
 
 <button class="totop" id="totop" aria-label="Back to top" title="Back to top">
@@ -852,8 +476,7 @@ body::before{
     if(mq.matches) return;
     document.documentElement.classList.add('js-anim');
 
-    var SEL = '.step,.fwc,.band,.clgroup,.trap,.crit,.docwrap,.flow,.tabwrap,'
-            + '.mm,.aspects,.flip,.cite-warn,.conflict,.keyline,.obj,.ctbox,.strands,.matrix';
+    var SEL = '.myp-panel';
 
     // bidirectional: eases in whether you arrive scrolling down or back up
     var io = new IntersectionObserver(function(entries){
@@ -869,7 +492,6 @@ body::before{
       for(var i=0;i<els.length;i++){
         var el = els[i];
         if(el.classList.contains('reveal')) continue;
-        if(el.closest && el.closest('.mast')) continue;
         el.classList.add('reveal');
         // stagger siblings in the same parent, capped so nothing waits long
         var par = el.parentNode;
@@ -882,84 +504,6 @@ body::before{
 
     window.__armReveal = arm;
     arm(document);
-  })();
-
-
-  // --- command terms become flip tiles ---
-  (function(){
-    var boxes = document.querySelectorAll('.ctbox');
-    for(var b=0; b<boxes.length; b++){
-      var box = boxes[b];
-      var rows = box.querySelectorAll('.ctrow');
-      if(!rows.length) continue;
-
-      var grid = document.createElement('div');
-      grid.className = 'ctiles';
-      box.insertBefore(grid, rows[0]);
-
-      for(var r=0; r<rows.length; r++){
-        var row  = rows[r];
-        var band = row.querySelector('.ctband');
-        var term = row.querySelector('b');
-        var def  = row.querySelector('span');
-
-        var tile = document.createElement('button');
-        tile.type = 'button';
-        tile.className = 'ctile';
-        tile.setAttribute('aria-pressed', 'false');
-
-        var inner = document.createElement('div');
-        inner.className = 'ctile__inner';
-
-        var front = document.createElement('div');
-        front.className = 'ctile__face ctile__front';
-        front.innerHTML =
-          '<p class="ctile__band">' + (band ? band.textContent : '') + '</p>' +
-          '<p class="ctile__term">' + (term ? term.textContent : '') + '</p>' +
-          '<p class="ctile__hint">Tap for meaning</p>';
-
-        var back = document.createElement('div');
-        back.className = 'ctile__face ctile__back';
-        back.innerHTML =
-          '<p class="ctile__band">' + (term ? term.textContent : '') + '</p>' +
-          '<p class="ctile__def">' + (def ? def.textContent : '') + '</p>';
-
-        inner.appendChild(front);
-        inner.appendChild(back);
-        tile.appendChild(inner);
-        grid.appendChild(tile);
-
-        (function(t){
-          t.addEventListener('click', function(e){
-            e.stopPropagation();
-            t.classList.toggle('flipped');
-            t.setAttribute('aria-pressed', t.classList.contains('flipped') ? 'true' : 'false');
-          });
-        })(tile);
-
-        row.parentNode.removeChild(row);
-      }
-    }
-  })();
-
-  // --- tap tint: repeated clicks deepen the shade ---
-  (function(){
-    var SEL = '.step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.pbox,.flip__side,'
-            + '.dnote,.tools,.concepts,.quote,.fstep,.crit:not(a)';
-    var els = document.querySelectorAll(SEL);
-    for(var i=0;i<els.length;i++) els[i].classList.add('tapfx');
-
-    document.addEventListener('click', function(e){
-      var t = e.target;
-      if(!t || !t.closest) return;
-      // never hijack a real control
-      if(t.closest('a,button,summary,label,input,select,textarea,.sechead,.ctile')) return;
-      var card = t.closest('.tapfx');
-      if(!card) return;
-      var n = parseInt(card.getAttribute('data-clicks') || '0', 10) + 1;
-      if(n > 5) n = 1;
-      card.setAttribute('data-clicks', String(n));
-    });
   })();
 
 
@@ -1021,63 +565,6 @@ body::before{
     wl.addEventListener('click', function(e){ if(e.target === wl) close(); });
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape' || e.keyCode === 27) close();
-    });
-  })();
-
-
-  // --- grade picker: MYP 4-5 reveals the criteria grid ---
-  (function(){
-    var gradeSec = document.getElementById('gradeSec');
-    var critSec  = document.getElementById('critSec');
-    var open45   = document.getElementById('gradeOpen45');
-    var back     = document.getElementById('backToGrades');
-    if(!gradeSec || !critSec || !open45) return;
-
-    function clearHash(){
-      try{
-        if(window.history && window.history.replaceState){
-          window.history.replaceState(null, '', window.location.pathname + window.location.search);
-        } else {
-          window.location.hash = '';
-        }
-      }catch(e){}
-    }
-
-    // the MYP 4 & 5 year tab in the header shows as selected while its workspace is open
-    function markTab(on){
-      var tab = document.querySelector('.topbar__grades a[data-g="myp4-5"]');
-      if(!tab) return;
-      if(on){ tab.classList.add('on'); tab.setAttribute('aria-current', 'page'); }
-      else { tab.classList.remove('on'); tab.removeAttribute('aria-current'); }
-    }
-
-    function showCrit(smooth){
-      gradeSec.hidden = true;
-      critSec.hidden = false;
-      markTab(true);
-      if(window.__armReveal) window.__armReveal(critSec);
-      if(smooth) critSec.scrollIntoView({behavior:'smooth', block:'start'});
-    }
-
-    open45.addEventListener('click', function(){
-      showCrit(true);
-      window.location.hash = 'myp4-5';
-    });
-
-    if(back) back.addEventListener('click', function(){
-      critSec.hidden = true;
-      gradeSec.hidden = false;
-      markTab(false);
-      gradeSec.scrollIntoView({behavior:'smooth', block:'start'});
-      clearHash();
-    });
-
-    // arriving from a strand page's "All criteria" link goes straight back to the grid
-    if(window.location.hash === '#myp4-5') showCrit(false);
-
-    // the header's MYP 4 & 5 tab is a #myp4-5 link on this page
-    window.addEventListener('hashchange', function(){
-      if(window.location.hash === '#myp4-5') showCrit(true);
     });
   })();
 
