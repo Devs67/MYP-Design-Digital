@@ -1,0 +1,73 @@
+/* MYP Digital Design · Blue Glass tokens
+   Source: Figma collection "Blue glass / Semantic".
+   Use [data-theme="dark"] or .dark on the app root. */
+:root {
+  color-scheme: light;
+  --myp-bg: #F5F8FF;
+  --myp-surface: #FFFFFF;
+  --myp-text: #111111;
+  --myp-muted: #515D70;
+  --myp-accent: #2862AE;
+  --myp-border: #BACEE9;
+  --myp-tint: #E8F1FF;
+  --myp-orb: #6BAEFF;
+
+  --myp-glass-fill: color-mix(in srgb, var(--myp-surface) 86%, transparent);
+  --myp-glass-fill-soft: color-mix(in srgb, var(--myp-surface) 72%, transparent);
+  --myp-glass-border: color-mix(in srgb, var(--myp-border) 82%, transparent);
+  --myp-glass-blur: 18px;
+  --myp-glass-shadow: 0 18px 50px rgb(40 98 174 / 10%);
+  --myp-focus-ring: 0 0 0 3px rgb(40 98 174 / 24%);
+
+  --myp-radius-card: 24px;
+  --myp-radius-button: 16px;
+  --myp-radius-chip: 999px;
+  --myp-radius-field: 12px;
+
+  --myp-space-1: 8px;
+  --myp-space-2: 12px;
+  --myp-space-3: 16px;
+  --myp-space-4: 24px;
+  --myp-space-5: 32px;
+
+  --myp-font-display: "Work Sans", system-ui, sans-serif;
+  --myp-font-body: "Work Sans", system-ui, sans-serif;
+  --myp-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --myp-display-size: 56px;
+  --myp-display-line: 64px;
+  --myp-section-size: 32px;
+  --myp-section-line: 40px;
+  --myp-card-size: 24px;
+  --myp-card-line: 32px;
+  --myp-body-size: 16px;
+  --myp-body-line: 26px;
+  --myp-small-size: 14px;
+  --myp-small-line: 22px;
+  --myp-label-size: 14px;
+  --myp-label-line: 20px;
+  --myp-eyebrow-size: 11px;
+  --myp-eyebrow-line: 18px;
+  --myp-micro-size: 10px;
+  --myp-micro-line: 16px;
+}
+
+[data-theme="dark"], .dark {
+  color-scheme: dark;
+  --myp-bg: #0B1220;
+  --myp-surface: #182538;
+  --myp-text: #F4F7FF;
+  --myp-muted: #B5C3D8;
+  --myp-accent: #92C5FF;
+  --myp-border: #395474;
+  --myp-tint: #203955;
+  --myp-orb: #5A95DD;
+  --myp-glass-fill: color-mix(in srgb, var(--myp-surface) 88%, transparent);
+  --myp-glass-fill-soft: color-mix(in srgb, var(--myp-surface) 74%, transparent);
+  --myp-glass-border: color-mix(in srgb, var(--myp-border) 88%, transparent);
+  --myp-glass-shadow: 0 18px 50px rgb(0 0 0 / 26%);
+  --myp-focus-ring: 0 0 0 3px rgb(146 197 255 / 30%);
+}
+
+@media (max-width: 720px) {
+  :root { --myp-display-size: 38px; --myp-display-line: 44px; --myp-section-size: 28px; --myp-section-line: 36px; }
+}

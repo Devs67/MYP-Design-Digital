@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1600" viewBox="0 0 1440 1600" fill="none">
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="1440" y2="1600" gradientUnits="userSpaceOnUse"><stop stop-color="#F5F8FF"/><stop offset=".52" stop-color="#E8F1FF"/><stop offset="1" stop-color="#F5F8FF"/></linearGradient>
+    <radialGradient id="orbA" cx="0" cy="0" r="1" gradientTransform="translate(300 470) rotate(45) scale(520 720)" gradientUnits="userSpaceOnUse"><stop stop-color="#6BAEFF" stop-opacity=".42"/><stop offset="1" stop-color="#6BAEFF" stop-opacity="0"/></radialGradient>
+    <radialGradient id="orbB" cx="0" cy="0" r="1" gradientTransform="translate(1160 970) rotate(125) scale(560 760)" gradientUnits="userSpaceOnUse"><stop stop-color="#2862AE" stop-opacity=".18"/><stop offset="1" stop-color="#2862AE" stop-opacity="0"/></radialGradient>
+    <filter id="blur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="70"/></filter>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" stroke="#2862AE" stroke-opacity=".10"/></pattern>
+  </defs>
+  <rect width="1440" height="1600" fill="url(#wash)"/>
+  <ellipse cx="300" cy="470" rx="520" ry="720" fill="url(#orbA)" filter="url(#blur)"/>
+  <ellipse cx="1160" cy="970" rx="560" ry="760" fill="url(#orbB)" filter="url(#blur)"/>
+  <rect width="1440" height="1600" fill="url(#grid)"/>
+</svg>
