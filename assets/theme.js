@@ -49,11 +49,23 @@
     }
   }
 
+  function syncThemeButtons(){
+    var mode = currentTheme();
+    var btns = document.querySelectorAll('[data-theme-set]');
+    for(var i=0;i<btns.length;i++){
+      btns[i].setAttribute('aria-pressed', btns[i].getAttribute('data-theme-set') === mode ? 'true' : 'false');
+    }
+  }
+
+  function setTheme(mode){
+    applyTheme(mode);
+    setURLTheme(mode);
+    rewriteLinks(mode);
+    syncThemeButtons();
+  }
+
   function toggleTheme(){
-    var next = currentTheme() === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    setURLTheme(next);
-    rewriteLinks(next);
+    setTheme(currentTheme() === 'dark' ? 'light' : 'dark');
   }
 
   var QUOTES = [
@@ -131,11 +143,166 @@
     if(qmEl) qmEl.hidden = true;
   }
 
+  // ---- site search dialog (Search in the tools bar) ----
+  // The index is only fetched the first time someone opens Search.
+  var srEl = null, srOpener = null, srLoading = false;
+
+  // path from this page back to the site root, read from how theme.js was linked
+  function rootPrefix(){
+    var s = document.querySelectorAll('script[src]');
+    for(var i=0;i<s.length;i++){
+      var src = s[i].getAttribute('src') || '';
+      var at = src.indexOf('assets/theme.js');
+      if(at !== -1) return src.slice(0, at);
+    }
+    return '';
+  }
+
+  function loadIndex(cb){
+    if(typeof MYP_SEARCH_INDEX !== 'undefined'){ cb(); return; }
+    if(srLoading) return;
+    srLoading = true;
+    var sc = document.createElement('script');
+    sc.src = rootPrefix() + 'assets/search-index.js';
+    sc.onload = function(){ srLoading = false; cb(); };
+    sc.onerror = function(){ srLoading = false; showNone('Search is not available right now.'); };
+    document.body.appendChild(sc);
+  }
+
+  function showNone(msg){
+    if(!srEl) return;
+    var none = srEl.querySelector('.myp-search__none');
+    if(!none) return;
+    none.textContent = msg || '';
+    none.hidden = !msg;
+  }
+
+  function renderSearch(){
+    if(!srEl) return;
+    var input = srEl.querySelector('.myp-field');
+    var list = srEl.querySelector('.myp-search__list');
+    if(!input || !list) return;
+    list.innerHTML = '';
+    var q = input.value.replace(/^\s+|\s+$/g, '').toLowerCase();
+    if(q.length < 2){ showNone(''); return; }
+    if(typeof MYP_SEARCH_INDEX === 'undefined'){ loadIndex(renderSearch); return; }
+
+    var base = rootPrefix();
+    var mode = currentTheme();
+    var n = 0;
+    for(var i=0; i<MYP_SEARCH_INDEX.length && n < 8; i++){
+      var r = MYP_SEARCH_INDEX[i];
+      if(r.t.toLowerCase().indexOf(q) === -1 && r.d.toLowerCase().indexOf(q) === -1) continue;
+      n++;
+      var hi = r.href.indexOf('#');
+      var href = hi === -1 ? r.href + '?theme=' + mode
+                           : r.href.slice(0, hi) + '?theme=' + mode + r.href.slice(hi);
+
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.className = 'myp-search__row';
+      a.href = base + href;
+      var b = document.createElement('span');
+      b.className = 'myp-search__badge';
+      // strand pages do not define the criterion colours, so fall back to the fixed navy (white text stays readable in both themes)
+      b.style.background = 'var(--' + (r.tone === 'ink' ? 'ink-fixed' : r.tone) + ', var(--ink-fixed))';
+      b.textContent = r.badge;
+      var t = document.createElement('span');
+      t.className = 'myp-search__t';
+      t.textContent = r.t;
+      var d = document.createElement('span');
+      d.className = 'myp-search__d';
+      d.textContent = r.d;
+      t.appendChild(d);
+      var g = document.createElement('span');
+      g.className = 'myp-search__g';
+      g.textContent = r.grade;
+      a.appendChild(b); a.appendChild(t); a.appendChild(g);
+      li.appendChild(a);
+      list.appendChild(li);
+    }
+    showNone(n ? '' : 'No matches. Try a different word.');
+  }
+
+  function buildSearch(){
+    srEl = document.createElement('div');
+    srEl.className = 'myp-dialog-backdrop';
+    srEl.hidden = true;
+    srEl.innerHTML =
+      '<div class="myp-dialog" role="dialog" aria-modal="true" aria-labelledby="mypSearchTitle">' +
+        '<div class="myp-dialog__head">' +
+          '<h2 class="myp-dialog__title" id="mypSearchTitle">Search</h2>' +
+          '<button type="button" class="myp-button myp-button--text myp-search__close">' +
+            '<span class="myp-icon myp-icon--x" aria-hidden="true"></span>Close</button>' +
+        '</div>' +
+        '<label class="myp-muted" for="mypSearchInput">Search all year groups, strands, tools and resources</label>' +
+        '<input class="myp-field" id="mypSearchInput" type="search" autocomplete="off" style="margin-top:8px">' +
+        '<ul class="myp-search__list"></ul>' +
+        '<p class="myp-search__none" hidden></p>' +
+      '</div>';
+    document.body.appendChild(srEl);
+
+    var input = srEl.querySelector('.myp-field');
+    var close = srEl.querySelector('.myp-search__close');
+    if(input) input.addEventListener('input', renderSearch);
+    if(close) close.addEventListener('click', closeSearch);
+    srEl.addEventListener('click', function(e){ if(e.target === srEl) closeSearch(); });
+    srEl.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' || e.keyCode === 27){ closeSearch(); return; }
+      if(e.key !== 'Tab' && e.keyCode !== 9) return;
+      // keep focus inside the dialog
+      var f = srEl.querySelectorAll('button, input, a[href]');
+      if(!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    });
+  }
+
+  function openSearch(opener){
+    // the landing page has its own search box: use it rather than a second one
+    var hero = document.getElementById('heroSearch');
+    if(hero){
+      try{ hero.scrollIntoView({behavior:'smooth', block:'center'}); }catch(e){}
+      hero.focus();
+      return;
+    }
+    if(!srEl) buildSearch();
+    srOpener = opener || null;
+    srEl.hidden = false;
+    document.body.classList.add('myp-noscroll');
+    var input = srEl.querySelector('.myp-field');
+    if(input){ input.focus(); renderSearch(); }
+    loadIndex(function(){});
+  }
+
+  function closeSearch(){
+    if(!srEl || srEl.hidden) return;
+    srEl.hidden = true;
+    document.body.classList.remove('myp-noscroll');
+    if(srOpener && srOpener.focus) srOpener.focus();
+  }
+
   document.addEventListener('DOMContentLoaded', function(){
     rewriteLinks(currentTheme());
 
     var themeBtn = document.getElementById('themeBtn');
     if(themeBtn) themeBtn.addEventListener('click', toggleTheme);
+
+    var setBtns = document.querySelectorAll('[data-theme-set]');
+    for(var t = 0; t < setBtns.length; t++){
+      (function(btn){
+        btn.addEventListener('click', function(){ setTheme(btn.getAttribute('data-theme-set')); });
+      })(setBtns[t]);
+    }
+    syncThemeButtons();
+
+    var searchBtns = document.querySelectorAll('[data-search-open]');
+    for(var sb = 0; sb < searchBtns.length; sb++){
+      (function(btn){
+        btn.addEventListener('click', function(){ openSearch(btn); });
+      })(searchBtns[sb]);
+    }
 
     var quoteBtn = document.getElementById('quoteBtn');
     if(quoteBtn) quoteBtn.addEventListener('click', openQuote);
@@ -152,6 +319,6 @@
     }
   });
 
-  window.MYPTheme = { toggle: toggleTheme, apply: applyTheme, openQuote: openQuote };
+  window.MYPTheme = { toggle: toggleTheme, apply: applyTheme, set: setTheme, openQuote: openQuote, openSearch: openSearch };
 
 })();

@@ -33,26 +33,43 @@ Exception, approved by Dev: `lesson-experience-app/` is a React + Vite app built
 
 ## House style — CSS
 
-Palette, defined as custom properties at the top of each page:
+The site uses the **Blue Glass** look. Its single source is `assets/glass.css`, linked as the
+**last** element in `<head>` on every page so it wins over the page's own `<style>`. New pages
+link it the same way (`node design/link-glass.js` adds it to any page that lacks it). The Figma
+handoff it was built from is in `design/figma-export/`; the plan is `design/BUILD-BRIEF.md`.
+
+Tokens, light / dark (dark applies under `:root.dark`):
 
 ```
---ink    #14303C   body text, dark panels
---paper  #F2F5F6   page background
---card   #FFF      card background
---rule   #D3E0E5   borders
---slate  #5A727B   secondary text
---amber  #B05A1C   accent, active states, emphasis
---moss   #2F6B4F   success, progress, "good"
---clay   #9C3E2F   warnings, "what is missing"
---dev    #6A4C93   teacher-only elements
+--myp-bg       #F5F8FF / #0B1220   page background
+--myp-surface  #FFFFFF / #182538   cards, dialogs
+--myp-text     #111111 / #F4F7FF   body text
+--myp-muted    #515D70 / #B5C3D8   secondary text
+--myp-accent   #2862AE / #92C5FF   links, active states, emphasis
+--myp-border   #BACEE9 / #395474   borders
+--myp-tint     #E8F1FF / #203955   chips, selected states, soft fills
 ```
 
-Criterion colours on the landing page: `--a` teal, `--b` gold, `--c` green, `--d` red.
+The old names still work and are remapped in `glass.css`: `--ink` → text, `--paper` → bg,
+`--card` → surface, `--rule` → border, `--slate` → muted, `--amber` → accent. `--moss` stays
+success / progress, `--clay` stays warnings and "what is missing", `--dev` stays teacher-only.
+Criterion colours `--a` teal, `--b` gold, `--c` green, `--d` red are unchanged.
 
-Typefaces: **Fraunces** for display headings, **Work Sans** for body, **IBM Plex Mono** for
-labels, eyebrows and codes. Loaded from Google Fonts.
+Glass: section panels, the header, tools bar and dialogs use a translucent surface, a 1px
+border and a soft shadow, with an 18px backdrop blur (blur only on large desktop screens for
+section panels, to keep school iPads smooth). Cards inside a panel are solid surfaces.
 
-Corner radii: 12px on cards, 7px on chips and buttons, 99px on progress bars.
+Typefaces: **Work Sans** for everything, display headings included. **IBM Plex Mono** for
+eyebrows, micro labels and codes. Fraunces is retired. Loaded from Google Fonts.
+
+Corner radii: 24px on panels and dialogs, 16px on cards and buttons, 12px on fields and
+checklist rows, pill (999px) on chips and progress bars.
+
+Icons: Lucide outline SVGs in `assets/icons/`, 20–24px, stroke 1.8, always beside a text label.
+See `assets/icons/README.md`.
+
+`color-mix()` needs an `rgba()` fallback (iOS 16.1 and older). Pair `backdrop-filter` and
+`mask-image` with their `-webkit-` versions.
 
 **Motion must sit inside `@media (prefers-reduced-motion: no-preference)`.** Animate only
 `transform` and `opacity`. Nothing longer than ~600ms. Scroll reveals must fail *visible* —

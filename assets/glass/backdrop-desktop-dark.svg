@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1600" viewBox="0 0 1440 1600" preserveAspectRatio="xMidYMid slice" fill="none">
+  <!-- Dark version of backdrop-desktop-light.svg, built from the dark tokens: bg #0B1220, tint #203955, orb #5A95DD, accent #92C5FF. -->
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="1440" y2="1600" gradientUnits="userSpaceOnUse"><stop stop-color="#0B1220"/><stop offset=".52" stop-color="#122038"/><stop offset="1" stop-color="#0B1220"/></linearGradient>
+    <radialGradient id="orbA" cx="0" cy="0" r="1" gradientTransform="translate(300 470) rotate(45) scale(520 720)" gradientUnits="userSpaceOnUse"><stop stop-color="#5A95DD" stop-opacity=".30"/><stop offset="1" stop-color="#5A95DD" stop-opacity="0"/></radialGradient>
+    <radialGradient id="orbB" cx="0" cy="0" r="1" gradientTransform="translate(1160 970) rotate(125) scale(560 760)" gradientUnits="userSpaceOnUse"><stop stop-color="#92C5FF" stop-opacity=".12"/><stop offset="1" stop-color="#92C5FF" stop-opacity="0"/></radialGradient>
+    <filter id="blur" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="70"/></filter>
+  </defs>
+  <rect width="1440" height="1600" fill="url(#wash)"/>
+  <ellipse cx="300" cy="470" rx="520" ry="720" fill="url(#orbA)" filter="url(#blur)"/>
+  <ellipse cx="1160" cy="970" rx="560" ry="760" fill="url(#orbB)" filter="url(#blur)"/>
+</svg>
