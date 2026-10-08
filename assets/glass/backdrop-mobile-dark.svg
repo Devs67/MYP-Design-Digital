@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="1900" viewBox="0 0 390 1900" preserveAspectRatio="xMidYMin slice" fill="none">
+  <!-- Dark version of backdrop-mobile-light.svg, built from the dark tokens. -->
+  <defs>
+    <linearGradient id="wash" x1="0" y1="0" x2="390" y2="1900" gradientUnits="userSpaceOnUse"><stop stop-color="#0B1220"/><stop offset=".55" stop-color="#122038"/><stop offset="1" stop-color="#0B1220"/></linearGradient>
+    <radialGradient id="orb" cx="0" cy="0" r="1" gradientTransform="translate(110 540) rotate(48) scale(330 520)" gradientUnits="userSpaceOnUse"><stop stop-color="#5A95DD" stop-opacity=".32"/><stop offset="1" stop-color="#5A95DD" stop-opacity="0"/></radialGradient>
+    <filter id="blur" x="-50%" y="-30%" width="200%" height="160%"><feGaussianBlur stdDeviation="48"/></filter>
+  </defs>
+  <rect width="390" height="1900" fill="url(#wash)"/>
+  <ellipse cx="110" cy="540" rx="330" ry="520" fill="url(#orb)" filter="url(#blur)"/>
+</svg>
