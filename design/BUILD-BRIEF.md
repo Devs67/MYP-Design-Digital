@@ -159,6 +159,13 @@ Redirect pages (`criterion-a.html`, `criterion-b.html`, `frameworks.html`,
 
 Run each in a **fresh chat** to keep cost down. Each ends with a push, screenshots and a stop.
 
+**Status:** commit `bb3536d` did part of session 1 under the earlier reskin brief — `assets/glass.css`,
+backdrops, Lucide icons, `design/link-glass.js` (glass.css linked on 46 pages), Light/Dark
+control and Search dialog in `assets/theme.js`, new header and tools bar on Home and MYP 4–5
+Criterion A, `CLAUDE.md` house style. Build on that. Still to do for session 1: rebuild Home and
+`myp4-5/criterion-a.html` to their frames' layouts, create `myp4-5/index.html`, and restyle the
+progress-code dialogs (84–86).
+
 1. **Foundation + pilot:** `assets/glass.css`, dark backdrops, icons, shared header / tools bar /
    footer / search dialog / progress-code dialogs, `CLAUDE.md` house-style update. Then Home,
    `myp4-5/index.html` and `myp4-5/criterion-a.html` (all four strands). Stop for Dev's review.
