@@ -1,347 +1,307 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CLASSES_DATA } from './data/curriculumData';
-import { Lesson, CriterionType, ClassData } from './types/curriculum';
-import { TopBar } from './components/TopBar';
-import { ClassSelector } from './components/ClassSelector';
-import { UnitHero } from './components/UnitHero';
-import { DesignCycleProgress } from './components/DesignCycleProgress';
-import { LatestLessonBanner } from './components/LatestLessonBanner';
-import { LessonTimelineView } from './components/LessonTimelineView';
-import { LessonGridView } from './components/LessonGridView';
+import { ClassData, CriterionType, Lesson } from './types/curriculum';
+import {
+  LessonFilter,
+  LIST_VIEWS,
+  ListView,
+  View,
+  VIEW_TITLES,
+  currentTheme,
+  isView,
+  matchesLesson,
+  workspaceFor,
+} from './lib';
+import { ClassPanel } from './components/ClassPanel';
+import { LessonFinder } from './components/LessonFinder';
+import { LessonListView } from './components/LessonListView';
+import { LessonPanel } from './components/LessonPanel';
 import { CurriculumBlueprintView } from './components/CurriculumBlueprintView';
 import { ResourceLockerView } from './components/ResourceLockerView';
 import { ProjectorPresentationModal } from './components/ProjectorPresentationModal';
-import { DesignQuoteModal } from './components/DesignQuoteModal';
-import { StrandDetailModal } from './components/StrandDetailModal';
-import { LessonDetailModal } from './components/LessonDetailModal';
-import { Search, Filter, Layers, ListFilter, RotateCcw, Clock, Sparkles } from 'lucide-react';
+import { DesignQuoteDialog } from './components/DesignQuoteDialog';
+import { StrandDetailDialog } from './components/StrandDetailDialog';
+
+const DEFAULT_CLASS = 'myp2a';
+
+interface RouteState {
+  classId: string;
+  view: View;
+  lessonId: string | null;
+}
+
+// ?class=myp2a&view=cards&lesson=myp2a-3 — so a bookmark or a shared link opens the same place.
+// ?theme= is left alone: assets/theme.js owns it.
+function readURL(): RouteState {
+  let params: URLSearchParams;
+  try {
+    params = new URLSearchParams(window.location.search);
+  } catch (e) {
+    return { classId: DEFAULT_CLASS, view: 'timeline', lessonId: null };
+  }
+  const c = params.get('class');
+  const classId = c && CLASSES_DATA[c] ? c : DEFAULT_CLASS;
+  const v = params.get('view');
+  let view: View = isView(v) ? v : 'timeline';
+  let lessonId = params.get('lesson');
+  if (view === 'lesson' && !CLASSES_DATA[classId].lessons.some((l) => l.id === lessonId)) view = 'timeline';
+  if (view !== 'lesson') lessonId = null;
+  return { classId, view, lessonId };
+}
+
+function writeURL(s: RouteState, push: boolean) {
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.set('class', s.classId);
+    if (s.view === 'timeline') url.searchParams.delete('view');
+    else url.searchParams.set('view', s.view);
+    if (s.view === 'lesson' && s.lessonId) url.searchParams.set('lesson', s.lessonId);
+    else url.searchParams.delete('lesson');
+    const next = url.pathname + url.search + url.hash;
+    if (push) window.history.pushState({ lx: true }, '', next);
+    else window.history.replaceState(window.history.state, '', next);
+  } catch (e) {
+    // history can be blocked in some embedded browsers; the app still works without it
+  }
+}
+
+function isListView(v: View): v is ListView {
+  return v !== 'lesson' && v !== 'today';
+}
 
 export default function App() {
-  // Theme state: ?theme= in the URL (site convention), else the system setting
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = new URLSearchParams(window.location.search).get('theme');
-      if (saved === 'dark' || saved === 'light') return saved === 'dark';
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
-  });
+  const [route, setRoute] = useState<RouteState>(readURL);
+  const [listView, setListView] = useState<ListView>(() => (isListView(route.view) ? route.view : 'timeline'));
+  const [filter, setFilter] = useState<LessonFilter>('all');
+  const [query, setQuery] = useState('');
+  const [projectorOpen, setProjectorOpen] = useState(false);
+  const [quoteOpen, setQuoteOpen] = useState(false);
+  const [strandDialog, setStrandDialog] = useState<{ strand: string | null; criterion: CriterionType } | null>(null);
 
-  // Read initial class from URL query ?class=myp2a
-  const [selectedClassId, setSelectedClassId] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const cls = params.get('class');
-      if (cls && CLASSES_DATA[cls]) {
-        return cls;
-      }
-    }
-    return 'myp2a';
-  });
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  // set when a lesson or today's lesson was opened with pushState, so "Back to lessons" can use history.back()
+  const pushedRef = useRef(false);
+  // the lesson panel to scroll back to after returning to a list
+  const scrollToRef = useRef<string | null>(null);
+  const focusTitleRef = useRef(false);
 
-  // Active view: timeline | cards | blueprint | resources
-  const [activeView, setActiveView] = useState<'timeline' | 'cards' | 'blueprint' | 'resources'>('timeline');
+  const currentClass: ClassData = CLASSES_DATA[route.classId] || CLASSES_DATA[DEFAULT_CLASS];
+  const lessons = currentClass.lessons;
 
-  // Filter: all | a | b | formative
-  const [activeFilter, setActiveFilter] = useState<'all' | CriterionType | 'formative'>('all');
+  const go = useCallback((next: RouteState, push: boolean) => {
+    setRoute(next);
+    if (isListView(next.view)) setListView(next.view);
+    writeURL(next, push);
+  }, []);
 
-  // Search input
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Modals state
-  const [isProjectorOpen, setIsProjectorOpen] = useState(false);
-  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
-  const [selectedLessonForModal, setSelectedLessonForModal] = useState<Lesson | null>(null);
-  const [strandModalData, setStrandModalData] = useState<{
-    isOpen: boolean;
-    strand: string | null;
-    criterion: CriterionType;
-  }>({
-    isOpen: false,
-    strand: null,
-    criterion: 'a',
-  });
-
-  // Sync theme to <html>
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
     try {
-      const url = new URL(window.location.href);
-      url.searchParams.set('theme', isDark ? 'dark' : 'light');
-      window.history.replaceState({}, '', url.toString());
+      window.history.scrollRestoration = 'manual';
     } catch (e) {
-      // ignore
+      // not supported: the browser keeps its own scroll handling
     }
-  }, [isDark]);
+    const onPop = () => {
+      pushedRef.current = false;
+      const next = readURL();
+      setRoute(next);
+      if (isListView(next.view)) setListView(next.view);
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
 
-  // Sync class to URL query without full page reload
-  const handleSelectClass = (classId: string) => {
-    setSelectedClassId(classId);
-    try {
-      const url = new URL(window.location.href);
-      url.searchParams.set('class', classId);
-      window.history.replaceState({}, '', url.toString());
-    } catch (e) {
-      // ignore
-    }
-  };
-
-  const currentClass: ClassData = CLASSES_DATA[selectedClassId] || CLASSES_DATA['myp2a'];
-
-  // Handle grade navigation in topbar
-  const handleSelectGrade = (gradeKey: string) => {
-    if (gradeKey === 'myp1-2') {
-      if (selectedClassId !== 'myp2a' && selectedClassId !== 'myp2d' && selectedClassId !== 'myp1b') {
-        handleSelectClass('myp2a');
+  // After a view change: scroll back to the lesson we came from, or move focus to the new heading.
+  useEffect(() => {
+    if (isListView(route.view) && scrollToRef.current) {
+      const el = document.getElementById(`lesson-${scrollToRef.current}`);
+      scrollToRef.current = null;
+      if (el) {
+        el.scrollIntoView({ block: 'start' });
+        return;
       }
-    } else if (gradeKey === 'myp3') {
-      handleSelectClass('myp3b');
-    } else if (gradeKey === 'myp4-5') {
-      handleSelectClass('myp4');
     }
-  };
+    if (focusTitleRef.current && titleRef.current) {
+      focusTitleRef.current = false;
+      titleRef.current.focus({ preventScroll: true });
+    }
+  }, [route]);
 
-  // Find latest lesson
-  const latestLesson = useMemo(() => {
-    return currentClass.lessons.find((l) => l.isLatest);
+  // The shared header and tools bar live outside React (index.html); point them at this class's year.
+  useEffect(() => {
+    const ws = workspaceFor(currentClass);
+    const back = document.getElementById('backToWorkspace');
+    if (back) back.setAttribute('href', `../../${ws}/index.html?theme=${currentTheme()}`);
+    const tabs = document.querySelectorAll('.topbar__grades a');
+    for (let i = 0; i < tabs.length; i++) {
+      tabs[i].classList.toggle('on', tabs[i].getAttribute('data-g') === ws);
+    }
   }, [currentClass]);
 
-  // Filtered lessons
-  const filteredLessons = useMemo(() => {
-    return currentClass.lessons.filter((lesson) => {
-      // Filter by criterion
-      if (activeFilter !== 'all') {
-        if (activeFilter === 'formative') {
-          if (lesson.type !== 'formative') return false;
-        } else if (lesson.criterion !== activeFilter) {
-          return false;
-        }
-      }
+  useEffect(() => {
+    document.title = `${VIEW_TITLES[route.view].replace(/\.$/, '')} — ${currentClass.name} — MYP Digital Design`;
+  }, [route.view, currentClass]);
 
-      // Filter by search query
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        const matchesTitle = lesson.title.toLowerCase().includes(q);
-        const matchesParas = lesson.paragraphs.some((p) => p.toLowerCase().includes(q));
-        const matchesStrand = lesson.strands.some((s) => s.toLowerCase().includes(q));
-        const matchesRes = lesson.resources.some((r) => r.text.toLowerCase().includes(q));
-        const matchesNote = lesson.note?.text.toLowerCase().includes(q);
-        return matchesTitle || matchesParas || matchesStrand || matchesRes || matchesNote;
-      }
+  const selectClass = (classId: string) => {
+    setFilter('all');
+    setQuery('');
+    go({ classId, view: isListView(route.view) ? route.view : listView, lessonId: null }, false);
+  };
 
-      return true;
-    });
-  }, [currentClass, activeFilter, searchQuery]);
+  const selectView = (view: ListView) => {
+    pushedRef.current = false;
+    go({ classId: route.classId, view, lessonId: null }, false);
+  };
+
+  const openLesson = (lesson: Lesson) => {
+    scrollToRef.current = null;
+    pushedRef.current = true;
+    focusTitleRef.current = true;
+    go({ classId: route.classId, view: 'lesson', lessonId: lesson.id }, true);
+    window.scrollTo(0, 0);
+  };
+
+  const openToday = () => {
+    pushedRef.current = true;
+    focusTitleRef.current = true;
+    go({ classId: route.classId, view: 'today', lessonId: null }, true);
+    window.scrollTo(0, 0);
+  };
+
+  const backToLessons = () => {
+    scrollToRef.current = route.lessonId;
+    if (pushedRef.current) {
+      window.history.back();
+      return;
+    }
+    go({ classId: route.classId, view: listView, lessonId: null }, false);
+  };
+
+  const filteredLessons = useMemo(
+    () => lessons.filter((l) => matchesLesson(l, filter, query)),
+    [lessons, filter, query],
+  );
+
+  const counts = {
+    a: lessons.filter((l) => l.criterion === 'a').length,
+    b: lessons.filter((l) => l.criterion === 'b').length,
+    formative: lessons.filter((l) => l.type === 'formative').length,
+  };
+  const filterOptions: { id: LessonFilter; label: string }[] = [{ id: 'all', label: `All (${lessons.length})` }];
+  if (counts.a) filterOptions.push({ id: 'a', label: `Criterion A (${counts.a})` });
+  if (counts.b) filterOptions.push({ id: 'b', label: `Criterion B (${counts.b})` });
+  if (counts.formative) filterOptions.push({ id: 'formative', label: `Formatives (${counts.formative})` });
+
+  const openStrand = (strand: string | null, criterion: CriterionType) => setStrandDialog({ strand, criterion });
+
+  const detailLesson =
+    route.view === 'lesson'
+      ? lessons.find((l) => l.id === route.lessonId)
+      : route.view === 'today'
+        ? lessons.find((l) => l.isLatest)
+        : undefined;
 
   return (
-    <div className="min-h-screen bg-[#f2f5f6] dark:bg-[#0f171d] text-[#14303c] dark:text-[#ecf3f6] flex flex-col font-sans transition-colors selection:bg-[#b05a1c]/20 selection:text-[#b05a1c]">
-      {/* 3-zone Header */}
-      <TopBar
-        currentGrade={currentClass.grade}
-        onSelectGrade={handleSelectGrade}
-        isDark={isDark}
-        onToggleTheme={() => setIsDark((prev) => !prev)}
-        onOpenQuotes={() => setIsQuoteModalOpen(true)}
-        onOpenProjector={() => setIsProjectorOpen(true)}
-        activeView={activeView}
-        onSelectView={setActiveView}
-      />
+    <>
+      <header className="myp-hero">
+        <p className="myp-eyebrow">Lesson experience</p>
+        <h1 className="myp-title" ref={titleRef} tabIndex={-1}>{VIEW_TITLES[route.view]}</h1>
+        {route.view === 'timeline' && <p className="myp-lede">{currentClass.intro}</p>}
+      </header>
 
-      {/* Main Container */}
-      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8 flex-1">
-        {/* Class Selection Deck */}
-        <section aria-label="Class Selection">
-          <ClassSelector
-            classes={CLASSES_DATA}
-            selectedClassId={selectedClassId}
-            onSelectClass={handleSelectClass}
-          />
-        </section>
+      <nav className="lx-tabs" aria-label="Lesson views">
+        {LIST_VIEWS.map((v) => (
+          <button
+            key={v.id}
+            type="button"
+            className="lx-tab"
+            aria-current={route.view === v.id ? 'page' : undefined}
+            onClick={() => selectView(v.id)}
+          >
+            {v.label}
+          </button>
+        ))}
+      </nav>
 
-        {/* Unit Overview Hero */}
-        <section aria-label="Unit Overview">
-          <UnitHero currentClass={currentClass} />
-        </section>
+      {route.view === 'timeline' && (
+        <ClassPanel
+          classes={CLASSES_DATA}
+          currentClass={currentClass}
+          onSelectClass={selectClass}
+          onOpenToday={openToday}
+          onOpenProjector={() => setProjectorOpen(true)}
+          onOpenQuote={() => setQuoteOpen(true)}
+        />
+      )}
 
-        {/* MYP Design Cycle Progress / Stage Filter */}
-        <section aria-label="Design Cycle Progress">
-          <DesignCycleProgress
-            lessons={currentClass.lessons}
-            activeFilter={activeFilter}
-            onSelectFilter={setActiveFilter}
-            onOpenStrandModal={(strand, crit) =>
-              setStrandModalData({ isOpen: true, strand, criterion: crit })
+      {(route.view === 'timeline' || route.view === 'cards') && (
+        <>
+          <LessonFinder<LessonFilter>
+            label="Search lessons"
+            placeholder="Lessons, tools, skills…"
+            query={query}
+            onQuery={setQuery}
+            options={filterOptions}
+            filter={filter}
+            onFilter={setFilter}
+            filterLabel="Show lessons"
+            count={
+              filteredLessons.length === lessons.length
+                ? `${lessons.length} ${lessons.length === 1 ? 'lesson' : 'lessons'}`
+                : `${filteredLessons.length} of ${lessons.length} lessons`
             }
           />
-        </section>
+          <LessonListView
+            lessons={filteredLessons}
+            variant={route.view === 'timeline' ? 'timeline' : 'card'}
+            onOpenLesson={openLesson}
+            onClearFilters={() => {
+              setFilter('all');
+              setQuery('');
+            }}
+          />
+        </>
+      )}
 
-        {/* Latest Active Lesson Spotlight (if not filtered out and on timeline/cards view) */}
-        {latestLesson && activeFilter === 'all' && !searchQuery && (activeView === 'timeline' || activeView === 'cards') && (
-          <section aria-label="Current Lesson Focus">
-            <LatestLessonBanner
-              lesson={latestLesson}
-              onOpenLesson={(lesson) => setSelectedLessonForModal(lesson)}
-            />
-          </section>
-        )}
+      {route.view === 'blueprint' && (
+        <CurriculumBlueprintView lessons={lessons} onOpenLesson={openLesson} onOpenStrand={openStrand} />
+      )}
 
-        {/* View Header with Search & Mode Switcher */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2 border-t border-[#d3e0e5] dark:border-[#243c48]">
-          <div className="flex items-center gap-3">
-            <h2 className="text-sm font-mono uppercase tracking-wider text-[#14303c] dark:text-[#ecf3f6] font-bold">
-              {activeView === 'timeline' && 'Chronological Lesson Stream'}
-              {activeView === 'cards' && 'Curriculum Session Cards'}
-              {activeView === 'blueprint' && 'MYP Strands Assessment Blueprint'}
-              {activeView === 'resources' && 'Learning Artifacts & Tool Locker'}
-            </h2>
-            <span className="text-xs font-mono text-[#5a727b] dark:text-[#8ba2ad]">
-              ({filteredLessons.length} {filteredLessons.length === 1 ? 'record' : 'records'})
-            </span>
-          </div>
+      {route.view === 'resources' && <ResourceLockerView key={currentClass.id} lessons={lessons} />}
 
-          {/* Search bar */}
-          <div className="flex items-center gap-3">
-            <div className="relative w-full sm:w-64">
-              <Search className="w-3.5 h-3.5 text-[#5a727b] absolute left-3 top-2.5" />
-              <input
-                type="text"
-                placeholder="Search lessons, tools, skills..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-3 py-1.5 text-xs bg-white dark:bg-[#162831] border border-[#d3e0e5] dark:border-[#243c48] rounded-lg text-[#14303c] dark:text-[#ecf3f6] focus:outline-none focus:border-[#b05a1c]"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-2 text-xs text-[#5a727b] hover:text-[#14303c] cursor-pointer"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {/* Mobile View Selector Pills */}
-            <div className="flex md:hidden items-center gap-1 bg-white dark:bg-[#162831] p-1 rounded-lg border border-[#d3e0e5] dark:border-[#243c48]">
-              <button
-                type="button"
-                onClick={() => setActiveView('timeline')}
-                className={`px-2 py-1 text-xs rounded ${activeView === 'timeline' ? 'bg-[#b05a1c] text-white font-medium' : 'text-[#5a727b]'}`}
-              >
-                Time
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveView('cards')}
-                className={`px-2 py-1 text-xs rounded ${activeView === 'cards' ? 'bg-[#b05a1c] text-white font-medium' : 'text-[#5a727b]'}`}
-              >
-                Grid
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveView('blueprint')}
-                className={`px-2 py-1 text-xs rounded ${activeView === 'blueprint' ? 'bg-[#b05a1c] text-white font-medium' : 'text-[#5a727b]'}`}
-              >
-                Map
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* View Switcher Output */}
-        <section aria-label="Session View Content" className="min-h-[350px]">
-          {activeView === 'timeline' && (
-            <LessonTimelineView
-              lessons={filteredLessons}
-              searchQuery={searchQuery}
-              onOpenLesson={(lesson) => setSelectedLessonForModal(lesson)}
-              onOpenStrandModal={(strand, crit) =>
-                setStrandModalData({ isOpen: true, strand, criterion: crit })
-              }
-            />
-          )}
-
-          {activeView === 'cards' && (
-            <LessonGridView
-              lessons={filteredLessons}
-              onOpenLesson={(lesson) => setSelectedLessonForModal(lesson)}
-              onOpenStrandModal={(strand, crit) =>
-                setStrandModalData({ isOpen: true, strand, criterion: crit })
-              }
-            />
-          )}
-
-          {activeView === 'blueprint' && (
-            <CurriculumBlueprintView
-              lessons={currentClass.lessons}
-              onOpenLesson={(lesson) => setSelectedLessonForModal(lesson)}
-              onOpenStrandModal={(strand, crit) =>
-                setStrandModalData({ isOpen: true, strand, criterion: crit })
-              }
-            />
-          )}
-
-          {activeView === 'resources' && (
-            <ResourceLockerView lessons={currentClass.lessons} />
-          )}
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="mt-auto border-t border-[#d3e0e5] dark:border-[#243c48] bg-white dark:bg-[#121c22] py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#5a727b] dark:text-[#8ba2ad]">
-          <div>
-            <span>MYP Digital Design · {currentClass.title}</span>
-            <span className="mx-2">·</span>
-            <span>Criterion A → Criterion B In Progress</span>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <button
-              type="button"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="hover:text-[#14303c] dark:hover:text-white transition-colors cursor-pointer"
-            >
-              ↑ Back to top
+      {(route.view === 'lesson' || route.view === 'today') &&
+        (detailLesson ? (
+          <LessonPanel
+            lesson={detailLesson}
+            variant="detail"
+            onAction={backToLessons}
+            onOpenStrand={(s) => openStrand(s, detailLesson.criterion)}
+          />
+        ) : (
+          <section className="myp-panel">
+            <h2 className="myp-panel__title">No lesson is marked as today&rsquo;s yet.</h2>
+            <p className="lx-text">{currentClass.name} has no session marked as the latest one.</p>
+            <button type="button" className="myp-button myp-button--secondary lx-wide" onClick={backToLessons}>
+              Back to lessons
             </button>
-            <span>·</span>
-            <span>Record of delivered sessions</span>
-          </div>
-        </div>
-      </footer>
+          </section>
+        ))}
 
-      {/* Modals */}
-      <ProjectorPresentationModal
-        isOpen={isProjectorOpen}
-        onClose={() => setIsProjectorOpen(false)}
-        lessons={currentClass.lessons}
-        unitTitle={currentClass.unitTitle}
-      />
-
-      <DesignQuoteModal
-        isOpen={isQuoteModalOpen}
-        onClose={() => setIsQuoteModalOpen(false)}
-      />
-
-      <StrandDetailModal
-        isOpen={strandModalData.isOpen}
-        onClose={() => setStrandModalData({ isOpen: false, strand: null, criterion: 'a' })}
-        selectedStrand={strandModalData.strand}
-        criterion={strandModalData.criterion}
-      />
-
-      <LessonDetailModal
-        lesson={selectedLessonForModal}
-        onClose={() => setSelectedLessonForModal(null)}
-        onOpenStrandModal={(strand, crit) => {
-          setSelectedLessonForModal(null);
-          setStrandModalData({ isOpen: true, strand, criterion: crit });
-        }}
-      />
-    </div>
+      {projectorOpen && (
+        <ProjectorPresentationModal
+          key={currentClass.id}
+          onClose={() => setProjectorOpen(false)}
+          lessons={lessons}
+          unitTitle={currentClass.unitTitle}
+        />
+      )}
+      {quoteOpen && <DesignQuoteDialog onClose={() => setQuoteOpen(false)} />}
+      {strandDialog && (
+        <StrandDetailDialog
+          criterion={strandDialog.criterion}
+          selectedStrand={strandDialog.strand}
+          onClose={() => setStrandDialog(null)}
+        />
+      )}
+    </>
   );
 }

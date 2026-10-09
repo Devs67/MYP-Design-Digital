@@ -229,7 +229,9 @@ Criteria B and C still carry their own inline sync code: in session 2, delete it
 3. MYP 3: all pages.
 4. MYP 1–2: all pages, including quizzes, live host and worksheets.
 5. Shared pages (appendix, bookmarks, tsc), group maker, `lesson-experience/*.html`.
-6. `lesson-experience-app/` restyle and rebuild.
+6. `lesson-experience-app/` restyle and rebuild. **Done:** the app now links the site's
+   `theme.css`, `glass.css` and `theme.js` instead of using Tailwind, with the shared header,
+   tools bar and footer in its `index.html`. See `lesson-experience-app/README.md`.
 7. Final check of the whole site, then merge to `main` only after Dev says yes.
 8. **Berry interaction colour + new Home.** See the section below. Dev's numbering; it can run
    at any point before step 7, and running it early means later sessions build in berry.
