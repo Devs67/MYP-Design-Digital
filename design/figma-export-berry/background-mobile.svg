@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 2200" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5F8FF"/><stop offset="1" stop-color="#DCEBFF"/></linearGradient>
+    <radialGradient id="blue" cx=".9" cy=".22" r=".65"><stop offset="0" stop-color="#A9D0FF" stop-opacity=".7"/><stop offset="1" stop-color="#A9D0FF" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#2862AE" stroke-opacity=".06"/></pattern>
+  </defs>
+  <rect width="390" height="2200" fill="url(#base)"/><rect width="390" height="2200" fill="url(#blue)"/><rect width="390" height="2200" fill="url(#grid)"/>
+</svg>

@@ -179,6 +179,63 @@ Criteria B and C still carry their own inline sync code: in session 2, delete it
 4. MYP 1–2: all pages, including quizzes, live host and worksheets.
 5. Shared pages (appendix, bookmarks, tsc), group maker, `lesson-experience/*.html`.
 6. `lesson-experience-app/` restyle and rebuild.
+7. Final check of the whole site, then merge to `main` only after Dev says yes.
+8. **Berry interaction colour + new Home.** See the section below. Dev's numbering; it can run
+   at any point before step 7, and running it early means later sessions build in berry.
+
+## Step 8: berry interaction colour and the new Home
+
+Source: `design/figma-export-berry/` (Home only, desktop frame `229:7359`; there is no mobile
+frame, so use the `@media (max-width: 800px)` rules in its `components.css`).
+
+**Decided by Dev:** berry is the interaction colour on **every page**, and it covers buttons,
+selected tabs and focus as well as links. Headings, reading text, the A–D overview and the
+criterion colours stay neutral and unchanged.
+
+### Tokens (add to `glass.css`, light / dark)
+
+```
+--myp-interaction        #A13C66 / #EE9FC0   links, nav, year tabs, actions, primary button fill
+--myp-interaction-hover  #7D2D4E / #F7C6DA   hover and pressed
+--myp-interaction-tint   #F8E9F0 / #3A2233   selected tab fill, secondary button fill
+--myp-on-interaction     #FFFFFF / #0B1220   label on a primary button
+```
+
+The export has light values only; the dark ones above were chosen for contrast. Measured
+contrast: #A13C66 is 5.2–6.3:1 on white, page, tint and field blue (passes AA), but only
+2.5–3.0:1 on the dark surfaces, so it must not be used in dark mode. #EE9FC0 is 7.1–9.2:1 on
+the dark surfaces and tints. White on #A13C66 is 6.3:1; #0B1220 on #EE9FC0 is 9.2:1.
+
+### Where berry goes
+
+Everything a student can click or that shows what is selected: links and card actions
+("Enter MYP 1 & 2 →", "Open citation guide →"), header year tabs, Design Team, Light / Dark
+(selected mode shown), the tools bar actions, strand tabs (selected = berry tint fill, berry
+text, berry edge), primary buttons (berry fill, white bold label), secondary buttons (berry tint
+fill, berry text), checklist ticks, focus rings (solid 2px berry), interactive icons.
+
+Stays blue: the MYP brand mark, the backdrop fields and grid, borders, `--myp-tint` surfaces
+that are not selected states. Stays as is: success / warning / error, status chips, criterion
+colours, teacher-only `--dev`.
+
+Implement it by pointing the interactive selectors in `glass.css` section 11 at the new tokens,
+not by editing pages one by one. Update the colour table in `CLAUDE.md`.
+
+### New Home
+
+Rebuild `index.html` to the berry frame: "Big ideas. Start here." hero with the site search
+field, the A / B / D / C cycle tiles, "Where will you begin?" year cards, "A little help along
+the way." cards (citations, task-specific clarifications, teacher bookmarks), footer. It
+replaces the session 1 Home. Keep the search working with the existing index, keep the theme
+control and the old `index.html#myp4-5` redirect.
+
+Do not copy from the export: "MYP 4&5" (write "MYP 4 & 5"), the Light / Dark pair with no
+selected state, the fixed 696 px / 520 px hero columns (make them fluid), empty space under the
+year card text if `min-height: 292px` leaves a gap, the unscoped `* {}` / `body {}` resets,
+`color-mix()` without an `rgba()` fallback, `backdrop-filter` without `-webkit-`.
+
+Not in this step: the animated "Flow" background mentioned in the export notes. Only add it if
+Dev asks, and then inside the motion rules in `CLAUDE.md`.
 
 ## Checking, every session
 
