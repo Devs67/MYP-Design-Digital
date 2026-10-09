@@ -187,6 +187,15 @@ section 12 (`.docwrap` embeds inside a panel, `.myp-kv` unit table, `.myp-stats`
 `.tl` timeline, `.myp-chips` filters, `.myp-seg` segmented control, `select` in `.myp-input`).
 MYP 3 and MYP 1–2 units, sa and journey pages can reuse section 12 directly.
 
+**Session 3 (MYP 3) is done**, run before session 2. Every page in `myp3/` is rebuilt on the
+shell (header, tools bar, hero, panels, footer). New shared pieces: `glass.css` section 12
+(`.myp-defs` for units, `.myp-note`, `.myp-embed` for embedded slides, `.myp-panel__lead`) and
+`assets/worksheet.css` for the Brief Builder and Task Sheet, which the MYP 1–2 copies of those
+two pages can reuse in session 4. Research Planner and Product Analysis keep inline CSS so their
+"Save my copy" download still looks right offline. MYP 3 checklists stay in-memory only (no
+progress code), although frame 32 shows the progress card: that needs a Worker page key and a
+teacher view, so it waits for Dev.
+
 1. **Foundation + pilot:** `assets/glass.css`, dark backdrops, icons, shared header / tools bar /
    footer / search dialog / progress-code dialogs, `CLAUDE.md` house-style update. Then Home,
    `myp4-5/index.html` and `myp4-5/criterion-a.html` (all four strands). Stop for Dev's review.

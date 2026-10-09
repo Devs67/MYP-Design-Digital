@@ -28,6 +28,8 @@
     11  Palette (Dev's colour table)
     12  Year resource pages (embeds, unit table, stats, timeline,
         filter chips, segmented control)
+    13  Reference pages: units, notices, embedded slides
+   Worksheets (Brief Builder, Task Sheet) add assets/worksheet.css.
    ============================================================ */
 
 
@@ -850,9 +852,10 @@ footer > .wrap{width:100%}
    MYP 4 & 5 workspace 127:451, Criterion A 127:453):
    hero, section panels, list rows, the input field, the footer,
    and the progress-code card and dialogs (frames 84-86).
-   Pages rebuilt so far: index.html and all of myp4-5/ (session 1:
+   Pages rebuilt so far: index.html, all of myp4-5/ (session 1:
    index, criterion-a; session 2: criterion-b, criterion-c, frameworks,
-   journey, sa, units, teacher). Section 12 holds the session 2 pieces. */
+   journey, sa, units, teacher) and every page in myp3/ (session 3).
+   Section 12 holds the session 2 pieces, section 13 the session 3 ones. */
 
 /* ---- hero ---- */
 .myp-hero{width:var(--myp-col);margin:24px auto 0}
@@ -1019,6 +1022,8 @@ footer.myp-footer{width:var(--myp-col);margin:56px auto 0;padding:24px 0 32px;bo
 /* the flow: four separate step cards */
 .sec .flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;background:none;border:0;border-radius:0;overflow:visible}
 .fstep{padding:16px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface)}
+/* style.css drops the last step's right edge and swaps edges on phones */
+.sec .flow .fstep{border:1px solid var(--myp-border)}
 .fstep h4{font:500 16px/24px var(--myp-font-body);margin:4px 0 4px}
 .flownote{margin:16px 0 0;font-size:16px;line-height:26px;color:var(--myp-text)}
 @media (max-width:900px){.sec .flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -1308,3 +1313,61 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-input select option{color:#111;background:#fff}
 /* the hidden attribute must win over the panel's display:flex */
 .myp-panel[hidden],.myp-stats[hidden]{display:none}
+
+
+/* ============ 13  REFERENCE PAGES ============
+   Units, notices and embedded slides (MYP 3 session: units.html,
+   criterion-b.html). Reusable on the other year groups' units pages.
+   Worksheets have their own file, assets/worksheet.css. */
+
+/* ---- panel heading parts sit tight (eyebrow above the title) ---- */
+.myp-panel__head > *{margin:0}
+
+/* ---- a panel heading with a lead badge (unit number, FA number) ---- */
+.myp-panel__lead{display:flex;align-items:center;gap:16px}
+.myp-panel__lead .myp-row__lead{width:52px;height:52px;flex-basis:52px;border-radius:var(--myp-radius-button);font-size:14px}
+.myp-panel__meta{margin:4px 0 0;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+
+/* ---- definition list: label column and value (unit details) ---- */
+.myp-defs{margin:0;border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface);overflow:hidden}
+.myp-defs > div{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;padding:14px 16px;border-top:1px solid var(--myp-tint)}
+.myp-defs > div:first-child{border-top:0}
+.myp-defs dt{padding-top:3px;color:var(--myp-accent);
+  font:500 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase}
+.myp-defs dd{margin:0;font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-body)}
+.myp-defs .myp-defs__key{background:var(--myp-tint)}
+.myp-defs .myp-defs__key dd{color:var(--myp-text);font-style:italic}
+.myp-defs .myp-row__chips{padding-top:2px}
+@media (max-width:560px){
+  .myp-defs > div{grid-template-columns:1fr;gap:4px}
+  .myp-panel__lead .myp-row__lead{width:44px;height:44px;flex-basis:44px}
+}
+
+/* ---- notice: a short status line inside a panel ---- */
+.myp-note{margin:0;padding:14px 16px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);
+  background:var(--myp-tint);font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-text)}
+.myp-note b{color:var(--myp-accent);font-weight:600}
+
+/* ---- embedded slides / document, collapsible ---- */
+.myp-embed{border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface);overflow:hidden}
+.myp-embed > summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:16px 20px}
+.myp-embed > summary::-webkit-details-marker{display:none}
+.myp-embed > summary::before{content:"";width:28px;height:28px;flex:0 0 28px;border:1px solid var(--myp-border);border-radius:10px;
+  background:var(--myp-tint) var(--myp-ico-plus) no-repeat center / 16px 16px}
+.myp-embed[open] > summary::before{background:var(--myp-accent) var(--myp-ico-minus-on) no-repeat center / 16px 16px;border-color:var(--myp-accent)}
+.myp-embed > summary b{font:600 18px/26px var(--myp-font-body);color:var(--myp-accent)}
+.myp-embed > summary:hover b{color:var(--myp-hover)}
+.myp-embed > summary i{margin-left:auto;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);font-style:normal;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.myp-embed[open] > summary{border-bottom:1px solid var(--myp-border)}
+.myp-embed__frame iframe{display:block;width:100%;height:720px;border:0;background:var(--myp-bg)}
+.myp-embed__bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:12px 20px;border-top:1px solid var(--myp-border);
+  font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-muted)}
+.myp-embed__bar a{display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none}
+.myp-embed__bar a:hover{text-decoration:underline}
+@media (max-width:700px){
+  .myp-embed__frame iframe{height:440px}
+  .myp-embed > summary{padding:14px 16px}
+  .myp-embed > summary i{margin-left:42px}
+}

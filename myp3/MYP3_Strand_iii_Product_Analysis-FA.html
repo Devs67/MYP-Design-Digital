@@ -1,299 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MYP 3 Design — Product Analysis</title>
-<style>
-  :root{
-    --ink:#1B2A4A;
-    --ink-soft:#4A5A78;
-    --line:#C7CEDA;
-    --line-soft:#E3E7EE;
-    --paper:#F7F8FA;
-    --panel:#FFFFFF;
-    --accent:#C4881F;
-    --accent-soft:#F3E4C6;
-    --area1:#EEF2F8;
-    --area2:#F4EFE6;
-    --area3:#EDF3EF;
-    --red:#B01E1E;
-    --red-bg:#FBEAEA;
-    --mono: "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-  }
-
-  *{box-sizing:border-box;}
-
-  body{
-    margin:0;
-    font-family:var(--sans);
-    color:var(--ink);
-    background:
-      linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0/100% 42px,
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px) 0 0/42px 100%,
-      var(--paper);
-    padding:28px 20px 60px;
-  }
-
-  .sheet{
-    max-width:1180px;
-    margin:0 auto;
-    background:var(--panel);
-    border:1px solid var(--line);
-    box-shadow: 0 1px 0 var(--line);
-  }
-
-  /* header */
-  .head{
-    padding:26px 32px 20px;
-    border-bottom:2px solid var(--ink);
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:20px;
-    flex-wrap:wrap;
-  }
-  .head .kicker{
-    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--accent); margin:0 0 6px;
-  }
-  .head h1{margin:0; font-size:26px; font-weight:700; letter-spacing:-.01em;}
-  .head .sub{margin:6px 0 0; font-size:13.5px; color:var(--ink-soft); max-width:56ch;}
-  .idbox{display:flex; gap:14px; font-size:12px; color:var(--ink-soft);}
-  .idbox label{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px; color:var(--ink-soft);}
-  .idbox input{
-    border:none; border-bottom:1px solid var(--line); background:transparent;
-    font-size:13px; padding:2px 2px 4px; width:140px; font-family:var(--sans); color:var(--ink);
-  }
-  .idbox input:focus{outline:none; border-bottom-color:var(--accent);}
-  .idbox input.field-missing{border-bottom-color:var(--red); background:var(--red-bg);}
-
-  /* legend */
-  .legend{
-    display:flex; gap:22px; flex-wrap:wrap; padding:14px 32px; background:var(--paper);
-    border-bottom:1px solid var(--line); font-size:12px; color:var(--ink-soft); align-items:center;
-  }
-  .legend b{color:var(--ink); font-weight:600;}
-
-  /* red instruction box */
-  .warn-box{
-    border:1.5px solid var(--red); background:var(--red-bg); color:#111;
-    padding:14px 18px; margin:18px 32px; font-size:13px; line-height:1.65;
-  }
-  .warn-box b{color:var(--red);}
-
-  /* print-blocker banner */
-  .print-warning{
-    display:none; border:1.5px solid var(--red); background:var(--red-bg); color:var(--red);
-    padding:12px 18px; margin:16px 32px; font-size:13px; font-weight:700; line-height:1.5;
-  }
-  .print-warning.show{display:block;}
-
-  /* site picker */
-  .sites{padding:18px 32px; border-bottom:1px solid var(--line);}
-  .sites h2, .reflect h2, .checklist h2{
-    font-size:13px; font-family:var(--mono); letter-spacing:.08em; text-transform:uppercase;
-    color:var(--ink-soft); margin:0 0 12px; font-weight:600;
-  }
-  .site-row{
-    display:flex; align-items:flex-start; gap:12px; padding:10px 12px;
-    border:1px solid var(--line-soft); margin-bottom:8px; background:var(--paper);
-  }
-  .site-row .st{flex:1;}
-  .site-row a{color:var(--ink); font-weight:700; text-decoration:none; border-bottom:1px solid var(--accent);}
-  .site-row .url{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-left:6px;}
-  .site-row .desc{font-size:12.5px; color:var(--ink-soft); margin-top:3px;}
-  .site-row.field-missing{border-color:var(--red);}
-
-  /* area block */
-  .area{border-bottom:1px solid var(--line);}
-  .area-head{display:flex; align-items:center; gap:14px; padding:14px 32px;}
-  .area:nth-of-type(1) .area-head{background:var(--area1);}
-  .area:nth-of-type(2) .area-head{background:var(--area2);}
-  .area:nth-of-type(3) .area-head{background:var(--area3);}
-  .area-num{
-    font-family:var(--mono); font-size:12px; color:var(--ink); background:var(--panel);
-    border:1px solid var(--ink); width:26px; height:26px; display:flex; align-items:center;
-    justify-content:center; flex:none;
-  }
-  .area-fields{flex:1;}
-  .area-fields .title{font-size:15px; font-weight:700; color:var(--ink);}
-  .area-fields .hint{font-size:12px; color:var(--ink-soft); margin-top:2px;}
-  .area-body{padding:18px 32px;}
-
-  /* SWOT quadrant */
-  .swot-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line-soft);}
-  .swot-cell{border:1px solid var(--line-soft); padding:14px;}
-  .swot-label{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; margin-bottom:3px; font-weight:700;}
-  .swot-cell:nth-child(1) .swot-label{color:#2E6B4F;}
-  .swot-cell:nth-child(2) .swot-label{color:#A03E3E;}
-  .swot-cell:nth-child(3) .swot-label{color:#1B5C9E;}
-  .swot-cell:nth-child(4) .swot-label{color:var(--accent);}
-  .swot-hint{font-size:11px; color:var(--ink-soft); margin-bottom:8px;}
-
-  /* framework table — 2 columns, resizable */
-  .ftable{width:100%; border-collapse:collapse; table-layout:fixed;}
-  .ftable th{
-    font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase;
-    color:var(--ink-soft); text-align:left; font-weight:600; padding:8px 10px;
-    border-bottom:1px solid var(--line); border-top:1px solid var(--line); background:var(--paper);
-    position:relative;
-  }
-  .col-resizer{
-    position:absolute; top:0; right:-3px; width:6px; height:100%; cursor:col-resize; z-index:2;
-  }
-  .col-resizer:hover, .col-resizer.resizing{background:var(--accent-soft);}
-  .ftable td{padding:10px; border-bottom:1px solid var(--line-soft); vertical-align:top;}
-  .ftable td.flabel{font-size:13px;}
-  .ftable td.flabel .lname{font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:700; display:block; margin-bottom:3px;}
-  .ftable td.flabel .lhint{font-size:11.5px; color:var(--ink-soft); line-height:1.4;}
-
-  textarea, input:not([type=radio]):not([type=checkbox]), select{
-    border:none; background:transparent; font-size:13px; font-family:var(--sans); color:var(--ink);
-    line-height:1.4; width:100%;
-  }
-  input[type=radio], input[type=checkbox]{width:16px; height:16px; flex:none; accent-color:var(--accent);}
-
-  /* resizable answer cells */
-  .cell-input{resize:both; overflow:auto; min-width:120px; min-height:56px; width:100%; height:64px;}
-  .swot-cell .cell-input{height:76px;}
-  textarea.cell-input{border:1px solid transparent; padding:2px;}
-  textarea.cell-input:focus{outline:none; background:var(--accent-soft); border-color:var(--accent);}
-
-  /* per-cell image tools */
-  .cell-wrap{display:flex; flex-direction:column; gap:6px;}
-  .img-tools{display:flex; align-items:center; gap:8px;}
-  .img-add-btn{
-    font-family:var(--sans); font-size:10.5px; font-weight:600; color:var(--ink-soft);
-    background:var(--panel); border:1px dashed var(--line); padding:3px 9px; cursor:pointer;
-  }
-  .img-add-btn:hover{border-color:var(--accent); color:var(--accent);}
-  .cell-img-wrap{
-    display:none; resize:both; overflow:hidden; border:1px solid var(--line);
-    width:180px; height:120px; max-width:100%; position:relative; background:var(--paper);
-  }
-  .cell-img-wrap.has-img{display:block;}
-  .cell-img-wrap img{width:100%; height:100%; object-fit:contain; display:block;}
-  .img-remove-btn{
-    position:absolute; top:2px; right:2px; width:18px; height:18px; line-height:16px; text-align:center;
-    background:#fff; border:1px solid var(--red); color:var(--red); font-size:11px; font-weight:700;
-    cursor:pointer; padding:0; border-radius:2px;
-  }
-  .img-remove-btn:hover{background:var(--red); color:#fff;}
-
-  /* framework-level screenshot zone */
-  .shot{margin-top:14px; border:1px dashed var(--line); padding:14px; text-align:center; background:var(--paper);}
-  .shot input[type=file]{display:none;}
-  .shot-btn{
-    font-family:var(--sans); font-size:12px; font-weight:600; padding:7px 14px;
-    border:1px solid var(--ink); background:var(--panel); color:var(--ink); cursor:pointer;
-  }
-  .shot-btn:hover{background:var(--ink); color:#fff;}
-  .shot-caption-label{font-size:11px; color:var(--ink-soft); margin-top:6px;}
-  .shot-preview{max-width:100%; max-height:340px; margin-top:12px; border:1px solid var(--line); display:none;}
-  .shot-preview.has-img{display:inline-block;}
-  .shot-note{width:100%; margin-top:10px; border:1px solid var(--line-soft); padding:8px; font-size:12.5px; display:none; text-align:left;}
-  .shot-note.has-img{display:block;}
-  .shot-note label{display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:4px;}
-
-  /* reflection */
-  .reflect{padding:18px 32px;}
-  .reflect textarea{border:1px solid var(--line-soft); padding:10px; min-height:64px; resize:vertical;}
-
-  /* checklist */
-  .checklist{padding:20px 32px 30px;}
-  .checklist ul{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,1fr); gap:8px 30px;}
-  .checklist li{display:flex; gap:9px; align-items:flex-start; font-size:13px; color:var(--ink-soft);}
-  .checklist input[type=checkbox]{margin-top:3px; accent-color:var(--accent);}
-
-  .toolbar{max-width:1180px; margin:0 auto 16px; display:flex; justify-content:flex-end; gap:10px;}
-  .toolbar button{
-    font-family:var(--sans); font-size:12.5px; font-weight:600; padding:8px 16px;
-    border:1px solid var(--ink); background:var(--panel); color:var(--ink); cursor:pointer;
-  }
-  .toolbar button:hover{background:var(--ink); color:#fff;}
-
-  @media print{
-    body{background:#fff; padding:0;}
-    .toolbar{display:none;}
-    .back-nav{display:none;}
-    .print-warning{display:none !important;}
-    .sheet{border:none; box-shadow:none;}
-    textarea, input, select{color:#000 !important;}
-    textarea:focus, input:focus, select:focus{background:transparent !important; outline:none !important;}
-    .shot-btn, .img-add-btn, .img-remove-btn, .col-resizer{display:none !important;}
-    .shot{border-style:solid;}
-    .area{break-inside:avoid;}
-    .cell-input, .cell-img-wrap{resize:none !important;}
-  }
-
-  @media (max-width:720px){
-    .ftable{display:block; overflow-x:auto; white-space:nowrap;}
-  }
-</style>
+<meta name="description" content="MYP 3 formative FA-1: analyse one existing product using SWOT, ACCESS FM and CFPC.">
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/theme.css">
+<style>
+/* Product Analysis (FA-1). Blue Glass tokens from glass.css, each with a
+   light fallback: "Save my copy" downloads this page as a standalone file,
+   where glass.css is not reachable and only this <style> applies. */
+:root{--a:#12707F;--b:#96700A;--c:#38722C;--d:#B23A2E;--dev:#6A4C93}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Work Sans",system-ui,-apple-system,sans-serif;color:var(--myp-body,#344054);background:var(--myp-bg,#F5F8FF)}
+
+.pa{--ln:var(--myp-border,#BACEE9);--tn:var(--myp-tint,#E8F1FF);--sf:var(--myp-surface,#FFFFFF);
+  --tx:var(--myp-text,#111111);--bd:var(--myp-body,#344054);--mu:var(--myp-muted,#515D70);--ac:var(--myp-accent,#2862AE);
+  --er:var(--myp-error,#B42318);--er-bg:var(--clay-tint,#FBEAE6);
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--sans:"Work Sans",system-ui,-apple-system,sans-serif}
+.pa-sub{margin:0;font-size:16px;line-height:26px;color:var(--bd)}
+.pa-sub b{color:var(--tx);font-weight:600}
+
+/* name, class, date */
+.idbox{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
+.idbox > div{padding:10px 14px;border:1px solid var(--ln);border-radius:12px;background:var(--tn)}
+.idbox > div:focus-within{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.idbox label{display:block;margin:0 0 2px;font:500 14px/20px var(--sans);color:var(--tx)}
+.idbox input{width:100%;min-width:0;margin:0;padding:0;border:0;outline:0;background:transparent;color:var(--tx);font:400 16px/26px var(--sans)}
+.idbox > div:has(input.field-missing){border-color:var(--er);background:var(--er-bg)}
+.idbox input.field-missing{background:transparent}
+.pa-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+/* print-blocker banner and the screenshot instruction */
+.print-warning{display:none;margin:0;padding:12px 16px;border:1px solid var(--er);border-radius:12px;background:var(--er-bg);
+  color:var(--er);font-size:15px;line-height:24px;font-weight:600}
+.print-warning.show{display:block}
+.warn-box{margin:0;padding:14px 16px;border:1px solid var(--er);border-radius:12px;background:var(--er-bg);
+  color:var(--tx);font-size:15px;line-height:24px}
+.warn-box b{color:var(--er)}
+
+/* site picker */
+.site-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1px solid var(--ln);border-radius:12px;background:var(--sf);cursor:pointer}
+.site-row + .site-row{margin-top:8px}
+.site-row:has(input:checked){border-color:var(--ac);box-shadow:0 0 0 1px var(--ac);background:var(--tn)}
+.site-row.field-missing{border-color:var(--er)}
+.site-row .site-text{flex:1;min-width:0}
+.site-row a{font-weight:600;color:var(--ac)}
+.site-row .url{margin-left:8px;font:400 12px/20px var(--mono);color:var(--mu);overflow-wrap:anywhere}
+.site-row .desc{margin-top:4px;font-size:14px;line-height:22px;color:var(--bd)}
+
+/* a framework block */
+.area{border:1px solid var(--ln);border-radius:16px;background:var(--sf);overflow:hidden}
+.area-head{display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--tn);border-bottom:1px solid var(--ln)}
+.area-num{flex:0 0 40px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:12px;
+  background:var(--ac);color:var(--myp-on-accent,#FFFFFF);font:600 13px/1 var(--mono)}
+.area-fields{flex:1;min-width:0}
+.area-fields .title{margin:0;font:500 20px/28px var(--sans);color:var(--tx)}
+.area-fields .hint{margin:2px 0 0;font-size:14px;line-height:22px;color:var(--bd)}
+.area-body{padding:16px}
+
+/* SWOT quadrant */
+.swot-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.swot-cell{padding:14px;border:1px solid var(--ln);border-radius:12px;background:var(--sf)}
+.swot-label{margin:0 0 2px;font:600 11px/18px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.swot-cell:nth-child(1) .swot-label{color:var(--myp-ok,#236B50)}
+.swot-cell:nth-child(2) .swot-label{color:var(--clay,#A8402F)}
+.swot-cell:nth-child(3) .swot-label{color:var(--ac)}
+.swot-cell:nth-child(4) .swot-label{color:var(--myp-warn,#8A5B12)}
+.swot-hint{margin:0 0 8px;font-size:13px;line-height:20px;color:var(--mu)}
+
+/* framework table: two columns, the first resizable */
+.ftable{width:100%;border-collapse:collapse;table-layout:fixed}
+.ftable th{position:relative;padding:10px 12px;text-align:left;font:600 10px/16px var(--mono);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--mu);border-bottom:1px solid var(--ln)}
+.col-resizer{position:absolute;top:0;right:-3px;z-index:2;width:6px;height:100%;cursor:col-resize}
+.col-resizer:hover,.col-resizer.resizing{background:var(--tn)}
+.ftable td{padding:12px;vertical-align:top;border-bottom:1px solid var(--tn)}
+.ftable tr:last-child td{border-bottom:0}
+.ftable td.flabel .lname{display:block;margin:0 0 2px;font:600 13px/20px var(--mono);color:var(--ac)}
+.ftable td.flabel .lhint{font-size:14px;line-height:22px;color:var(--bd)}
+
+/* answer boxes (resizable) */
+.pa textarea{display:block;width:100%;margin:0;padding:8px 10px;border:1px solid var(--ln);border-radius:10px;
+  background:var(--sf);color:var(--tx);font:400 15px/24px var(--sans)}
+.pa textarea::placeholder{color:var(--mu);opacity:1}
+.pa textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.pa input[type=radio],.pa input[type=checkbox]{flex:0 0 20px;width:20px;height:20px;margin:2px 0 0;accent-color:var(--ac)}
+.cell-input{resize:both;overflow:auto;min-width:120px;min-height:56px;height:72px}
+.swot-cell .cell-input{height:84px}
+
+/* per-cell image tools */
+.cell-wrap{display:flex;flex-direction:column;gap:8px}
+.img-tools{display:flex;align-items:center;gap:8px}
+.img-add-btn{padding:4px 10px;border:1px dashed var(--ac);border-radius:8px;background:var(--tn);color:var(--ac);
+  font:600 12px/18px var(--sans);cursor:pointer}
+.img-add-btn:hover{border-style:solid}
+.cell-img-wrap{display:none;position:relative;width:180px;height:120px;max-width:100%;resize:both;overflow:hidden;
+  border:1px solid var(--ln);border-radius:10px;background:var(--tn)}
+.cell-img-wrap.has-img{display:block}
+.cell-img-wrap img{display:block;width:100%;height:100%;object-fit:contain}
+.img-remove-btn{position:absolute;top:4px;right:4px;width:24px;height:24px;padding:0;border:1px solid var(--er);border-radius:6px;
+  background:var(--sf);color:var(--er);font:600 14px/1 var(--sans);cursor:pointer}
+.img-remove-btn:hover{background:var(--er);color:var(--sf)}
+
+/* framework-level screenshot */
+.shot{margin-top:16px;padding:16px;border:1px dashed var(--ln);border-radius:12px;background:var(--tn);text-align:center}
+.shot input[type=file]{display:none}
+.shot-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;border:1px solid var(--ln);
+  border-radius:16px;background:var(--sf);color:var(--ac);font:600 14px/20px var(--sans);cursor:pointer}
+.shot-btn:hover{border-color:var(--myp-hover,#1D4D8A);color:var(--myp-hover,#1D4D8A)}
+.shot-caption-label{margin-top:6px;font-size:13px;line-height:20px;color:var(--mu)}
+.shot-preview{display:none;max-width:100%;max-height:340px;margin-top:12px;border:1px solid var(--ln);border-radius:10px}
+.shot-preview.has-img{display:inline-block}
+.shot-note{display:none;margin-top:12px;text-align:left}
+.shot-note.has-img{display:block}
+.shot-note label{display:block;margin:0 0 4px;font:600 10px/16px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--mu)}
+
+/* reflection and self-check */
+.reflect textarea{min-height:72px;resize:vertical}
+.checklist{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+.checklist li{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;
+  background:var(--sf);font-size:15px;line-height:24px;color:var(--bd)}
+
+@media (max-width:860px){.checklist{grid-template-columns:1fr}}
+@media (max-width:720px){
+  .idbox{grid-template-columns:1fr 1fr}
+  .idbox > div:first-child{grid-column:1 / -1}
+  .swot-grid{grid-template-columns:1fr}
+  .area-body{padding:12px}
+  .ftable,.ftable tbody,.ftable tr,.ftable td{display:block;width:100%}
+  .ftable thead{display:none}
+  .ftable tr{padding:12px 0;border-bottom:1px solid var(--tn)}
+  .ftable td{padding:0;border:0}
+  .ftable td + td{margin-top:8px}
+  .cell-input{min-width:0;resize:vertical}
+  .site-row .url{display:block;margin:2px 0 0}
+}
+
+@media print{
+  html:root.dark{--myp-bg:#FFFFFF;--myp-surface:#FFFFFF;--myp-text:#111111;--myp-body:#344054;--myp-muted:#515D70;
+    --myp-accent:#2862AE;--myp-border:#BACEE9;--myp-tint:#E8F1FF;--myp-on-accent:#FFFFFF;--myp-ok:#236B50;--myp-warn:#8A5B12;
+    --myp-error:#B42318;--clay:#A8402F;--clay-tint:#FBEAE6;color-scheme:light}
+  body{background:#fff}
+  .topbar,.myp-tools,.myp-footer,.pa-noprint,.print-warning{display:none !important}
+  .myp-panel{box-shadow:none;background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}
+  textarea,input,select{color:#000 !important}
+  textarea:focus,input:focus,select:focus{background:transparent !important;outline:none !important;box-shadow:none !important}
+  .shot-btn,.img-add-btn,.img-remove-btn,.col-resizer{display:none !important}
+  .shot{border-style:solid}
+  .area{break-inside:avoid}
+  .cell-input,.cell-img-wrap{resize:none !important}
+}
+</style>
 <link rel="stylesheet" href="../assets/glass.css">
 </head>
 <body id="artifacts-component-root-html">
 
-<div class="back-nav" style="max-width:1180px;margin:0 auto">
-  <a href="fa.html" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--ink-soft);text-decoration:none;margin-bottom:14px">&larr; Formative assessments</a>
-</div>
-
-<div class="toolbar">
-  <button onclick="saveCopy()">Save my copy (.html)</button>
-  <button onclick="tryPrint()">Print / Save as PDF</button>
-</div>
-
-<div class="sheet">
-
-  <div class="head">
-    <div>
-      <p class="kicker">MYP Design · Criterion A · Strand iii · Formative</p>
-      <h1>Product Analysis</h1>
-      <p class="sub">Choose one existing product and analyse it using three frameworks — SWOT, ACCESS FM, and CFPC — to build the skill you'll need for the Strand iii summative.</p>
-    </div>
-    <div class="idbox">
-      <div><label>Name</label><input type="text" id="fName" value=""></div>
-      <div><label>Class</label><input type="text" id="fClass" style="width:80px;" value=""></div>
-      <div><label>Date</label><input type="text" id="fDate" style="width:100px;" value=""></div>
+<header class="topbar" data-grade="myp3">
+  <div class="topbar__wrap">
+    <a class="topbar__brand" href="../index.html">
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
+    </a>
+    <div class="topbar__actions">
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="../myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
+        <a href="index.html" data-g="myp3" aria-current="page">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
+</header>
 
-  <div class="legend">
-    <span><b>Note:</b> this is formative — it builds the skill for your Strand iii summative, where you'll analyse a full group of products.</span>
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="fa.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to Formative assessments</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
   </div>
+</nav>
 
-  <div class="print-warning" id="printWarning"></div>
+<main id="main" class="pa">
 
-  <div class="sites" id="sitesSection">
-    <h2>Choose your website</h2>
-    <div class="site-row" data-site-row>
+<header class="myp-hero">
+  <p class="myp-eyebrow">MYP Design &middot; Criterion A &middot; Strand iii &middot; Formative</p>
+  <h1 class="myp-title">Product Analysis</h1>
+  <p class="myp-lede">Choose one existing product and analyse it using three frameworks — SWOT, ACCESS FM, and CFPC — to build the skill you'll need for the Strand iii summative.</p>
+</header>
+
+<section class="myp-panel" aria-labelledby="paYou">
+  <h2 class="myp-panel__title" id="paYou">Your details</h2>
+  <p class="pa-sub"><b>Note:</b> this is formative — it builds the skill for your Strand iii summative, where you'll analyse a full group of products.</p>
+  <div class="idbox">
+    <div><label for="fName">Name</label><input type="text" id="fName" value=""></div>
+    <div><label for="fClass">Class</label><input type="text" id="fClass" value=""></div>
+    <div><label for="fDate">Date</label><input type="text" id="fDate" value=""></div>
+  </div>
+  <div class="pa-actions pa-noprint">
+    <button type="button" class="myp-button myp-button--primary" onclick="saveCopy()"><span class="myp-icon myp-icon--save" aria-hidden="true"></span>Save my copy (.html)</button>
+    <button type="button" class="myp-button myp-button--secondary" onclick="tryPrint()"><span class="myp-icon myp-icon--download" aria-hidden="true"></span>Print / Save as PDF</button>
+  </div>
+  <div class="print-warning" id="printWarning" role="alert"></div>
+</section>
+
+<section class="myp-panel sites" id="sitesSection" aria-labelledby="paSites">
+  <h2 class="myp-panel__title" id="paSites">Choose your website</h2>
+  <div>
+    <label class="site-row" data-site-row>
       <input type="radio" name="site" value="LocalCircles">
-      <div class="st">
+      <div class="site-text">
         <a href="https://www.localcircles.com/a/home" target="_blank" rel="noopener">LocalCircles</a><span class="url">localcircles.com/a/home</span>
         <div class="desc">An Indian community platform where citizens raise local issues, run polls, and engage with governance and daily life topics.</div>
       </div>
-    </div>
-    <div class="site-row" data-site-row>
+    </label>
+    <label class="site-row" data-site-row>
       <input type="radio" name="site" value="Community Tool Box">
-      <div class="st">
+      <div class="site-text">
         <a href="https://ctb.ku.edu/en" target="_blank" rel="noopener">Community Tool Box</a><span class="url">ctb.ku.edu/en</span>
         <div class="desc">A free global resource (University of Kansas) offering toolkits and step-by-step guidance for building healthier communities.</div>
       </div>
-    </div>
-    <div class="site-row" data-site-row>
+    </label>
+    <label class="site-row" data-site-row>
       <input type="radio" name="site" value="UNICEF Voices of Youth">
-      <div class="st">
+      <div class="site-text">
         <a href="https://www.unicef.org/topics/voices-youth" target="_blank" rel="noopener">UNICEF Voices of Youth</a><span class="url">unicef.org/topics/voices-youth</span>
         <div class="desc">A UNICEF platform that amplifies young people's voices and engagement on issues affecting their lives worldwide.</div>
       </div>
-    </div>
+    </label>
   </div>
+</section>
 
-  <div class="warn-box">
-    <b>SCREENSHOT + ANNOTATE:</b> as you work through each framework below, take a screenshot of the part of the website you're analysing, and annotate it (label what you're pointing to) to support your written answers. Use the <b>+ Image</b> button under any answer box to insert it directly into that cell, or attach one screenshot for the whole framework using the box at the bottom of each section. Drag the bottom-right corner of any answer box or image to resize it.
-  </div>
+<section class="myp-panel" aria-labelledby="paFrameworks">
+  <h2 class="myp-panel__title" id="paFrameworks">Analyse it with three frameworks</h2>
+  <p class="warn-box"><b>SCREENSHOT + ANNOTATE:</b> as you work through each framework below, take a screenshot of the part of the website you're analysing, and annotate it (label what you're pointing to) to support your written answers. Use the <b>+ Image</b> button under any answer box to insert it directly into that cell, or attach one screenshot for the whole framework using the box at the bottom of each section. Drag the bottom-right corner of any answer box or image to resize it.</p>
 
   <!-- SWOT -->
   <div class="area">
@@ -375,15 +321,17 @@
     </div>
   </div>
 
-  <div class="reflect">
-    <h2>Quick reflection</h2>
-    <div style="font-size:13px; margin-bottom:6px;">What's ONE idea from this product you could adapt for your own app?</div>
-    <textarea placeholder="I could adapt..."></textarea>
-  </div>
+</section>
 
-  <div class="checklist">
-    <h2>Self-check before submitting</h2>
-    <ul>
+<section class="myp-panel reflect" aria-labelledby="paReflect">
+  <h2 class="myp-panel__title" id="paReflect">Quick reflection</h2>
+  <label class="pa-sub" for="paIdea">What's ONE idea from this product you could adapt for your own app?</label>
+  <textarea id="paIdea" placeholder="I could adapt..."></textarea>
+</section>
+
+<section class="myp-panel" aria-labelledby="paCheck">
+  <h2 class="myp-panel__title" id="paCheck">Self-check before submitting</h2>
+  <ul class="checklist">
       <li><input type="checkbox"><span>I have clearly selected which website I chose</span></li>
       <li><input type="checkbox"><span>My SWOT is specific to this product — not generic, one-word answers</span></li>
       <li><input type="checkbox"><span>My ACCESS FM covers all 8 letters, adapted sensibly for a digital product</span></li>
@@ -391,9 +339,14 @@
       <li><input type="checkbox"><span>I have attached at least one annotated screenshot</span></li>
       <li><input type="checkbox"><span>I have noted one idea I could adapt for my own app</span></li>
     </ul>
-  </div>
+</section>
 
-</div>
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 3</a><span>Product Analysis · FA-1</span></p>
+  <p class="myp-footer__links"><a href="index.html">MYP 3 workspace</a><a href="fa.html">Formative assessments</a><a href="criterion-a.html#iii">Criterion A, strand iii</a><span>Design Team - SIS</span></p>
+</footer>
 
 <script>
   let cellIdCounter = 0;
