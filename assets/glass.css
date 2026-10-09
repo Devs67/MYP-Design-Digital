@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 /* ============================================================
    Blue Glass: the shared reskin.
@@ -13,6 +13,9 @@
    - no global * / body resets from components.css
    - motion only under prefers-reduced-motion: no-preference
    - mobile column is full width minus a 16px gutter
+   Berry (design/figma-export-berry/) is the interaction colour: links,
+   buttons, selected tabs, ticks and focus. Blue stays for the brand
+   mark, eyebrows, bullets, borders and the backdrop.
 
    Sections
      1  Tokens (light, dark)
@@ -30,6 +33,9 @@
         filter chips, segmented control)
     13  Reference pages: units, notices, embedded slides
     14  Shared pages, group maker, lesson logs
+    15  Berry Home (index.html)
+    16  Motion: fluid background, page entrance, hover and focus,
+        strand tab transition, theme crossfade, reduced motion
    Sections 12 to 14 share .myp-stats, .myp-embed and .myp-note: the base
    rule is written once and each section adds only its own form.
    Worksheets (Brief Builder, Task Sheet) add assets/worksheet.css.
@@ -43,7 +49,12 @@
   --myp-surface:#FFFFFF;
   --myp-text:#111111;
   --myp-muted:#515D70;
-  --myp-accent:#2862AE;
+  --myp-accent:#2862AE;           /* brand blue: the MYP mark, eyebrows, bullets, bands */
+  /* berry: everything a student can click, and what is selected (section 11) */
+  --myp-interaction:#A13C66;
+  --myp-interaction-hover:#7D2D4E;
+  --myp-interaction-tint:#F8E9F0;
+  --myp-on-interaction:#FFFFFF;   /* label on a primary button */
   --myp-border:#BACEE9;
   --myp-tint:#E8F1FF;
   --myp-orb:#6BAEFF;
@@ -54,13 +65,15 @@
   --myp-glass-border:rgba(186,206,233,.82);
   --myp-glass-blur:18px;
   --myp-glass-shadow:0 18px 50px rgba(40,98,174,.10);
-  /* hover ring: a darker blue edge (focus uses a solid outline, section 11) */
+  /* hover ring: a darker berry edge (focus uses a solid outline, section 11) */
   --myp-focus-ring:0 0 0 1px var(--myp-hover);
   --myp-grid-line:rgba(40,98,174,.06);
   /* Dev's colour table (section 11 applies it) */
   --myp-body:#344054;            /* descriptions, instructions, longer reading */
-  --myp-hover:#1D4D8A;           /* hover and pressed */
-  --myp-on-accent:#FFFFFF;       /* label on a primary button */
+  --myp-hover:var(--myp-interaction-hover);   /* old name, kept for page styles */
+  --myp-on-accent:#FFFFFF;       /* label on a solid blue chip */
+  --myp-tint-soft:rgba(232,241,255,.82);   /* A to D overview tiles */
+  --myp-lift-shadow:0 18px 44px rgba(14,43,83,.16);   /* a link card on hover */
   --myp-disabled-bg:#EEF2F7;  --myp-disabled-text:#78869B;
   --myp-error:#B42318;
   --myp-panel-fill:rgba(255,255,255,.94);   /* reading panels: nearly opaque */
@@ -101,7 +114,7 @@
   --myp-ease:cubic-bezier(.22,.61,.36,1);
 
   /* expand / collapse marks (Lucide plus and minus), coloured per theme */
-  --myp-ico-plus:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232862AE' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 12h14M12 5v14'/%3E%3C/svg%3E");
+  --myp-ico-plus:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23A13C66' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 12h14M12 5v14'/%3E%3C/svg%3E");
   --myp-ico-minus-on:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E");
 }
 :root.dark{
@@ -111,6 +124,11 @@
   --myp-text:#F4F7FF;
   --myp-muted:#B5C3D8;
   --myp-accent:#92C5FF;
+  /* #A13C66 is only 2.5 to 3.0:1 on the dark surfaces, so dark has its own berry */
+  --myp-interaction:#EE9FC0;
+  --myp-interaction-hover:#F7C6DA;
+  --myp-interaction-tint:#3A2233;
+  --myp-on-interaction:#0B1220;
   --myp-border:#395474;
   --myp-tint:#203955;
   --myp-orb:#5A95DD;
@@ -121,16 +139,17 @@
   --myp-grid-line:rgba(146,197,255,.06);
   /* dark equivalents of the colour table (the table gives light values only) */
   --myp-body:#D3DCEA;
-  --myp-hover:#C2DEFF;
   --myp-on-accent:#0B1220;
+  --myp-tint-soft:rgba(32,57,85,.82);
+  --myp-lift-shadow:0 18px 44px rgba(0,0,0,.42);
   --myp-disabled-bg:#1E2A3B;  --myp-disabled-text:#8391A6;
   --myp-error:#FDA29B;
   --myp-panel-fill:rgba(24,37,56,.94);
   --myp-header-shadow:0 10px 30px rgba(0,0,0,.36);
   --myp-ok:#8BE3B5;     --myp-ok-tint:#173A2A;
   --myp-warn:#F2D37A;   --myp-warn-tint:#3A3214;
-  --myp-ico-plus:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2392C5FF' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 12h14M12 5v14'/%3E%3C/svg%3E");
-  --myp-ico-minus-on:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23182538' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E");
+  --myp-ico-plus:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23EE9FC0' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 12h14M12 5v14'/%3E%3C/svg%3E");
+  --myp-ico-minus-on:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230B1220' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E");
 }
 @supports (color:color-mix(in srgb, red 50%, transparent)){
   :root,:root.dark{
@@ -193,6 +212,8 @@
 html{background-color:var(--myp-bg)}
 body{background:transparent;color:var(--myp-body);font-family:var(--myp-font-body);
   font-size:var(--myp-body-size);line-height:1.625;-webkit-font-smoothing:antialiased}
+/* theme.css paints the dark body solid, which covered the backdrop in dark mode */
+:root.dark body{background:transparent}
 :root body::before,:root.dark body::before{content:"";position:fixed;inset:0;z-index:-2;
   pointer-events:none;-webkit-mask-image:none;mask-image:none;
   background:var(--myp-bg) url("glass/backdrop-desktop-light.svg") center top / cover no-repeat}
@@ -213,9 +234,9 @@ body{background:transparent;color:var(--myp-body);font-family:var(--myp-font-bod
 }
 
 ::selection{background:var(--myp-tint);color:var(--myp-text)}
-a{color:var(--myp-accent)}
-a:hover{color:var(--myp-hover)}
-:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+a{color:var(--myp-interaction)}
+a:hover{color:var(--myp-interaction-hover)}
+:focus-visible{outline:2px solid var(--myp-interaction);outline-offset:2px}
 
 
 /* ============ 4  BLUE GLASS COMPONENTS ============
@@ -263,15 +284,15 @@ a:hover{color:var(--myp-hover)}
   min-height:46px;border-radius:var(--myp-radius-button);border:1px solid var(--myp-glass-border);
   padding:12px 16px;font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);
   text-decoration:none;cursor:pointer;white-space:nowrap}
-.myp-tool{color:var(--myp-accent);background:var(--myp-glass-fill-soft)}
-.myp-tool:hover,.myp-button:hover{border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+.myp-tool{color:var(--myp-interaction);background:var(--myp-glass-fill-soft)}
+.myp-tool:hover,.myp-button:hover{border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 .myp-tool[aria-current="page"]{background:var(--myp-tint);border-color:var(--myp-border)}
 .myp-tool:focus-visible,.myp-button:focus-visible{outline:none;box-shadow:var(--myp-focus-ring);
-  border-color:var(--myp-accent)}
+  border-color:var(--myp-interaction)}
 .myp-button--primary{color:var(--myp-surface);border-color:var(--myp-text);background:var(--myp-text)}
-.myp-button--primary:hover{color:var(--myp-surface);border-color:var(--myp-accent);background:var(--myp-accent)}
-.myp-button--secondary{color:var(--myp-accent);border-color:var(--myp-border);background:var(--myp-tint)}
-.myp-button--text{min-height:auto;color:var(--myp-accent);border-color:transparent;background:transparent;padding:8px 0}
+.myp-button--primary:hover{color:var(--myp-surface);border-color:var(--myp-interaction);background:var(--myp-interaction)}
+.myp-button--secondary{color:var(--myp-interaction);border-color:var(--myp-border);background:var(--myp-tint)}
+.myp-button--text{min-height:auto;color:var(--myp-interaction);border-color:transparent;background:transparent;padding:8px 0}
 .myp-button--text:hover{box-shadow:none;text-decoration:underline}
 .myp-button[disabled],.myp-tool[disabled]{opacity:.5;cursor:not-allowed;box-shadow:none}
 
@@ -279,7 +300,7 @@ a:hover{color:var(--myp-hover)}
   border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-tint);
   font:400 16px/24px var(--myp-font-body)}
 .myp-field::placeholder{color:var(--myp-muted);opacity:1}
-.myp-field:focus{outline:none;border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+.myp-field:focus{outline:none;border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 
 .myp-status{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--myp-radius-chip);
   color:var(--myp-accent);background:var(--myp-tint);font-size:var(--myp-small-size)}
@@ -296,24 +317,24 @@ a:hover{color:var(--myp-hover)}
   -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
 .topbar__wrap{max-width:none;height:auto;min-height:0;padding:16px 16px 16px 24px;gap:24px}
 .topbar__brand{gap:25px}
-.topbar__logo{width:auto;height:auto;border-radius:0;background:none;color:var(--myp-text);
-  font:500 24px/32px var(--myp-font-display);letter-spacing:-.02em}
+.topbar__logo{width:auto;height:auto;border-radius:0;background:none;color:var(--myp-accent);
+  font:700 24px/32px var(--myp-font-display);letter-spacing:-.02em}
 .topbar__brand:hover .topbar__logo{transform:none;color:var(--myp-accent)}
 .topbar__word{display:flex}
-.topbar__word b{font:500 14px/20px var(--myp-font-body);color:var(--myp-text)}
+.topbar__word b{font:700 14px/20px var(--myp-font-body);color:var(--myp-accent)}
 .topbar__word i{font-family:var(--myp-font-mono);font-size:var(--myp-micro-size);letter-spacing:.06em;color:var(--myp-muted)}
 .topbar__crumb{font-family:var(--myp-font-body);font-size:13px;color:var(--myp-muted)}
 .topbar__crumb a{color:var(--myp-muted);font-weight:500}
-.topbar__crumb a:hover{color:var(--myp-accent)}
+.topbar__crumb a:hover{color:var(--myp-interaction)}
 .topbar__crumb .cur{color:var(--myp-text);text-transform:none;letter-spacing:0;font-weight:500}
 .topbar__grades{display:flex;gap:4px;padding:0;border:0;border-radius:0;background:none}
 .topbar__grades a{font:500 14px/20px var(--myp-font-body);letter-spacing:0;text-transform:none;
   padding:12px 16px;border-radius:var(--myp-radius-chip);color:var(--myp-text)}
-.topbar__grades a:hover{color:var(--myp-accent);background:var(--myp-tint)}
+.topbar__grades a:hover{color:var(--myp-interaction);background:var(--myp-tint)}
 .topbar__grades a.on,.topbar__grades a[aria-current]{color:var(--myp-text);background:var(--myp-tint);box-shadow:none}
 .topbar__btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--myp-glass-border);
-  background:var(--myp-glass-fill-soft);color:var(--myp-accent)}
-.topbar__btn:hover{color:var(--myp-accent);border-color:var(--myp-accent)}
+  background:var(--myp-glass-fill-soft);color:var(--myp-interaction)}
+.topbar__btn:hover{color:var(--myp-interaction);border-color:var(--myp-interaction)}
 .topbar__btn svg{width:20px;height:20px;stroke-width:1.8}
 @media (max-width:899px){
   .topbar__grades{display:flex}
@@ -340,7 +361,7 @@ a:hover{color:var(--myp-hover)}
 .myp-theme-toggle{display:inline-flex;align-items:center;gap:4px;padding:4px;flex:0 0 auto;
   border:1px solid var(--myp-glass-border);border-radius:var(--myp-radius-button);background:var(--myp-tint)}
 .myp-theme-toggle button{min-height:36px;display:inline-flex;align-items:center;gap:6px;border:0;
-  border-radius:12px;padding:8px 14px;color:var(--myp-accent);background:transparent;
+  border-radius:12px;padding:8px 14px;color:var(--myp-interaction);background:transparent;
   font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);cursor:pointer}
 .myp-theme-toggle button:hover{color:var(--myp-text)}
 /* the selected mode reads as a raised chip, so the control shows which is on */
@@ -365,7 +386,7 @@ a:hover{color:var(--myp-hover)}
 .qm__btn{font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0;text-transform:none;
   min-height:46px;padding:12px 20px;border-radius:var(--myp-radius-button);
   border:1px solid var(--myp-text);background:var(--myp-text);color:var(--myp-surface)}
-.qm__btn:hover{background:var(--myp-accent);border-color:var(--myp-accent);color:var(--myp-surface)}
+.qm__btn:hover{background:var(--myp-interaction);border-color:var(--myp-interaction);color:var(--myp-surface)}
 .qm__x{border-radius:12px;width:36px;height:36px;color:var(--myp-muted)}
 .qm__x:hover{background:var(--myp-tint);color:var(--myp-text)}
 
@@ -382,7 +403,7 @@ a:hover{color:var(--myp-hover)}
 .myp-search__row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:12px 14px;
   border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface);
   color:var(--myp-text);text-decoration:none}
-.myp-search__row:hover,.myp-search__row:focus-visible{border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring);outline:none}
+.myp-search__row:hover,.myp-search__row:focus-visible{border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring);outline:none}
 .myp-search__badge{min-width:30px;height:30px;padding:0 6px;border-radius:9px;display:flex;align-items:center;
   justify-content:center;font:600 11px/1 var(--myp-font-mono);color:#fff;background:var(--myp-accent)}
 .myp-search__t{font-weight:500;min-width:0}
@@ -440,8 +461,8 @@ body.myp-noscroll{overflow:hidden}
 /* back links */
 .homelink,.backlink{font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0;
   text-transform:none;min-height:46px;padding:12px 16px;border-radius:var(--myp-radius-button);
-  border:1px solid var(--myp-glass-border);background:var(--myp-glass-fill-soft);color:var(--myp-accent);gap:8px}
-.homelink:hover,.backlink:hover{border-color:var(--myp-accent);color:var(--myp-accent);background:var(--myp-glass-fill-soft);
+  border:1px solid var(--myp-glass-border);background:var(--myp-glass-fill-soft);color:var(--myp-interaction);gap:8px}
+.homelink:hover,.backlink:hover{border-color:var(--myp-interaction);color:var(--myp-interaction);background:var(--myp-glass-fill-soft);
   box-shadow:var(--myp-focus-ring)}
 .homelink::before,.backlink::before{content:"";width:20px;height:20px;flex:0 0 20px;background-color:currentColor;
   -webkit-mask:url("icons/arrow-left.svg") no-repeat center / contain;mask:url("icons/arrow-left.svg") no-repeat center / contain}
@@ -452,16 +473,16 @@ footer{width:var(--myp-col);margin:56px auto 0;padding:24px 0 48px;border-top:1p
 footer > .wrap{width:100%}
 .footlinks{font:400 var(--myp-small-size)/var(--myp-small-line) var(--myp-font-body);letter-spacing:0;text-transform:none;gap:6px 20px}
 .footlinks a{color:var(--myp-muted)}
-.footlinks a:hover{color:var(--myp-accent)}
+.footlinks a:hover{color:var(--myp-interaction)}
 .attrib{font-size:13px;color:var(--myp-muted)}
-.attrib a{color:var(--myp-accent)}
+.attrib a{color:var(--myp-interaction)}
 
 /* back to top */
 .totop{background:var(--myp-glass-fill);border:1px solid var(--myp-glass-border);box-shadow:var(--myp-glass-shadow);
   -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
 .totop .trk{stroke:var(--myp-tint)}
-.totop .prg{stroke:var(--myp-accent)}
-.totop .arw{color:var(--myp-accent)}
+.totop .prg{stroke:var(--myp-interaction)}
+.totop .arw{color:var(--myp-interaction)}
 
 /* tap tint: blue instead of the old amber */
 .tapfx[data-clicks="1"]{background-image:linear-gradient(160deg,rgba(40,98,174,.03),rgba(40,98,174,.06))}
@@ -481,12 +502,12 @@ footer > .wrap{width:100%}
 .herosearch{max-width:560px;margin:28px 0 0;padding:16px;border:1px solid var(--myp-glass-border);
   border-radius:var(--myp-radius-card);background:var(--myp-glass-fill-soft)}
 .herosearch__lbl{display:block;margin:0 0 8px;font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);color:var(--myp-text)}
-.herosearch svg,.herosearch .myp-icon{left:14px;width:20px;height:20px;color:var(--myp-accent)}
+.herosearch svg,.herosearch .myp-icon{left:14px;width:20px;height:20px;color:var(--myp-interaction)}
 .herosearch .myp-icon{position:absolute;pointer-events:none}
 .herosearch input{min-height:48px;padding:12px 14px 12px 44px;border:1px solid var(--myp-border);
   border-radius:var(--myp-radius-field);background:var(--myp-tint);font:400 16px/24px var(--myp-font-body);color:var(--myp-text)}
 .herosearch input::placeholder{color:var(--myp-muted);opacity:1}
-.herosearch input:focus{outline:none;border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+.herosearch input:focus{outline:none;border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 .herosearch__results{left:16px;right:16px;top:calc(100% - 8px);border:1px solid var(--myp-glass-border);
   border-radius:var(--myp-radius-field);background:var(--myp-surface);box-shadow:var(--myp-glass-shadow);padding:6px}
 .herr{border-radius:10px;font-size:14px}
@@ -512,7 +533,7 @@ footer > .wrap{width:100%}
 .gradecard{border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface);
   padding:24px;box-shadow:none}
 .gradecard::before{opacity:.06}
-.gradecard:hover,.gradecard--a:hover,.gradecard--b:hover,.gradecard--amber:hover{border-color:var(--myp-accent);
+.gradecard:hover,.gradecard--a:hover,.gradecard--b:hover,.gradecard--amber:hover{border-color:var(--myp-interaction);
   box-shadow:var(--myp-focus-ring)}
 .gradecard__top{margin-bottom:16px}
 .gradecard__n{width:52px;height:52px;border-radius:var(--myp-radius-button);font:500 22px/1 var(--myp-font-display)}
@@ -527,11 +548,11 @@ footer > .wrap{width:100%}
 .gradecard__foot{border-top-color:var(--myp-tint)}
 .gradecard__count{font-family:var(--myp-font-mono);font-size:var(--myp-micro-size);letter-spacing:.04em;color:var(--myp-muted)}
 .gradecard__cta{min-height:40px;padding:8px 14px;border-radius:12px;border:1px solid var(--myp-border);
-  background:var(--myp-tint);color:var(--myp-accent);font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);
+  background:var(--myp-tint);color:var(--myp-interaction);font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);
   letter-spacing:0;text-transform:none}
 .gradecard__cta svg{width:18px;height:18px;stroke-width:1.8}
 .gradecard--a:hover .gradecard__cta,.gradecard--b:hover .gradecard__cta,.gradecard--amber:hover .gradecard__cta{
-  background:var(--myp-accent);border-color:var(--myp-accent);color:var(--myp-surface)}
+  background:var(--myp-interaction);border-color:var(--myp-interaction);color:var(--myp-surface)}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
   .gradecard--a:hover h3,.gradecard--b:hover h3,.gradecard--amber:hover h3{color:var(--myp-accent)}
 }
@@ -556,7 +577,7 @@ footer > .wrap{width:100%}
 .crit--dev .devname{font:500 26px/30px var(--myp-font-display);letter-spacing:-.02em}
 .crit--dev .devpre{font:500 13px/18px var(--myp-font-body)}
 @media (hover:hover){
-  .grid > a.crit:hover{border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+  .grid > a.crit:hover{border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
   .grid > a.crit--dev:hover{border-color:var(--dev)}
 }
 
@@ -573,7 +594,7 @@ footer > .wrap{width:100%}
 .wl__btn{font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0;text-transform:none;
   min-height:46px;padding:12px 32px;border-radius:var(--myp-radius-button);
   border:1px solid var(--myp-text);background:var(--myp-text);color:var(--myp-surface)}
-.wl__btn:hover{background:var(--myp-accent);border-color:var(--myp-accent);color:var(--myp-surface)}
+.wl__btn:hover{background:var(--myp-interaction);border-color:var(--myp-interaction);color:var(--myp-surface)}
 .wl__x{border-radius:12px;width:36px;height:36px}
 .wl__x:hover{background:var(--myp-tint)}
 
@@ -590,8 +611,8 @@ footer > .wrap{width:100%}
 .tab,.tab.on{flex:1 1 0;min-height:44px;top:0;padding:10px 14px;border:1px solid transparent;border-radius:14px;
   background:transparent;background-image:none;box-shadow:none;color:var(--myp-muted);
   font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0;text-transform:none}
-.tab:hover{color:var(--myp-accent);background:var(--myp-tint)}
-.tab.on{color:var(--myp-accent);background:var(--myp-tint);border-color:var(--myp-border);font-weight:600}
+.tab:hover{color:var(--myp-interaction);background:var(--myp-tint)}
+.tab.on{color:var(--myp-interaction);background:var(--myp-tint);border-color:var(--myp-border);font-weight:600}
 .tab.todo{opacity:.5}
 @media (max-width:760px){
   .tabs{top:8px;padding:4px;border-radius:18px}
@@ -609,13 +630,13 @@ footer > .wrap{width:100%}
 .ctbox__note,.ctall{border-top-color:var(--myp-tint)}
 .ctrow b{font:500 20px/28px var(--myp-font-display)}
 .ctall summary{font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0;text-transform:none;
-  color:var(--myp-accent);padding:6px 0}
+  color:var(--myp-interaction);padding:6px 0}
 .ctall summary::before,.docwrap > summary::before,.fwgroup > summary::before{
   content:"";width:28px;height:28px;flex:0 0 28px;border:1px solid var(--myp-border);border-radius:10px;
   background:var(--myp-tint) var(--myp-ico-plus) no-repeat center / 16px 16px;font-size:0;transform:none}
 .ctall summary::before{width:24px;height:24px;flex-basis:24px;border-radius:8px}
 .ctall[open] summary::before,.docwrap[open] > summary::before,.fwgroup[open] > summary::before{transform:none;
-  background-color:var(--myp-accent);background-image:var(--myp-ico-minus-on);border-color:var(--myp-accent)}
+  background-color:var(--myp-interaction);background-image:var(--myp-ico-minus-on);border-color:var(--myp-interaction)}
 .ctall summary:hover{color:var(--myp-text)}
 .ctg{background:var(--myp-bg);border:1px solid var(--myp-tint);border-radius:var(--myp-radius-field)}
 .ctg b{font:500 16px/24px var(--myp-font-display)}
@@ -624,8 +645,8 @@ footer > .wrap{width:100%}
 /* command-term flip tiles */
 .ctile__face{border-radius:var(--myp-radius-inner)}
 .ctile__front{background:var(--myp-surface);border:1px solid var(--myp-border);border-top:1px solid var(--myp-border)}
-.ctile:hover .ctile__front{border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
-.ctile__back{background:var(--myp-tint);color:var(--myp-text);border:1px solid var(--myp-accent)}
+.ctile:hover .ctile__front{border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
+.ctile__back{background:var(--myp-tint);color:var(--myp-text);border:1px solid var(--myp-interaction)}
 .ctile__band{font-family:var(--myp-font-mono);font-size:var(--myp-micro-size);letter-spacing:.06em}
 .ctile__term{font:500 24px/30px var(--myp-font-display);color:var(--myp-accent);letter-spacing:-.015em}
 .ctile__hint{font-family:var(--myp-font-mono);font-size:var(--myp-micro-size);letter-spacing:.06em}
@@ -646,10 +667,10 @@ footer > .wrap{width:100%}
 .tpl__btn{min-height:46px;padding:12px 18px;border-radius:var(--myp-radius-button);gap:8px;
   font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0;text-transform:none;
   border:1px solid var(--myp-text);background:var(--myp-text);color:var(--myp-surface)}
-.tpl__btn:hover{background:var(--myp-accent);border-color:var(--myp-accent);color:var(--myp-surface);box-shadow:none}
-.tpl__btn--ghost,.tpl__btn.tpl__btn--ghost{color:var(--myp-accent);border-color:var(--myp-border);background:var(--myp-tint)}
-.tpl__btn--ghost:hover,.tpl__btn.tpl__btn--ghost:hover{background:var(--myp-tint);color:var(--myp-accent);
-  border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+.tpl__btn:hover{background:var(--myp-interaction);border-color:var(--myp-interaction);color:var(--myp-surface);box-shadow:none}
+.tpl__btn--ghost,.tpl__btn.tpl__btn--ghost{color:var(--myp-interaction);border-color:var(--myp-border);background:var(--myp-tint)}
+.tpl__btn--ghost:hover,.tpl__btn.tpl__btn--ghost:hover{background:var(--myp-tint);color:var(--myp-interaction);
+  border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 .tpl__btn svg{width:20px;height:20px;stroke-width:1.8}
 @media (prefers-reduced-motion:no-preference){.tpl{animation:none}}
 .docpreview{overflow:hidden}
@@ -700,7 +721,7 @@ footer > .wrap{width:100%}
 .fwgroup__hd{border-bottom-color:var(--myp-border)}
 .fwgroup__n{font-family:var(--myp-font-mono);font-size:var(--myp-eyebrow-size);letter-spacing:.06em}
 .fwgroup__hd h3{font:500 20px/28px var(--myp-font-display)}
-.fwgroup > summary:hover h3{color:var(--myp-accent)}
+.fwgroup > summary:hover h3{color:var(--myp-interaction)}
 .fwc{background:var(--myp-surface);border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);padding:20px 22px 22px}
 .fwc h4{font:500 18px/26px var(--myp-font-display)}
 .fwc ol li::marker{color:var(--myp-accent)}
@@ -725,16 +746,16 @@ footer > .wrap{width:100%}
 .meter i{background:var(--myp-accent)}
 .count{font-family:var(--myp-font-mono);font-size:12px;color:var(--myp-muted)}
 .rst{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border-radius:12px;
-  border:1px solid var(--myp-border);background:var(--myp-tint);color:var(--myp-accent);
+  border:1px solid var(--myp-border);background:var(--myp-tint);color:var(--myp-interaction);
   font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0;text-transform:none}
 .rst::before{content:"";width:16px;height:16px;flex:0 0 16px;background-color:currentColor;
   -webkit-mask:url("icons/refresh-cw.svg") no-repeat center / contain;mask:url("icons/refresh-cw.svg") no-repeat center / contain}
-.rst:hover{border-color:var(--myp-accent);color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+.rst:hover{border-color:var(--myp-interaction);color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 .clgroup{background:transparent;border:0;border-radius:0;padding:0;margin-bottom:24px;display:grid;gap:8px}
 .clgroup h3{color:var(--myp-accent);margin:0 0 4px}
 .ck,.ck:first-of-type{gap:12px;padding:14px 16px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);
   background:var(--myp-surface)}
-.ck input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--myp-accent)}
+.ck input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--myp-interaction)}
 .ck span{font-size:16px;line-height:26px}
 .ck small{display:block;font-size:13.5px;line-height:21px;color:var(--myp-muted);margin-top:2px;font-weight:400}
 .ck.must span{font-weight:600}
@@ -755,17 +776,17 @@ footer > .wrap{width:100%}
 .sync__btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;border-radius:var(--myp-radius-button);
   font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0;text-transform:none;
   border:1px solid var(--myp-text);background:var(--myp-text);color:var(--myp-surface)}
-.sync__btn:hover{background:var(--myp-accent);border-color:var(--myp-accent);color:var(--myp-surface)}
-.sync__btn--ghost,.sync__btn.sync__btn--ghost{background:var(--myp-surface);color:var(--myp-accent);border-color:var(--myp-border)}
-.sync__btn--ghost:hover,.sync__btn.sync__btn--ghost:hover{background:var(--myp-surface);color:var(--myp-accent);
-  border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+.sync__btn:hover{background:var(--myp-interaction);border-color:var(--myp-interaction);color:var(--myp-surface)}
+.sync__btn--ghost,.sync__btn.sync__btn--ghost{background:var(--myp-surface);color:var(--myp-interaction);border-color:var(--myp-border)}
+.sync__btn--ghost:hover,.sync__btn.sync__btn--ghost:hover{background:var(--myp-surface);color:var(--myp-interaction);
+  border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 .sync__new::before,.sync__copy::before{content:"";width:18px;height:18px;flex:0 0 18px;background-color:currentColor;
   -webkit-mask:no-repeat center / contain;mask:no-repeat center / contain}
 .sync__new::before{-webkit-mask-image:url("icons/save.svg");mask-image:url("icons/save.svg")}
 .sync__copy::before{-webkit-mask-image:url("icons/copy.svg");mask-image:url("icons/copy.svg")}
 .sync input{min-height:46px;border-radius:var(--myp-radius-field);border-color:var(--myp-border);background:var(--myp-surface);
   font-size:16px}
-.sync input:focus{outline:none;border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+.sync input:focus{outline:none;border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 .sync__code{border-radius:10px;color:var(--moss);background:var(--myp-surface);border:1px solid var(--myp-border)}
 .sync__status{font-family:var(--myp-font-mono);font-size:var(--myp-micro-size);letter-spacing:.06em}
 
@@ -786,7 +807,7 @@ footer > .wrap{width:100%}
 /* mobile: collapsible sections and jump menu */
 @media (max-width:760px){
   .sechead{border-bottom-color:var(--myp-tint);padding:4px 0 14px}
-  .sec.open .sechead{border-bottom-color:var(--myp-accent)}
+  .sec.open .sechead{border-bottom-color:var(--myp-interaction)}
   .sec.open .sechead h2{color:var(--myp-text)}
   .sec:not(.open) .sechead{border-bottom-color:transparent;padding-bottom:0}
   .sec:not(.open) > .wrap{padding-top:18px;padding-bottom:18px}
@@ -795,8 +816,8 @@ footer > .wrap{width:100%}
   .jump{width:var(--myp-col);margin:12px auto 0;padding:0 0 4px;gap:8px}
   .jump button{font:500 13px/20px var(--myp-font-body);letter-spacing:0;text-transform:none;
     min-height:40px;padding:9px 14px;border-radius:var(--myp-radius-chip);
-    border:1px solid var(--myp-glass-border);background:var(--myp-glass-fill-soft);color:var(--myp-accent)}
-  .jump button:active{background:var(--myp-accent);color:var(--myp-surface);border-color:var(--myp-accent)}
+    border:1px solid var(--myp-glass-border);background:var(--myp-glass-fill-soft);color:var(--myp-interaction)}
+  .jump button:active{background:var(--myp-interaction);color:var(--myp-surface);border-color:var(--myp-interaction)}
   .tabwrap::after{background:var(--myp-accent);color:var(--myp-surface);border-radius:0 var(--myp-radius-inner) 0 12px;
     font-family:var(--myp-font-mono)}
 
@@ -811,7 +832,8 @@ footer > .wrap{width:100%}
 
 /* ============ 9  MOTION ============
    Short glides only. Everything sits under no-preference; transform
-   and opacity are animated, colours change instantly. */
+   and opacity are animated, colours change instantly.
+   The step 8 motion (background, entrance, tabs, theme) is section 16. */
 @media (prefers-reduced-motion:no-preference){
   .myp-tool,.myp-button,.tpl__btn,.sync__btn,.rst,.homelink,.backlink,.gradecard__cta{
     transition:transform .22s var(--myp-ease)}
@@ -838,15 +860,15 @@ footer > .wrap{width:100%}
 /* style.css repaints the expand box on hover with a background shorthand,
    which would drop the icon; restate it, then the open state after it */
 .docwrap > summary:hover::before,.fwgroup > summary:hover::before,.ctall summary:hover::before{
-  background:var(--myp-tint) var(--myp-ico-plus) no-repeat center / 16px 16px;border-color:var(--myp-accent);color:inherit}
+  background:var(--myp-tint) var(--myp-ico-plus) no-repeat center / 16px 16px;border-color:var(--myp-interaction);color:inherit}
 .docwrap[open] > summary::before,.fwgroup[open] > summary::before,.ctall[open] summary::before{
-  background:var(--myp-accent) var(--myp-ico-minus-on) no-repeat center / 16px 16px;border-color:var(--myp-accent)}
+  background:var(--myp-interaction) var(--myp-ico-minus-on) no-repeat center / 16px 16px;border-color:var(--myp-interaction)}
 @media (max-width:760px){
   .sechead::after,.sechead:hover::after{content:"";width:28px;height:28px;flex:0 0 28px;font-size:0;transform:none;
     border:1px solid var(--myp-border);border-radius:10px;
     background:var(--myp-tint) var(--myp-ico-plus) no-repeat center / 16px 16px}
-  .sec.open .sechead::after{background:var(--myp-accent) var(--myp-ico-minus-on) no-repeat center / 16px 16px;
-    border-color:var(--myp-accent);transform:none}
+  .sec.open .sechead::after{background:var(--myp-interaction) var(--myp-ico-minus-on) no-repeat center / 16px 16px;
+    border-color:var(--myp-interaction);transform:none}
 }
 
 
@@ -890,8 +912,8 @@ footer > .wrap{width:100%}
   border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface);
   color:var(--myp-text);text-decoration:none;font:inherit;text-align:left;width:100%}
 .myp-row--nolead{grid-template-columns:minmax(0,1fr) auto}
-a.myp-row:hover,button.myp-row:hover{border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
-a.myp-row:focus-visible,button.myp-row:focus-visible{outline:none;border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+a.myp-row:hover,button.myp-row:hover{border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
+a.myp-row:focus-visible,button.myp-row:focus-visible{outline:none;border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 .myp-row__lead{width:44px;height:44px;flex:0 0 44px;display:flex;align-items:center;justify-content:center;
   border-radius:12px;background:var(--myp-tint);color:var(--myp-accent);
   font:600 13px/1 var(--myp-font-mono);letter-spacing:.02em}
@@ -915,7 +937,7 @@ a.myp-row:focus-visible,button.myp-row:focus-visible{outline:none;border-color:v
   font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;
   color:var(--myp-muted);background:var(--myp-tint)}
 .myp-chip--live{color:var(--moss);background:var(--moss-tint)}
-.myp-row__go{display:inline-flex;align-items:center;gap:8px;color:var(--myp-accent);white-space:nowrap;
+.myp-row__go{display:inline-flex;align-items:center;gap:8px;color:var(--myp-interaction);white-space:nowrap;
   font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body)}
 .myp-row__go .myp-icon{width:18px;height:18px;flex-basis:18px}
 .myp-row--off{border-style:dashed;background:var(--myp-glass-fill-soft)}
@@ -935,10 +957,10 @@ a.myp-row--dev:hover{border-color:var(--dev)}
 /* ---- input field (Figma "Blue glass / Input field"): the label sits inside the box ---- */
 .myp-input{position:relative;display:block;padding:12px 16px;border:1px solid var(--myp-border);
   border-radius:var(--myp-radius-field);background:var(--myp-tint)}
-.myp-input:focus-within{border-color:var(--myp-accent);box-shadow:var(--myp-focus-ring)}
+.myp-input:focus-within{border-color:var(--myp-interaction);box-shadow:var(--myp-focus-ring)}
 .myp-input__label{display:block;margin:0 0 4px;font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);color:var(--myp-text)}
 .myp-input__row{display:flex;align-items:center;gap:10px}
-.myp-input__row .myp-icon{color:var(--myp-accent)}
+.myp-input__row .myp-icon{color:var(--myp-interaction)}
 .myp-input input{width:100%;min-width:0;min-height:30px;margin:0;padding:0;border:0;outline:0;background:transparent;
   color:var(--myp-text);font:400 16px/26px var(--myp-font-body);-webkit-appearance:none;appearance:none}
 .myp-input input::placeholder{color:var(--myp-muted);opacity:1}
@@ -948,32 +970,25 @@ footer.myp-footer{width:var(--myp-col);margin:56px auto 0;padding:24px 0 32px;bo
   font:400 var(--myp-small-size)/var(--myp-small-line) var(--myp-font-body);letter-spacing:0;text-transform:none;color:var(--myp-muted)}
 .myp-footer p{margin:0}
 .myp-footer a{color:var(--myp-muted);text-decoration:none}
-.myp-footer a:hover{color:var(--myp-accent);text-decoration:underline}
+.myp-footer a:hover{color:var(--myp-interaction);text-decoration:underline}
 .myp-footer__crumb > * + *::before{content:"/";margin:0 10px;color:var(--myp-muted)}
 .myp-footer__links{display:flex;flex-wrap:wrap;gap:4px 0}
 .myp-footer__links > * + *::before{content:"\00b7";margin:0 10px;color:var(--myp-muted)}
 .myp-footer .attrib{font-size:13px}
 
-/* ---- home: hero with the design cycle beside it ---- */
-.myp-hero--home{display:flex;gap:32px;align-items:flex-start;justify-content:space-between}
-.myp-hero__text{flex:1 1 0;min-width:0}
-.myp-hero__aside{flex:0 0 auto;width:572px;display:flex;flex-direction:column;gap:16px}
+/* ---- hero search (the Home hero itself is in section 15) ---- */
 .myp-hero .myp-input{margin-top:24px}
 .myp-search{position:relative}
 .myp-search .herosearch__results{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:30}
-@media (max-width:1180px){
-  .myp-hero--home{display:block}
-  .myp-hero__aside{display:none}
-}
 
 /* ---- strand pages ---- */
 /* the strand switcher: four equal buttons, the open strand filled */
 .tabs{top:104px;padding:8px;border-radius:var(--myp-radius-card);margin-top:24px}
 .tabs .wrap,.tabs .wrap:first-child{gap:12px}
 .tab,.tab.on{min-height:46px;padding:12px 16px;justify-content:flex-start;text-align:left;border-radius:var(--myp-radius-button);
-  border:1px solid var(--myp-glass-border);background:var(--myp-tint);color:var(--myp-accent);font-weight:500}
-.tab:hover{color:var(--myp-accent);border-color:var(--myp-accent);background:var(--myp-tint)}
-.tab.on,.tab.on:hover{color:var(--myp-surface);background:var(--myp-accent);border-color:var(--myp-accent);font-weight:600}
+  border:1px solid var(--myp-glass-border);background:var(--myp-tint);color:var(--myp-interaction);font-weight:500}
+.tab:hover{color:var(--myp-interaction);border-color:var(--myp-interaction);background:var(--myp-tint)}
+.tab.on,.tab.on:hover{color:var(--myp-surface);background:var(--myp-interaction);border-color:var(--myp-interaction);font-weight:600}
 @media (max-width:760px){
   .tabs{top:8px;padding:6px;border-radius:20px;margin-top:20px}
   .tabs .wrap{gap:6px}
@@ -998,7 +1013,7 @@ footer.myp-footer{width:var(--myp-col);margin:56px auto 0;padding:24px 0 32px;bo
 .ctile__face{min-height:128px;padding:16px;border-radius:var(--myp-radius-inner)}
 .ctile__front{border-top:1px solid var(--myp-border)}
 .ctile__term{font:500 20px/28px var(--myp-font-display);color:var(--myp-text)}
-.ctile:hover .ctile__term{color:var(--myp-accent)}
+.ctile:hover .ctile__term{color:var(--myp-interaction)}
 .ctbox__note{margin:16px 0 0;padding-top:0;border-top:0;font-size:16px;line-height:26px;color:var(--myp-text)}
 .ctall{margin-top:16px;padding-top:16px;border-top:1px solid var(--myp-tint)}
 .ctgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
@@ -1095,15 +1110,19 @@ footer.myp-footer{width:var(--myp-col);margin:56px auto 0;padding:24px 0 32px;bo
 
 
 /* ============ 11  PALETTE ============
-   Dev's colour table. Light values are Dev's; dark values are their
-   equivalents on the dark tokens (section 1).
+   Dev's colour table, with berry as the interaction colour (step 8).
+   Light / dark:
      headings #111            body text #344054       secondary #515D70
-     links and clickable headings: blue #2862AE, bold
-     selected tabs: #E8F1FF with bold blue text
-     primary button: blue fill, white bold label   secondary: #E8F1FF, blue
-     hover / pressed #1D4D8A   focus: a clear blue outline
+     links, navigation, actions and clickable headings: berry
+       #A13C66 / #EE9FC0, bold
+     selected tabs: berry tint #F8E9F0 / #3A2233, berry text, berry edge
+     primary button: berry fill, white bold label (dark: #0B1220 label)
+     secondary button: berry tint fill, berry text
+     hover / pressed #7D2D4E / #F7C6DA   focus: a solid 2px berry outline
      disabled #EEF2F7 / #78869B
-     success #236B50   warning #8A5B12   error #B42318 */
+     success #236B50   warning #8A5B12   error #B42318
+   Blue (--myp-accent) stays on the brand mark, eyebrows, labels, bullets,
+   bands and the progress bar: none of those can be clicked. */
 
 /* headings stay near-black; reading text is the softer body colour */
 h1,h2,h3,h4,h5,h6,
@@ -1113,54 +1132,55 @@ h1,h2,h3,h4,h5,h6,
 .ctbox__note,.ctg span,.band p,.step li,.obj,.ck span,.myp-sync__txt p,.myp-dialog__note,.myp-row__points{color:var(--myp-body)}
 .obj__head b,.ctbox__lbl,.ex__lbl,.step__n,.fstep b{color:var(--myp-accent)}
 
-/* links: blue and bold */
+/* links: berry and bold */
 p a,li a,td a,.attrib a{font-weight:600}
-.myp-footer a{color:var(--myp-accent);font-weight:600}
-.myp-footer a:hover{color:var(--myp-hover)}
+.myp-footer a,.docpreview__bar a,.pdfbar a,.credit figcaption a{color:var(--myp-interaction);font-weight:600}
+.myp-footer a:hover{color:var(--myp-interaction-hover)}
 
 /* clickable headings: the title of a whole-card link, and anything that opens */
-a.myp-row .myp-row__title{color:var(--myp-accent);font-weight:600}
-a.myp-row:hover .myp-row__title{color:var(--myp-hover)}
+a.myp-row .myp-row__title{color:var(--myp-interaction);font-weight:600}
+a.myp-row:hover .myp-row__title{color:var(--myp-interaction-hover)}
 a.myp-row--dev .myp-row__title{color:var(--dev)}
 .myp-row__go{font-weight:600}
-.docwrap > summary b,.fwgroup__hd h3,.ctall summary{color:var(--myp-accent);font-weight:600}
-.docwrap > summary:hover b,.fwgroup > summary:hover h3,.ctall summary:hover{color:var(--myp-hover)}
+.docwrap > summary b,.fwgroup__hd h3,.ctall summary{color:var(--myp-interaction);font-weight:600}
+.docwrap > summary:hover b,.fwgroup > summary:hover h3,.ctall summary:hover{color:var(--myp-interaction-hover)}
 @media (max-width:760px){
-  .sechead h2,.sec.open .sechead h2{color:var(--myp-accent);font-weight:600}
+  .sechead h2,.sec.open .sechead h2{color:var(--myp-interaction);font-weight:600}
 }
 
-/* navigation: year tabs and tools are links, so blue and bold */
-.topbar__grades a{color:var(--myp-accent);font-weight:600}
-.topbar__grades a:hover{color:var(--myp-hover);background:var(--myp-tint)}
-.topbar__grades a.on,.topbar__grades a[aria-current]{color:var(--myp-accent);background:var(--myp-tint)}
-.myp-tool{font-weight:600}
-.myp-tool:hover{color:var(--myp-hover);border-color:var(--myp-hover);box-shadow:none}
-.myp-tool[aria-current="page"]{background:var(--myp-tint);border-color:var(--myp-accent)}
+/* navigation: year tabs and tools are links, so berry and bold */
+.topbar__grades a{color:var(--myp-interaction);font-weight:700}
+.topbar__grades a:hover{color:var(--myp-interaction-hover);background:var(--myp-interaction-tint)}
+.topbar__grades a.on,.topbar__grades a[aria-current]{color:var(--myp-interaction);background:var(--myp-interaction-tint);
+  box-shadow:inset 0 0 0 1px var(--myp-interaction)}
+.myp-tool{font-weight:700}
+.myp-tool:hover{color:var(--myp-interaction-hover);border-color:var(--myp-interaction-hover);box-shadow:none}
+.myp-tool[aria-current="page"]{background:var(--myp-interaction-tint);border-color:var(--myp-interaction)}
 
-/* selected tabs: pale blue with bold blue text */
+/* selected tabs: berry tint with bold berry text and a berry edge */
 .myp-theme-toggle{background:var(--myp-glass-fill-soft)}
-.myp-theme-toggle button{color:var(--myp-accent);font-weight:600}
-.myp-theme-toggle button:hover{color:var(--myp-hover)}
-.myp-theme-toggle button[aria-pressed="true"]{color:var(--myp-accent);background:var(--myp-tint);
-  box-shadow:inset 0 0 0 1px var(--myp-accent)}
+.myp-theme-toggle button{color:var(--myp-interaction);font-weight:700}
+.myp-theme-toggle button:hover{color:var(--myp-interaction-hover)}
+.myp-theme-toggle button[aria-pressed="true"]{color:var(--myp-interaction);background:var(--myp-interaction-tint);
+  box-shadow:inset 0 0 0 1px var(--myp-interaction)}
 .tab,.tab.on{font-weight:600}
-.tab{color:var(--myp-accent);background:var(--myp-glass-fill-soft);border-color:var(--myp-border)}
-.tab:hover{color:var(--myp-hover);background:var(--myp-tint);border-color:var(--myp-hover)}
-.tab.on,.tab.on:hover{color:var(--myp-accent);background:var(--myp-tint);border-color:var(--myp-accent);
-  box-shadow:inset 0 0 0 1px var(--myp-accent);font-weight:700}
+.tab{color:var(--myp-interaction);background:var(--myp-glass-fill-soft);border-color:var(--myp-border)}
+.tab:hover{color:var(--myp-interaction-hover);background:var(--myp-interaction-tint);border-color:var(--myp-interaction-hover)}
+.tab.on,.tab.on:hover{color:var(--myp-interaction);background:var(--myp-interaction-tint);border-color:var(--myp-interaction);
+  box-shadow:inset 0 0 0 1px var(--myp-interaction);font-weight:700}
 
-/* primary buttons: blue fill, white bold label; darker blue on hover and press */
-.myp-button--primary,.tpl__btn,.sync__btn,.qm__btn,.wl__btn{color:var(--myp-on-accent);background:var(--myp-accent);
-  border-color:var(--myp-accent);font-weight:600}
+/* primary buttons: berry fill, white bold label; darker berry on hover and press */
+.myp-button--primary,.tpl__btn,.sync__btn,.qm__btn,.wl__btn{color:var(--myp-on-interaction);background:var(--myp-interaction);
+  border-color:var(--myp-interaction);font-weight:700}
 .myp-button--primary:hover,.myp-button--primary:active,.tpl__btn:hover,.sync__btn:hover,.qm__btn:hover,.wl__btn:hover{
-  color:var(--myp-on-accent);background:var(--myp-hover);border-color:var(--myp-hover);box-shadow:none}
+  color:var(--myp-on-interaction);background:var(--myp-interaction-hover);border-color:var(--myp-interaction-hover);box-shadow:none}
 
-/* secondary buttons: pale blue fill, blue text */
+/* secondary buttons: berry tint fill, berry text */
 .myp-button--secondary,.tpl__btn--ghost,.tpl__btn.tpl__btn--ghost,.sync__btn--ghost,.sync__btn.sync__btn--ghost,
-.rst,.gradecard__cta{color:var(--myp-accent);background:var(--myp-tint);border-color:var(--myp-border);font-weight:600}
+.rst,.gradecard__cta{color:var(--myp-interaction);background:var(--myp-interaction-tint);border-color:var(--myp-border);font-weight:600}
 .myp-button--secondary:hover,.myp-button--secondary:active,.tpl__btn--ghost:hover,.tpl__btn.tpl__btn--ghost:hover,
 .sync__btn--ghost:hover,.sync__btn.sync__btn--ghost:hover,.rst:hover{
-  color:var(--myp-hover);background:var(--myp-tint);border-color:var(--myp-hover);box-shadow:none}
+  color:var(--myp-interaction-hover);background:var(--myp-interaction-tint);border-color:var(--myp-interaction-hover);box-shadow:none}
 
 /* disabled: visibly inactive */
 .myp-button[disabled],.myp-tool[disabled],.tpl__btn[disabled],.sync__btn[disabled],button[disabled].tab,
@@ -1168,13 +1188,13 @@ a.myp-row--dev .myp-row__title{color:var(--dev)}
   border-color:var(--myp-disabled-bg);box-shadow:none;opacity:1;cursor:not-allowed;transform:none}
 .tab.todo{color:var(--myp-disabled-text);background:var(--myp-disabled-bg);border-color:var(--myp-disabled-bg);opacity:1}
 
-/* keyboard focus: a clear blue outline on every control */
+/* keyboard focus: a solid 2px berry outline on every control */
 .myp-tool:focus-visible,.myp-button:focus-visible,.tab:focus-visible,.myp-theme-toggle button:focus-visible,
 a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.sync__btn:focus-visible,
 .rst:focus-visible,.ctile:focus-visible,.topbar__grades a:focus-visible,summary:focus-visible{
-  outline:2px solid var(--myp-accent);outline-offset:2px}
+  outline:2px solid var(--myp-interaction);outline-offset:2px}
 .myp-input:focus-within,.myp-field:focus,.herosearch input:focus,.sync input:focus{
-  border-color:var(--myp-accent);box-shadow:0 0 0 1px var(--myp-accent)}
+  border-color:var(--myp-interaction);box-shadow:0 0 0 1px var(--myp-interaction)}
 
 /* status: success, warning, error */
 .myp-status-line.ok,.sync__status.ok{color:var(--myp-ok)}
@@ -1209,10 +1229,10 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-panel .pdfbox iframe{display:block;width:100%;height:720px;border:0;background:var(--myp-bg)}
 .myp-panel .pdfbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:12px 20px;
   border-top:1px solid var(--myp-tint);font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-muted)}
-.myp-panel .pdfbar a{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--myp-accent);text-decoration:none}
+.myp-panel .pdfbar a{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--myp-interaction);text-decoration:none}
 .myp-panel .pdfbar a::after{content:"";width:16px;height:16px;background-color:currentColor;
   -webkit-mask:url("icons/external-link.svg") no-repeat center / contain;mask:url("icons/external-link.svg") no-repeat center / contain}
-.myp-panel .pdfbar a:hover{color:var(--myp-hover);text-decoration:underline}
+.myp-panel .pdfbar a:hover{color:var(--myp-interaction-hover);text-decoration:underline}
 @media (max-width:700px){
   .myp-panel .pdfbox iframe{height:460px}
   .myp-panel .docwrap > summary{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;padding:14px 16px}
@@ -1296,22 +1316,22 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 /* ---- filter chips (pressed = selected) ---- */
 .myp-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0}
 .myp-chips button{min-height:40px;padding:8px 14px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-chip);
-  background:var(--myp-glass-fill-soft);color:var(--myp-accent);cursor:pointer;
+  background:var(--myp-glass-fill-soft);color:var(--myp-interaction);cursor:pointer;
   font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body)}
-.myp-chips button:hover{color:var(--myp-hover);border-color:var(--myp-hover);background:var(--myp-tint)}
-.myp-chips button[aria-pressed="true"]{color:var(--myp-accent);background:var(--myp-tint);border-color:var(--myp-accent);
-  box-shadow:inset 0 0 0 1px var(--myp-accent);font-weight:700}
-.myp-chips button:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.myp-chips button:hover{color:var(--myp-interaction-hover);border-color:var(--myp-interaction-hover);background:var(--myp-interaction-tint)}
+.myp-chips button[aria-pressed="true"]{color:var(--myp-interaction);background:var(--myp-interaction-tint);border-color:var(--myp-interaction);
+  box-shadow:inset 0 0 0 1px var(--myp-interaction);font-weight:700}
+.myp-chips button:focus-visible{outline:2px solid var(--myp-interaction);outline-offset:2px}
 .myp-chips__hint{margin-left:auto;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
   letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
 
 /* ---- segmented control (one of a few states) ---- */
 .myp-seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
-.myp-seg button{min-height:42px;padding:8px 12px;border:1px solid var(--myp-border);border-radius:12px;background:var(--myp-tint);
-  color:var(--myp-accent);cursor:pointer;font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body)}
-.myp-seg button:hover{border-color:var(--myp-hover);color:var(--myp-hover)}
-.myp-seg button[aria-pressed="true"]{color:var(--myp-on-accent);background:var(--myp-accent);border-color:var(--myp-accent)}
-.myp-seg button:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.myp-seg button{min-height:42px;padding:8px 12px;border:1px solid var(--myp-border);border-radius:12px;background:var(--myp-interaction-tint);
+  color:var(--myp-interaction);cursor:pointer;font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body)}
+.myp-seg button:hover{border-color:var(--myp-interaction-hover);color:var(--myp-interaction-hover)}
+.myp-seg button[aria-pressed="true"]{color:var(--myp-on-interaction);background:var(--myp-interaction);border-color:var(--myp-interaction)}
+.myp-seg button:focus-visible{outline:2px solid var(--myp-interaction);outline-offset:2px}
 
 /* select inside the input field (a select with its own class, as in the
    group maker and the lesson app, keeps its own rules) */
@@ -1363,9 +1383,9 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-embed > summary::-webkit-details-marker{display:none}
 .myp-embed > summary::before{content:"";width:28px;height:28px;flex:0 0 28px;border:1px solid var(--myp-border);border-radius:10px;
   background:var(--myp-tint) var(--myp-ico-plus) no-repeat center / 16px 16px}
-.myp-embed[open] > summary::before{background:var(--myp-accent) var(--myp-ico-minus-on) no-repeat center / 16px 16px;border-color:var(--myp-accent)}
-.myp-embed > summary b{font:600 18px/26px var(--myp-font-body);color:var(--myp-accent)}
-.myp-embed > summary:hover b{color:var(--myp-hover)}
+.myp-embed[open] > summary::before{background:var(--myp-interaction) var(--myp-ico-minus-on) no-repeat center / 16px 16px;border-color:var(--myp-interaction)}
+.myp-embed > summary b{font:600 18px/26px var(--myp-font-body);color:var(--myp-interaction)}
+.myp-embed > summary:hover b{color:var(--myp-interaction-hover)}
 .myp-embed > summary i{margin-left:auto;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);font-style:normal;
   letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
 .myp-embed[open] > summary{border-bottom:1px solid var(--myp-border)}
@@ -1425,3 +1445,254 @@ div.myp-stats > :where(.myp-stat){min-width:0;padding:16px;display:flex;flex-dir
 .myp-error-line{margin:0;padding:12px 14px;border-radius:var(--myp-radius-field);font:500 var(--myp-small-size)/var(--myp-small-line) var(--myp-font-body);
   color:var(--myp-error);background:var(--clay-tint)}
 .myp-error-line:empty,.myp-error-line[hidden]{display:none}
+
+
+/* ============ 15  BERRY HOME ============
+   index.html, built to design/figma-export-berry/ (frame 229:7359).
+   The header is the shared .topbar. The hero columns are fluid, not
+   the frame's fixed 696px / 520px, and the year cards have no fixed
+   height. Headings and the A to D overview stay neutral: only the
+   action labels are berry. */
+
+/* micro label: muted, where .myp-eyebrow is blue */
+.myp-category{margin:0;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.myp-category--plain{text-transform:none}
+
+/* action label: the clickable part of a card */
+.myp-action,.myp-action:visited{display:inline-flex;align-items:center;gap:6px;color:var(--myp-interaction);
+  font:700 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);text-decoration:none}
+.myp-action:hover{color:var(--myp-interaction-hover);text-decoration:underline;text-underline-offset:4px}
+.myp-action:focus-visible{outline-offset:4px;border-radius:4px}
+.myp-action .myp-icon{width:16px;height:16px;flex-basis:16px}
+
+/* the row under the header: where you are, Design Team, Light / Dark */
+.myp-home__util{width:var(--myp-col);margin:32px auto 0;display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:12px 24px}
+.myp-home__tools{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
+
+/* hero: the text and search beside the A to D overview.
+   It sits above the sections so the search results can cover them. */
+.myp-hero--home{position:relative;z-index:2;margin-top:32px;display:grid;
+  grid-template-columns:minmax(0,1.34fr) minmax(0,1fr);gap:64px;align-items:start}
+.myp-hero__text{min-width:0}
+.myp-hero--home .myp-title{margin-top:28px}
+.myp-hero--home .myp-lede{max-width:58ch}
+.myp-hero--home .myp-search{max-width:580px}
+.myp-hero--home .myp-input{padding:16px;border-radius:var(--myp-radius-card);background:var(--myp-panel-fill);
+  box-shadow:var(--myp-glass-shadow)}
+.myp-hero--home .myp-input__label{font-weight:400;color:var(--myp-body)}
+
+/* the design cycle, as four tiles. It is information, not a control:
+   no link, no hover, no motion. Read A B C D, drawn A B / D C. */
+.myp-cycle{min-width:0}
+.myp-cycle__grid{list-style:none;margin:12px 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.myp-cycle__tile{min-height:120px;padding:24px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-card);
+  background:var(--myp-tint-soft)}
+.myp-cycle__tile b{display:block;font:500 24px/32px var(--myp-font-display);color:var(--myp-text)}
+.myp-cycle__tile span{display:block;margin-top:12px;font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-body)}
+.myp-cycle__tile--c{order:4}
+.myp-cycle__tile--d{order:3}
+
+/* sections and cards */
+.myp-section{width:var(--myp-col);margin:40px auto 0}
+.myp-section__title{margin:0 0 24px;font:500 var(--myp-section-size)/var(--myp-section-line) var(--myp-font-display);
+  letter-spacing:-.025em;color:var(--myp-text)}
+.myp-cards{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.myp-card{position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:24px;
+  border:1px solid var(--myp-glass-border);border-radius:var(--myp-radius-card);
+  background:var(--myp-glass-fill);box-shadow:var(--myp-glass-shadow)}
+@media (hover:hover) and (pointer:fine) and (min-width:900px){
+  .myp-card{-webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+}
+.myp-card h3{margin:12px 0;font:700 var(--myp-card-size)/var(--myp-card-line) var(--myp-font-display);
+  letter-spacing:-.015em;color:var(--myp-text)}
+.myp-card--year h3{margin-top:0;font-size:clamp(38px,4.2vw,56px);line-height:1.14;letter-spacing:-.03em}
+.myp-card p:not(.myp-category){margin:0 0 12px;font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-body)}
+.myp-card .myp-action{margin-top:auto}
+/* the label is the link; this stretches its click area over the card */
+.myp-card .myp-action::after{content:"";position:absolute;inset:0;border-radius:var(--myp-radius-card)}
+/* the stronger shadow a link card gets on hover (section 16 fades it in) */
+.myp-card::before{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:var(--myp-lift-shadow);
+  opacity:0;pointer-events:none}
+
+@media (max-width:800px){
+  .myp-home__util{margin-top:20px}
+  .myp-hero--home{grid-template-columns:minmax(0,1fr);gap:32px;margin-top:24px}
+  .myp-hero--home .myp-title{margin-top:20px}
+  .myp-hero--home .myp-search{max-width:none}
+  .myp-cards{grid-template-columns:minmax(0,1fr)}
+  .myp-section{margin-top:32px}
+  .myp-section__title{margin-bottom:16px}
+}
+@media (max-width:560px){
+  .myp-cycle__tile{min-height:0;padding:16px}
+  .myp-card{padding:20px}
+}
+
+
+/* ============ 16  MOTION (step 8) ============
+   Dev's motion spec, design/BUILD-BRIEF.md. Everything here runs only
+   under prefers-reduced-motion: no-preference and animates transform
+   and opacity for 600ms or less, with three approved exceptions
+   (CLAUDE.md): the background loop is long and animates border-radius,
+   the theme crossfade changes colours, and the focus outline eases in.
+   Without motion: the backdrop is still, nothing enters or lifts. */
+
+/* ---- fluid background (Flow) ----
+   <div class="myp-flow"><div class="myp-flow__blur"><i></i> x4</div></div>
+   as the first thing in <body>. Four white and soft-blue fields that
+   stretch and turn; the grid (body::after) and the page stay still.
+   The blur is applied once, on the wrapper. No berry in here. */
+.myp-flow{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;
+  background:linear-gradient(135deg,#F5F8FF 0%,#EAF3FF 54%,#DCEBFF 100%);
+  --myp-f1:#A9D0FF;--myp-f2:#DCEBFF;--myp-f3:#FFFFFF;--myp-f4:#A9D0FF;
+  --myp-o1:.32;--myp-o2:.32;--myp-o3:.3;--myp-o4:.22}
+:root.dark .myp-flow{background:linear-gradient(135deg,#0B1220 0%,#122038 52%,#0B1220 100%);
+  --myp-f1:#5A95DD;--myp-f2:#395474;--myp-f3:#203955;--myp-f4:#92C5FF;
+  --myp-o1:.3;--myp-o2:.32;--myp-o3:.32;--myp-o4:.12}
+.myp-flow__blur{position:absolute;inset:-12%;filter:blur(72px)}
+.myp-flow i{position:absolute;display:block}
+.myp-flow i:nth-child(1){left:50%;top:-4%;width:50%;height:56%;background:var(--myp-f1);opacity:var(--myp-o1);
+  border-radius:42% 58% 63% 37% / 45% 39% 61% 55%}
+.myp-flow i:nth-child(2){left:0;top:40%;width:48%;height:54%;background:var(--myp-f2);opacity:var(--myp-o2);
+  border-radius:61% 39% 44% 56% / 52% 60% 40% 48%}
+.myp-flow i:nth-child(3){left:26%;top:10%;width:42%;height:46%;background:var(--myp-f3);opacity:var(--myp-o3);
+  border-radius:38% 62% 57% 43% / 60% 44% 56% 40%}
+.myp-flow i:nth-child(4){left:56%;top:50%;width:44%;height:48%;background:var(--myp-f4);opacity:var(--myp-o4);
+  border-radius:55% 45% 36% 64% / 43% 57% 43% 57%}
+/* the still backdrop is covered, so it need not load */
+:root body:has(> .myp-flow)::before{background-image:none}
+/* small and touch screens: soft discs instead of a live blur, so only
+   transform moves and school iPads stay smooth */
+@media (max-width:900px),(hover:none){
+  .myp-flow__blur{filter:none}
+  .myp-flow i:nth-child(n){border-radius:50%}
+  .myp-flow i:nth-child(1){background:radial-gradient(closest-side,var(--myp-f1),transparent)}
+  .myp-flow i:nth-child(2){background:radial-gradient(closest-side,var(--myp-f2),transparent)}
+  .myp-flow i:nth-child(3){background:radial-gradient(closest-side,var(--myp-f3),transparent)}
+  .myp-flow i:nth-child(4){background:radial-gradient(closest-side,var(--myp-f4),transparent)}
+}
+@media print{.myp-flow{display:none}}
+
+@media (prefers-reduced-motion:no-preference){
+  .myp-flow i{will-change:transform}
+  .myp-flow i:nth-child(1){animation:mypFlowA 19s ease-in-out infinite alternate}
+  .myp-flow i:nth-child(2){animation:mypFlowB 23s ease-in-out infinite alternate}
+  .myp-flow i:nth-child(3){animation:mypFlowC 27s ease-in-out infinite alternate}
+  .myp-flow i:nth-child(4){animation:mypFlowD 19s ease-in-out -7s infinite alternate-reverse}
+  /* theme.js sets this while the tab is in the background */
+  :root.myp-paused .myp-flow i{animation-play-state:paused}
+  @keyframes mypFlowA{
+    0%{transform:translate3d(0,0,0) scale(1) rotate(0deg)}
+    50%{transform:translate3d(-14%,10%,0) scale(1.14) rotate(24deg)}
+    100%{transform:translate3d(-26%,-6%,0) scale(1.26) rotate(46deg)}
+  }
+  @keyframes mypFlowB{
+    0%{transform:translate3d(0,0,0) scale(1.05) rotate(0deg)}
+    50%{transform:translate3d(16%,-12%,0) scale(1.22) rotate(-28deg)}
+    100%{transform:translate3d(30%,4%,0) scale(.94) rotate(-52deg)}
+  }
+  @keyframes mypFlowC{
+    0%{transform:translate3d(0,0,0) scale(.96) rotate(0deg)}
+    50%{transform:translate3d(12%,16%,0) scale(1.2) rotate(32deg)}
+    100%{transform:translate3d(-10%,28%,0) scale(1.08) rotate(64deg)}
+  }
+  @keyframes mypFlowD{
+    0%{transform:translate3d(0,0,0) scale(1.1) rotate(0deg)}
+    50%{transform:translate3d(-18%,-14%,0) scale(.92) rotate(-20deg)}
+    100%{transform:translate3d(-8%,-30%,0) scale(1.24) rotate(-44deg)}
+  }
+}
+/* the fields also change shape, where there is the power for it */
+@media (prefers-reduced-motion:no-preference) and (min-width:901px) and (hover:hover){
+  .myp-flow i:nth-child(1){animation:mypFlowA 19s ease-in-out infinite alternate,mypMorphA 19s ease-in-out infinite alternate}
+  .myp-flow i:nth-child(2){animation:mypFlowB 23s ease-in-out infinite alternate,mypMorphB 23s ease-in-out infinite alternate}
+  .myp-flow i:nth-child(3){animation:mypFlowC 27s ease-in-out infinite alternate,mypMorphC 27s ease-in-out infinite alternate}
+  .myp-flow i:nth-child(4){animation:mypFlowD 19s ease-in-out -7s infinite alternate-reverse,mypMorphB 19s ease-in-out -7s infinite alternate-reverse}
+  @keyframes mypMorphA{
+    50%{border-radius:58% 42% 38% 62% / 61% 54% 46% 39%}
+    100%{border-radius:35% 65% 55% 45% / 40% 62% 38% 60%}
+  }
+  @keyframes mypMorphB{
+    50%{border-radius:40% 60% 62% 38% / 38% 46% 54% 62%}
+    100%{border-radius:66% 34% 48% 52% / 57% 36% 64% 43%}
+  }
+  @keyframes mypMorphC{
+    50%{border-radius:60% 40% 36% 64% / 42% 63% 37% 58%}
+    100%{border-radius:44% 56% 66% 34% / 64% 38% 62% 36%}
+  }
+}
+
+/* ---- page entrance (Home) ----
+   CSS only, fill-mode both: with no animation support the content is
+   simply there. Sections follow each other by 60ms. */
+@media (prefers-reduced-motion:no-preference){
+  .myp-home .topbar{animation:mypRise8 .35s var(--myp-ease) both}
+  .myp-home .myp-home__util,.myp-home .myp-hero__text{animation:mypRise12 .45s var(--myp-ease) 60ms both}
+  .myp-home .myp-cycle{animation:mypFade .5s ease-out 120ms both}
+  .myp-home .myp-section{animation:mypRise12 .5s var(--myp-ease) 180ms both}
+  .myp-home .myp-section ~ .myp-section{animation-duration:.6s;animation-delay:240ms}
+  @keyframes mypRise8{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes mypRise12{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+}
+
+/* ---- hover and focus (every page) ----
+   The colour changes at once; what moves is the arrow, the 1px rise
+   on buttons (section 9) and the 2px lift on cards that are links. */
+@media (prefers-reduced-motion:no-preference){
+  .myp-action .myp-icon,.myp-row__go .myp-icon,.topbar__grades a{transition:transform .2s var(--myp-ease)}
+  .myp-action:hover .myp-icon--arrow-right,a.myp-row:hover .myp-row__go .myp-icon--arrow-right{transform:translateX(4px)}
+  a.myp-row,.myp-card{transition:transform .24s var(--myp-ease)}
+  a.myp-row::after,.myp-card::before{transition:opacity .24s var(--myp-ease)}
+  /* keyboard focus eases in (approved exception: it animates the outline) */
+  :where(:focus-visible){animation:mypFocus .16s ease-out}
+  @keyframes mypFocus{from{outline-color:transparent;outline-offset:6px}}
+}
+/* a link row carries the same hover shadow as a Home card */
+a.myp-row{position:relative}
+a.myp-row::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:var(--myp-lift-shadow);
+  opacity:0;pointer-events:none}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .topbar__grades a:hover{transform:translateY(-1px)}
+  a.myp-row:hover,.myp-card:hover{transform:translateY(-2px)}
+  a.myp-row:hover::after,.myp-card:hover::before{opacity:1}
+}
+
+/* ---- A to B: strand tabs ----
+   The page's own script swaps the panels. theme.js adds the direction
+   (--myp-dir, 1 forward / -1 back) and measures the selected tab, so the
+   marker glides to it while the new strand slides into place. */
+.tabs .wrap.has-ind{position:relative}
+.tabs .wrap.has-ind::before{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--myp-ind-w,0);
+  border-radius:var(--myp-radius-button);background:var(--myp-interaction-tint);
+  box-shadow:inset 0 0 0 2px var(--myp-interaction);transform:translateX(var(--myp-ind-x,0));pointer-events:none}
+.tabs .wrap.has-ind .tab{position:relative}
+.tabs .wrap.has-ind .tab.on,.tabs .wrap.has-ind .tab.on:hover{background:transparent;border-color:transparent;box-shadow:none}
+@media (max-width:760px){.tabs .wrap.has-ind::before{border-radius:14px}}
+/* the slide must not widen the page */
+:root.myp-tabbed main{overflow-x:clip}
+@media (prefers-reduced-motion:no-preference){
+  .tabs .wrap.has-ind::before{transition:transform .5s var(--myp-ease)}
+  :root.myp-tabbed [data-panel]:not([hidden]){animation:mypPanelIn .5s var(--myp-ease) backwards}
+  @keyframes mypPanelIn{from{opacity:.15;transform:translateX(calc(var(--myp-dir,1) * 28px))}}
+}
+
+/* ---- theme crossfade ----
+   theme.js wraps the switch in a view transition where the browser has
+   one (.myp-theming), and otherwise eases the colours (.myp-theme-fade).
+   Approved exception: colours may transition here. */
+@media (prefers-reduced-motion:no-preference){
+  :root.myp-theming::view-transition-old(root),:root.myp-theming::view-transition-new(root){animation-duration:.35s}
+  :root.myp-theme-fade *,:root.myp-theme-fade *::before,:root.myp-theme-fade *::after{
+    transition:background-color .35s ease,color .35s ease,border-color .35s ease,box-shadow .35s ease !important}
+}
+
+/* ---- reduced motion ----
+   Nothing above runs. Older page styles that still animate are cut short;
+   focus rings and selected states are colours, so they stay. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms !important;transition-delay:0s !important;
+    animation-duration:.01ms !important;animation-delay:0s !important;animation-iteration-count:1 !important;
+    scroll-behavior:auto !important}
+}

@@ -20,13 +20,14 @@ body{margin:0;font-family:"Work Sans",system-ui,-apple-system,sans-serif;color:v
 
 .rp{--ln:var(--myp-border,#BACEE9);--tn:var(--myp-tint,#E8F1FF);--sf:var(--myp-surface,#FFFFFF);
   --tx:var(--myp-text,#111111);--bd:var(--myp-body,#344054);--mu:var(--myp-muted,#515D70);--ac:var(--myp-accent,#2862AE);
+  --ix:var(--myp-interaction,#A13C66);--ixh:var(--myp-interaction-hover,#7D2D4E);
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --t-fact:var(--myp-ok,#236B50);--t-conc:var(--myp-accent,#2862AE);--t-debate:var(--clay,#A8402F);--t-other:var(--dev,#6A4C93)}
 
 /* name, class, date */
 .idbox{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}
 .idbox > div{padding:10px 14px;border:1px solid var(--ln);border-radius:12px;background:var(--tn)}
-.idbox > div:focus-within{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.idbox > div:focus-within{border-color:var(--ix);box-shadow:0 0 0 1px var(--ix)}
 .idbox label{display:block;margin:0 0 2px;font:500 14px/20px "Work Sans",system-ui,sans-serif;color:var(--tx)}
 .idbox input{width:100%;min-width:0;margin:0;padding:0;border:0;outline:0;background:transparent;color:var(--tx);font:400 16px/26px "Work Sans",system-ui,sans-serif}
 .rp-actions{display:flex;flex-wrap:wrap;gap:8px}
@@ -56,7 +57,7 @@ body{margin:0;font-family:"Work Sans",system-ui,-apple-system,sans-serif;color:v
 .area-fields input{width:100%;margin:0;padding:8px 12px;border:1px solid var(--ln);border-radius:10px;background:var(--sf);
   color:var(--tx);font:500 15px/24px "Work Sans",system-ui,sans-serif}
 .area-fields input::placeholder{color:var(--mu);opacity:1;font-weight:400}
-.area-fields input:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.area-fields input:focus{outline:none;border-color:var(--ix);box-shadow:0 0 0 1px var(--ix)}
 
 .area-remove,.row-remove{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;
   border:1px solid var(--ln);background:var(--sf);color:var(--mu);border-radius:10px;font:500 18px/1 "Work Sans",system-ui,sans-serif}
@@ -73,7 +74,7 @@ body{margin:0;font-family:"Work Sans",system-ui,-apple-system,sans-serif;color:v
   background:var(--sf);color:var(--tx);font:400 14px/22px "Work Sans",system-ui,sans-serif;resize:none}
 .qtable textarea{display:block;min-height:64px;overflow:hidden}
 .qtable textarea::placeholder,.qtable input::placeholder{color:var(--mu);opacity:1}
-.qtable textarea:focus,.qtable input:focus,.qtable select:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 1px var(--ac)}
+.qtable textarea:focus,.qtable input:focus,.qtable select:focus{outline:none;border-color:var(--ix);box-shadow:0 0 0 1px var(--ix)}
 .qtable select{font-weight:600;color:var(--bd)}
 .qtable select.t-fact{color:var(--t-fact)}
 .qtable select.t-conc{color:var(--t-conc)}
@@ -85,14 +86,14 @@ body{margin:0;font-family:"Work Sans",system-ui,-apple-system,sans-serif;color:v
 
 .area-actions{padding:12px 16px}
 .add-question,.add-area{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;cursor:pointer;
-  border:1px dashed var(--ac);border-radius:16px;background:var(--tn);color:var(--ac);font:600 14px/20px "Work Sans",system-ui,sans-serif}
-.add-question:hover,.add-area:hover{border-style:solid;color:var(--myp-hover,#1D4D8A);border-color:var(--myp-hover,#1D4D8A)}
+  border:1px dashed var(--ix);border-radius:16px;background:var(--tn);color:var(--ix);font:600 14px/20px "Work Sans",system-ui,sans-serif}
+.add-question:hover,.add-area:hover{border-style:solid;color:var(--ixh);border-color:var(--ixh)}
 
 /* self-check */
 .checklist{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
 .checklist li{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;
   background:var(--sf);font-size:15px;line-height:24px;color:var(--bd)}
-.checklist input[type=checkbox]{flex:0 0 20px;width:20px;height:20px;margin:2px 0 0;accent-color:var(--ac)}
+.checklist input[type=checkbox]{flex:0 0 20px;width:20px;height:20px;margin:2px 0 0;accent-color:var(--ix)}
 
 @media (max-width:860px){
   .legend,.checklist{grid-template-columns:1fr}
@@ -121,7 +122,7 @@ body{margin:0;font-family:"Work Sans",system-ui,-apple-system,sans-serif;color:v
 
 @media print{
   html:root.dark{--myp-bg:#FFFFFF;--myp-surface:#FFFFFF;--myp-text:#111111;--myp-body:#344054;--myp-muted:#515D70;
-    --myp-accent:#2862AE;--myp-border:#BACEE9;--myp-tint:#E8F1FF;--myp-on-accent:#FFFFFF;--myp-ok:#236B50;--myp-ok-tint:#DDF3E9;
+    --myp-accent:#2862AE;--myp-interaction:#A13C66;--myp-interaction-hover:#7D2D4E;--myp-interaction-tint:#F8E9F0;--myp-border:#BACEE9;--myp-tint:#E8F1FF;--myp-on-accent:#FFFFFF;--myp-ok:#236B50;--myp-ok-tint:#DDF3E9;
     --clay:#A8402F;--clay-tint:#FBEAE6;--dev:#6A4C93;color-scheme:light}
   body{background:#fff}
   .topbar,.myp-tools,.myp-footer,.rp-noprint,.print-hint{display:none !important}

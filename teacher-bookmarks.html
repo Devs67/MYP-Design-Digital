@@ -24,10 +24,10 @@ body{margin:0}
 .bm-filter{display:flex;flex-direction:column;gap:12px;width:var(--myp-col);margin:24px auto 0}
 .bm-chips{display:flex;flex-wrap:wrap;gap:8px}
 .bm-chips button{min-height:40px;padding:8px 14px;border-radius:12px;border:1px solid var(--myp-border);
-  background:var(--myp-glass-fill-soft);color:var(--myp-accent);font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);cursor:pointer}
+  background:var(--myp-glass-fill-soft);color:var(--myp-interaction);font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);cursor:pointer}
 .bm-chips button:hover{color:var(--myp-hover);border-color:var(--myp-hover)}
-.bm-chips button[aria-pressed="true"]{background:var(--myp-tint);border-color:var(--myp-accent);box-shadow:inset 0 0 0 1px var(--myp-accent);font-weight:700}
-.bm-chips button:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.bm-chips button[aria-pressed="true"]{background:var(--myp-interaction-tint);border-color:var(--myp-interaction);box-shadow:inset 0 0 0 1px var(--myp-interaction);font-weight:700}
+.bm-chips button:focus-visible{outline:2px solid var(--myp-interaction);outline-offset:2px}
 .bm-count{margin:0;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
 
 .bm-part{width:var(--myp-col);margin:40px auto 0}
@@ -40,13 +40,13 @@ body{margin:0}
 .links{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .links li{position:relative;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:14px 16px;
   border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface)}
-.links li:hover{border-color:var(--myp-accent);box-shadow:0 0 0 1px var(--myp-accent)}
-.links a{color:var(--myp-accent);font-weight:600;text-decoration:none}
+.links li:hover{border-color:var(--myp-interaction);box-shadow:0 0 0 1px var(--myp-interaction)}
+.links a{color:var(--myp-interaction);font-weight:600;text-decoration:none}
 /* the whole row is the link's tap target; the icon sits after the title */
 .links a::before{content:"";position:absolute;inset:0;border-radius:inherit}
 .links a:hover{color:var(--myp-hover)}
 .links a:focus-visible{outline:none}
-.links li:focus-within{outline:2px solid var(--myp-accent);outline-offset:2px}
+.links li:focus-within{outline:2px solid var(--myp-interaction);outline-offset:2px}
 .links a[target="_blank"]::after{content:"";display:inline-block;width:14px;height:14px;margin-left:6px;vertical-align:-1px;
   background-color:currentColor;-webkit-mask:url("assets/icons/external-link.svg") no-repeat center / contain;
   mask:url("assets/icons/external-link.svg") no-repeat center / contain}

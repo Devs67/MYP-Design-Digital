@@ -58,10 +58,31 @@
   }
 
   function setTheme(mode){
-    applyTheme(mode);
-    setURLTheme(mode);
-    rewriteLinks(mode);
-    syncThemeButtons();
+    function run(){
+      applyTheme(mode);
+      setURLTheme(mode);
+      rewriteLinks(mode);
+      syncThemeButtons();
+    }
+    function done(){ root.classList.remove('myp-theming'); root.classList.remove('myp-theme-fade'); }
+
+    // crossfade between the themes (glass.css section 16) unless motion is off
+    var calm = true;
+    try{ calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+    if(calm || mode === currentTheme()){ run(); return; }
+
+    if(document.startViewTransition){
+      try{
+        root.classList.add('myp-theming');
+        var vt = document.startViewTransition(run);
+        vt.finished.then(done, done);
+        return;
+      }catch(e){ done(); }
+    }
+    // no view transitions here: ease the colours instead
+    root.classList.add('myp-theme-fade');
+    run();
+    window.setTimeout(done, 400);
   }
 
   function toggleTheme(){
@@ -283,8 +304,59 @@
     if(srOpener && srOpener.focus) srOpener.focus();
   }
 
+  // ---- strand tabs: the direction of travel and the gliding marker ----
+  // The page's own script still swaps the panels. This only tells the CSS
+  // (glass.css section 16) which way the content moves and where the
+  // selected tab sits.
+  function initTabs(){
+    var wrap = document.querySelector('.tabs .wrap');
+    if(!wrap) return;
+    var tabs = wrap.querySelectorAll('.tab');
+    if(!tabs.length) return;
+
+    function indexOfTab(el){
+      for(var i=0;i<tabs.length;i++){ if(tabs[i] === el) return i; }
+      return -1;
+    }
+
+    function place(){
+      var on = wrap.querySelector('.tab.on');
+      if(!on){ wrap.classList.remove('has-ind'); return; }
+      wrap.style.setProperty('--myp-ind-x', on.offsetLeft + 'px');
+      wrap.style.setProperty('--myp-ind-w', on.offsetWidth + 'px');
+      wrap.classList.add('has-ind');
+    }
+
+    // capture phase, so this runs before the page's handler moves .on
+    wrap.addEventListener('click', function(e){
+      var t = e.target;
+      while(t && t !== wrap && !(t.classList && t.classList.contains('tab'))) t = t.parentNode;
+      if(!t || t === wrap) return;
+      var from = indexOfTab(wrap.querySelector('.tab.on'));
+      var to = indexOfTab(t);
+      if(to === -1 || to === from) return;
+      root.style.setProperty('--myp-dir', to < from ? '-1' : '1');
+      root.classList.add('myp-tabbed');
+    }, true);
+
+    if('MutationObserver' in window){
+      try{
+        new MutationObserver(place).observe(wrap, {attributes:true, attributeFilter:['class'], subtree:true});
+      }catch(e){}
+    }
+    window.addEventListener('resize', place);
+    place();
+  }
+
+  // the moving backdrop rests while the tab is in the background
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) root.classList.add('myp-paused');
+    else root.classList.remove('myp-paused');
+  });
+
   document.addEventListener('DOMContentLoaded', function(){
     rewriteLinks(currentTheme());
+    initTabs();
 
     var themeBtn = document.getElementById('themeBtn');
     if(themeBtn) themeBtn.addEventListener('click', toggleTheme);

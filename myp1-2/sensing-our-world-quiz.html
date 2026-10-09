@@ -44,9 +44,9 @@ legend.q-text + *{clear:both}
 .options{display:grid;gap:8px}
 .option{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:1px solid var(--myp-border);
   border-radius:var(--myp-radius-field);background:var(--myp-surface);cursor:pointer;color:var(--myp-body);line-height:24px}
-.option:hover{border-color:var(--myp-accent)}
-.option:has(input:checked){border-color:var(--myp-accent);background:var(--myp-tint);color:var(--myp-text)}
-.option input{width:18px;height:18px;margin:3px 0 0;flex:none;accent-color:var(--myp-accent)}
+.option:hover{border-color:var(--myp-interaction)}
+.option:has(input:checked){border-color:var(--myp-interaction);background:var(--myp-interaction-tint);color:var(--myp-text)}
+.option input{width:18px;height:18px;margin:3px 0 0;flex:none;accent-color:var(--myp-interaction)}
 .option.correct{border-color:var(--myp-ok);background:var(--myp-ok-tint);color:var(--myp-text)}
 .option.incorrect{border-color:var(--myp-error);background:var(--clay-tint);color:var(--myp-text)}
 .explain{margin:12px 0 0;padding:12px 16px;border:1px solid var(--myp-border);border-left:4px solid var(--myp-accent);
@@ -61,7 +61,7 @@ legend.q-text + *{clear:both}
 .match-term{font-weight:600;color:var(--myp-text)}
 .match-select{width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--myp-border);border-radius:10px;
   background:var(--myp-tint);color:var(--myp-text);font:500 15px/22px var(--myp-font-body)}
-.match-select:focus-visible,.fill-input:focus-visible{outline:2px solid var(--myp-accent);outline-offset:1px;border-color:var(--myp-accent)}
+.match-select:focus-visible,.fill-input:focus-visible{outline:2px solid var(--myp-interaction);outline-offset:1px;border-color:var(--myp-interaction)}
 .match-feedback,.fill-feedback{min-width:2rem;text-align:right;
   font:600 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase}
 .match-row.correct,.fill-row.correct{border-color:var(--myp-ok);background:var(--myp-ok-tint)}

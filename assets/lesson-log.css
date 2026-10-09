@@ -74,10 +74,10 @@ body{margin:0}
   font-size:14px;line-height:22px;color:var(--myp-body)}
 .lx--log .note strong{color:var(--myp-text)}
 .lx--log .resource{display:inline-flex;align-items:center;gap:8px;margin:12px 8px 0 0;min-height:40px;padding:8px 14px;
-  border:1px solid var(--myp-border);border-radius:12px;background:var(--myp-tint);color:var(--myp-accent);
+  border:1px solid var(--myp-border);border-radius:12px;background:var(--myp-tint);color:var(--myp-interaction);
   font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);text-decoration:none}
 .lx--log .resource:hover{color:var(--myp-hover);border-color:var(--myp-hover)}
-.lx--log .resource:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.lx--log .resource:focus-visible{outline:2px solid var(--myp-interaction);outline-offset:2px}
 .lx--log .resource .rlabel{color:var(--myp-muted);font-weight:500}
 .lx--log .no-resource,.lx--log .est-note{margin:12px 0 0;font-size:13px;line-height:20px;font-style:italic;color:var(--myp-muted)}
 /* today's lesson */

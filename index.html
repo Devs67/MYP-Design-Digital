@@ -7,11 +7,12 @@
 <script>(function(){try{if(location.hash==='#myp4-5'){location.replace('myp4-5/index.html'+location.search);return;}var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/theme.css">
 <style>
-/* Page-only styles: the design cycle, the welcome overlay and back-to-top.
-   The layout and components come from assets/glass.css. */
+/* Page-only styles: the welcome overlay and back-to-top.
+   The layout, the berry Home and the motion come from assets/glass.css
+   (sections 15 and 16). */
 :root{
   --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
   --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
@@ -32,27 +33,20 @@ html{scroll-behavior:smooth}
 .totop{position:fixed;right:26px;bottom:26px;width:52px;height:52px;padding:0;
   border:0;background:var(--card);border-radius:50%;cursor:pointer;z-index:60;
   box-shadow:0 3px 14px rgba(20,48,60,.14);display:flex;align-items:center;
-  justify-content:center;opacity:0;visibility:hidden;transform:translateY(10px);
-  transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
+  justify-content:center;opacity:0;visibility:hidden;transform:translateY(10px)}
 .totop.show{opacity:1;visibility:visible;transform:translateY(0)}
 .totop:hover{box-shadow:0 5px 20px rgba(20,48,60,.2)}
 .totop svg{position:absolute;inset:0;width:52px;height:52px;transform:rotate(-90deg)}
 .totop .trk{fill:none;stroke:var(--rule-soft);stroke-width:3}
 .totop .prg{fill:none;stroke:var(--amber);stroke-width:3;stroke-linecap:round;
-  stroke-dasharray:119.4;stroke-dashoffset:119.4;transition:stroke-dashoffset .1s linear}
+  stroke-dasharray:119.4;stroke-dashoffset:119.4}
 .totop .arw{font-size:18px;line-height:1;color:var(--ink);position:relative;top:-1px}
+@media (prefers-reduced-motion: no-preference){
+  .totop{transition:opacity .25s var(--ease-out),transform .25s var(--ease-out)}
+}
 @media print{.totop{display:none}}
 @media (max-width:600px){.totop{right:16px;bottom:16px;width:46px;height:46px}
   .totop svg{width:46px;height:46px}}
-
-
-/* scroll reveal: armed only once JS confirms support, so it fails visible */
-@media (prefers-reduced-motion: no-preference){
-  .js-anim .reveal{opacity:0;transform:translateY(12px);
-    transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);
-    transition-delay:var(--rd,0ms)}
-  .js-anim .reveal.in{opacity:1;transform:none}
-}
 
 /* ============ WELCOME ============ */
 .wl{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
@@ -73,11 +67,9 @@ html{scroll-behavior:smooth}
   color:var(--amber);margin:20px 0 0}
 .wl__btn{margin-top:32px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
   text-transform:uppercase;padding:14px 34px;border:1px solid var(--ink-fixed);background:var(--ink-fixed);
-  color:#fff;border-radius:7px;cursor:pointer;transition:background .2s,color .2s,transform .2s}
-.wl__btn:hover{background:var(--amber);border-color:var(--amber);transform:translateY(-2px)}
+  color:#fff;border-radius:7px;cursor:pointer}
 .wl__x{position:absolute;top:14px;right:16px;width:32px;height:32px;border:0;background:none;
-  color:var(--slate);font-size:20px;line-height:1;cursor:pointer;border-radius:7px;
-  transition:color .2s,background .2s}
+  color:var(--slate);font-size:20px;line-height:1;cursor:pointer;border-radius:7px}
 .wl__x:hover{color:var(--ink);background:var(--paper)}
 body.wl-open{overflow:hidden}
 
@@ -86,169 +78,23 @@ body.wl-open{overflow:hidden}
   .wl__card{animation:wlRise .55s var(--ease-out) both .06s}
   .wl__quote{animation:wlRise .6s var(--ease-out) both .2s}
   .wl__who{animation:wlRise .6s var(--ease-out) both .3s}
-  .wl__btn{animation:wlRise .6s var(--ease-out) both .38s}
+  .wl__btn{animation:wlRise .6s var(--ease-out) both .38s;transition:transform .2s var(--ease-out)}
+  .wl__btn:hover{transform:translateY(-2px)}
   .wl.closing{animation:wlFade .3s ease reverse both}
   @keyframes wlFade{from{opacity:0}to{opacity:1}}
   @keyframes wlRise{from{opacity:0;transform:translateY(16px) scale(.985)}
     to{opacity:1;transform:none}}
+
+  /* the page entrance (glass.css section 16) waits until the welcome card
+     is closed. wl-open is set by the script below, so without the script
+     nothing waits. */
+  body.wl-open .topbar,body.wl-open .myp-home__util,body.wl-open .myp-hero__text,
+  body.wl-open .myp-cycle,body.wl-open .myp-section{animation-play-state:paused}
 }
 @media (max-width:600px){
   .wl{padding:16px}
   .wl__card{padding:36px 24px 30px}
 }
-
-/* ============ MASTHEAD IMAGES ============ */
-.mast__images{display:flex;gap:14px;width:572px;height:455px}
-@media (max-width:900px){.mast__images{display:none}.mast__aside{max-width:100%}}
-
-/* ============ DESIGN CYCLE ============ */
-/* Geometry and motion come from the Figma file (node 7:48). Colours use the
-   page palette so it follows light and dark mode. */
-.cycle{position:relative;flex:0 0 440px;width:440px;height:350px;transform:scale(1.3);transform-origin:0 0}
-.cycle svg{position:absolute;left:0;top:0;display:block;overflow:visible}
-.cycle__dots{fill:var(--slate);opacity:.55}
-.cycle__ring{stroke:var(--slate);opacity:.7;transform-box:fill-box;transform-origin:center}
-.cycle__track{stroke:var(--slate);opacity:.6}
-.cycle__core{fill:var(--card);stroke:var(--slate);transform-box:fill-box;transform-origin:center}
-.cycle__arc{stroke-width:3.5}
-.cycle__tip{stroke-width:2}
-.cycle .is-a{stroke:var(--a);color:var(--a)}
-.cycle .is-b{stroke:var(--b);color:var(--b)}
-.cycle .is-c{stroke:var(--c);color:var(--c)}
-.cycle .is-d{stroke:var(--d);color:var(--d)}
-.cycle__mid{position:absolute;left:152px;top:130px;width:136px;height:80px;display:flex;
-  flex-direction:column;gap:4px;align-items:center;justify-content:center;white-space:nowrap}
-.cycle__mid b{font-family:var(--display);font-weight:400;font-size:26px;line-height:32px;color:var(--ink)}
-.cycle__mid i{font-family:var(--mono);font-style:normal;font-size:10px;line-height:16px;color:var(--amber)}
-.cycle__lbl{position:absolute;display:flex;flex-direction:column;gap:4px;align-items:center;
-  background:var(--paper);white-space:nowrap}
-.cycle__lbl b{font-family:var(--display);font-weight:400;font-size:26px;line-height:32px}
-.cycle__lbl i,.cycle__cap{font-family:var(--mono);font-style:normal;font-size:10px;line-height:16px;
-  color:var(--slate)}
-.cycle__cap{position:absolute;left:102px;top:327px;margin:0;white-space:nowrap}
-
-/* One shared 8s loop, as authored in Figma. Without motion the cycle shows complete. */
-@media (prefers-reduced-motion: no-preference){
-  .cycle__ring{animation:cyRing 8s linear infinite}
-  .cycle__core,.cycle__mid{animation:cyPulse 8s linear infinite}
-  .cycle__arc{stroke-dashoffset:0}
-  .cycle__arc.is-a{animation:cyArcA 8s linear infinite,cyTrimA 8s linear infinite}
-  .cycle__arc.is-b{animation:cyArcB 8s linear infinite,cyTrimB 8s linear infinite}
-  .cycle__arc.is-c{animation:cyArcC 8s linear infinite,cyTrimC 8s linear infinite}
-  .cycle__arc.is-d{animation:cyArcD 8s linear infinite,cyTrimD 8s linear infinite}
-  .cycle__tip.is-a{animation:cyTipA 8s linear infinite}
-  .cycle__tip.is-b{animation:cyTipB 8s linear infinite}
-  .cycle__tip.is-c{animation:cyTipC 8s linear infinite}
-  .cycle__tip.is-d{animation:cyTipD 8s linear infinite}
-  .cycle__lbl.is-a{animation:cyLblA 8s linear infinite,cyPopA 8s linear infinite}
-  .cycle__lbl.is-b{animation:cyLblB 8s linear infinite,cyPopB 8s linear infinite}
-  .cycle__lbl.is-c{animation:cyLblC 8s linear infinite,cyPopC 8s linear infinite}
-  .cycle__lbl.is-d{animation:cyLblD 8s linear infinite,cyPopD 8s linear infinite}
-}
-@keyframes cyRing{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes cyPulse{
-  0%{transform:scale(1)}
-  6.25%{animation-timing-function:ease-in-out;transform:scale(1)}
-  10%{animation-timing-function:ease-in-out;transform:scale(1.035)}
-  14.375%{transform:scale(1)}
-  26.25%{animation-timing-function:ease-in-out;transform:scale(1)}
-  30%{animation-timing-function:ease-in-out;transform:scale(1.035)}
-  34.375%{transform:scale(1)}
-  46.25%{animation-timing-function:ease-in-out;transform:scale(1)}
-  50%{animation-timing-function:ease-in-out;transform:scale(1.035)}
-  54.375%{transform:scale(1)}
-  66.25%{animation-timing-function:ease-in-out;transform:scale(1)}
-  70%{animation-timing-function:ease-in-out;transform:scale(1.035)}
-  74.375%{transform:scale(1)}
-  87.5%{animation-timing-function:ease-in-out;transform:scale(1)}
-  91.25%{animation-timing-function:ease-in-out;transform:scale(1.035)}
-  95.625%{transform:scale(1)}
-  100%{transform:scale(1)}
-}
-@keyframes cyArcA{0%{animation-timing-function:ease-in-out;opacity:0}
-  5%{animation-timing-function:ease-in-out;opacity:.3}8.75%{opacity:1}
-  20%{animation-timing-function:ease-in-out;opacity:1}
-  23.75%{animation-timing-function:ease-in-out;opacity:.82}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:0}}
-@keyframes cyArcB{0%{animation-timing-function:ease-in-out;opacity:0}
-  25%{animation-timing-function:ease-in-out;opacity:.3}28.75%{opacity:1}
-  40%{animation-timing-function:ease-in-out;opacity:1}
-  43.75%{animation-timing-function:ease-in-out;opacity:.82}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:0}}
-@keyframes cyArcC{0%{animation-timing-function:ease-in-out;opacity:0}
-  45%{animation-timing-function:ease-in-out;opacity:.3}48.75%{opacity:1}
-  60%{animation-timing-function:ease-in-out;opacity:1}
-  63.75%{animation-timing-function:ease-in-out;opacity:.82}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:0}}
-@keyframes cyArcD{0%{animation-timing-function:ease-in-out;opacity:0}
-  65%{animation-timing-function:ease-in-out;opacity:.3}68.75%{opacity:1}
-  80%{animation-timing-function:ease-in-out;opacity:1}
-  83.75%{animation-timing-function:ease-in-out;opacity:.82}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:0}}
-@keyframes cyTrimA{0%{stroke-dasharray:0 1;visibility:hidden}
-  5%{animation-timing-function:ease-in-out;stroke-dasharray:0 1;visibility:hidden}
-  18.75%{stroke-dasharray:1 1;visibility:visible}
-  93.75%{animation-timing-function:step-end;stroke-dasharray:1 1;visibility:visible}
-  100%{stroke-dasharray:0 1;visibility:hidden}}
-@keyframes cyTrimB{0%{stroke-dasharray:0 1;visibility:hidden}
-  25%{animation-timing-function:ease-in-out;stroke-dasharray:0 1;visibility:hidden}
-  38.75%{stroke-dasharray:1 1;visibility:visible}
-  93.75%{animation-timing-function:step-end;stroke-dasharray:1 1;visibility:visible}
-  100%{stroke-dasharray:0 1;visibility:hidden}}
-@keyframes cyTrimC{0%{stroke-dasharray:0 1;visibility:hidden}
-  45%{animation-timing-function:ease-in-out;stroke-dasharray:0 1;visibility:hidden}
-  58.75%{stroke-dasharray:1 1;visibility:visible}
-  93.75%{animation-timing-function:step-end;stroke-dasharray:1 1;visibility:visible}
-  100%{stroke-dasharray:0 1;visibility:hidden}}
-@keyframes cyTrimD{0%{stroke-dasharray:0 1;visibility:hidden}
-  65%{animation-timing-function:ease-in-out;stroke-dasharray:0 1;visibility:hidden}
-  78.75%{stroke-dasharray:1 1;visibility:visible}
-  93.75%{animation-timing-function:step-end;stroke-dasharray:1 1;visibility:visible}
-  100%{stroke-dasharray:0 1;visibility:hidden}}
-@keyframes cyTipA{0%{opacity:.5}14.375%{animation-timing-function:ease-in-out;opacity:.5}
-  18.75%{animation-timing-function:ease-in-out;opacity:1}
-  23.75%{animation-timing-function:ease-in-out;opacity:.85}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.5}}
-@keyframes cyTipB{0%{opacity:.5}34.375%{animation-timing-function:ease-in-out;opacity:.5}
-  38.75%{animation-timing-function:ease-in-out;opacity:1}
-  43.75%{animation-timing-function:ease-in-out;opacity:.85}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.5}}
-@keyframes cyTipC{0%{opacity:.5}54.375%{animation-timing-function:ease-in-out;opacity:.5}
-  58.75%{animation-timing-function:ease-in-out;opacity:1}
-  63.75%{animation-timing-function:ease-in-out;opacity:.85}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.5}}
-@keyframes cyTipD{0%{opacity:.5}74.375%{animation-timing-function:ease-in-out;opacity:.5}
-  78.75%{animation-timing-function:ease-in-out;opacity:1}
-  83.75%{animation-timing-function:ease-in-out;opacity:.85}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.5}}
-@keyframes cyLblA{0%{opacity:.82}5%{animation-timing-function:ease-in-out;opacity:.82}
-  8.75%{opacity:1}18.75%{animation-timing-function:ease-in-out;opacity:1}
-  23.75%{animation-timing-function:ease-in-out;opacity:.82}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.82}}
-@keyframes cyLblB{0%{opacity:.82}25%{animation-timing-function:ease-in-out;opacity:.82}
-  28.75%{opacity:1}38.75%{animation-timing-function:ease-in-out;opacity:1}
-  43.75%{animation-timing-function:ease-in-out;opacity:.82}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.82}}
-@keyframes cyLblC{0%{opacity:.82}45%{animation-timing-function:ease-in-out;opacity:.82}
-  48.75%{opacity:1}58.75%{animation-timing-function:ease-in-out;opacity:1}
-  63.75%{animation-timing-function:ease-in-out;opacity:.82}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.82}}
-@keyframes cyLblD{0%{opacity:.82}65%{animation-timing-function:ease-in-out;opacity:.82}
-  68.75%{opacity:1}78.75%{animation-timing-function:ease-in-out;opacity:1}
-  83.75%{animation-timing-function:ease-in-out;opacity:.82}
-  89.375%{animation-timing-function:ease-in-out;opacity:1}100%{opacity:.82}}
-@keyframes cyPopA{0%{transform:scale(1)}5%{animation-timing-function:ease-in-out;transform:scale(1)}
-  10.625%{animation-timing-function:ease-in-out;transform:scale(1.08)}
-  21.25%{transform:scale(1)}100%{transform:scale(1)}}
-@keyframes cyPopB{0%{transform:scale(1)}25%{animation-timing-function:ease-in-out;transform:scale(1)}
-  30.625%{animation-timing-function:ease-in-out;transform:scale(1.08)}
-  41.25%{transform:scale(1)}100%{transform:scale(1)}}
-@keyframes cyPopC{0%{transform:scale(1)}45%{animation-timing-function:ease-in-out;transform:scale(1)}
-  50.625%{animation-timing-function:ease-in-out;transform:scale(1.08)}
-  61.25%{transform:scale(1)}100%{transform:scale(1)}}
-@keyframes cyPopD{0%{transform:scale(1)}65%{animation-timing-function:ease-in-out;transform:scale(1)}
-  70.625%{animation-timing-function:ease-in-out;transform:scale(1.08)}
-  81.25%{transform:scale(1)}100%{transform:scale(1)}}
 
 /* ============ PRESS FEEDBACK ============ */
 @media (prefers-reduced-motion: no-preference){
@@ -257,7 +103,9 @@ body.wl-open{overflow:hidden}
 </style>
 <link rel="stylesheet" href="assets/glass.css">
 </head>
-<body>
+<body class="myp-home">
+
+<div class="myp-flow" aria-hidden="true"><div class="myp-flow__blur"><i></i><i></i><i></i><i></i></div></div>
 
 <header class="topbar">
   <div class="topbar__wrap">
@@ -275,15 +123,16 @@ body.wl-open{overflow:hidden}
   </div>
 </header>
 
-<nav class="myp-tools" aria-label="Site tools">
-  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
-  <a class="myp-tool" href="myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
-  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
-  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
-    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
-    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
-  </div>
-</nav>
+<div class="myp-home__util">
+  <p class="myp-category">IB MYP &middot; Digital Design</p>
+  <nav class="myp-home__tools" aria-label="Site tools">
+    <a class="myp-action" href="myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+    <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+      <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+      <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
+    </div>
+  </nav>
+</div>
 
 <div class="wl" id="welcome" role="dialog" aria-modal="true" aria-labelledby="wlTitle" hidden>
   <div class="wl__card">
@@ -301,130 +150,72 @@ body.wl-open{overflow:hidden}
 
 <header class="myp-hero myp-hero--home">
   <div class="myp-hero__text">
-    <p class="myp-eyebrow">IB MYP Design &middot; International Baccalaureate Middle Years Programme</p>
-    <h1 class="myp-title">What each criterion asks for, and how to get there.</h1>
-    <p class="myp-lede">Strand-by-strand guides: the command terms, the steps in order, the frameworks that produce each part, worked examples, and a checklist to run before submitting.</p>
+    <p class="myp-category">A space for your next idea</p>
+    <h1 class="myp-title">Big ideas.<br>Start here.</h1>
+    <p class="myp-lede">Explore, make, test and improve. Choose your year group to find the guides and tools for your next project.</p>
     <div class="myp-search">
       <label class="myp-input" for="heroSearch">
-        <span class="myp-input__label">Search</span>
+        <span class="myp-input__label">Find a guide, framework or tool</span>
         <span class="myp-input__row">
-          <span class="myp-icon myp-icon--search" aria-hidden="true"></span>
-          <input type="search" id="heroSearch" placeholder="Search any criterion, framework or worksheet&hellip;" autocomplete="off">
+          <input type="search" id="heroSearch" placeholder="Search MYP Design&hellip;" autocomplete="off">
         </span>
       </label>
       <div class="herosearch__results" id="heroResults" hidden></div>
     </div>
   </div>
-    <div class="myp-hero__aside">
-      <div class="mast__images">
-        <div class="cycle" role="img" aria-label="The design cycle: A inquire, B develop, C create, D evaluate. A process, not a straight line.">
-          <svg width="440" height="350" viewBox="0 0 440 350" fill="none" aria-hidden="true">
-            <defs><pattern id="cycleDots" x="13" y="18" width="24" height="24" patternUnits="userSpaceOnUse"><circle class="cycle__dots" cx="12" cy="12" r=".75"/></pattern></defs>
-            <rect x="13" y="18" width="408" height="312" style="fill:url(#cycleDots)"/>
-            <path class="cycle__ring" d="M220 302C292.902 302 352 242.902 352 170C352 97.0984 292.902 38 220 38C147.098 38 88 97.0984 88 170C88 242.902 147.098 302 220 302Z" stroke-dasharray="3 6"/>
-            <path class="cycle__track" d="M220 255C266.944 255 305 216.944 305 170C305 123.056 266.944 85 220 85C173.056 85 135 123.056 135 170C135 216.944 173.056 255 220 255Z"/>
-            <path class="cycle__arc is-a" pathLength="1" d="M101 160C103.248 132.009 115.321 105.716 135.086 85.7683C154.85 65.821 181.031 53.5056 209 51"/>
-            <path class="cycle__arc is-b" pathLength="1" d="M232 51C259.633 53.6927 285.455 65.9626 304.995 85.6856C324.535 105.409 336.564 131.343 339 159"/>
-            <path class="cycle__arc is-c" pathLength="1" d="M339 182C336.344 209.478 324.218 235.177 304.698 254.698C285.177 274.218 259.478 286.344 232 289"/>
-            <path class="cycle__arc is-d" pathLength="1" d="M209 289C181.343 286.564 155.409 274.535 135.686 254.995C115.963 235.455 103.693 209.633 101 182"/>
-            <path class="cycle__tip is-a" d="M204 46L211 51L204 56"/>
-            <path class="cycle__tip is-b" d="M334 154L339 161L344 154"/>
-            <path class="cycle__tip is-c" d="M238 284L231 289L238 294"/>
-            <path class="cycle__tip is-d" d="M96 188L101 181L106 188"/>
-            <path class="cycle__core" d="M220 238C257.555 238 288 207.555 288 170C288 132.445 257.555 102 220 102C182.445 102 152 132.445 152 170C152 207.555 182.445 238 220 238Z"/>
-          </svg>
-          <div class="cycle__mid"><b>Design.</b><i>ITERATE. REPEAT.</i></div>
-          <div class="cycle__lbl is-a" style="left:93px;top:65px"><b>A</b><i>INQUIRE</i></div>
-          <div class="cycle__lbl is-b" style="left:283px;top:65px"><b>B</b><i>DEVELOP</i></div>
-          <div class="cycle__lbl is-c" style="left:286px;top:237px"><b>C</b><i>CREATE</i></div>
-          <div class="cycle__lbl is-d" style="left:93px;top:237px"><b>D</b><i>EVALUATE</i></div>
-          <p class="cycle__cap">A PROCESS, NOT A STRAIGHT LINE</p>
-        </div>
-      </div>
-      <div class="herolegend">
-        <div class="herolegend__top">
-          <span>Curriculum framework</span>
-        </div>
-        <div class="herow"><i style="background:var(--a)">A</i>Inquiring &amp; analysing</div>
-        <div class="herow"><i style="background:var(--b)">B</i>Developing ideas</div>
-        <div class="herow"><i style="background:var(--c)">C</i>Creating the solution</div>
-        <div class="herow"><i style="background:var(--d)">D</i>Evaluating</div>
-        <div class="herolegend__foot"><span>43 frameworks</span><span>IB aligned</span></div>
-      </div>
-    </div>
+  <div class="myp-cycle">
+    <p class="myp-category" id="cycleLabel">One cycle. Many possibilities.</p>
+    <ul class="myp-cycle__grid" aria-labelledby="cycleLabel">
+      <li class="myp-cycle__tile"><b>A</b><span>Inquire &amp; analyse</span></li>
+      <li class="myp-cycle__tile"><b>B</b><span>Develop ideas</span></li>
+      <li class="myp-cycle__tile myp-cycle__tile--c"><b>C</b><span>Create the solution</span></li>
+      <li class="myp-cycle__tile myp-cycle__tile--d"><b>D</b><span>Evaluate &amp; improve</span></li>
+    </ul>
+    <p class="myp-category myp-category--plain">A &rarr; B &rarr; C &rarr; D &rarr; back to your next idea</p>
+  </div>
 </header>
 
-<section class="myp-panel" id="gradeSec" aria-labelledby="gradeTitle">
-  <div class="myp-panel__head">
-    <p class="myp-eyebrow">Start here</p>
-    <h2 class="myp-panel__title" id="gradeTitle">Choose your year group</h2>
-    <p class="myp-panel__sub">Content is organised by MYP year band. MYP 4&ndash;5 is the most complete; MYP 1&ndash;2 and MYP 3 each have a growing set of live resources too.</p>
-  </div>
-  <ul class="myp-list">
-    <li>
-      <a class="myp-row" href="myp1-2/index.html">
-        <span class="myp-row__lead" aria-hidden="true">1&ndash;2</span>
-        <span class="myp-row__text">
-          <span class="myp-row__meta">Years 1 &amp; 2 &middot; Foundations &amp; frameworks</span>
-          <span class="myp-row__title">MYP 1 &amp; 2 Design</span>
-          <span class="myp-row__body">This year&rsquo;s units, Criterion A underway, and thinking-tool practice for the earliest years of the programme.</span>
-          <span class="myp-row__points"><span>Criterion A, strands i &amp; iv &middot; Criterion B, strands i&ndash;ii</span><span>PEEL, CRAAP, SWOT &amp; Brief Builder frameworks</span><span>Sensing Our World interactive quiz</span></span>
-          <span class="myp-row__detail">8 resources open</span>
-        </span>
-        <span class="myp-row__go">Enter portal<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
-      </a>
+<section class="myp-section" id="gradeSec" aria-labelledby="gradeTitle">
+  <h2 class="myp-section__title" id="gradeTitle">Where will you begin?</h2>
+  <ul class="myp-cards">
+    <li class="myp-card myp-card--year">
+      <h3>MYP 1 &amp; 2</h3>
+      <p>Build the foundations. Explore design problems, develop ideas and learn by making.</p>
+      <a class="myp-action" href="myp1-2/index.html">Enter MYP 1 &amp; 2<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></a>
     </li>
-    <li>
-      <a class="myp-row" href="myp3/index.html">
-        <span class="myp-row__lead" aria-hidden="true">3</span>
-        <span class="myp-row__text">
-          <span class="myp-row__meta">Year 3 &middot; Applied analysis &amp; planning</span>
-          <span class="myp-row__title">MYP 3 Design</span>
-          <span class="myp-row__body">Criterion A complete, Criterion B underway, formative practice, and the frameworks that plan and pitch the work.</span>
-          <span class="myp-row__points"><span>Criterion A, all four strands</span><span>Criterion B, strand i</span><span>Brief Builder &amp; Research Planner</span></span>
-          <span class="myp-row__detail">7 resources open</span>
-        </span>
-        <span class="myp-row__go">Enter portal<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
-      </a>
+    <li class="myp-card myp-card--year">
+      <h3>MYP 3</h3>
+      <p>Develop your process. Research with purpose and turn evidence into stronger ideas.</p>
+      <a class="myp-action" href="myp3/index.html">Enter MYP 3<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></a>
     </li>
-    <li>
-      <a class="myp-row" href="myp4-5/index.html">
-        <span class="myp-row__lead" aria-hidden="true">4&ndash;5</span>
-        <span class="myp-row__text">
-          <span class="myp-row__meta">Years 4 &amp; 5 &middot; Senior portfolio &amp; full cycle</span>
-          <span class="myp-row__title">MYP 4 &amp; 5 Design</span>
-          <span class="myp-row__body">Complete Criterion A, this year&rsquo;s units and summative tasks, the full framework index, and the class journey log.</span>
-          <span class="myp-row__points"><span>Criterion A complete, Criterion B strands i&ndash;iii</span><span>This year&rsquo;s units &amp; summative tasks</span><span>Our Journey class log</span></span>
-          <span class="myp-row__detail">7 resources open</span>
-        </span>
-        <span class="myp-row__go">Enter portal<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
-      </a>
+    <li class="myp-card myp-card--year">
+      <h3>MYP 4 &amp; 5</h3>
+      <p>Take your project further. Find strand guides, portfolio support and 43 frameworks.</p>
+      <a class="myp-action" href="myp4-5/index.html">Enter MYP 4 &amp; 5<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></a>
     </li>
   </ul>
 </section>
 
-<section class="myp-panel" aria-labelledby="refTitle">
-  <h2 class="myp-panel__title" id="refTitle">Reference</h2>
-  <ul class="myp-list">
-    <li>
-      <a class="myp-row" href="appendix-citations.html">
-        <span class="myp-row__lead" aria-hidden="true"><span class="myp-icon myp-icon--file-text"></span></span>
-        <span class="myp-row__text">
-          <span class="myp-row__title">Appendix, citations &amp; bibliography</span>
-          <span class="myp-row__body">How to build your appendix, cite a source properly, and format your Bibliography &mdash; the mechanics that sit underneath every criterion, checked against the current MYP Design Guide.</span>
-        </span>
-        <span class="myp-row__go">Open<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
-      </a>
+<section class="myp-section" aria-labelledby="helpTitle">
+  <h2 class="myp-section__title" id="helpTitle">A little help along the way.</h2>
+  <ul class="myp-cards">
+    <li class="myp-card">
+      <p class="myp-category">Reference</p>
+      <h3>Cite with confidence</h3>
+      <p>Build your appendix and bibliography using MLA&nbsp;9.</p>
+      <a class="myp-action" href="appendix-citations.html">Open citation guide<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></a>
     </li>
-    <li>
-      <a class="myp-row" href="tsc.html">
-        <span class="myp-row__lead" aria-hidden="true"><span class="myp-icon myp-icon--book-open"></span></span>
-        <span class="myp-row__text">
-          <span class="myp-row__title">Task-specific clarifications</span>
-          <span class="myp-row__body">The source wording this site&rsquo;s guides are built from &mdash; MYP 1 Criterion A, MYP 2 Criteria A &amp; B, and MYP 3 Criteria A &amp; B.</span>
-        </span>
-        <span class="myp-row__go">Open<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></span>
-      </a>
+    <li class="myp-card">
+      <p class="myp-category">Assessment</p>
+      <h3>Know what is expected</h3>
+      <p>Read the task-specific clarifications for your year.</p>
+      <a class="myp-action" href="tsc.html">View clarifications<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></a>
+    </li>
+    <li class="myp-card">
+      <p class="myp-category">For teachers</p>
+      <h3>Your teaching toolkit</h3>
+      <p>Find IB/MYP references and curated design resources.</p>
+      <a class="myp-action" href="teacher-bookmarks.html">Browse bookmarks<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></a>
     </li>
   </ul>
 </section>
@@ -432,8 +223,7 @@ body.wl-open{overflow:hidden}
 </main>
 
 <footer class="myp-footer">
-  <p class="myp-footer__crumb"><span>Design Team - SIS</span><span>IB MYP Design &middot; Years 1&ndash;5</span></p>
-  <p class="myp-footer__links"><a href="myp1-2/index.html">MYP 1 &amp; 2</a><a href="myp3/index.html">MYP 3</a><a href="myp4-5/index.html">MYP 4 &amp; 5</a><a href="myp4-5/frameworks.html">Frameworks</a><a href="appendix-citations.html">MLA 9 &amp; appendix</a></p>
+  <p class="myp-footer__crumb"><span>MYP Digital Design</span><span>Design Team &middot; SIS</span></p>
 </footer>
 
 <button class="totop" id="totop" aria-label="Back to top" title="Back to top">
@@ -469,43 +259,6 @@ body.wl-open{overflow:hidden}
     onScroll();
   })();
 
-  // --- scroll reveal ---
-  (function(){
-    if(!('IntersectionObserver' in window)) return;
-    var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if(mq.matches) return;
-    document.documentElement.classList.add('js-anim');
-
-    var SEL = '.myp-panel';
-
-    // bidirectional: eases in whether you arrive scrolling down or back up
-    var io = new IntersectionObserver(function(entries){
-      for(var i=0;i<entries.length;i++){
-        var e = entries[i];
-        if(e.isIntersecting) e.target.classList.add('in');
-        else e.target.classList.remove('in');
-      }
-    }, {rootMargin:'14% 0px 14% 0px', threshold:0});
-
-    function arm(root){
-      var els = (root || document).querySelectorAll(SEL);
-      for(var i=0;i<els.length;i++){
-        var el = els[i];
-        if(el.classList.contains('reveal')) continue;
-        el.classList.add('reveal');
-        // stagger siblings in the same parent, capped so nothing waits long
-        var par = el.parentNode;
-        if(!par.__revealIdx) par.__revealIdx = 0;
-        el.style.setProperty('--rd', Math.min(par.__revealIdx * 55, 220) + 'ms');
-        par.__revealIdx++;
-        io.observe(el);
-      }
-    }
-
-    window.__armReveal = arm;
-    arm(document);
-  })();
-
 
   // --- welcome overlay with a rotating quote ---
   (function(){
@@ -526,8 +279,8 @@ body.wl-open{overflow:hidden}
       ["To design is to communicate clearly by whatever means you can control.", "Milton Glaser"],
       ["Design creates culture. Culture shapes values.", "Robert L. Peters"],
       ["Everything is designed. Few things are designed well.", "Brian Reed"],
-      ["Perfection is achieved when there is nothing left to take away.", "Antoine de Saint-Exup\u00e9ry"],
-      ["Engineers create the world that has never been.", "Theodore von K\u00e1rm\u00e1n"],
+      ["Perfection is achieved when there is nothing left to take away.", "Antoine de Saint-Exupéry"],
+      ["Engineers create the world that has never been.", "Theodore von Kármán"],
       ["The best way to predict the future is to invent it.", "Alan Kay"],
       ["Make it work, make it right, make it fast.", "Kent Beck"],
       ["Innovation distinguishes between a leader and a follower.", "Steve Jobs"],
@@ -541,7 +294,7 @@ body.wl-open{overflow:hidden}
     var q  = document.getElementById('wlQuote');
     var w  = document.getElementById('wlWho');
     var pick = QUOTES[Math.floor(Math.random() * QUOTES.length)];
-    q.textContent = '\u201c' + pick[0] + '\u201d';
+    q.textContent = '“' + pick[0] + '”';
     w.textContent = pick[1];
 
     wl.hidden = false;

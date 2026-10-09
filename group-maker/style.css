@@ -24,17 +24,17 @@ body{margin:0}
   color:var(--myp-text);font:400 18px/30px var(--myp-font-body);cursor:pointer;-webkit-appearance:none;appearance:none}
 .gm-select-wrap{position:relative}
 .gm-select-wrap::after{content:"";position:absolute;right:16px;bottom:17px;width:20px;height:20px;pointer-events:none;
-  background-color:var(--myp-accent);-webkit-mask:url("../assets/icons/chevron-down.svg") no-repeat center / contain;
+  background-color:var(--myp-interaction);-webkit-mask:url("../assets/icons/chevron-down.svg") no-repeat center / contain;
   mask:url("../assets/icons/chevron-down.svg") no-repeat center / contain}
 .gm-select option{color:#111;background:#fff}
 
 .gender-toggle{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0}
 .gender-btn{min-height:64px;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;
   border:1px solid var(--myp-border);border-radius:var(--myp-radius-button);background:var(--myp-tint);
-  color:var(--myp-accent);font:600 18px/26px var(--myp-font-body);cursor:pointer}
+  color:var(--myp-interaction);font:600 18px/26px var(--myp-font-body);cursor:pointer}
 .gender-btn .shape{width:24px;height:24px}
 .gender-btn:hover{color:var(--myp-hover);border-color:var(--myp-hover)}
-.gender-btn:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.gender-btn:focus-visible{outline:2px solid var(--myp-interaction);outline-offset:2px}
 .gender-btn[data-gender="Boy"].active{color:var(--boy);background:var(--boy-tint);border-color:var(--boy);box-shadow:inset 0 0 0 1px var(--boy)}
 .gender-btn[data-gender="Girl"].active{color:var(--girl);background:var(--girl-tint);border-color:var(--girl);box-shadow:inset 0 0 0 1px var(--girl)}
 
@@ -65,7 +65,7 @@ body{margin:0}
   border-radius:var(--myp-radius-field);background:var(--myp-surface);color:var(--myp-text);font:500 18px/26px var(--myp-font-body);
   -moz-appearance:textfield}
 .gm-stepper input::-webkit-outer-spin-button,.gm-stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.gm-stepper input:focus{outline:none;border-color:var(--myp-accent);box-shadow:0 0 0 1px var(--myp-accent)}
+.gm-stepper input:focus{outline:none;border-color:var(--myp-interaction);box-shadow:0 0 0 1px var(--myp-interaction)}
 .gm-stepper .myp-button{min-width:44px;min-height:44px;padding:8px;font-size:20px}
 .gm-actions{display:flex;flex-wrap:wrap;gap:12px}
 .gm-actions .myp-button{min-width:160px}
