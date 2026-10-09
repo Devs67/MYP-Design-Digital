@@ -251,6 +251,8 @@ Session 6 (lesson experience app): see step 6 below and `lesson-experience-app/R
 7. Final check of the whole site, then merge to `main` only after Dev says yes.
 8. **Berry interaction colour + new Home.** See the section below. Dev's numbering; it runs
    before step 7.
+9. **Real glass everywhere + the gliding selection pill.** See the section below. Runs after
+   step 8 and before step 7.
 
 ## Step 8: berry interaction colour and the new Home
 
@@ -349,6 +351,60 @@ stays transform/opacity, under ~600 ms, inside `prefers-reduced-motion: no-prefe
 
 Check: no layout shift or horizontal scroll, text stays readable over the moving background,
 berry links work by keyboard and touch; desktop, 390 px and reduced motion.
+
+## Step 9: real glass everywhere and the gliding selection pill
+
+Dev's feedback after step 8: the glass look is not coming through, and the gliding pill from
+the "Glide" frames (`88:1094` … `88:2086`, the black "Selection pill" behind the active item)
+is missing. Dev wants both **across the whole website**, including the lesson experience app.
+
+### Glass
+
+The page should read as frosted glass over the moving blue fields, not white cards on blue.
+- Header, tools bar, section panels, **cards** and dialogs all get glass: translucent surface
+  (cards ~72–80% light / ~70% dark, panels ~80–86%, dialogs and long reading panels stay ~94%
+  for legibility), `backdrop-filter: blur(18–24px) saturate(140%)` with the `-webkit-` pair, a
+  1px border plus a faint top highlight (inset 0 1px 0 rgba(255,255,255,.6); dark: .08), and
+  the soft shadow. This replaces "cards inside a panel are solid surfaces".
+- With the fluid background moving behind, the blur must be visible: check that colour shifts
+  show through cards on Home, a workspace and a criterion page.
+- Text contrast is checked on the glass at its lightest and darkest point over the fields
+  (body text ≥ 4.5:1, berry links ≥ 4.5:1). Raise opacity where it fails.
+- Performance: on small or touch screens (`(max-width: 900px)`, `(hover: none)`) keep the
+  translucency but use 10–12px blur and only on the header, tools bar, dialogs and the cards in
+  view; never blur more than a dozen large layers at once. `rgba()` fallbacks before every
+  `color-mix()`. Update the Glass paragraph in `CLAUDE.md`.
+
+### Gliding selection pill
+
+One shared, dependency-free script, `assets/glide.js` (plain JS, IIFE, `var`, guarded), linked
+on every page after `theme.js`. Any group marked `data-glide` gets one pill element behind its
+items that **slides to the selected or clicked item** instead of the highlight jumping.
+- Apply it to every selector group on the site: header year tabs, Light / Dark, the tools bar
+  where it has a current item, strand tabs (i–iv) on every criterion page, the criterion
+  navigation (A–D) on the three workspaces, framework / bookmark / units filter chips, the
+  teacher section filter, quiz option groups where one answer is chosen, the group maker size
+  control, and the lesson app view switcher (Timeline / Cards / Blueprint / Resources), which
+  needs the same behaviour in React and a rebuild.
+- Look: pill = berry tint fill with a 1px berry edge and soft shadow; the selected label is bold
+  berry. (The Glide frames' black pill becomes berry tint under the berry colour rules.)
+- Motion: `transform: translateX()` plus `width`, 280–350 ms, ease-out; it moves with the A → B
+  content transition from step 8. `width` is an approved exception (the pill is absolutely
+  positioned, so nothing else reflows). Under reduced motion the pill jumps with no animation.
+- Links that go to another page (year tabs, workspace criteria): add cross-document view
+  transitions (`@view-transition { navigation: auto; }` with a shared `view-transition-name` on
+  the pill) so it glides between pages in browsers that support it; other browsers simply load
+  the new page with the pill already in place.
+- Behaviour stays correct without JS (the selected item keeps its normal highlight), with
+  keyboard (arrow keys / Tab), on resize and font load (re-measure), in both themes, and when
+  a group wraps onto two lines on mobile (the pill follows the item's row).
+- Never change tab behaviour, deep links (`#ii`), checklist panels or quiz scoring.
+
+### Checking
+
+Screen-record or screenshot sequences of the pill moving on Home, a workspace, a criterion page
+and the lesson app; glass visibly blurring the moving fields; contrast pass; reduced motion;
+1440 and 390, light and dark.
 
 ## Checking, every session
 
