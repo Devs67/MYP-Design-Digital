@@ -159,7 +159,9 @@ Redirect pages (`criterion-a.html`, `criterion-b.html`, `frameworks.html`,
 
 Run each in a **fresh chat** to keep cost down. Each ends with a push, screenshots and a stop.
 
-**Status:** sessions 1 and 2 are done; session 3 (MYP 3) is next.
+**Status:** sessions 1 and 2 are done. Next is session 3 (MYP 3), or step 8 (berry) first if
+later sessions should be built in berry. Step 8 must also repoint the section 12 controls
+(`.myp-chips`, `.myp-seg`, `.fw__src` rows in `myp4-5/frameworks.html`), which use `--myp-accent`.
 
 Session 1: commit `bb3536d` laid the foundation (`assets/glass.css`, backdrops, Lucide icons,
 `design/link-glass.js`, Light/Dark control and Search dialog in `assets/theme.js`, `CLAUDE.md`
