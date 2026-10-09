@@ -1,0 +1,176 @@
+/* ============================================================
+   Worksheets: the Brief Builder guide and its Task Sheet.
+   Link it just before glass.css (glass.css stays last in <head>):
+     <link rel="stylesheet" href="../assets/worksheet.css">
+     <link rel="stylesheet" href="../assets/glass.css">
+
+   Blue Glass tokens only (assets/glass.css section 1). Class names
+   start with ws- so nothing here meets the strand-page classes in
+   glass.css. The few unprefixed names (.blank, .analysis-textarea,
+   .checklist, .check-item, .print-hint) are the hooks the Task
+   Sheet script uses; keep them.
+
+   Each part of a worksheet is a .myp-panel (glass.css section 10).
+   Colour variants: default blue, --warn amber, --clay red-brown,
+   --ok green. Printing always comes out light.
+   ============================================================ */
+
+@page{margin:.6in}
+
+/* ---- hero extras ---- */
+.ws-tags{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0;padding:0;list-style:none}
+
+/* ---- a numbered part ---- */
+.ws-part__head{display:flex;align-items:center;gap:12px}
+.ws-num{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:28px;padding:0 10px;
+  border-radius:var(--myp-radius-chip);background:var(--myp-tint);color:var(--myp-accent);
+  font:600 12px/1 var(--myp-font-mono);letter-spacing:.04em}
+.ws-part p{margin:0;font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-body)}
+.ws-part p + p{margin-top:12px}
+.ws-part strong{color:var(--myp-text);font-weight:600}
+.ws-part .ws-lede{color:var(--myp-muted)}
+
+/* ---- callouts ---- */
+.ws-callout{padding:16px 20px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-tint)}
+.ws-callout__head{display:flex;align-items:center;gap:8px;margin:0 0 8px;color:var(--myp-accent);
+  font:600 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase}
+.ws-callout__head svg{width:16px;height:16px;flex:0 0 16px}
+.ws-part .ws-callout p{color:var(--myp-text)}
+.ws-callout--warn{background:var(--myp-warn-tint);border-color:rgba(138,91,18,.28)}
+.ws-callout--warn .ws-callout__head{color:var(--myp-warn)}
+.ws-callout--clay{background:var(--clay-tint);border-color:rgba(168,64,47,.28)}
+.ws-callout--clay .ws-callout__head{color:var(--clay)}
+.ws-callout--ok{background:var(--myp-ok-tint);border-color:rgba(35,107,80,.28)}
+.ws-callout--ok .ws-callout__head{color:var(--myp-ok)}
+:root.dark .ws-callout--warn,:root.dark .ws-callout--clay,:root.dark .ws-callout--ok{border-color:var(--myp-border)}
+.ws-questions{margin:10px 0 0;padding-left:22px;display:grid;gap:6px}
+.ws-questions li{font-size:15px;line-height:24px;color:var(--myp-text)}
+
+/* ---- reasons: four short cards ---- */
+.ws-reasons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ws-reason{display:flex;gap:12px;padding:16px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);
+  background:var(--myp-surface)}
+.ws-reason svg{flex:0 0 22px;width:22px;height:22px;margin-top:2px;color:var(--myp-accent)}
+.ws-part .ws-reason p{font-size:15px;line-height:24px}
+
+/* ---- the three-step builder ---- */
+.ws-steps{display:grid;margin:0;padding:0;list-style:none}
+.ws-step{display:grid;grid-template-columns:40px minmax(0,1fr);gap:16px}
+.ws-step__rail{display:flex;flex-direction:column;align-items:center}
+.ws-step__n{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--myp-accent);color:var(--myp-on-accent);font:600 15px/1 var(--myp-font-body)}
+.ws-step__line{flex:1;width:2px;min-height:24px;margin:6px 0;background:var(--myp-border)}
+.ws-step:last-child .ws-step__line{display:none}
+.ws-step__body{padding:4px 0 24px}
+.ws-step:last-child .ws-step__body{padding-bottom:0}
+.ws-step__body h3{margin:0 0 6px;font:500 20px/28px var(--myp-font-display);letter-spacing:-.01em;color:var(--myp-text)}
+.ws-part .ws-formula{margin:12px 0 0;padding:12px 16px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);
+  background:var(--myp-tint);color:var(--myp-text);font:400 14px/23px var(--myp-font-mono)}
+
+/* ---- worked examples ---- */
+.ws-example{border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface);overflow:hidden}
+.ws-example + .ws-example{margin-top:16px}
+.ws-example__top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:14px 20px;
+  border-bottom:1px solid var(--myp-border);background:var(--myp-tint)}
+.ws-example__top .myp-chip{background:var(--myp-surface)}
+.ws-example__name{margin:0;font:600 17px/24px var(--myp-font-body);color:var(--myp-accent)}
+.ws-example--warn .ws-example__top{background:var(--myp-warn-tint)}
+.ws-example--warn .ws-example__name{color:var(--myp-warn)}
+.ws-example--ok .ws-example__top{background:var(--myp-ok-tint)}
+.ws-example--ok .ws-example__name{color:var(--myp-ok)}
+.ws-example__body{padding:18px 20px 20px}
+.ws-part .ws-example__problem{margin:0 0 12px;font-style:italic;color:var(--myp-muted)}
+.ws-fields{margin:0}
+.ws-field{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:10px 0;border-top:1px solid var(--myp-tint)}
+.ws-field:first-child{border-top:0;padding-top:0}
+.ws-field dt{padding-top:3px;color:var(--myp-muted);
+  font:600 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase}
+.ws-field dd{margin:0;font-size:15px;line-height:24px;color:var(--myp-body)}
+
+/* the student's own analysis under an example */
+.ws-analysis{margin-top:16px;padding-top:16px;border-top:1px dashed var(--myp-border)}
+.ws-label{display:block;margin:0 0 8px;color:var(--myp-muted);
+  font:600 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase}
+.analysis-textarea{display:block;width:100%;min-height:104px;margin:0;padding:12px 14px;resize:none;overflow:hidden;
+  border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-tint);
+  color:var(--myp-text);font:400 16px/25px var(--myp-font-body)}
+.analysis-textarea::placeholder{color:var(--myp-muted);opacity:1;font-style:italic}
+.analysis-textarea:focus{outline:none;border-color:var(--myp-accent);box-shadow:0 0 0 1px var(--myp-accent)}
+
+/* ---- task: evidence cards and word bank ---- */
+.ws-evidence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ws-ev{padding:14px 16px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-tint);
+  font-size:15px;line-height:24px;color:var(--myp-text)}
+.ws-ev__kind{display:block;margin:0 0 6px;color:var(--myp-accent);
+  font:600 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase}
+.ws-ev--ok{background:var(--myp-ok-tint)}
+.ws-ev--ok .ws-ev__kind{color:var(--myp-ok)}
+.ws-ev--warn{background:var(--myp-warn-tint)}
+.ws-ev--warn .ws-ev__kind{color:var(--myp-warn)}
+.ws-wordbank{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 0;padding:0;list-style:none}
+.ws-wordbank li{padding:4px 12px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-chip);background:var(--myp-surface);
+  color:var(--myp-text);font:500 13px/22px var(--myp-font-mono)}
+
+/* ---- task: fill-in sentences ---- */
+.ws-fill{padding:20px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface)}
+.ws-fill__head{display:flex;align-items:center;gap:10px;margin:0 0 10px}
+.ws-fill__n{width:28px;height:28px;flex:0 0 28px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  background:var(--myp-accent);color:var(--myp-on-accent);font:600 13px/1 var(--myp-font-mono)}
+.ws-fill__head h3{margin:0;font:500 18px/26px var(--myp-font-display);color:var(--myp-text)}
+.fillrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 8px;font-size:16px;line-height:2.2;color:var(--myp-body)}
+.blank{flex:0 0 auto;width:120px;max-width:100%;margin:0;padding:2px 6px;border:0;border-bottom:2px dotted var(--myp-muted);
+  border-radius:0;background:transparent;color:var(--myp-text);font:500 15px/24px var(--myp-font-body)}
+.blank.wide{width:180px}
+.blank::placeholder{color:var(--myp-muted);opacity:1;font-style:italic;font-weight:400}
+.blank:focus{outline:none;border-bottom:2px solid var(--myp-accent);background:var(--myp-tint)}
+
+/* ---- task: self-check (custom boxes) ---- */
+.checklist{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:8px}
+.check-item{margin:0}
+.check-item label{position:relative;display:flex;align-items:flex-start;gap:12px;padding:12px 14px;cursor:pointer;
+  border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface)}
+.check-item input[type="checkbox"]{position:absolute;opacity:0;pointer-events:none}
+.check-item .box{flex:0 0 20px;width:20px;height:20px;margin-top:2px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--myp-border);background:var(--myp-surface);color:var(--myp-on-accent)}
+.check-item .box svg{width:12px;height:12px;opacity:0}
+.check-item input:checked + .box{background:var(--myp-accent);border-color:var(--myp-accent)}
+.check-item input:checked + .box svg{opacity:1}
+.check-item input:focus-visible + .box{outline:2px solid var(--myp-accent);outline-offset:2px}
+.check-item .txt{font-size:15px;line-height:24px;color:var(--myp-body)}
+.check-item input:checked ~ .txt{color:var(--myp-muted)}
+
+/* ---- actions ---- */
+.ws-actions{display:flex;flex-wrap:wrap;gap:8px}
+.print-hint,.ws-part .print-hint{margin:0;font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-muted)}
+.print-hint.warn,.ws-part .print-hint.warn{color:var(--myp-error)}
+
+@media (max-width:720px){
+  .ws-reasons,.ws-evidence{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .ws-field{grid-template-columns:1fr;gap:2px}
+  .ws-example__top,.ws-example__body{padding-left:16px;padding-right:16px}
+  .ws-step{grid-template-columns:32px minmax(0,1fr);gap:12px}
+  .ws-step__n{width:32px;height:32px;flex-basis:32px;font-size:14px}
+  .ws-fill{padding:16px}
+  .ws-actions .myp-button{flex:1 1 0}
+}
+
+@media (prefers-reduced-motion:no-preference){
+  .check-item .box{transition:transform .15s var(--myp-ease)}
+  .check-item input:active + .box{transform:scale(.9)}
+}
+
+/* print: always light, no chrome, answers kept whole */
+@media print{
+  html:root.dark{color-scheme:light;
+    --myp-bg:#FFFFFF;--myp-surface:#FFFFFF;--myp-text:#111111;--myp-body:#344054;--myp-muted:#515D70;
+    --myp-accent:#2862AE;--myp-border:#BACEE9;--myp-tint:#E8F1FF;--myp-on-accent:#FFFFFF;
+    --myp-glass-fill:#FFFFFF;--myp-glass-border:#BACEE9;--myp-panel-fill:#FFFFFF;
+    --myp-ok:#236B50;--myp-ok-tint:#DDF3E9;--myp-warn:#8A5B12;--myp-warn-tint:#FFF1D6;--myp-error:#B42318;
+    --clay:#A8402F;--clay-tint:#FBEAE6}
+  .topbar,.myp-tools,.myp-footer,.ws-noprint{display:none !important}
+  .myp-hero{margin-top:0}
+  .myp-panel{box-shadow:none;background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .ws-example,.ws-callout,.ws-reason,.ws-fill,.ws-ev,.ws-step,.ws-analysis,.check-item{break-inside:avoid}
+}

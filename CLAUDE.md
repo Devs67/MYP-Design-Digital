@@ -84,6 +84,11 @@ eyebrows, micro labels and codes. Fraunces is retired. Loaded from Google Fonts.
 Corner radii: 24px on panels and dialogs, 16px on cards and buttons, 12px on fields and
 checklist rows, pill (999px) on chips and progress bars.
 
+Worksheets (the Brief Builder and its Task Sheet) also link `assets/worksheet.css`, just before
+`glass.css`; its classes start with `ws-`. Worksheets with a "Save my copy (.html)" button
+(Research Planner, Product Analysis) keep their CSS inline instead, written on the tokens with a
+light fallback (`var(--myp-surface,#FFFFFF)`), because the downloaded copy cannot reach `assets/`.
+
 Icons: Lucide outline SVGs in `assets/icons/`, 20–24px, stroke 1.8, always beside a text label.
 See `assets/icons/README.md`.
 
@@ -138,7 +143,7 @@ Worker key: `<script src="../assets/progress.js" data-page="criterion-a"></scrip
 "Save your progress." card above every `.clbar` and the Get / Enter / Connected dialogs. Never
 change its `hash()` or `labelOf()`, and never change a page's `data-page` key: saved ticks and
 teacher notes hang off both. Criteria B and C still have their own inline copy until they are
-rebuilt.
+rebuilt. MYP 3 checklists are in-memory only: no Worker page key exists for them yet.
 
 ---
 
