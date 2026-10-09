@@ -1,217 +1,161 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, ExternalLink, Pause, Play, RotateCcw, X } from 'lucide-react';
 import { Lesson } from '../types/curriculum';
-import { X, ChevronLeft, ChevronRight, Clock, Play, Pause, RotateCcw, ExternalLink, Sparkles } from 'lucide-react';
+import { cleanLabel, formatDate, lessonMeta, resourceTitle } from '../lib';
 
 interface ProjectorPresentationModalProps {
-  isOpen: boolean;
   onClose: () => void;
   lessons: Lesson[];
   unitTitle: string;
 }
 
-export const ProjectorPresentationModal: React.FC<ProjectorPresentationModalProps> = ({
-  isOpen,
-  onClose,
-  lessons,
-  unitTitle,
-}) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [timerSeconds, setTimerSeconds] = useState(600); // 10 minutes default
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
+const TIMER_START = 600; // 10 minutes
+
+function formatTimer(totalSec: number) {
+  const m = Math.floor(totalSec / 60);
+  const s = totalSec % 60;
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+/** Full-screen view for the classroom board: one session at a time, with an activity timer. */
+export const ProjectorPresentationModal: React.FC<ProjectorPresentationModalProps> = ({ onClose, lessons, unitTitle }) => {
+  const [index, setIndex] = useState(() => {
+    const latest = lessons.findIndex((l) => l.isLatest);
+    return latest !== -1 ? latest : Math.max(0, lessons.length - 1);
+  });
+  const [seconds, setSeconds] = useState(TIMER_START);
+  const [running, setRunning] = useState(false);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    // If there is a latest lesson, start there
-    const latestIdx = lessons.findIndex((l) => l.isLatest);
-    if (latestIdx !== -1) {
-      setCurrentIndex(latestIdx);
-    } else {
-      setCurrentIndex(lessons.length - 1);
+    if (!running) return;
+    if (seconds <= 0) {
+      setRunning(false);
+      return;
     }
-  }, [lessons]);
+    const t = window.setTimeout(() => setSeconds((s) => s - 1), 1000);
+    return () => window.clearTimeout(t);
+  }, [running, seconds]);
 
   useEffect(() => {
-    let interval: any = null;
-    if (isTimerRunning && timerSeconds > 0) {
-      interval = setInterval(() => {
-        setTimerSeconds((prev) => prev - 1);
-      }, 1000);
-    } else if (timerSeconds === 0) {
-      setIsTimerRunning(false);
-    }
-    return () => clearInterval(interval);
-  }, [isTimerRunning, timerSeconds]);
+    const opener = document.activeElement as HTMLElement | null;
+    document.body.classList.add('myp-noscroll');
+    if (closeRef.current) closeRef.current.focus();
+    return () => {
+      document.body.classList.remove('myp-noscroll');
+      if (opener && typeof opener.focus === 'function') opener.focus();
+    };
+  }, []);
 
-  if (!isOpen || lessons.length === 0) return null;
+  if (lessons.length === 0) return null;
+  const lesson = lessons[Math.min(index, lessons.length - 1)];
+  const last = lessons.length - 1;
 
-  const currentLesson = lessons[currentIndex] || lessons[0];
-
-  const formatTimer = (totalSec: number) => {
-    const m = Math.floor(totalSec / 60);
-    const s = totalSec % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    const tag = (e.target as HTMLElement).tagName;
+    if (e.key === 'Escape') onClose();
+    else if (e.key === 'ArrowLeft' && tag !== 'INPUT') setIndex((i) => Math.max(0, i - 1));
+    else if (e.key === 'ArrowRight' && tag !== 'INPUT') setIndex((i) => Math.min(last, i + 1));
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#0f171d]/95 backdrop-blur-md text-white flex flex-col justify-between p-6 sm:p-10 animate-fadeIn">
-      {/* Top bar for projector */}
-      <div className="flex items-center justify-between border-b border-white/10 pb-4">
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-xs uppercase tracking-widest text-[#e2803b] font-semibold bg-[#e2803b]/10 px-3 py-1 rounded-full border border-[#e2803b]/30">
-            Whiteboard Projector View
-          </span>
-          <span className="text-sm font-mono text-white/60">
-            {unitTitle} · Session {currentLesson.sessionNumber} of {lessons.length}
-          </span>
+    <div className="lx-proj" role="dialog" aria-modal="true" aria-label="Projector view" onKeyDown={onKeyDown}>
+      <div className="lx-proj__bar">
+        <div className="lx-proj__where">
+          <p className="myp-eyebrow">Projector view</p>
+          <p className="lx-small">
+            {unitTitle} &middot; Session {lesson.sessionNumber} of {lessons.length}
+          </p>
         </div>
 
-        {/* Classroom Activity Timer */}
-        <div className="flex items-center gap-3 bg-white/5 px-4 py-1.5 rounded-full border border-white/10">
-          <Clock className="w-4 h-4 text-[#e2803b]" />
-          <span className="font-mono text-lg font-bold tracking-widest tabular-nums">
-            {formatTimer(timerSeconds)}
-          </span>
+        <div className="lx-timer" role="group" aria-label="Activity timer">
+          <span className="lx-timer__time" aria-live="off">{formatTimer(seconds)}</span>
           <button
             type="button"
-            onClick={() => setIsTimerRunning(!isTimerRunning)}
-            className="p-1 hover:text-[#e2803b] transition-colors cursor-pointer"
-            title={isTimerRunning ? 'Pause timer' : 'Start timer'}
+            className="lx-iconbtn"
+            onClick={() => setRunning((r) => !r)}
+            disabled={seconds === 0}
+            aria-label={running ? 'Pause timer' : 'Start timer'}
           >
-            {isTimerRunning ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+            {running ? <Pause size={20} strokeWidth={1.8} aria-hidden="true" /> : <Play size={20} strokeWidth={1.8} aria-hidden="true" />}
           </button>
           <button
             type="button"
+            className="lx-iconbtn"
             onClick={() => {
-              setIsTimerRunning(false);
-              setTimerSeconds(600);
+              setRunning(false);
+              setSeconds(TIMER_START);
             }}
-            className="p-1 hover:text-white transition-colors cursor-pointer"
-            title="Reset timer (10 mins)"
+            aria-label="Reset timer to 10 minutes"
           >
-            <RotateCcw className="w-3.5 h-3.5 text-white/50" />
+            <RotateCcw size={18} strokeWidth={1.8} aria-hidden="true" />
           </button>
         </div>
 
-        <button
-          type="button"
-          onClick={onClose}
-          className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
-        >
-          <X className="w-5 h-5 text-white" />
+        <button ref={closeRef} type="button" className="myp-button myp-button--secondary" onClick={onClose}>
+          <X size={20} strokeWidth={1.8} aria-hidden="true" />
+          Close
         </button>
       </div>
 
-      {/* Main Projector Content */}
-      <div className="max-w-5xl mx-auto w-full my-auto py-8">
-        <div className="space-y-6">
-          <div className="flex flex-wrap items-center gap-3 text-sm font-mono text-white/70">
-            <span className="text-[#e2803b] font-bold">
-              {currentLesson.critLabel}
-            </span>
-            <span>·</span>
-            <span>
-              {currentLesson.date.day} {currentLesson.date.mon} {currentLesson.date.sub ? `(${currentLesson.date.sub})` : ''}
-            </span>
-            {currentLesson.type === 'formative' && (
-              <>
-                <span>·</span>
-                <span className="text-[#7fceac] font-semibold">Formative Assessment</span>
-              </>
-            )}
-            {currentLesson.isLatest && (
-              <>
-                <span>·</span>
-                <span className="text-[#e2803b] font-bold flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5" /> Latest Session
-                </span>
-              </>
-            )}
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-display font-bold text-white tracking-tight leading-tight">
-            {currentLesson.title}
-          </h1>
-
-          <div className="flex flex-wrap gap-2">
-            {currentLesson.strands.map((strand, i) => (
-              <span
-                key={i}
-                className="text-xs font-mono px-3 py-1 rounded-full bg-white/10 text-white border border-white/20"
-              >
-                {strand}
-              </span>
+      <div className="lx-proj__main">
+        <p className="lx-proj__meta">
+          {lessonMeta(lesson)} &middot; {formatDate(lesson.date)}
+          {lesson.type === 'formative' && <span className="myp-chip">Formative</span>}
+          {lesson.isLatest && <span className="myp-chip myp-chip--live">Latest session</span>}
+        </p>
+        <h2 className="lx-proj__title">{lesson.title}</h2>
+        {lesson.paragraphs.map((p, i) => (
+          <p key={i} className="lx-proj__text">{p}</p>
+        ))}
+        {lesson.note && (
+          <p className="lx-note lx-proj__note">
+            <strong>{cleanLabel(lesson.note.label)}:</strong> {lesson.note.text}
+          </p>
+        )}
+        {lesson.resources.length > 0 && (
+          <div className="lx-actions">
+            {lesson.resources.map((r, i) => (
+              <a key={i} className="myp-button myp-button--primary" href={r.href} target="_blank" rel="noopener noreferrer">
+                {resourceTitle(r)}
+                <ExternalLink size={18} strokeWidth={1.8} aria-hidden="true" />
+                <span className="lx-sr">(opens in a new tab)</span>
+              </a>
             ))}
           </div>
-
-          <div className="space-y-4 text-lg sm:text-xl text-white/90 leading-relaxed font-sans max-w-4xl pt-2">
-            {currentLesson.paragraphs.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-
-          {currentLesson.note && (
-            <div className="p-5 rounded-2xl bg-[#e2803b]/15 border border-[#e2803b]/40 text-base leading-relaxed text-white/95 mt-6">
-              <strong className="text-[#e2803b] font-semibold mr-2">
-                {currentLesson.note.label}:
-              </strong>
-              {currentLesson.note.text}
-            </div>
-          )}
-
-          {/* Direct resource launchers */}
-          {currentLesson.resources.length > 0 && (
-            <div className="flex flex-wrap items-center gap-3 pt-4">
-              {currentLesson.resources.map((res, i) => (
-                <a
-                  key={i}
-                  href={res.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-[#14303c] font-semibold text-sm hover:bg-[#e2803b] hover:text-white transition-colors"
-                >
-                  <span className="font-mono text-xs uppercase opacity-75">{res.label}</span>
-                  <span>{res.text}</span>
-                  <ExternalLink className="w-4 h-4 ml-1" />
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
+        )}
       </div>
 
-      {/* Bottom projector navigation */}
-      <div className="flex items-center justify-between border-t border-white/10 pt-4 max-w-5xl mx-auto w-full">
+      <div className="lx-proj__nav">
         <button
           type="button"
-          onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
-          disabled={currentIndex === 0}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+          className="myp-button myp-button--secondary"
+          onClick={() => setIndex((i) => Math.max(0, i - 1))}
+          disabled={index === 0}
         >
-          <ChevronLeft className="w-5 h-5" />
-          <span className="text-sm font-medium">Previous Session</span>
+          <ArrowLeft size={20} strokeWidth={1.8} aria-hidden="true" />
+          Previous session
         </button>
-
-        <div className="flex items-center gap-1.5">
-          {lessons.map((_, i) => (
+        <div className="lx-dots">
+          {lessons.map((l, i) => (
             <button
-              key={i}
+              key={l.id}
               type="button"
-              onClick={() => setCurrentIndex(i)}
-              className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
-                i === currentIndex ? 'bg-[#e2803b] scale-125' : 'bg-white/30 hover:bg-white/60'
-              }`}
-              title={`Jump to session ${i + 1}`}
+              className="lx-dot"
+              aria-current={i === index ? 'true' : undefined}
+              aria-label={`Session ${l.sessionNumber}`}
+              onClick={() => setIndex(i)}
             />
           ))}
         </div>
-
         <button
           type="button"
-          onClick={() => setCurrentIndex((prev) => Math.min(lessons.length - 1, prev + 1))}
-          disabled={currentIndex === lessons.length - 1}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer"
+          className="myp-button myp-button--secondary"
+          onClick={() => setIndex((i) => Math.min(last, i + 1))}
+          disabled={index === last}
         >
-          <span className="text-sm font-medium">Next Session</span>
-          <ChevronRight className="w-5 h-5" />
+          Next session
+          <ArrowRight size={20} strokeWidth={1.8} aria-hidden="true" />
         </button>
       </div>
     </div>

@@ -83,7 +83,6 @@ export interface ClassData {
   kicker: string;
   title: string;
   intro: string;
-  bannerImage?: string;
   facts: UnitFact[];
   unitFrame?: UnitFrame | null;
   lessons: Lesson[];

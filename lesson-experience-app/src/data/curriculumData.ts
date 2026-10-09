@@ -11,7 +11,6 @@ export const CLASSES_DATA: Record<string, ClassData> = {
     "kicker": "Lesson Flow — Running Log",
     "title": "Sensing Our World: MYP 2A",
     "intro": "Every logged class session in sequence, from global problem identification through to developing ideas — tracking progress across Criteria A and B.",
-    "bannerImage": "images/unit_sensing_world_1790408347692.jpg",
     "facts": [
       {
         "label": "Class",
@@ -274,7 +273,6 @@ export const CLASSES_DATA: Record<string, ClassData> = {
     "kicker": "Lesson Flow — Running Log",
     "title": "Sensing Our World: MYP 2D",
     "intro": "Every logged class session in sequence, from specifications through to technical drawings — tracking progress across Criteria A and B.",
-    "bannerImage": "images/unit_sensing_world_1790408347692.jpg",
     "facts": [
       {
         "label": "Class",
@@ -477,7 +475,6 @@ export const CLASSES_DATA: Record<string, ClassData> = {
     "kicker": "Criterion B — Lesson Flow",
     "title": "Criterion B Lesson Flow: MYP 3B",
     "intro": "Developing mobile application solutions from design specifications through to user flow diagrams and high-fidelity interface wireframes.",
-    "bannerImage": "images/unit_coding_change_1790408359855.jpg",
     "facts": [
       {
         "label": "Class",
@@ -643,7 +640,6 @@ export const CLASSES_DATA: Record<string, ClassData> = {
     "kicker": "Lesson Flow — Running Log",
     "title": "Coding for Change: MYP 4",
     "intro": "Exploring community problem-solving through computational design, fishbone diagrams, CPFC analysis, and mobile wireframes.",
-    "bannerImage": "images/unit_coding_change_1790408359855.jpg",
     "facts": [
       {
         "label": "Class",
@@ -1006,7 +1002,6 @@ export const CLASSES_DATA: Record<string, ClassData> = {
     "kicker": "Upcoming Unit — Term 2",
     "title": "Foundations of Digital Design: MYP 1B",
     "intro": "An introduction to the MYP Design Cycle, computational thinking, safe digital collaboration, and interactive media creation.",
-    "bannerImage": "images/unit_coding_change_1790408359855.jpg",
     "facts": [
       {
         "label": "Class",
