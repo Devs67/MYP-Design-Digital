@@ -1241,6 +1241,8 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-chip--b{color:#fff;background:var(--b)}
 .myp-chip--c{color:#fff;background:var(--c)}
 .myp-chip--d{color:#fff;background:var(--d)}
+/* the dark-mode criterion colours are bright, so their chips take dark text */
+:root.dark .myp-chip--a,:root.dark .myp-chip--b,:root.dark .myp-chip--c,:root.dark .myp-chip--d{color:var(--myp-bg)}
 
 /* ---- stat cards ---- */
 .myp-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:0}
