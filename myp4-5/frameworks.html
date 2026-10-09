@@ -7,340 +7,140 @@
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-:root{
-  --ink:#14303C;
-  --paper:#EFF3F5;
-  --card:#FFFFFF;
-  --rule:#CBDCE2;
-  --rule-soft:#E3ECEF;
-  --slate:#516A74;
-  --amber:#B05A1C;
-
-  --a:#12707F;      --a-tint:#E1F1F3;
-  --b:#96700A;      --b-tint:#F8F0D9;
-  --c:#38722C;      --c-tint:#E7F1E3;
-  --d:#B23A2E;      --d-tint:#F8E8E6;
-  --x:#4B4A73;      --x-tint:#ECEBF4;
-
-  --display:"Fraunces",Georgia,serif;
-  --body:"Work Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
+/* criterion colours (dark versions live in theme.css); everything else is in glass.css */
+:root{--a:#12707F;--b:#96700A;--c:#38722C;--d:#B23A2E;--dev:#6A4C93}
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:var(--body);font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-}
-.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
-a{color:inherit}
+body{margin:0}
+:root{--x:#4B4A73}
+:root.dark{--x:#B9B7E8}
 
-/* home link */
-.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
-  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
-  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
-  background:var(--card);margin-bottom:20px;transition:.15s}
-.homelink:hover{border-color:var(--slate);color:var(--ink)}
-@media print{.homelink{display:none}}
-
-/* ---------- masthead ---------- */
-.mast{padding:54px 0 30px}
-.kicker{
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--amber);margin:0 0 14px;
-}
-.mast h1{
-  font-family:var(--display);font-weight:600;
-  font-size:clamp(30px,5.4vw,54px);line-height:1.08;
-  letter-spacing:-.02em;margin:0;max-width:17ch;
-}
-.mast p.lede{
-  margin:20px 0 0;font-size:17px;color:var(--slate);max-width:62ch;
+/* search and filters */
+.fwtools{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px;margin-top:24px}
+.fwtools .myp-input{flex:1 1 420px;margin:0}
+.fwtools .myp-button{flex:0 0 auto}
+.fwfilters{position:sticky;top:104px;z-index:20;width:var(--myp-col);margin:24px auto 0;padding:8px;
+  border:1px solid var(--myp-glass-border);border-radius:var(--myp-radius-card);background:var(--myp-glass-fill);
+  box-shadow:var(--myp-glass-shadow);-webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+.fwfilters .myp-chips__hint{padding-right:8px}
+.fwnone{width:var(--myp-col);margin:24px auto 0;padding:20px 24px;border:1px dashed var(--myp-border);
+  border-radius:var(--myp-radius-inner);background:var(--myp-glass-fill-soft);color:var(--myp-muted)}
+@media (max-width:760px){
+  .fwfilters{position:relative;top:0;margin-top:16px;padding:0;border:0;background:none;box-shadow:none;
+    -webkit-backdrop-filter:none;backdrop-filter:none}
+  .fwfilters .myp-chips{flex-wrap:nowrap;overflow-x:auto;padding:2px 2px 6px;-webkit-overflow-scrolling:touch}
+  .fwfilters .myp-chips button{flex:0 0 auto}
+  .fwfilters .myp-chips__hint{display:none}
 }
 
-/* ---------- filter bar ---------- */
-.filters{
-  position:sticky;top:62px;z-index:20;
-  background:color-mix(in srgb, var(--paper) 92%, transparent);
-  -webkit-backdrop-filter:blur(6px);
-  backdrop-filter:blur(6px);
-  border-bottom:1px solid var(--rule);
-  padding:12px 0;margin-bottom:8px;
-}
-.filters .wrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.filt{
-  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  padding:8px 14px;border:1px solid var(--rule);background:var(--card);
-  color:var(--slate);border-radius:7px;cursor:pointer;transition:.15s;
-}
-.filt:hover{border-color:var(--slate);color:var(--ink)}
-.filt.is-on{background:var(--ink-fixed);border-color:var(--ink-fixed);color:#fff}
-.filt__hint{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--slate);margin-left:auto;
-}
-
-/* ---------- criterion header ---------- */
-.crit{padding:52px 0 0}
-.crit__top{display:flex;gap:22px;align-items:flex-start;margin-bottom:8px}
-.crit__badge{
-  flex:0 0 auto;width:62px;height:62px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);font-weight:700;font-size:31px;color:#fff;
-}
-.crit__ttl h2{
-  font-family:var(--display);font-weight:600;
-  font-size:clamp(22px,3.2vw,32px);margin:0;letter-spacing:-.01em;
-}
-.crit__ttl p{margin:3px 0 0;font-size:14.5px;color:var(--slate)}
-.strands{
-  margin:18px 0 26px;padding:18px 22px;background:var(--card);
-  border:1px solid var(--rule);border-radius:12px;
-}
-.strands h3{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--slate);margin:0 0 12px;font-weight:500;
-}
-.strands ol{margin:0;padding-left:22px}
-.strands li{font-size:14.5px;padding:3px 0;color:var(--ink)}
-.strands li::marker{font-family:var(--mono);font-size:12px;color:var(--amber)}
-
-/* ---------- framework cards ---------- */
-.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.fw{scroll-margin-top:140px;
-  background:var(--card);border:1px solid var(--rule);
-  border-left-width:4px;border-radius:12px;
-  padding:24px 26px 26px;position:relative;
-}
-.fw__head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
-.fw h3{
-  font-family:var(--display);font-weight:600;font-size:21px;
-  margin:0;letter-spacing:-.01em;
-}
-.tag{
-  font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
-  text-transform:uppercase;padding:4px 8px;border-radius:7px;white-space:nowrap;
-}
-.tag--borrow{background:var(--x-tint);color:var(--x)}
-.tag--time{background:var(--rule-soft);color:var(--slate);margin-left:auto}
-.fw__what{margin:0 0 18px;font-size:14.5px;color:var(--slate)}
-.fw__block{margin-bottom:16px}
-.fw__block:last-child{margin-bottom:0}
-.fw__lbl{
-  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;margin:0 0 7px;font-weight:500;
-}
-.fw__block p{margin:0;font-size:14.5px}
-.fw__block ol{margin:0;padding-left:19px}
-.fw__block ol li{font-size:14.5px;padding:3px 0}
-.fw__block ol li::marker{font-family:var(--mono);font-size:11.5px}
-.strandsrc{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--rule-soft);
-  font-size:13px;color:var(--slate)}
-.strandsrc a{text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
-.strandsrc a:hover{text-decoration-color:var(--amber)}
-.fw__src{margin-top:18px;padding-top:15px;border-top:1px solid var(--rule-soft)}
-.fw__src a{display:block;font-size:13.5px;padding:3px 0;line-height:1.45;
-  text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:3px}
-.fw__src a:hover{text-decoration-color:var(--amber)}
-.srcnote{margin:6px 0 0 !important;font-size:13px !important;color:var(--slate);font-style:italic;line-height:1.5}
-.strandref{
-  font-family:var(--mono);font-size:11px;
-  padding:2px 6px;border-radius:7px;white-space:nowrap;
-}
-
-/* criterion colour binding */
-[data-crit="a"] .crit__badge,[data-crit="a"] .fw{border-left-color:var(--a)}
+/* a criterion group: heading on the backdrop, one panel per framework */
+.fwsec{width:var(--myp-col);margin:48px auto 0}
+.fwsec[hidden]{display:none}
+.crit__top{display:flex;align-items:center;gap:16px}
+.crit__badge{flex:0 0 auto;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  color:#fff;font:500 24px/1 var(--myp-font-display)}
+.crit__ttl h2{margin:0;font:500 var(--myp-section-size)/var(--myp-section-line) var(--myp-font-display);letter-spacing:-.025em;color:var(--myp-text)}
+.crit__ttl p{margin:4px 0 0;font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-muted)}
 [data-crit="a"] .crit__badge{background:var(--a)}
-[data-crit="a"] .fw__lbl,[data-crit="a"] .fw__block ol li::marker{color:var(--a)}
-[data-crit="a"] .strandref{background:var(--a-tint);color:var(--a)}
-[data-crit="b"] .crit__badge,[data-crit="b"] .fw{border-left-color:var(--b)}
 [data-crit="b"] .crit__badge{background:var(--b)}
-[data-crit="b"] .fw__lbl,[data-crit="b"] .fw__block ol li::marker{color:var(--b)}
-[data-crit="b"] .strandref{background:var(--b-tint);color:var(--b)}
-[data-crit="c"] .crit__badge,[data-crit="c"] .fw{border-left-color:var(--c)}
 [data-crit="c"] .crit__badge{background:var(--c)}
-[data-crit="c"] .fw__lbl,[data-crit="c"] .fw__block ol li::marker{color:var(--c)}
-[data-crit="c"] .strandref{background:var(--c-tint);color:var(--c)}
-[data-crit="d"] .crit__badge,[data-crit="d"] .fw{border-left-color:var(--d)}
 [data-crit="d"] .crit__badge{background:var(--d)}
-[data-crit="d"] .fw__lbl,[data-crit="d"] .fw__block ol li::marker{color:var(--d)}
-[data-crit="d"] .strandref{background:var(--d-tint);color:var(--d)}
-[data-crit="x"] .crit__badge,[data-crit="x"] .fw{border-left-color:var(--x)}
-[data-crit="x"] .crit__badge{background:var(--x);font-size:15px;letter-spacing:.08em}
-[data-crit="x"] .fw__lbl,[data-crit="x"] .fw__block ol li::marker{color:var(--x)}
-[data-crit="x"] .strandref{background:var(--x-tint);color:var(--x)}
+[data-crit="x"] .crit__badge{background:var(--x);font:600 14px/1 var(--myp-font-mono);letter-spacing:.04em}
+:root.dark [data-crit] .crit__badge{color:#0B1220}
 
-/* ---------- matrix ---------- */
-.matrix{margin-top:26px;background:var(--card);border:1px solid var(--rule);border-radius:12px;overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:620px}
-th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--rule-soft);font-size:14.5px}
-thead th{
-  background:var(--ink-fixed);color:#fff;font-family:var(--mono);
-  font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;
-}
-tbody tr:last-child td{border-bottom:0}
-td.mk{text-align:center;font-family:var(--mono);font-size:15px}
-.dot{color:var(--rule)}
+.strands{margin:20px 0 0;padding:20px 24px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-tint)}
+.strands h3{margin:0 0 10px;font:500 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--myp-accent)}
+.strands ol{margin:0;padding-left:22px}
+.strands li{padding:3px 0;font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-body)}
+.strands li::marker{font:500 13px var(--myp-font-mono);color:var(--myp-accent)}
+.strandsrc{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--myp-border);font-size:var(--myp-small-size);
+  line-height:var(--myp-small-line);color:var(--myp-muted)}
+
+.cards{display:grid;gap:0}
+.cards > .fw.myp-panel{width:auto;margin:24px 0 0;scroll-margin-top:200px}
+/* theme.css draws a corner glow on .fw; the panels stay clean */
+.fw::before{display:none}
+.cards > .fw[hidden]{display:none}
+.fw{border-left:4px solid var(--myp-border)}
+[data-crit="a"] .fw{border-left-color:var(--a)}
+[data-crit="b"] .fw{border-left-color:var(--b)}
+[data-crit="c"] .fw{border-left-color:var(--c)}
+[data-crit="d"] .fw{border-left-color:var(--d)}
+[data-crit="x"] .fw{border-left-color:var(--x)}
+.fw__head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.fw h3{margin:0 8px 0 0;font:500 var(--myp-card-size)/var(--myp-card-line) var(--myp-font-display);letter-spacing:-.02em;color:var(--myp-text)}
+.tag{display:inline-flex;padding:4px 10px;border-radius:var(--myp-radius-chip);font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;color:var(--myp-muted);background:var(--myp-tint)}
+.tag--borrow{color:var(--x);background:transparent;box-shadow:inset 0 0 0 1px var(--myp-border)}
+.fw__what{font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-body);max-width:80ch}
+.fw__block{max-width:84ch}
+.fw__block .fw__lbl{margin:0 0 6px;font:500 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--myp-accent)}
+.fw__block p{margin:0;font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-body)}
+.fw__block ol{margin:0;padding-left:22px}
+.fw__block ol li{padding:3px 0;font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-body)}
+.fw__block ol li::marker{font:500 13px var(--myp-font-mono);color:var(--myp-accent)}
+.fw__block b,.fw__block strong{color:var(--myp-text)}
+.strandref{display:inline-block;margin:2px 2px 0 0;padding:1px 8px;border-radius:var(--myp-radius-chip);
+  font:500 12px/20px var(--myp-font-mono);color:var(--myp-accent);background:var(--myp-tint);white-space:nowrap}
+
+/* resources read as list rows */
+.fw__src{display:grid;gap:8px;max-width:none}
+.fw__src a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;
+  border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface);
+  color:var(--myp-accent);font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);text-decoration:none}
+.fw__src a::after{content:"";flex:0 0 18px;width:18px;height:18px;background-color:currentColor;
+  -webkit-mask:url("../assets/icons/external-link.svg") no-repeat center / contain;mask:url("../assets/icons/external-link.svg") no-repeat center / contain}
+.fw__src a:hover{color:var(--myp-hover);border-color:var(--myp-hover)}
+.fw__src a:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.srcnote{margin:4px 0 0 !important;font-size:var(--myp-small-size) !important;line-height:var(--myp-small-line) !important;
+  color:var(--myp-muted) !important;font-style:italic}
+
+/* at a glance */
+.fwsec--matrix .matrix{margin-top:20px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);
+  background:var(--myp-surface);overflow-x:auto}
+.matrix table{width:100%;min-width:620px;border-collapse:collapse}
+.matrix th,.matrix td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--myp-tint);
+  font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-body)}
+.matrix thead th{background:var(--myp-tint);color:var(--myp-accent);font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--myp-border)}
+.matrix tbody tr:last-child td{border-bottom:0}
+.matrix td:first-child{font-weight:500;color:var(--myp-text)}
+.matrix td.mk{text-align:center;font:500 15px/1 var(--myp-font-mono)}
+.matrix th.n{text-align:center;width:64px}
+.dot{color:var(--myp-border)}
 .dot--a{color:var(--a)}.dot--b{color:var(--b)}.dot--c{color:var(--c)}.dot--d{color:var(--d)}
-th.n{text-align:center;width:70px}
-
-/* ---------- closing note ---------- */
-.note{
-  background:var(--ink-fixed);color:#D7E5EA;border-radius:12px;
-  padding:34px 32px;margin:46px 0 0;
-}
-.note h3{font-family:var(--display);color:#fff;font-weight:600;font-size:22px;margin:0 0 16px}
-.note p{margin:0 0 12px;font-size:15px;max-width:78ch}
-.note p:last-child{margin-bottom:0}
-.note strong{color:#fff;font-weight:600}
-
-footer{
-  margin-top:56px;padding:34px 0 60px;border-top:1px solid var(--rule);
-  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
-}
-:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:7px}
-
-@media (max-width:900px){
-  .cards{grid-template-columns:1fr}
-  .crit__badge{width:50px;height:50px;font-size:25px}
-  .tag--time{margin-left:0}
-}
-@media print{
-  body{background:#fff}
-  .filters{display:none}
-  [hidden]{display:block !important}
-  .crit{padding-top:26px;break-inside:avoid}
-  .fw{break-inside:avoid}
-  .note{background:#fff;color:var(--ink);border:1px solid var(--rule)}
-  .note h3,.note strong{color:var(--ink)}
-  thead th{background:#fff;color:var(--ink);border-bottom:2px solid var(--ink)}
-}
-
-/* ============ MOTION ============ */
-html{scroll-behavior:smooth}
-
-@media (prefers-reduced-motion: no-preference){
-
-  /* scroll reveal - only armed once JS confirms support */
-  .js-anim .reveal{opacity:0;transform:translateY(12px);
-    transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1);
-    transition-delay:var(--rd,0ms)}
-  .js-anim .reveal.in{opacity:1;transform:none}
-
-  /* masthead on load */
-  .mast .eyebrow,.mast h1,.mast .sub,.mast .facts,.mast .ctbox,.homelink{
-    animation:riseIn .55s cubic-bezier(.22,.61,.36,1) both}
-  .homelink{animation-delay:.02s}
-  .mast .eyebrow{animation-delay:.06s}
-  .mast h1{animation-delay:.12s}
-  .mast .sub{animation-delay:.2s}
-  .mast .ctbox,.mast .facts{animation-delay:.28s}
-  @keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-
-  /* strand panel cross-fade */
-  [data-panel]:not([hidden]){animation:panelIn .38s cubic-bezier(.22,.61,.36,1) both}
-  @keyframes panelIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-  /* dropdown + section open */
-  details[open] > .doc,
-  details[open] > .fwlist,
-  details[open] > .pdfbox,
-  details[open] > .ctgrid,
-  .sec.open > .wrap > .secbody{animation:openIn .34s cubic-bezier(.22,.61,.36,1) both}
-  @keyframes openIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:none}}
-
-  /* summary chevrons and toggles */
-  .docwrap > summary::before,.fwgroup > summary::before,
-  .ctall summary::before,.sechead::after{transition:background .2s,color .2s,border-color .2s}
-  .docwrap > summary:hover::before,.fwgroup > summary:hover::before,
-  .sechead:hover::after{background:var(--amber);color:#fff;border-color:var(--amber)}
-
-  /* interactive lift */
-  .step,.fwc,.trap,.band,.clgroup{transition:box-shadow .25s ease,border-color .25s ease}
-  .step:hover,.fwc:hover,.trap:hover{box-shadow:0 3px 16px rgba(20,48,60,.06)}
-
-  .tab{transition:background .2s ease,color .2s ease,border-color .2s ease}
-  .ck{transition:background .18s ease}
-  .ck:hover{background:var(--paper)}
-  .ck input{transition:transform .15s ease}
-  .ck input:active{transform:scale(.88)}
-  .ck span{transition:color .25s ease,text-decoration-color .25s ease}
-
-  .jump button{transition:background .18s ease,color .18s ease,border-color .18s ease}
-  .homelink{transition:border-color .2s ease,color .2s ease,transform .2s ease}
-  .homelink:hover{transform:translateX(-2px)}
-
-  .pri,.spill,.pill,.st,.chip{transition:transform .18s ease}
-  .fwc:hover .pill{transform:translateY(-1px)}
-}
-
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  .js-anim .reveal{opacity:1;transform:none}
-}
-
-/* ============ FLIP TILES ============ */
-.ctiles{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 4px}
-.ctile{flex:1 1 200px;min-width:170px;padding:0;border:0;background:none;
-  cursor:pointer;perspective:1000px;font-family:inherit;text-align:left}
-.ctile__inner{display:grid;position:relative;width:100%;height:100%;
-  transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.4,1)}
-.ctile.flipped .ctile__inner{transform:rotateY(180deg)}
-.ctile__face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;
-  border-radius:12px;padding:18px 18px 16px;display:flex;flex-direction:column;
-  justify-content:center;min-height:132px}
-.ctile__front{background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--amber);
-  transition:border-color .25s ease,box-shadow .25s ease}
-.ctile:hover .ctile__front{border-color:var(--amber);box-shadow:0 4px 16px rgba(20,48,60,.09)}
-.ctile__back{background:var(--ink-fixed);color:#E4EEF1;transform:rotateY(180deg);
-  border:1px solid var(--ink)}
-.ctile__band{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--slate);
-  margin:0 0 8px}
-.ctile__term{font-family:var(--display);font-size:23px;font-weight:600;color:var(--amber);
-  line-height:1.1;margin:0}
-.ctile__hint{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--slate);margin:12px 0 0;opacity:.75}
-.ctile__def{font-size:13.5px;line-height:1.5;margin:0}
-.ctile__back .ctile__band{color:var(--amber);margin-bottom:9px}
-
-/* ============ HOVER LIFT ============ */
-@media (hover:hover) and (prefers-reduced-motion: no-preference){
-  .step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.crit,.pbox,.flip__side,.term{
-    transition:transform .22s cubic-bezier(.22,.61,.36,1),border-color .22s ease,box-shadow .22s ease}
-  .step:hover,.fwc:hover,.trap:hover,.band:hover,.clgroup:hover,.asp:hover,
-  .mm__branch:hover,.pbox:hover,.flip__side:hover{
-    transform:translateY(-3px) scale(1.006);border-color:var(--amber)}
-  a.crit:hover{transform:translateY(-3px) scale(1.008)}
-  .jump button:hover,.tab:hover,.rst:hover,.homelink:hover{transform:translateY(-1px)}
-  .pri,.pill,.spill,.st,.sq,.chip{transition:transform .18s ease,filter .18s ease}
-  .step:hover .step__n,.fwc:hover .pill,.band:hover .sq{transform:translateY(-1px)}
-  .mm__col li,.step li,.fwc ol li{transition:color .18s ease}
-  .step li:hover,.fwc ol li:hover,.mm__col li:hover{color:var(--amber)}
-  .totop:hover{transform:translateY(-2px) scale(1.05)}
-}
-
-/* ============ TAP TINT ============ */
-.tapfx{transition:background-image .35s ease,border-color .35s ease,box-shadow .35s ease}
-.tapfx[data-clicks="1"]{background-image:linear-gradient(160deg,rgba(176,90,28,.035),rgba(176,90,28,.075))}
-.tapfx[data-clicks="2"]{background-image:linear-gradient(160deg,rgba(176,90,28,.065),rgba(176,90,28,.13))}
-.tapfx[data-clicks="3"]{background-image:linear-gradient(160deg,rgba(176,90,28,.10),rgba(176,90,28,.19))}
-.tapfx[data-clicks="4"]{background-image:linear-gradient(160deg,rgba(176,90,28,.14),rgba(176,90,28,.25))}
-.tapfx[data-clicks="5"]{background-image:linear-gradient(160deg,rgba(176,90,28,.185),rgba(176,90,28,.31));
-  border-color:var(--amber);box-shadow:0 0 0 1px rgba(176,90,28,.25)}
-@media (prefers-reduced-motion: no-preference){
-  .tapfx:active{transform:scale(.995)}
-}
+.note.myp-panel{width:auto;margin:24px 0 0}
+.note h3{margin:0;font:500 var(--myp-card-size)/var(--myp-card-line) var(--myp-font-display);letter-spacing:-.02em;color:var(--myp-text)}
+.note p{font-size:var(--myp-body-size);line-height:var(--myp-body-line);color:var(--myp-body);max-width:84ch}
+.note strong{color:var(--myp-text)}
 
 @media (max-width:760px){
-  .ctile{flex:1 1 100%;min-width:0}
-  .ctile__face{min-height:0;padding:15px 16px}
-  .ctile__term{font-size:21px}
+  .fwsec{margin-top:36px}
+  .crit__badge{width:44px;height:44px;font-size:20px;border-radius:12px}
+  .strands{padding:16px}
+  .fw{border-left-width:4px}
+}
+@media print{
+  .fwfilters,.fwtools{display:none}
+  [hidden]{display:block !important}
+  .fw{break-inside:avoid}
+}
+
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  .fw.fw:hover{transform:translateY(-2px);box-shadow:var(--myp-glass-shadow)}
+}
+
+/* scroll reveal: armed by the script only when motion is allowed */
+@media (prefers-reduced-motion:no-preference){
+  .js-anim .reveal{opacity:0;transform:translateY(12px);
+    transition:opacity .5s var(--myp-ease),transform .5s var(--myp-ease);transition-delay:var(--rd,0ms)}
+  .js-anim .reveal.in{opacity:1;transform:none}
 }
 </style>
-<link rel="stylesheet" href="../assets/theme.css">
 <link rel="stylesheet" href="../assets/glass.css">
 </head>
 <body>
@@ -348,56 +148,61 @@ html{scroll-behavior:smooth}
 <header class="topbar" data-grade="myp4-5">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="../index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="index.html">MYP 4 &amp; 5</a>
-      <span>&rsaquo;</span>
-      <span class="cur">Frameworks</span>
-    </nav>
     <div class="topbar__actions">
-      <div class="topbar__grades">
-        <a href="../myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
-        <a href="../myp3/index.html" data-g="myp3">3</a>
-        <a href="index.html" data-g="myp4-5">4&ndash;5</a>
-      </div>
-      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
-      </button>
-      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
-        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="../myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="index.html" data-g="myp4-5" aria-current="page">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
-
-<header class="mast">
-  <div class="wrap">
-    <a class="homelink" href="index.html">&larr; All criteria</a>
-    <p class="kicker">MYP Design · Years 4 and 5 · Framework index</p>
-    <h1>Which framework, for which criterion, and how to run it.</h1>
-    <p class="lede">Every thinking tool from our problem-definition work, mapped to the strand it actually serves — plus PEEL and OPVL, borrowed from English and History, which do more work in Design than most people expect. Filter by criterion, or print the whole thing.</p>
-  </div>
-</header>
-
-<nav class="filters" aria-label="Filter by criterion">
-  <div class="wrap">
-    <button class="filt is-on" data-f="all" aria-pressed="true">All</button>
-    <button class="filt" data-f="x" aria-pressed="false">Cross-cutting</button>
-    <button class="filt" data-f="a" aria-pressed="false">A · Inquiring</button>
-    <button class="filt" data-f="b" aria-pressed="false">B · Developing</button>
-    <button class="filt" data-f="c" aria-pressed="false">C · Creating</button>
-    <button class="filt" data-f="d" aria-pressed="false">D · Evaluating</button>
-    <span class="filt__hint">43 frameworks</span>
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="index.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to workspace</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
   </div>
 </nav>
 
+<main id="main">
+
+<header class="myp-hero">
+  <p class="myp-eyebrow">MYP Design · Years 4 and 5 · Framework index</p>
+  <h1 class="myp-title">Which framework, for which criterion, and how to run it.</h1>
+  <p class="myp-lede">Every thinking tool from our problem-definition work, mapped to the strand it actually serves — plus PEEL and OPVL, borrowed from English and History, which do more work in Design than most people expect. Filter by criterion, or print the whole thing.</p>
+  <div class="fwtools">
+    <label class="myp-input" for="fwq">
+      <span class="myp-input__label">Search</span>
+      <span class="myp-input__row"><span class="myp-icon myp-icon--search" aria-hidden="true"></span><input id="fwq" type="search" placeholder="Search frameworks by name or purpose" autocomplete="off"></span>
+    </label>
+    <button type="button" class="myp-button myp-button--secondary" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search the site</button>
+  </div>
+</header>
+
+<nav class="fwfilters" aria-label="Filter by criterion">
+  <div class="myp-chips">
+    <button type="button" data-f="all" aria-pressed="true">All</button>
+    <button type="button" data-f="x" aria-pressed="false">Cross-cutting</button>
+    <button type="button" data-f="a" aria-pressed="false">A · Inquiring</button>
+    <button type="button" data-f="b" aria-pressed="false">B · Developing</button>
+    <button type="button" data-f="c" aria-pressed="false">C · Creating</button>
+    <button type="button" data-f="d" aria-pressed="false">D · Evaluating</button>
+    <span class="myp-chips__hint" id="fwcount" aria-live="polite">43 frameworks</span>
+  </div>
+</nav>
+
+<p class="fwnone" id="fwnone" hidden>No framework matches that search. Try a shorter word, or choose All.</p>
+
 <!-- ================= CROSS-CUTTING ================= -->
-<section class="crit" data-crit="x">
-  <div class="wrap">
+<section class="fwsec" data-crit="x">
     <div class="crit__top">
       <div class="crit__badge">A–D</div>
       <div class="crit__ttl">
@@ -408,7 +213,7 @@ html{scroll-behavior:smooth}
 
     <div class="cards">
 
-      <article class="fw" id="fw-peel">
+      <article class="fw myp-panel" id="fw-peel">
         <div class="fw__head">
           <h3>PEEL</h3>
           <span class="tag tag--borrow">From English</span>
@@ -438,7 +243,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head">
           <h3>OPVL</h3>
           <span class="tag tag--borrow">From IB History</span>
@@ -469,12 +274,10 @@ html{scroll-behavior:smooth}
       </article>
 
     </div>
-  </div>
 </section>
 
 <!-- ================= CRITERION A ================= -->
-<section class="crit" data-crit="a">
-  <div class="wrap">
+<section class="fwsec" data-crit="a">
     <div class="crit__top">
       <div class="crit__badge">A</div>
       <div class="crit__ttl">
@@ -496,7 +299,7 @@ html{scroll-behavior:smooth}
 
     <div class="cards">
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Problem hypothesis frame</h3><span class="tag tag--time">10 min</span></div>
         <p class="fw__what">Rewrites an assumed problem as a testable claim with a named user, a suspected cause and a falsifier.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i asks students to <em>justify</em> a need, not assert one. A claim written so it could be proved wrong is the only kind that can be justified with evidence. <span class="strandref">A i</span></p></div>
@@ -512,7 +315,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>W³D organiser</h3><span class="tag tag--time">1 lesson</span></div>
         <p class="fw__what">Who · Why · Where · Data. Four topics, three points each, converging on one problem statement.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Gathers everything strand i needs — client, cause, context and evidence — into one page a moderator can read at a glance. The three-point limit forces decisions rather than lists. <span class="strandref">A i</span> <span class="strandref">A iv</span></p></div>
@@ -527,7 +330,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Assumption dump and risk grid</h3><span class="tag tag--time">12 min</span></div>
         <p class="fw__what">Lists every unverified belief inside the problem statement, then plots them on impact against evidence held.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand ii is assessed on <em>prioritizing</em> research, not listing it. The grid produces that priority order from the students' own reasoning rather than from guesswork. <span class="strandref">A ii</span></p></div>
@@ -543,7 +346,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Five Whys</h3><span class="tag tag--time">15 min</span></div>
         <p class="fw__what">Asks "why" repeatedly to travel from a visible symptom to an underlying cause.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Students almost always name a symptom on day one. Designing for a symptom produces a solution that treats nothing, which then fails in Criterion D. <span class="strandref">A i</span></p></div>
@@ -559,7 +362,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Fishbone (Ishikawa)</h3><span class="tag tag--time">20 min</span></div>
         <p class="fw__what">Six categories — People, Process, Place, Tools, Time, Rules — each holding three possible causes.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Five Whys goes deep on one path; the fishbone goes wide first, so students do not commit to the first cause they think of. Use it before Five Whys, not instead. <span class="strandref">A i</span></p></div>
@@ -575,7 +378,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Problem tree</h3><span class="tag tag--time">15 min</span></div>
         <p class="fw__what">Roots are causes, the trunk is the core problem, branches are effects.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Shows students visually whether they picked a branch or the trunk. Designing for a branch treats a symptom; designing for a root removes the problem. <span class="strandref">A i</span></p></div>
@@ -591,7 +394,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Scale ladder</h3><span class="tag tag--time">1 lesson</span></div>
         <p class="fw__what">Six rungs from personal anecdote up to global data, checking where the evidence still holds.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Turns "is this a real problem?" into a researchable question with a defined search order, and produces the secondary research strand ii demands. <span class="strandref">A ii</span></p></div>
@@ -608,7 +411,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>SCALE checklist</h3><span class="tag tag--time">Ongoing</span></div>
         <p class="fw__what">Say it in the field's words · Climb the ladder · Assess each source · Link it to us · End with a verdict.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>The whole secondary-research process as a tick-list with an exit gate, so students can self-check before submitting rather than discovering gaps at moderation. <span class="strandref">A ii</span> <span class="strandref">A iv</span></p></div>
@@ -624,7 +427,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Source card and the rule of three</h3><span class="tag tag--time">5 min per source</span></div>
         <p class="fw__what">Six fields per source, and no claim admitted unless three independent kinds of evidence support it.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>One source is an anecdote; two of the same kind repeat one blind spot. Three different kinds cannot all be wrong in the same direction — which is what "justify" means in the descriptor. Pairs directly with OPVL. <span class="strandref">A ii</span> <span class="strandref">A iv</span></p></div>
@@ -640,7 +443,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>ACCESS FM</h3><span class="tag tag--borrow">From D&amp;T</span><span class="tag tag--time">20 min</span></div>
         <p class="fw__what">Aesthetics, Cost, Customer, Environment, Size, Safety, Function, Materials — a fixed lens for taking a product apart.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii asks students to <em>analyse</em> existing products, but without a lens they describe instead. Eight headings force analysis in eight directions and carry straight into the Criterion B specification. <span class="strandref">A iii</span> <span class="strandref">B i</span></p></div>
@@ -656,7 +459,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>DVF lens</h3><span class="tag tag--time">5 min</span></div>
         <p class="fw__what">Desirable, feasible, viable — a fast triage before committing a week of research.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Catches problems that are really preferences, and ideas that cannot be built in the time available, before they consume the unit. <span class="strandref">A i</span></p></div>
@@ -671,7 +474,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Minimum viable test</h3><span class="tag tag--time">Under 1 hour</span></div>
         <p class="fw__what">The simplest, fastest evidence-gathering that could change your mind about the riskiest assumption.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Produces genuine primary research inside a school timetable, and keeps strand ii research plans realistic rather than aspirational. <span class="strandref">A ii</span></p></div>
@@ -688,12 +491,10 @@ html{scroll-behavior:smooth}
       </article>
 
     </div>
-  </div>
 </section>
 
 <!-- ================= CRITERION B ================= -->
-<section class="crit" data-crit="b">
-  <div class="wrap">
+<section class="fwsec" data-crit="b">
     <div class="crit__top">
       <div class="crit__badge">B</div>
       <div class="crit__ttl">
@@ -715,7 +516,7 @@ html{scroll-behavior:smooth}
 
     <div class="cards">
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Testable specification writing</h3><span class="tag tag--time">1 lesson</span></div>
         <p class="fw__what">Every specification point written so it can be measured, with the test named alongside it.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i is the hinge of the whole cycle: Criterion D evaluates against these points. A specification that cannot be tested makes a good Criterion D impossible. <span class="strandref">B i</span> <span class="strandref">D ii</span></p></div>
@@ -731,7 +532,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>MoSCoW prioritisation</h3><span class="tag tag--time">10 min</span></div>
         <p class="fw__what">Must have, Should have, Could have, Won't have this time.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Stops the flat specification list where twenty points all appear equally important. Priority makes the Criterion D evaluation meaningful, because failing a "could" is not the same as failing a "must". <span class="strandref">B i</span> <span class="strandref">D ii</span></p></div>
@@ -747,7 +548,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Crazy 8s</h3><span class="tag tag--time">8 min</span></div>
         <p class="fw__what">Eight sketched ideas in eight minutes, one per folded panel.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand ii asks for a <em>range</em> of feasible ideas. Time pressure defeats the student who draws one polished idea and calls it done. <span class="strandref">B ii</span></p></div>
@@ -763,7 +564,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>SCAMPER</h3><span class="tag tag--time">20 min</span></div>
         <p class="fw__what">Substitute, Combine, Adapt, Modify, Put to other use, Eliminate, Reverse.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Gives students a way to generate variety on demand rather than waiting for inspiration, and it works directly on the products analysed in strand A iii. <span class="strandref">B ii</span></p></div>
@@ -779,7 +580,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>User flow shape key</h3></div>
         <p class="fw__what">Pages, decisions and arrows, drawn so the flow reads without you there.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand ii ideas must be "correctly interpreted by others". For a website the page flow is part of the sketch, and a shape key lets someone else follow it. <span class="strandref">B ii</span></p></div>
@@ -794,7 +595,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Label-what-works rule</h3></div>
         <p class="fw__what">Label the parts that have a job; skip decoration.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Every label becomes a row in the annotation table. Labelling decoration fills the table with rows that have nothing to justify. <span class="strandref">B ii</span></p></div>
@@ -808,7 +609,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>What · How · Why · Spec</h3></div>
         <p class="fw__what">What it is → how it works → why → which specification point.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Turns a label into the annotation and justification columns of the department template. "Blue header" only answers what. <span class="strandref">B ii</span> <span class="strandref">B i</span></p></div>
@@ -823,7 +624,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Strength–limitation pair</h3></div>
         <p class="fw__what">One strength and one limitation per idea, both measured against the specification.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>The Guide defines evaluate as "Make an appraisal by weighing up the strengths and limitations". An idea that only lists features stops short of detailed annotation. <span class="strandref">B ii</span></p></div>
@@ -837,7 +638,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Explain-it-back test</h3></div>
         <p class="fw__what">A classmate explains your idea back to you without your help.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>The most direct evidence that an idea is "correctly interpreted by others", which is what separates 7–8 from 5–6. <span class="strandref">B ii</span></p></div>
@@ -851,7 +652,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Task walkthrough</h3></div>
         <p class="fw__what">Give one task, and watch where they get stuck in the flow.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Pinpoints the exact page or link that breaks, rather than a general sense that the idea is confusing. <span class="strandref">B ii</span></p></div>
@@ -865,7 +666,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw" id="fw-wdm">
+      <article class="fw myp-panel" id="fw-wdm">
         <div class="fw__head"><h3>Weighted decision matrix</h3><span class="tag tag--time">20 min</span></div>
         <p class="fw__what">Score each idea against weighted specification points to produce a defensible ranking.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii requires students to <em>justify</em> the selection. "I liked it best" is not justification; a matrix tied to the specification is. <span class="strandref">B iii</span></p></div>
@@ -880,7 +681,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Evidence for a level</h3></div>
         <p class="fw__what">Count it, time it, check it on the sketch, or ask someone — and name which you did.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>A level with nothing behind it is an opinion. Naming how you reached it is what the template means by explaining the level. <span class="strandref">B iii</span></p></div>
@@ -894,7 +695,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Descriptor-free justification</h3></div>
         <p class="fw__what">Cover the descriptor text and explain the level in your own words.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>The template warns against justifications that "simply repeat the wording of the descriptor." <span class="strandref">B iii</span></p></div>
@@ -908,7 +709,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Spot the splitters</h3></div>
         <p class="fw__what">Circle the specs where the designs' levels differ most.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>A total hides where the decision was really made. The specs that split the designs are where the justification should focus. <span class="strandref">B iii</span></p></div>
@@ -922,7 +723,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Feature harvest</h3></div>
         <p class="fw__what">One strength from each runner-up, kept only if it serves a spec.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii asks what you will change before you make the design, and which specification point each change satisfies. The runners-up are the obvious place to look. <span class="strandref">B iii</span></p></div>
@@ -936,7 +737,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Fidelity step-up</h3></div>
         <p class="fw__what">Rough (ii) → clean mid-fidelity (iii) → high-fidelity Figma (iv).</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Keeps each strand at the right level of finish. Strand iii presents the chosen design as images; the full high-fidelity wireframe of every screen belongs to strand iv. <span class="strandref">B ii</span> <span class="strandref">B iii</span> <span class="strandref">B iv</span></p></div>
@@ -950,7 +751,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Runner-up rebuttal</h3></div>
         <p class="fw__what">"Design [x] scored higher on Spec [n], but lost because [shortfall]. I'm keeping [feature] from it to meet Spec [n]."</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Saying why the runner-up lost, including where it scored higher, is what makes the justification critical rather than one-sided. <span class="strandref">B iii</span></p></div>
@@ -964,7 +765,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Planning drawing conventions</h3><span class="tag tag--time">1–2 lessons</span></div>
         <p class="fw__what">Dimensioned orthographic views, exploded diagrams, or wireframes and storyboards for digital solutions.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iv is assessed on accuracy and sufficiency for someone else to build from. The test is literal: hand it to a peer and see whether they could make it. <span class="strandref">B iv</span></p></div>
@@ -981,12 +782,10 @@ html{scroll-behavior:smooth}
       </article>
 
     </div>
-  </div>
 </section>
 
 <!-- ================= CRITERION C ================= -->
-<section class="crit" data-crit="c">
-  <div class="wrap">
+<section class="fwsec" data-crit="c">
     <div class="crit__top">
       <div class="crit__badge">C</div>
       <div class="crit__ttl">
@@ -1008,7 +807,7 @@ html{scroll-behavior:smooth}
 
     <div class="cards">
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Production plan table</h3><span class="tag tag--time">1 lesson</span></div>
         <p class="fw__what">Step, time estimate, tools, materials, safety note and quality check — one row per operation.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i is judged on whether a peer could follow it. A table makes omissions visible in a way prose hides. <span class="strandref">C i</span></p></div>
@@ -1023,7 +822,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Gantt chart</h3><span class="tag tag--time">20 min</span></div>
         <p class="fw__what">Tasks against a timeline, showing what runs in parallel and what blocks what.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i specifies <em>efficient</em> use of time. A list cannot show efficiency; only a timeline can show overlap, slack and dependency. <span class="strandref">C i</span></p></div>
@@ -1038,7 +837,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Process log with timestamps</h3><span class="tag tag--time">5 min per lesson</span></div>
         <p class="fw__what">Dated photographs plus a one-line note of what was done and what went wrong.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strands ii and iii are evidenced almost entirely through documentation. Students who photograph only the finished article have no evidence of skill or process. <span class="strandref">C ii</span> <span class="strandref">C iii</span></p></div>
@@ -1054,7 +853,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Modification log</h3><span class="tag tag--time">Ongoing</span></div>
         <p class="fw__what">A running table: what changed, why, what the alternative was, and what it cost.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iv asks students to <em>fully justify</em> each change. Reconstructing reasons from memory in the last week produces vague answers; logging at the moment of change produces specific ones. <span class="strandref">C iv</span></p></div>
@@ -1069,7 +868,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Plan-Do-Check-Act</h3><span class="tag tag--time">Per iteration</span></div>
         <p class="fw__what">A short loop of planning a step, doing it, checking against the specification, then adjusting.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Keeps testing inside the making rather than saving it all for Criterion D, so failures are caught while there is still time to fix them. <span class="strandref">C iii</span> <span class="strandref">C iv</span></p></div>
@@ -1086,12 +885,10 @@ html{scroll-behavior:smooth}
       </article>
 
     </div>
-  </div>
 </section>
 
 <!-- ================= CRITERION D ================= -->
-<section class="crit" data-crit="d">
-  <div class="wrap">
+<section class="fwsec" data-crit="d">
     <div class="crit__top">
       <div class="crit__badge">D</div>
       <div class="crit__ttl">
@@ -1113,7 +910,7 @@ html{scroll-behavior:smooth}
 
     <div class="cards">
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Testing methods matrix</h3><span class="tag tag--time">1 lesson</span></div>
         <p class="fw__what">Each specification point paired with the test that measures it and the data it generates.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand i requires methods that <em>generate data</em>. A matrix built from the specification guarantees relevance, which is the word doing the work in the descriptor. <span class="strandref">D i</span></p></div>
@@ -1128,7 +925,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Usability testing with think-aloud</h3><span class="tag tag--time">15 min per user</span></div>
         <p class="fw__what">A real user attempts a real task while narrating their thinking; you watch and stay silent.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Generates the qualitative data strand i asks for, and surfaces improvement evidence for strand iii that no questionnaire would find. <span class="strandref">D i</span> <span class="strandref">D iii</span></p></div>
@@ -1145,7 +942,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Point-by-point specification audit</h3><span class="tag tag--time">1 lesson</span></div>
         <p class="fw__what">Every specification point judged met, partly met or not met, with the evidence beside it.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand ii says <em>against the design specification</em> — so the specification must structure the evaluation. Students who write flowing prose about how it went usually miss half the points. <span class="strandref">D ii</span></p></div>
@@ -1160,7 +957,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>OPVL on your own data</h3><span class="tag tag--borrow">From IB History</span><span class="tag tag--time">10 min</span></div>
         <p class="fw__what">The same four questions turned on the student's own test results.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>"Critically evaluate" includes evaluating the evidence itself. A student who can say why their own sample of five friends limits the conclusion is demonstrating exactly the criticality strand ii rewards. <span class="strandref">D i</span> <span class="strandref">D ii</span></p></div>
@@ -1176,7 +973,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>Before-and-after against the baseline</h3><span class="tag tag--time">30 min</span></div>
         <p class="fw__what">The primary data collected in Criterion A becomes the benchmark the solution is measured against.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iv asks for <em>impact</em> on the client. Impact is a change, and a change needs a starting number. This closes the loop on the whole unit. <span class="strandref">D iv</span></p></div>
@@ -1191,7 +988,7 @@ html{scroll-behavior:smooth}
           </div>
       </article>
 
-      <article class="fw">
+      <article class="fw myp-panel">
         <div class="fw__head"><h3>What · So what · Now what</h3><span class="tag tag--time">15 min</span></div>
         <p class="fw__what">A three-step reflection that pushes description into consequence and then into action.</p>
         <div class="fw__block"><p class="fw__lbl">Why it helps</p><p>Strand iii wants improvements explained, not listed. This structure forces students past "I would make it neater" into a reasoned change with a cause. <span class="strandref">D iii</span></p></div>
@@ -1207,12 +1004,10 @@ html{scroll-behavior:smooth}
       </article>
 
     </div>
-  </div>
 </section>
 
 <!-- ================= MATRIX ================= -->
-<section class="crit" data-crit="all-matrix">
-  <div class="wrap">
+<section class="fwsec fwsec--matrix" data-crit="all-matrix">
     <div class="crit__top">
       <div class="crit__ttl">
         <h2>At a glance</h2>
@@ -1251,43 +1046,68 @@ html{scroll-behavior:smooth}
       </table>
     </div>
 
-    <div class="note">
+    <div class="note myp-panel">
       <h3>Three things worth saying to the class</h3>
       <p><strong>Frameworks are scaffolds, not deliverables.</strong> A fishbone in the eportfolio scores nothing by itself. What scores is the sentence it let the student write. Ask for the finding, not the diagram.</p>
       <p><strong>PEEL and OPVL come from other subjects, and that is the point.</strong> Naming their origin out loud — English, History — makes the transfer visible and gives students a reason to trust tools they already half-know. It also lets your Humanities and English colleagues reinforce the same vocabulary.</p>
       <p><strong>The specification is the spine.</strong> Criterion B strand i is where Criterion D is won or lost. A specification point that cannot be tested is a mark that cannot be earned, which is why the testing method belongs in the specification table from the very first draft.</p>
     </div>
 
-  </div>
 </section>
 
-<footer>
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:14px;width:100%;flex-wrap:wrap">
-    <span>Sreenidhi International School · Design</span>
-    <span>MYP Years 4–5 · Framework index</span>
-  </div>
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 4 &amp; 5</a><span>Framework index</span></p>
+  <p>Sreenidhi International School &middot; Design &middot; MYP Years 4&ndash;5</p>
 </footer>
 
 <script>
 (function(){
-  var btns = document.querySelectorAll('.filt');
-  var secs = document.querySelectorAll('.crit[data-crit]');
-  btns.forEach(function(b){
-    b.addEventListener('click', function(){
-      var f = b.dataset.f;
-      btns.forEach(function(x){
-        x.classList.remove('is-on');
-        x.setAttribute('aria-pressed','false');
-      });
-      b.classList.add('is-on');
-      b.setAttribute('aria-pressed','true');
-      secs.forEach(function(s){
-        var c = s.dataset.crit;
-        s.hidden = !(f === 'all' || c === f || c === 'all-matrix');
-      });
-      window.scrollTo({top:0, behavior:'smooth'});
+  var btns = document.querySelectorAll('.fwfilters [data-f]');
+  var secs = document.querySelectorAll('.fwsec[data-crit]');
+  var q = document.getElementById('fwq');
+  var count = document.getElementById('fwcount');
+  var none = document.getElementById('fwnone');
+  var current = 'all';
+
+  // criterion filter and text search work together
+  function apply(){
+    var words = q ? q.value.toLowerCase().replace(/^\s+|\s+$/g, '').split(/\s+/) : [];
+    if(words.length === 1 && !words[0]) words = [];
+    var shown = 0;
+    for(var i=0;i<secs.length;i++){
+      var s = secs[i], c = s.getAttribute('data-crit');
+      if(c === 'all-matrix'){ s.hidden = words.length > 0; continue; }
+      var inCrit = current === 'all' || c === current;
+      var cards = s.querySelectorAll('.fw');
+      var visible = 0;
+      for(var j=0;j<cards.length;j++){
+        var txt = (cards[j].textContent || '').toLowerCase();
+        var ok = inCrit;
+        for(var w=0; ok && w<words.length; w++) if(txt.indexOf(words[w]) === -1) ok = false;
+        cards[j].hidden = !ok;
+        if(ok) visible++;
+      }
+      s.hidden = !visible;
+      shown += visible;
+    }
+    if(count) count.textContent = shown + (shown === 1 ? ' framework' : ' frameworks');
+    if(none) none.hidden = shown > 0;
+  }
+
+  for(var b=0;b<btns.length;b++){
+    btns[b].addEventListener('click', function(){
+      current = this.getAttribute('data-f');
+      for(var x=0;x<btns.length;x++) btns[x].setAttribute('aria-pressed', btns[x] === this ? 'true' : 'false');
+      apply();
+      var first = document.querySelector('.fwsec:not([hidden])');
+      if(first && first.scrollIntoView){
+        try { first.scrollIntoView({block:'start'}); } catch(e){ first.scrollIntoView(true); }
+      }
     });
-  });
+  }
+  if(q) q.addEventListener('input', apply);
 
   // --- scroll reveal ---
   (function(){
@@ -1296,8 +1116,7 @@ html{scroll-behavior:smooth}
     if(mq.matches) return;
     document.documentElement.classList.add('js-anim');
 
-    var SEL = '.step,.fwc,.band,.clgroup,.trap,.crit,.docwrap,.flow,.tabwrap,'
-            + '.mm,.aspects,.flip,.cite-warn,.conflict,.keyline,.obj,.ctbox,.strands,.matrix';
+    var SEL = '.fw,.crit__top,.strands,.matrix,.note';
 
     // bidirectional: eases in whether you arrive scrolling down or back up
     var io = new IntersectionObserver(function(entries){
@@ -1308,96 +1127,29 @@ html{scroll-behavior:smooth}
       }
     }, {rootMargin:'14% 0px 14% 0px', threshold:0});
 
-    function arm(root){
-      var els = (root || document).querySelectorAll(SEL);
-      for(var i=0;i<els.length;i++){
-        var el = els[i];
-        if(el.classList.contains('reveal')) continue;
-        if(el.closest && el.closest('.mast')) continue;
-        el.classList.add('reveal');
-        // stagger siblings in the same parent, capped so nothing waits long
-        var par = el.parentNode;
-        if(!par.__revealIdx) par.__revealIdx = 0;
-        el.style.setProperty('--rd', Math.min(par.__revealIdx * 55, 220) + 'ms');
-        par.__revealIdx++;
-        io.observe(el);
-      }
-    }
-
-    window.__armReveal = arm;
-    arm(document);
-  })();
-
-
-  // --- command terms become flip tiles ---
-  (function(){
-    var boxes = document.querySelectorAll('.ctbox');
-    for(var b=0; b<boxes.length; b++){
-      var box = boxes[b];
-      var rows = box.querySelectorAll('.ctrow');
-      if(!rows.length) continue;
-
-      var grid = document.createElement('div');
-      grid.className = 'ctiles';
-      box.insertBefore(grid, rows[0]);
-
-      for(var r=0; r<rows.length; r++){
-        var row  = rows[r];
-        var band = row.querySelector('.ctband');
-        var term = row.querySelector('b');
-        var def  = row.querySelector('span');
-
-        var tile = document.createElement('button');
-        tile.type = 'button';
-        tile.className = 'ctile';
-        tile.setAttribute('aria-pressed', 'false');
-
-        var inner = document.createElement('div');
-        inner.className = 'ctile__inner';
-
-        var front = document.createElement('div');
-        front.className = 'ctile__face ctile__front';
-        front.innerHTML =
-          '<p class="ctile__band">' + (band ? band.textContent : '') + '</p>' +
-          '<p class="ctile__term">' + (term ? term.textContent : '') + '</p>' +
-          '<p class="ctile__hint">Tap for meaning</p>';
-
-        var back = document.createElement('div');
-        back.className = 'ctile__face ctile__back';
-        back.innerHTML =
-          '<p class="ctile__band">' + (term ? term.textContent : '') + '</p>' +
-          '<p class="ctile__def">' + (def ? def.textContent : '') + '</p>';
-
-        inner.appendChild(front);
-        inner.appendChild(back);
-        tile.appendChild(inner);
-        grid.appendChild(tile);
-
-        (function(t){
-          t.addEventListener('click', function(e){
-            e.stopPropagation();
-            t.classList.toggle('flipped');
-            t.setAttribute('aria-pressed', t.classList.contains('flipped') ? 'true' : 'false');
-          });
-        })(tile);
-
-        row.parentNode.removeChild(row);
-      }
+    var els = document.querySelectorAll(SEL);
+    for(var i=0;i<els.length;i++){
+      var el = els[i];
+      el.classList.add('reveal');
+      // stagger siblings in the same parent, capped so nothing waits long
+      var par = el.parentNode;
+      if(!par.__revealIdx) par.__revealIdx = 0;
+      el.style.setProperty('--rd', Math.min(par.__revealIdx * 55, 220) + 'ms');
+      par.__revealIdx++;
+      io.observe(el);
     }
   })();
 
   // --- tap tint: repeated clicks deepen the shade ---
   (function(){
-    var SEL = '.step,.fwc,.trap,.band,.clgroup,.asp,.mm__branch,.pbox,.flip__side,'
-            + '.dnote,.tools,.concepts,.quote,.fstep,.crit:not(a)';
-    var els = document.querySelectorAll(SEL);
+    var els = document.querySelectorAll('.fw,.strands');
     for(var i=0;i<els.length;i++) els[i].classList.add('tapfx');
 
     document.addEventListener('click', function(e){
       var t = e.target;
       if(!t || !t.closest) return;
       // never hijack a real control
-      if(t.closest('a,button,summary,label,input,select,textarea,.sechead,.ctile')) return;
+      if(t.closest('a,button,summary,label,input,select,textarea')) return;
       var card = t.closest('.tapfx');
       if(!card) return;
       var n = parseInt(card.getAttribute('data-clicks') || '0', 10) + 1;
@@ -1411,4 +1163,4 @@ html{scroll-behavior:smooth}
 
 <script src="../assets/theme.js"></script>
 </body>
-</html>
+</html>

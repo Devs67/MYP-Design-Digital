@@ -7,90 +7,14 @@
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
-  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
-  --amber:#B05A1C; --amber-tint:#FBEEE2;
-  --moss:#2F6B4F; --moss-tint:#E8F1EC;
-  --display:"Fraunces",Georgia,serif;
-  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
-  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1100px;margin:0 auto;padding:0 30px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
-  text-transform:uppercase;color:var(--amber);margin:0}
-
-.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
-  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
-  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
-  background:var(--card);margin-bottom:20px;transition:.15s}
-.homelink:hover{border-color:var(--slate);color:var(--ink)}
-
-.mast{padding:56px 0 30px}
-.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
-  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
-.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
-
-.sec{padding:8px 0 32px}
-
-.units{display:flex;flex-wrap:wrap;gap:18px;margin:0;align-items:flex-start}
-.unit{flex:1 1 440px;background:var(--card);border:1px solid var(--rule);border-radius:12px;
-  overflow:hidden}
-.unit--u1{border-top:4px solid var(--amber)}
-.unit--u2{border-top:4px solid var(--moss)}
-.unit__hd{padding:16px 22px;border-bottom:1px solid var(--rule-soft);display:flex;gap:14px;
-  align-items:center}
-.unit--u1 .unit__hd{background:var(--amber-tint)}
-.unit--u2 .unit__hd{background:var(--moss-tint)}
-.unit__badge{width:34px;height:34px;border-radius:9px;flex:0 0 34px;color:#fff;
-  display:flex;align-items:center;justify-content:center;font-family:var(--mono);
-  font-weight:600;font-size:12px}
-.unit--u1 .unit__badge{background:var(--amber)}
-.unit--u2 .unit__badge{background:var(--moss)}
-.unit__hd h3{font-family:var(--display);font-size:18px;font-weight:600;margin:0;
-  letter-spacing:-.01em}
-.unit__hd p{margin:2px 0 0;font-size:12px;color:var(--slate);font-family:var(--mono);
-  letter-spacing:.02em}
-
-.unittab{width:100%;border-collapse:collapse;font-size:13.5px}
-.unittab th{width:130px;text-align:left;vertical-align:top;
-  padding:11px 14px 11px 22px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;
-  text-transform:uppercase;color:var(--slate);font-weight:500;border-top:1px solid var(--rule-soft)}
-.unittab td{padding:11px 22px 11px 14px;vertical-align:top;border-top:1px solid var(--rule-soft);
-  line-height:1.55}
-.unittab tr:first-child th,.unittab tr:first-child td{border-top:0}
-.unittab tr.soi td{font-style:italic}
-.unittab tr.missing td{color:var(--slate)}
-
-.objs{display:flex;gap:6px;flex-wrap:wrap;margin:0}
-.objs span{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
-  padding:5px 9px;border-radius:7px;background:var(--rule-soft);color:var(--slate)}
-
-footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
-  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-@media (max-width:760px){
-  .wrap{padding:0 14px}
-  .mast{padding:40px 0 22px}
-  .unit__hd{padding:14px 16px}
-  .unittab th{padding-left:16px;width:104px}
-  .unittab td{padding-right:16px}
-}
-@media (max-width:600px){
-  .unittab,.unittab tbody,.unittab tr,.unittab th,.unittab td{display:block;width:auto}
-  .unittab tr{padding:10px 16px;border-top:1px solid var(--rule-soft)}
-  .unittab tr:first-child{border-top:0}
-  .unittab th,.unittab td{padding:0;border-top:0}
-  .unittab th{margin-bottom:3px}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/theme.css">
+<style>
+/* criterion colours (dark versions live in theme.css); everything else is in glass.css */
+:root{--a:#12707F;--b:#96700A;--c:#38722C;--d:#B23A2E;--dev:#6A4C93}
+*{box-sizing:border-box}
+body{margin:0}
+</style>
 <link rel="stylesheet" href="../assets/glass.css">
 </head>
 <body>
@@ -98,105 +22,92 @@ footer{margin-top:56px;padding:28px 0 54px;border-top:1px solid var(--rule);
 <header class="topbar" data-grade="myp4-5">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="../index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="index.html">MYP 4 &amp; 5</a>
-      <span>&rsaquo;</span>
-      <span class="cur">Units</span>
-    </nav>
     <div class="topbar__actions">
-      <div class="topbar__grades">
-        <a href="../myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
-        <a href="../myp3/index.html" data-g="myp3">3</a>
-        <a href="index.html" data-g="myp4-5">4&ndash;5</a>
-      </div>
-      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
-      </button>
-      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
-        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="../myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="index.html" data-g="myp4-5" aria-current="page">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
-
-<header class="mast">
-  <div class="wrap">
-    <a class="homelink" href="index.html">&larr; All criteria</a>
-    <p class="eyebrow">MYP 4 Design</p>
-    <h1>This year&rsquo;s units</h1>
-    <p class="sub">Unit 1 and Unit 2 &mdash; what each unit is, the concepts behind it, and the summative task.</p>
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="index.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to workspace</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
   </div>
+</nav>
+
+<main id="main">
+
+<header class="myp-hero">
+  <p class="myp-eyebrow">MYP 4 Design</p>
+  <h1 class="myp-title">This year&rsquo;s units</h1>
+  <p class="myp-lede">Unit 1 and Unit 2 &mdash; what each unit is, the concepts behind it, and the summative task.</p>
 </header>
 
-<section class="sec"><div class="wrap">
-  <div class="units">
-
-    <div class="unit unit--u1">
-      <div class="unit__hd">
-        <span class="unit__badge">U1</span>
-        <div><h3>Coding for Change</h3><p>Start July 22 &middot; 19 weeks</p></div>
-      </div>
-      <table class="unittab">
-        <tr><th>Key concept</th><td>Systems*</td></tr>
-        <tr><th>Related concepts</th><td>Adaptation, Form</td></tr>
-        <tr><th>Global context</th><td>Identities and relationships &mdash; lifestyle choices</td></tr>
-        <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Systems are designed through adaptation and form to support human identities, relationships, and well-being by responding to changing physical, psychological, and social needs. Or systems and products can be created in different forms to support healthy lifestyle choices and improve well-being.&rdquo;</td></tr>
-        <tr><th>Goal</th><td>Design and develop a functional multi-page HTML website that supports human identities, relationships, and well-being by responding to changing physical, psychological, and social needs.</td></tr>
-        <tr><th>Role</th><td>You are a junior web designer commissioned by a youth wellness organisation.</td></tr>
-        <tr><th>Audience</th><td>Teenagers aged 13&ndash;16, school community, parents.</td></tr>
-        <tr><th>Situation</th><td>Many young people struggle to access reliable and engaging information about health, transitions, and relationships. Your client needs an accessible website to support them.</td></tr>
-        <tr><th>Product/Performance</th><td>A coded HTML/CSS website (minimum 4 linked pages) with navigation, media, clear layout, and researched content.</td></tr>
-        <tr><th>Standards for success</th><td>Effective inquiry, justified design ideas, functional code, visual consistency, accessibility, usability testing, and thoughtful evaluation.</td></tr>
-        <tr><th>Criteria</th><td>
-          <div class="objs">
-            <span>A &middot; Inquiring &amp; Analysing</span>
-            <span>B &middot; Developing Ideas</span>
-            <span>C &middot; Creating the Solution</span>
-            <span>D &middot; Evaluating</span>
-          </div>
-        </td></tr>
-      </table>
+<section class="myp-panel" aria-labelledby="u1">
+  <div class="myp-panel__top">
+    <span class="myp-row__lead" aria-hidden="true">U1</span>
+    <div class="myp-panel__head">
+      <h2 class="myp-panel__title" id="u1">Coding for Change</h2>
+      <p class="myp-panel__sub">Start July 22 &middot; 19 weeks</p>
     </div>
+  </div>
+  <table class="myp-kv">
+    <tr><th>Key concept</th><td>Systems*</td></tr>
+    <tr><th>Related concepts</th><td>Adaptation, Form</td></tr>
+    <tr><th>Global context</th><td>Identities and relationships &mdash; lifestyle choices</td></tr>
+    <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Systems are designed through adaptation and form to support human identities, relationships, and well-being by responding to changing physical, psychological, and social needs. Or systems and products can be created in different forms to support healthy lifestyle choices and improve well-being.&rdquo;</td></tr>
+    <tr><th>Goal</th><td>Design and develop a functional multi-page HTML website that supports human identities, relationships, and well-being by responding to changing physical, psychological, and social needs.</td></tr>
+    <tr><th>Role</th><td>You are a junior web designer commissioned by a youth wellness organisation.</td></tr>
+    <tr><th>Audience</th><td>Teenagers aged 13&ndash;16, school community, parents.</td></tr>
+    <tr><th>Situation</th><td>Many young people struggle to access reliable and engaging information about health, transitions, and relationships. Your client needs an accessible website to support them.</td></tr>
+    <tr><th>Product/Performance</th><td>A coded HTML/CSS website (minimum 4 linked pages) with navigation, media, clear layout, and researched content.</td></tr>
+    <tr><th>Standards for success</th><td>Effective inquiry, justified design ideas, functional code, visual consistency, accessibility, usability testing, and thoughtful evaluation.</td></tr>
+    <tr><th>Criteria</th><td>
+    <div class="myp-row__chips"><span class="myp-chip myp-chip--a">A &middot; Inquiring &amp; Analysing</span><span class="myp-chip myp-chip--b">B &middot; Developing Ideas</span><span class="myp-chip myp-chip--c">C &middot; Creating the Solution</span><span class="myp-chip myp-chip--d">D &middot; Evaluating</span></div>
+    </td></tr>
+  </table>
+</section>
 
-    <div class="unit unit--u2">
-      <div class="unit__hd">
-        <span class="unit__badge">U2</span>
-        <div><h3>Designing for Everyone</h3><p>Start Nov 22 &middot; 19 weeks</p></div>
-      </div>
-      <table class="unittab">
-        <tr><th>Key concept</th><td>Development*</td></tr>
-        <tr><th>Related concepts</th><td>Function, Ergonomics</td></tr>
-        <tr><th>Global context</th><td>Fairness and development &mdash; imagining the hopeful future (inclusivity focus)</td></tr>
-        <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Through development, designers use function and ergonomics to create fair and inclusive products that imagine a more hopeful future for diverse users.&rdquo;</td></tr>
-        <tr><th>Goal</th><td>Design and prototype a product or solution that meets the functional and ergonomic needs of a user who is often overlooked by mainstream design &mdash; such as a person with a disability, an elderly user, a left-handed person, or someone from a non-dominant cultural background.</td></tr>
-        <tr><th>Role</th><td>An inclusive design consultant at a product development studio.</td></tr>
-        <tr><th>Audience</th><td>A community review panel including peers, teacher, and a guest representative from a disability, accessibility, or equity-focused organisation.</td></tr>
-        <tr><th>Situation</th><td>Your studio has been commissioned by a &ldquo;Design for All&rdquo; initiative to create a product prototype that demonstrates how inclusive, ergonomic thinking can lead to better outcomes for everyone &mdash; not just the target user.</td></tr>
-        <tr><th>Product</th><td>A physical or digital prototype of the inclusive product, accompanied by: a research report, annotated design development iterations, an ergonomic and functional analysis, and a 3-minute presentation to the panel explaining how the design imagines a more hopeful future.</td></tr>
-        <tr><th>Criteria</th><td>
-          <div class="objs">
-            <span>A &middot; Inquiring &amp; Analysing</span>
-            <span>B &middot; Developing Ideas</span>
-            <span>C &middot; Creating the Solution</span>
-            <span>D &middot; Evaluating</span>
-          </div>
-        </td></tr>
-      </table>
+<section class="myp-panel" aria-labelledby="u2">
+  <div class="myp-panel__top">
+    <span class="myp-row__lead" aria-hidden="true">U2</span>
+    <div class="myp-panel__head">
+      <h2 class="myp-panel__title" id="u2">Designing for Everyone</h2>
+      <p class="myp-panel__sub">Start Nov 22 &middot; 19 weeks</p>
     </div>
-
   </div>
-</div></section>
+  <table class="myp-kv">
+    <tr><th>Key concept</th><td>Development*</td></tr>
+    <tr><th>Related concepts</th><td>Function, Ergonomics</td></tr>
+    <tr><th>Global context</th><td>Fairness and development &mdash; imagining the hopeful future (inclusivity focus)</td></tr>
+    <tr class="soi"><th>Statement of inquiry</th><td>&ldquo;Through development, designers use function and ergonomics to create fair and inclusive products that imagine a more hopeful future for diverse users.&rdquo;</td></tr>
+    <tr><th>Goal</th><td>Design and prototype a product or solution that meets the functional and ergonomic needs of a user who is often overlooked by mainstream design &mdash; such as a person with a disability, an elderly user, a left-handed person, or someone from a non-dominant cultural background.</td></tr>
+    <tr><th>Role</th><td>An inclusive design consultant at a product development studio.</td></tr>
+    <tr><th>Audience</th><td>A community review panel including peers, teacher, and a guest representative from a disability, accessibility, or equity-focused organisation.</td></tr>
+    <tr><th>Situation</th><td>Your studio has been commissioned by a &ldquo;Design for All&rdquo; initiative to create a product prototype that demonstrates how inclusive, ergonomic thinking can lead to better outcomes for everyone &mdash; not just the target user.</td></tr>
+    <tr><th>Product</th><td>A physical or digital prototype of the inclusive product, accompanied by: a research report, annotated design development iterations, an ergonomic and functional analysis, and a 3-minute presentation to the panel explaining how the design imagines a more hopeful future.</td></tr>
+    <tr><th>Criteria</th><td>
+    <div class="myp-row__chips"><span class="myp-chip myp-chip--a">A &middot; Inquiring &amp; Analysing</span><span class="myp-chip myp-chip--b">B &middot; Developing Ideas</span><span class="myp-chip myp-chip--c">C &middot; Creating the Solution</span><span class="myp-chip myp-chip--d">D &middot; Evaluating</span></div>
+    </td></tr>
+  </table>
+</section>
 
-<footer>
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
-    <span>Design Team - SIS</span>
-    <span>MYP Year 4</span>
-  </div>
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 4 &amp; 5</a><span>Units</span></p>
+  <p>Design Team - SIS &middot; MYP Year 4</p>
 </footer>
 
 <script src="../assets/theme.js"></script>

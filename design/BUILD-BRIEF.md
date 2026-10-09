@@ -159,17 +159,31 @@ Redirect pages (`criterion-a.html`, `criterion-b.html`, `frameworks.html`,
 
 Run each in a **fresh chat** to keep cost down. Each ends with a push, screenshots and a stop.
 
-**Status:** session 1 is done. Commit `bb3536d` laid the foundation (`assets/glass.css`,
-backdrops, Lucide icons, `design/link-glass.js`, Light/Dark control and Search dialog in
-`assets/theme.js`, `CLAUDE.md` house style). The follow-up rebuilt Home and
-`myp4-5/criterion-a.html` to their frames, created `myp4-5/index.html`, and moved progress codes
-into `assets/progress.js` with the 84–86 dialogs. Every `#myp4-5` link on the site now points at
-the workspace; Home still redirects old `index.html#myp4-5` bookmarks.
+**Status:** sessions 1 and 2 are done; session 3 (MYP 3) is next.
 
-Reusable pieces for later sessions, all in `glass.css` section 10: `.myp-hero`, `.myp-panel`,
-`.myp-list` / `.myp-row`, `.myp-input`, `footer.myp-footer`, and the strand-page panel styles.
-Criteria B and C still carry their own inline sync code: in session 2, delete it and link
-`assets/progress.js` with `data-page="criterion-b"` / `"criterion-c"` (keep those keys).
+Session 1: commit `bb3536d` laid the foundation (`assets/glass.css`, backdrops, Lucide icons,
+`design/link-glass.js`, Light/Dark control and Search dialog in `assets/theme.js`, `CLAUDE.md`
+house style). The follow-up rebuilt Home and `myp4-5/criterion-a.html` to their frames, created
+`myp4-5/index.html`, and moved progress codes into `assets/progress.js` with the 84–86 dialogs.
+Every `#myp4-5` link on the site now points at the workspace; Home still redirects old
+`index.html#myp4-5` bookmarks.
+
+Session 2 finished MYP 4 & 5. Criteria B and C now have A's shell (tools bar, hero, strand
+buttons, "Strand guidance" panel, footer) and use `assets/progress.js` (`criterion-b`,
+`criterion-c`); their inline sync code is gone and every checklist ID is unchanged (B 44, C 42).
+B's Preview buttons now work (the markup was there but the handler was missing). Frameworks,
+journey, sa, units and teacher were rebuilt on `.myp-panel` with their wording intact.
+Frameworks gained the frame's "Search frameworks" field and a "Search the site" button beside
+the criterion filters. Teacher: the key screen is a panel with the input field, the student
+table becomes stacked cards on phones, and note status is a three-button control (still open /
+planned / addressed). The Worker host is blocked from the build container, so the teacher
+dashboard was checked against mocked data only; check it once with the real key.
+
+Reusable pieces for later sessions: `glass.css` section 10 (`.myp-hero`, `.myp-panel`,
+`.myp-list` / `.myp-row`, `.myp-input`, `footer.myp-footer`, strand-page panel styles) and
+section 12 (`.docwrap` embeds inside a panel, `.myp-kv` unit table, `.myp-stats`, the
+`.tl` timeline, `.myp-chips` filters, `.myp-seg` segmented control, `select` in `.myp-input`).
+MYP 3 and MYP 1–2 units, sa and journey pages can reuse section 12 directly.
 
 1. **Foundation + pilot:** `assets/glass.css`, dark backdrops, icons, shared header / tools bar /
    footer / search dialog / progress-code dialogs, `CLAUDE.md` house-style update. Then Home,

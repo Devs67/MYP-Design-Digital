@@ -137,8 +137,8 @@ Checklist saving lives in `assets/progress.js`, linked after the page script wit
 Worker key: `<script src="../assets/progress.js" data-page="criterion-a"></script>`. It adds the
 "Save your progress." card above every `.clbar` and the Get / Enter / Connected dialogs. Never
 change its `hash()` or `labelOf()`, and never change a page's `data-page` key: saved ticks and
-teacher notes hang off both. Criteria B and C still have their own inline copy until they are
-rebuilt.
+teacher notes hang off both. All three MYP 4 & 5 criterion pages use it (`criterion-a`,
+`criterion-b`, `criterion-c`).
 
 ---
 
