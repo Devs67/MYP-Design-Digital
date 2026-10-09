@@ -4,75 +4,112 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Balanced Group Maker — Join</title>
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/theme.css">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="../assets/glass.css">
 </head>
 <body>
 
-<header class="hero">
-  <h1>Join the group</h1>
-  <p>Pick your name, pick your gender, and you're on the list.</p>
-  <span class="badge-demo mono" id="demoBadge" hidden>Local demo mode — not connected to a sheet</span>
+<header class="topbar">
+  <div class="topbar__wrap">
+    <a class="topbar__brand" href="../index.html">
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
+    </a>
+    <div class="topbar__actions">
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="../myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
+    </div>
+  </div>
 </header>
 
-<main style="max-width:520px;">
+<nav class="myp-tools" aria-label="Site tools">
+  <a class="myp-tool" href="../index.html"><span class="myp-icon myp-icon--house" aria-hidden="true"></span>Home</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
+  </div>
+</nav>
 
-  <section class="card" id="joinCard">
-    <form id="joinForm" autocomplete="off">
-      <select id="nameInput" required
-        style="width:100%; padding:16px 18px; font-size:20px; font-family:inherit; border:2px solid var(--rule); border-radius:10px; background:var(--paper); color:var(--ink);">
-        <option value="" selected disabled>Select your name</option>
-        <option>Adith</option>
-        <option>Anirudh</option>
-        <option>Syeda Adeeba</option>
-        <option>Falak</option>
-        <option>Yukti</option>
-        <option>Amal</option>
-        <option>Parinitha</option>
-        <option>Aishika</option>
-        <option>Tatva</option>
-        <option>Rithvik</option>
-        <option>Yuvan Reddy</option>
-        <option>Jigyansa</option>
-        <option>Kavya</option>
-        <option>Shreshta</option>
-        <option>Pranav</option>
-        <option>Ameya</option>
-        <option>Atiksh</option>
-        <option>Iyansh</option>
-        <option>Srithan Reddy</option>
-        <option>Vihana</option>
-        <option>Varshil</option>
+<main id="main">
+
+<header class="myp-hero">
+  <p class="myp-eyebrow">Group maker</p>
+  <h1 class="myp-title" id="heroTitle">Join the group</h1>
+  <p class="myp-lede" id="heroLede">Pick your name, pick your gender, and you're on the list.</p>
+  <div class="myp-hero__chips" id="demoBadge" hidden><span class="myp-chip">Local demo mode &mdash; not connected to a sheet</span></div>
+</header>
+
+<section class="myp-panel" id="joinCard" aria-labelledby="joinTitle">
+  <form class="gm-form" id="joinForm" autocomplete="off">
+    <h2 class="myp-panel__title" id="joinTitle">Join the group</h2>
+    <label class="myp-input gm-select-wrap" for="nameInput">
+      <span class="myp-input__label">Name</span>
+      <select class="gm-select" id="nameInput" required>
+            <option value="" selected disabled>Select your name</option>
+            <option>Adith</option>
+            <option>Anirudh</option>
+            <option>Syeda Adeeba</option>
+            <option>Falak</option>
+            <option>Yukti</option>
+            <option>Amal</option>
+            <option>Parinitha</option>
+            <option>Aishika</option>
+            <option>Tatva</option>
+            <option>Rithvik</option>
+            <option>Yuvan Reddy</option>
+            <option>Jigyansa</option>
+            <option>Kavya</option>
+            <option>Shreshta</option>
+            <option>Pranav</option>
+            <option>Ameya</option>
+            <option>Atiksh</option>
+            <option>Iyansh</option>
+            <option>Srithan Reddy</option>
+            <option>Vihana</option>
+            <option>Varshil</option>
       </select>
-      <div class="gender-toggle" role="group" aria-label="Gender">
-        <button type="button" class="gender-btn" data-gender="Boy">
-          <svg class="shape" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+    </label>
+    <div>
+      <p class="myp-label" id="genderLabel">Gender</p>
+      <div class="gender-toggle" role="group" aria-labelledby="genderLabel">
+        <button type="button" class="gender-btn" data-gender="Boy" aria-pressed="false">
+          <svg class="shape" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
           Boy
         </button>
-        <button type="button" class="gender-btn" data-gender="Girl">
-          <svg class="shape" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg>
+        <button type="button" class="gender-btn" data-gender="Girl" aria-pressed="false">
+          <svg class="shape" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>
           Girl
         </button>
       </div>
-      <button type="submit" class="primary" id="joinSubmit" disabled>Join the list</button>
-      <div class="error-toast mono" id="joinError"></div>
-    </form>
-
-    <div class="joined-panel" id="joinedPanel">
-      <div class="check">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="4,13 9,18 20,6"/></svg>
-      </div>
-      <h2 id="joinedName">You're in!</h2>
-      <p>Your teacher can see you on the list now.</p>
     </div>
-  </section>
+    <button type="submit" class="myp-button myp-button--primary gm-submit" id="joinSubmit" disabled>Join the list</button>
+    <p class="myp-hint" id="joinHint">Choose both a name and gender to enable Join the list.</p>
+    <p class="myp-error-line" id="joinError" role="alert" hidden></p>
+  </form>
+
+  <div class="gm-joined" id="joinedPanel" hidden>
+    <h2 class="myp-panel__title gm-joined__title" id="joinedName" tabindex="-1">You're in!</h2>
+    <p>Your teacher can see you on the list now.</p>
+    <button type="button" class="myp-button myp-button--secondary" id="joinAgain">Back to join page</button>
+  </div>
+</section>
 
 </main>
 
-<footer>Balanced Group Maker</footer>
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><span>Group maker</span></p>
+  <p class="myp-footer__links"><span>Balanced Group Maker</span><span>Design Team - SIS</span></p>
+</footer>
 
 <script src="shared.js"></script>
 <script>
@@ -83,29 +120,52 @@
 
   var els = {
     demoBadge: document.getElementById("demoBadge"),
+    heroTitle: document.getElementById("heroTitle"),
+    heroLede: document.getElementById("heroLede"),
     joinForm: document.getElementById("joinForm"),
     nameInput: document.getElementById("nameInput"),
     genderBtns: document.querySelectorAll(".gender-btn"),
     joinSubmit: document.getElementById("joinSubmit"),
+    joinHint: document.getElementById("joinHint"),
     joinError: document.getElementById("joinError"),
-    joinCard: document.getElementById("joinCard"),
     joinedPanel: document.getElementById("joinedPanel"),
-    joinedName: document.getElementById("joinedName")
+    joinedName: document.getElementById("joinedName"),
+    joinAgain: document.getElementById("joinAgain")
+  };
+  if (!els.joinForm || !els.nameInput || !els.joinSubmit) return;
+
+  var HERO = {
+    form: [els.heroTitle ? els.heroTitle.textContent : "", els.heroLede ? els.heroLede.textContent : ""],
+    joined: ["You’re on the list.", "Your teacher can see you on the list now."]
   };
 
   if (GroupMaker.isDemo && els.demoBadge) els.demoBadge.hidden = false;
 
-  function updateGenderButtons() {
-    for (var i = 0; i < els.genderBtns.length; i++) {
-      var btn = els.genderBtns[i];
-      btn.classList.toggle("active", btn.getAttribute("data-gender") === selectedGender);
-    }
-    updateSubmitState();
+  function setHero(pair) {
+    if (els.heroTitle) els.heroTitle.textContent = pair[0];
+    if (els.heroLede) els.heroLede.textContent = pair[1];
+  }
+
+  function showError(msg) {
+    if (!els.joinError) return;
+    els.joinError.textContent = msg || "";
+    els.joinError.hidden = !msg;
   }
 
   function updateSubmitState() {
-    if (!els.joinSubmit) return;
-    els.joinSubmit.disabled = !(selectedGender && els.nameInput.value.trim());
+    var ready = !!(selectedGender && els.nameInput.value.trim());
+    els.joinSubmit.disabled = !ready;
+    if (els.joinHint) els.joinHint.hidden = ready;
+  }
+
+  function updateGenderButtons() {
+    for (var i = 0; i < els.genderBtns.length; i++) {
+      var btn = els.genderBtns[i];
+      var on = btn.getAttribute("data-gender") === selectedGender;
+      btn.classList.toggle("active", on);
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+    }
+    updateSubmitState();
   }
 
   for (var gi = 0; gi < els.genderBtns.length; gi++) {
@@ -115,31 +175,47 @@
     });
   }
 
-  if (els.nameInput) els.nameInput.addEventListener("change", updateSubmitState);
+  els.nameInput.addEventListener("change", updateSubmitState);
 
-  if (els.joinForm) {
-    els.joinForm.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var name = els.nameInput.value.trim();
-      if (!name || !selectedGender) return;
+  els.joinForm.addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var name = els.nameInput.value.trim();
+    if (!name || !selectedGender) return;
 
-      els.joinSubmit.disabled = true;
-      els.joinError.style.display = "none";
+    els.joinSubmit.disabled = true;
+    showError("");
 
-      GroupMaker.submitStudent(name, selectedGender).then(function (result) {
-        if (!result || !result.ok) {
-          els.joinError.textContent = (result && result.error) || "Something went wrong. Try again.";
-          els.joinError.style.display = "block";
-          els.joinSubmit.disabled = false;
-          return;
-        }
-        els.joinedName.textContent = "You're in, " + name + "!";
-        els.joinForm.style.display = "none";
-        els.joinedPanel.style.display = "block";
-      });
+    GroupMaker.submitStudent(name, selectedGender).then(function (result) {
+      if (!result || !result.ok) {
+        showError((result && result.error) || "Something went wrong. Try again.");
+        els.joinSubmit.disabled = false;
+        return;
+      }
+      els.joinedName.textContent = "You're in, " + name + "!";
+      els.joinForm.hidden = true;
+      els.joinedPanel.hidden = false;
+      setHero(HERO.joined);
+      try { els.joinedName.focus(); } catch (e) {}
+    });
+  });
+
+  // Back to the form, cleared, for the next student on a shared device
+  if (els.joinAgain) {
+    els.joinAgain.addEventListener("click", function () {
+      els.nameInput.selectedIndex = 0;
+      selectedGender = null;
+      updateGenderButtons();
+      showError("");
+      els.joinedPanel.hidden = true;
+      els.joinForm.hidden = false;
+      setHero(HERO.form);
+      try { els.nameInput.focus(); } catch (e) {}
     });
   }
+
+  updateSubmitState();
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

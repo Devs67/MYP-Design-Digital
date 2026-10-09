@@ -10,115 +10,126 @@
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/theme.css">
 <style>
-:root{
-  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
-  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
-  --amber:#B05A1C; --dev:#6A4C93;
-  --display:"Fraunces",Georgia,serif;
-  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
+:root{--dev:#6A4C93}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
-  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1180px;margin:0 auto;padding:0 30px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
-  text-transform:uppercase;color:var(--dev);margin:0}
+body{margin:0}
+[hidden]{display:none !important}
+</style>
+<link rel="stylesheet" href="assets/glass.css">
+<style>
+/* ---- bookmarks: groups are panels, each link is a row (Figma 03) ---- */
+.bm-filter{display:flex;flex-direction:column;gap:12px;width:var(--myp-col);margin:24px auto 0}
+.bm-chips{display:flex;flex-wrap:wrap;gap:8px}
+.bm-chips button{min-height:40px;padding:8px 14px;border-radius:12px;border:1px solid var(--myp-border);
+  background:var(--myp-glass-fill-soft);color:var(--myp-accent);font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);cursor:pointer}
+.bm-chips button:hover{color:var(--myp-hover);border-color:var(--myp-hover)}
+.bm-chips button[aria-pressed="true"]{background:var(--myp-tint);border-color:var(--myp-accent);box-shadow:inset 0 0 0 1px var(--myp-accent);font-weight:700}
+.bm-chips button:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.bm-count{margin:0;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
 
-.mast{padding:56px 0 32px}
-.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
-  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
-.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
-
-.sec{padding:8px 0 32px}
-.part{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:-.01em;
-  margin:0 0 16px;display:flex;align-items:center;gap:12px}
-.part span{font-family:var(--mono);font-size:12px;width:28px;height:28px;flex:0 0 28px;
-  border-radius:7px;background:var(--dev);color:#FFF;display:flex;align-items:center;justify-content:center}
-
-.group{background:var(--card);border:1px solid var(--rule);border-radius:12px;
-  padding:18px 22px 10px;margin-bottom:14px}
-.group h3{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--slate);margin:0 0 8px}
-.links{list-style:none;margin:0;padding:0;columns:2;column-gap:36px}
-.links li{break-inside:avoid;padding:7px 0;border-top:1px solid var(--rule-soft);
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
-.links a{color:var(--ink);font-weight:500;text-decoration:underline;
-  text-decoration-color:var(--rule);text-underline-offset:3px}
-.links a:hover{color:var(--dev);text-decoration-color:var(--dev)}
-.links i{font-family:var(--mono);font-size:10.5px;font-style:normal;color:var(--slate)}
-.links .note{flex:0 0 100%;font-size:13.5px;line-height:1.5;color:var(--slate)}
-.links .pick a::before{content:"\2605";color:var(--dev);margin-right:6px;display:inline-block}
-
-footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
-  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-@media (max-width:760px){
-  .wrap{padding:0 14px}
-  .mast{padding:40px 0 24px}
-  .group{padding:14px 16px 6px}
-  .links{columns:1}
+.bm-part{width:var(--myp-col);margin:40px auto 0}
+.part{display:flex;align-items:center;gap:12px;margin:0;font:500 var(--myp-section-size)/var(--myp-section-line) var(--myp-font-display);
+  letter-spacing:-.025em;color:var(--myp-text)}
+.part span{width:36px;height:36px;flex:0 0 36px;display:flex;align-items:center;justify-content:center;border-radius:12px;
+  background:var(--dev);color:#fff;font:600 14px/1 var(--myp-font-mono)}
+.bm-part .group{width:100%;margin:16px 0 0}
+.group h3{margin:0;font:500 var(--myp-card-size)/var(--myp-card-line) var(--myp-font-display);letter-spacing:-.02em;color:var(--myp-text)}
+.links{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.links li{position:relative;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:14px 16px;
+  border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface)}
+.links li:hover{border-color:var(--myp-accent);box-shadow:0 0 0 1px var(--myp-accent)}
+.links a{color:var(--myp-accent);font-weight:600;text-decoration:none}
+/* the whole row is the link's tap target; the icon sits after the title */
+.links a::before{content:"";position:absolute;inset:0;border-radius:inherit}
+.links a:hover{color:var(--myp-hover)}
+.links a:focus-visible{outline:none}
+.links li:focus-within{outline:2px solid var(--myp-accent);outline-offset:2px}
+.links a[target="_blank"]::after{content:"";display:inline-block;width:14px;height:14px;margin-left:6px;vertical-align:-1px;
+  background-color:currentColor;-webkit-mask:url("assets/icons/external-link.svg") no-repeat center / contain;
+  mask:url("assets/icons/external-link.svg") no-repeat center / contain}
+.links i{font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);font-style:normal;letter-spacing:.04em;color:var(--myp-muted)}
+.links .note{flex:0 0 100%;font-size:14px;line-height:22px;color:var(--myp-body)}
+.links .pick::before{content:"\2605";order:-1;margin-right:-6px;color:var(--dev)}
+.bm-none{width:var(--myp-col);margin:24px auto 0}
+@media (max-width:560px){
+  .bm-part{margin-top:32px}
+  .links li{padding:12px 14px}
 }
 </style>
-<link rel="stylesheet" href="assets/theme.css">
-<link rel="stylesheet" href="assets/glass.css">
 </head>
 <body>
 
 <header class="topbar">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <span class="cur">Teacher bookmarks</span>
-    </nav>
     <div class="topbar__actions">
-      <div class="topbar__grades">
-        <a href="myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
-        <a href="myp3/index.html" data-g="myp3">3</a>
-        <a href="myp4-5/index.html" data-g="myp4-5">4&ndash;5</a>
-      </div>
-      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
-      </button>
-      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
-        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
+        <a href="myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
-<header class="mast">
-  <div class="wrap">
-    <p class="eyebrow">Teacher only &middot; not linked from the site</p>
-    <h1>Teacher bookmarks</h1>
-    <p class="sub">Planning and design references for the Design Team. Every link opens in a new tab. <span style="color:var(--dev)">&#9733;</span> marks a top pick.</p>
-    <div class="group" style="margin:24px 0 0">
+<nav class="myp-tools" aria-label="Site tools">
+  <a class="myp-tool" href="index.html"><span class="myp-icon myp-icon--house" aria-hidden="true"></span>Home</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search the site</button>
+  <a class="myp-tool" href="myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
+  </div>
+</nav>
+
+<main id="main">
+
+<header class="myp-hero">
+  <p class="myp-eyebrow">Teacher only &middot; not linked from the site</p>
+  <h1 class="myp-title">Teacher bookmarks</h1>
+  <p class="myp-lede">Planning and design references for the Design Team. Every link opens in a new tab. <span style="color:var(--dev)">&#9733;</span> marks a top pick.</p>
+</header>
+
+<div class="bm-filter" role="search">
+  <label class="myp-input" for="bmFilter">
+    <span class="myp-input__label">Search bookmarks</span>
+    <span class="myp-input__row">
+      <span class="myp-icon myp-icon--search" aria-hidden="true"></span>
+      <input type="search" id="bmFilter" placeholder="Search bookmarks by name, topic or provider" autocomplete="off">
+    </span>
+  </label>
+  <div class="bm-chips" role="group" aria-label="Show">
+    <button type="button" data-show="all" aria-pressed="true">All bookmarks</button>
+    <button type="button" data-show="A" aria-pressed="false">IB / MYP Resources</button>
+    <button type="button" data-show="B" aria-pressed="false">Design Resources</button>
+    <button type="button" data-show="pick" aria-pressed="false">&#9733; Top picks</button>
+  </div>
+  <p class="bm-count" id="bmCount" aria-live="polite"></p>
+</div>
+
+<section class="group myp-panel" data-part="site">
       <h3>Hidden pages on this site</h3>
       <ul class="links">
         <li><a href="lesson-experience.html">Lesson Experience</a><i>not linked for students</i><span class="note">Lesson-by-lesson class logs: MYP 1B, 2A, 2D, 3B and 4.</span></li>
       </ul>
-    </div>
-  </div>
-</header>
+</section>
 
-<section class="sec">
-  <div class="wrap">
-    <h2 class="part"><span>A</span>IB / MYP Resources</h2>
-    <div class="group">
+<section class="bm-part" data-part="A">
+  <h2 class="part"><span>A</span>IB / MYP Resources</h2>
+    <div class="group myp-panel">
       <h3>MYP enhancement 2027 (what&rsquo;s changing)</h3>
       <ul class="links">
         <li><a href="https://www.casieonline.org/post/enhancing-the-myp/" target="_blank" rel="noopener noreferrer">CASIE &ndash; Enhancing the MYP</a><i>casieonline.org</i></li>
         <li><a href="https://learnlattice.org/blog/enhancing-the-myp-what-changes/" target="_blank" rel="noopener noreferrer">Learn Lattice &ndash; Enhancing the MYP 2027: what changes and how to prepare</a><i>learnlattice.org</i><span class="note">Specified concepts, inquiry statements, contextual lenses, and Service as Action becoming Community Engagement.</span></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>MYP Design curriculum and assessment</h3>
       <ul class="links">
         <li><a href="https://www.designmyp.com/" target="_blank" rel="noopener noreferrer">designmyp.com</a><i>designmyp.com</i></li>
@@ -133,7 +144,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://guide.fariaedu.com/myp-personal-project" target="_blank" rel="noopener noreferrer">MYP Personal Project guide (Faria)</a><i>guide.fariaedu.com</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>IB planning: ATL and Global Contexts</h3>
       <ul class="links">
         <li><a href="https://docs.google.com/spreadsheets/d/1CPrLC-jpt60bolHCFTzIjWa3KkIEtrJsErQ8KaPOImk/edit?gid=0#gid=0" target="_blank" rel="noopener noreferrer">IB Approaches to Learning (AtL) Toolkit</a><i>docs.google.com</i></li>
@@ -146,7 +157,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://learn.wab.edu/myp/myp/video" target="_blank" rel="noopener noreferrer">More about IB &ndash; WAB MYP videos</a><i>learn.wab.edu</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Global contexts and real-world problems</h3>
       <ul class="links">
         <li class="pick"><a href="https://designforchangeindia.com/i-can-school-challenge/" target="_blank" rel="noopener noreferrer">Design for Change India &ndash; I CAN School Challenge</a><i>designforchangeindia.com</i><span class="note">India-based student design-thinking challenge (Feel, Imagine, Do, Share). A good fit for service and community projects.</span></li>
@@ -155,7 +166,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://www.ellenmacarthurfoundation.org/topics/circular-design/tools" target="_blank" rel="noopener noreferrer">Ellen MacArthur Foundation &ndash; Circular design tools</a><i>ellenmacarthurfoundation.org</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Inquiry, concepts and thinking routines</h3>
       <ul class="links">
         <li><a href="https://books.google.co.in/books?id=djKipn6tY40C" target="_blank" rel="noopener noreferrer">Concept-Based Curriculum and Instruction &ndash; H. Lynn Erickson</a><i>books.google.co.in</i></li>
@@ -170,7 +181,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://thinkingpathwayz.weebly.com/coloursymbolimage.html" target="_blank" rel="noopener noreferrer">Thinking Pathways &ndash; Colour Symbol Image</a><i>thinkingpathwayz.weebly.com</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Classroom engagement and learning spaces</h3>
       <ul class="links">
         <li><a href="https://www.educaplay.com/" target="_blank" rel="noopener noreferrer">Educaplay &ndash; educational games generator</a><i>educaplay.com</i></li>
@@ -180,13 +191,11 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://www.teacherled.com/iresources/shapesapp/index.html" target="_blank" rel="noopener noreferrer">TeacherLED &ndash; Shapes and Measures</a><i>teacherled.com</i></li>
       </ul>
     </div>
-  </div>
 </section>
 
-<section class="sec">
-  <div class="wrap">
-    <h2 class="part"><span>B</span>Design Resources</h2>
-    <div class="group">
+<section class="bm-part" data-part="B">
+  <h2 class="part"><span>B</span>Design Resources</h2>
+    <div class="group myp-panel">
       <h3>Design thinking and ideation</h3>
       <ul class="links">
         <li><a href="https://www.designkit.org/methods.html" target="_blank" rel="noopener noreferrer">IDEO Design Kit &ndash; Methods</a><i>designkit.org</i></li>
@@ -199,7 +208,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://razorpay.com/m/fix-my-itch/" target="_blank" rel="noopener noreferrer">Fix My Itch &ndash; Problems in India worth solving</a><i>razorpay.com</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Design thinking toolkits for teachers</h3>
       <ul class="links">
         <li class="pick"><a href="https://designthinking.ideo.com/resources/design-thinking-for-educators" target="_blank" rel="noopener noreferrer">IDEO &ndash; Design Thinking for Educators</a><i>designthinking.ideo.com</i><span class="note">Free toolkit written specifically for schools.</span></li>
@@ -209,7 +218,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://inclusive.microsoft.design/" target="_blank" rel="noopener noreferrer">Microsoft Inclusive Design toolkit</a><i>inclusive.microsoft.design</i><span class="note">Good for teaching empathy and designing for users with different needs.</span></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Design competitions and inspiration</h3>
       <ul class="links">
         <li class="pick"><a href="https://vam.ac.uk/info/va-innovate-challenge-resources" target="_blank" rel="noopener noreferrer">V&amp;A Innovate &ndash; challenge resources</a><i>vam.ac.uk</i><span class="note">Free design-challenge resources for students aged 11&ndash;14 from the V&amp;A museum.</span></li>
@@ -220,7 +229,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://www.dezeen.com/" target="_blank" rel="noopener noreferrer">Dezeen</a><i>dezeen.com</i><span class="note">Design news. Useful for Criterion A research and case studies.</span></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Product design, materials and CAD</h3>
       <ul class="links">
         <li><a href="https://www.dsource.in/" target="_blank" rel="noopener noreferrer">D'source &ndash; Design learning (IDC, IIT Bombay)</a><i>dsource.in</i></li>
@@ -237,7 +246,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://www.instructables.com/teachers/" target="_blank" rel="noopener noreferrer">Instructables &ndash; Teachers</a><i>instructables.com</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>UI / UX and digital design</h3>
       <ul class="links">
         <li><a href="https://m3.material.io/" target="_blank" rel="noopener noreferrer">Material Design 3</a><i>m3.material.io</i></li>
@@ -256,7 +265,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://www.canva.com/education/" target="_blank" rel="noopener noreferrer">Canva for Education</a><i>canva.com</i><span class="note">Free for teachers and students.</span></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Visual and graphic design</h3>
       <ul class="links">
         <li><a href="https://paperform.co/blog/principles-of-design/" target="_blank" rel="noopener noreferrer">Principles of design (Paperform)</a><i>paperform.co</i></li>
@@ -283,7 +292,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">Unsplash &ndash; Free photos</a><i>unsplash.com</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Drawing and sketching</h3>
       <ul class="links">
         <li><a href="https://drawabox.com/lesson/0" target="_blank" rel="noopener noreferrer">Drawabox &ndash; Lesson 0</a><i>drawabox.com</i></li>
@@ -291,7 +300,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://practicedrawingthis.com/cgi-bin/morning-sketches-app.cgi?warmup=0" target="_blank" rel="noopener noreferrer">Morning Sketches &ndash; Reference images</a><i>practicedrawingthis.com</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Design and animation software</h3>
       <ul class="links">
         <li><a href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva</a><i>canva.com</i></li>
@@ -300,7 +309,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://opentoonz.github.io/e/download/opentoonz.html" target="_blank" rel="noopener noreferrer">OpenToonz</a><i>opentoonz.github.io</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Making, robotics and electronics</h3>
       <ul class="links">
         <li><a href="https://github.com/sjpiper145/MakerSkillTree" target="_blank" rel="noopener noreferrer">MakerSkillTree (GitHub)</a><i>github.com</i></li>
@@ -326,7 +335,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://phet.colorado.edu/en/simulations/circuit-construction-kit-dc" target="_blank" rel="noopener noreferrer">PhET &ndash; Circuit Construction Kit</a><i>phet.colorado.edu</i></li>
       </ul>
     </div>
-    <div class="group">
+    <div class="group myp-panel">
       <h3>Coding and app design</h3>
       <ul class="links">
         <li><a href="https://appinventor.mit.edu/explore/library" target="_blank" rel="noopener noreferrer">MIT App Inventor &ndash; Library</a><i>appinventor.mit.edu</i></li>
@@ -345,16 +354,89 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li><a href="https://code.org/" target="_blank" rel="noopener noreferrer">Code.org</a><i>code.org</i></li>
       </ul>
     </div>
-  </div>
 </section>
 
-<footer>
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
-    <span>Design Team - SIS</span>
-    <span>Teacher bookmarks</span>
-  </div>
+<p class="myp-panel bm-none" id="bmNone" hidden>No bookmarks match. Try a shorter word, or show all bookmarks.</p>
+
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="index.html">MYP Digital Design</a><span>Teacher bookmarks</span></p>
+  <p class="myp-footer__links"><a href="index.html">Home</a><a href="myp1-2/index.html">MYP 1 &amp; 2</a><a href="myp3/index.html">MYP 3</a><a href="myp4-5/index.html">MYP 4 &amp; 5</a><span>Design Team - SIS</span></p>
 </footer>
 
+<script>
+(function(){
+  // --- filter: type to narrow the list, or show one part or the top picks ---
+  var input = document.getElementById('bmFilter');
+  var count = document.getElementById('bmCount');
+  var none = document.getElementById('bmNone');
+  var chips = document.querySelectorAll('.bm-chips button');
+  var groups = document.querySelectorAll('.group');
+  var parts = document.querySelectorAll('.bm-part');
+  if(!input || !groups.length) return;
+  var show = 'all';
+
+  function norm(t){ return (t || '').toLowerCase().replace(/\s+/g, ' '); }
+
+  function partOf(el){
+    var n = el;
+    while(n && n.getAttribute){
+      var p = n.getAttribute('data-part');
+      if(p) return p;
+      n = n.parentNode;
+    }
+    return '';
+  }
+
+  function apply(){
+    var words = norm(input.value).split(' ').filter(function(w){ return w; });
+    var total = 0, shown = 0;
+    for(var g = 0; g < groups.length; g++){
+      var grp = groups[g];
+      var part = partOf(grp);
+      var heading = grp.querySelector('h3');
+      var groupText = norm(heading ? heading.textContent : '');
+      var items = grp.querySelectorAll('.links li');
+      var visible = 0;
+      for(var i = 0; i < items.length; i++){
+        var li = items[i];
+        total++;
+        var ok = true;
+        if(show === 'pick') ok = li.classList.contains('pick');
+        else if(show !== 'all') ok = part === show;
+        if(ok && words.length){
+          var text = groupText + ' ' + norm(li.textContent);
+          for(var w = 0; w < words.length; w++){
+            if(text.indexOf(words[w]) === -1){ ok = false; break; }
+          }
+        }
+        li.hidden = !ok;
+        if(ok){ visible++; shown++; }
+      }
+      grp.hidden = visible === 0;
+    }
+    for(var p = 0; p < parts.length; p++){
+      parts[p].hidden = !parts[p].querySelector('.group:not([hidden])');
+    }
+    var filtered = words.length || show !== 'all';
+    if(count) count.textContent = filtered ? shown + ' of ' + total + ' bookmarks' : total + ' bookmarks';
+    if(none) none.hidden = shown > 0;
+  }
+
+  input.addEventListener('input', apply);
+  for(var c = 0; c < chips.length; c++){
+    chips[c].addEventListener('click', function(e){
+      show = e.currentTarget.getAttribute('data-show') || 'all';
+      for(var k = 0; k < chips.length; k++){
+        chips[k].setAttribute('aria-pressed', chips[k] === e.currentTarget ? 'true' : 'false');
+      }
+      apply();
+    });
+  }
+  apply();
+})();
+</script>
 <script src="assets/theme.js"></script>
 </body>
 </html>

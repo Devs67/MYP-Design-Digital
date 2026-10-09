@@ -1,0 +1,199 @@
+/* ============================================================
+   Lesson logs: lesson-experience/myp2a, myp2d, myp3b, myp4.html
+   (Figma 67-70). Loaded after glass.css, which supplies the shell,
+   hero, panels, chips, stat tiles and buttons. Everything here is
+   scoped to main.lx so the logs' short class names (.card, .tag,
+   .note, .quote, .gap ...) cannot leak into or out of glass.css.
+
+   Three layouts share it:
+     .lx--log     2A, 2D   date beside each lesson, running log
+     .lx--stages  3B       strand-coloured stages, planned = dashed
+     .lx--unit    4        unit frame, then Criterion A and B lessons
+   ============================================================ */
+
+:root{
+  --lx-a:#2862AE;      --lx-a-tint:#E8F1FF;     /* Criterion A */
+  --lx-b:#8A5B12;      --lx-b-tint:#FFF1D6;     /* Criterion B */
+  --lx-today:#A8402F;  --lx-today-tint:#FBEAE6; /* today's lesson */
+  --i-color:#2862AE;   --i-tint:#E8F1FF;        /* MYP 3B strands */
+  --ii-color:#6A4C93;  --ii-tint:#F0EAF7;
+  --iii-color:#8A5B12; --iii-tint:#FFF1D6;
+  --iv-color:#236B50;  --iv-tint:#DDF3E9;
+  --gc:#236B50;        --gc-soft:#DDF3E9;       /* global-context link */
+}
+:root.dark{
+  --lx-a:#92C5FF;      --lx-a-tint:#203955;
+  --lx-b:#F2D37A;      --lx-b-tint:#3A3214;
+  --lx-today:#FF9B8A;  --lx-today-tint:#3A2020;
+  --i-color:#92C5FF;   --i-tint:#203955;
+  --ii-color:#C9B3EC;  --ii-tint:#2E2640;
+  --iii-color:#F2D37A; --iii-tint:#3A3214;
+  --iv-color:#8BE3B5;  --iv-tint:#173A2A;
+  --gc:#8BE3B5;        --gc-soft:#173A2A;
+}
+*{box-sizing:border-box}
+body{margin:0}
+
+/* ---- shared pieces ---- */
+.lx .card{min-width:0;padding:20px 24px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);
+  background:var(--myp-surface);box-shadow:none}
+.lx .card h3{margin:0;font:500 20px/28px var(--myp-font-display);letter-spacing:-.01em;color:var(--myp-text);text-wrap:balance}
+.lx .card p{margin:0 0 10px;font-size:16px;line-height:26px;color:var(--myp-body)}
+.lx .card p:last-child{margin-bottom:0}
+.lx .legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:20px 0 0}
+.lx .legend-item{display:flex;align-items:center;gap:8px;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.lx .myp-panel__title{display:flex;align-items:center;gap:12px}
+
+/* the vertical rail every timeline hangs from */
+.lx .flow,.lx .timeline{position:relative;margin:0;padding:0 0 0 28px;background:none;border:0;border-radius:0;overflow:visible}
+.lx .flow::before,.lx .timeline::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;
+  border-radius:2px;background:var(--myp-border)}
+
+/* ============ 2A, 2D: running log ============ */
+.lx--log .flow{padding-left:108px}
+.lx--log .flow::before{left:87px}
+.lx--log .lesson{position:relative;margin:0 0 16px}
+.lx--log .lesson:last-child{margin-bottom:0}
+.lx--log .lesson::before{content:"";position:absolute;left:-27px;top:22px;width:16px;height:16px;border-radius:50%;
+  background:var(--myp-surface);border:2px solid var(--myp-accent)}
+.lx--log .datebadge{position:absolute;left:-108px;top:16px;width:60px;text-align:right;font-family:var(--myp-font-mono);line-height:1.25}
+.lx--log .datebadge span{display:block}
+.lx--log .datebadge .day{font:500 24px/28px var(--myp-font-display);color:var(--myp-text)}
+.lx--log .datebadge .mon{font-size:var(--myp-micro-size);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.lx--log .datebadge .time{margin-top:2px;font-size:var(--myp-micro-size);color:var(--myp-muted)}
+.lx--log .card-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:8px 16px;margin:0 0 10px}
+.lx--log .tag{padding:4px 10px;border-radius:var(--myp-radius-chip);white-space:nowrap;
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase}
+.lx--log .tag.a{color:var(--lx-a);background:var(--lx-a-tint)}
+.lx--log .tag.b{color:var(--lx-b);background:var(--lx-b-tint)}
+.lx--log .strand-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.lx--log .strand-chip{padding:4px 10px;border-radius:var(--myp-radius-chip);background:var(--myp-tint);color:var(--myp-muted);
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.04em}
+.lx--log .note{margin:12px 0 0;padding:12px 14px;border-radius:var(--myp-radius-field);background:var(--myp-bg);
+  font-size:14px;line-height:22px;color:var(--myp-body)}
+.lx--log .note strong{color:var(--myp-text)}
+.lx--log .resource{display:inline-flex;align-items:center;gap:8px;margin:12px 8px 0 0;min-height:40px;padding:8px 14px;
+  border:1px solid var(--myp-border);border-radius:12px;background:var(--myp-tint);color:var(--myp-accent);
+  font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);text-decoration:none}
+.lx--log .resource:hover{color:var(--myp-hover);border-color:var(--myp-hover)}
+.lx--log .resource:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.lx--log .resource .rlabel{color:var(--myp-muted);font-weight:500}
+.lx--log .no-resource,.lx--log .est-note{margin:12px 0 0;font-size:13px;line-height:20px;font-style:italic;color:var(--myp-muted)}
+/* today's lesson */
+.lx--log .card.today{border-color:var(--lx-today);box-shadow:0 0 0 1px var(--lx-today)}
+.lx--log .lesson.today::before{border-color:var(--lx-today);background:var(--lx-today)}
+.lx--log .card.today h3{color:var(--lx-today)}
+@media (max-width:560px){
+  /* the date moves above its card; the rail stays */
+  .lx.lx--log .flow{padding-left:22px}
+  .lx.lx--log .flow::before{left:5px}
+  .lx--log .lesson::before{left:-22px;top:5px;width:12px;height:12px}
+  .lx--log .datebadge{position:static;width:auto;display:flex;align-items:baseline;gap:6px;margin:0 0 8px;text-align:left}
+  .lx--log .datebadge .day{font-size:18px;line-height:24px}
+  .lx--log .lesson{margin-bottom:20px}
+  .lx .card{padding:16px}
+}
+
+/* ============ 3B: strand stages ============ */
+.lx--stages .legend-dot{width:10px;height:10px;flex:none;border-radius:50%;background:var(--dot)}
+.lx--stages .legend-dot--planned{background:transparent;border:1.5px dashed var(--dot)}
+.lx--stages .stage{position:relative;padding:0 0 24px}
+.lx--stages .stage:last-child{padding-bottom:0}
+.lx--stages .stage-dot{position:absolute;left:-28px;top:4px;width:16px;height:16px;border-radius:50%;
+  background:var(--dot, var(--i-color));box-shadow:0 0 0 4px var(--myp-surface)}
+.lx--stages .stage.planned .stage-dot{background:var(--myp-surface);border:2px dashed var(--dot, var(--iii-color))}
+.lx--stages .stage-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 10px}
+.lx--stages .date{font:500 13px/20px var(--myp-font-mono);color:var(--myp-muted)}
+.lx--stages .tag{padding:4px 10px;border-radius:var(--myp-radius-chip);font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--dot, var(--i-color));background:var(--tint, var(--i-tint))}
+.lx--stages .status{padding:3px 9px;border:1px dashed var(--myp-border);border-radius:var(--myp-radius-chip);
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.lx--stages .card{border-left:4px solid var(--dot, var(--i-color))}
+.lx--stages .stage.planned .card{border-style:dashed;border-left-style:dashed;background:var(--myp-glass-fill-soft)}
+.lx--stages .card h3{margin:0 0 8px}
+.lx--stages .card ul{margin:0 0 12px;padding-left:20px}
+.lx--stages .card li{margin:0 0 4px;font-size:15px;line-height:24px;color:var(--myp-body)}
+.lx--stages .card li::marker{color:var(--dot, var(--i-color))}
+.lx--stages .card p.quote{margin:0;padding:0 0 0 12px;border:0;border-left:2px solid var(--myp-border);border-radius:0;background:none;
+  font:400 13px/21px var(--myp-font-mono);color:var(--myp-muted)}
+
+/* ============ 4: unit frame and criterion panels ============ */
+.lx--unit .swatch{width:12px;height:12px;flex:none;border-radius:4px}
+.lx--unit .swatch.a{background:var(--lx-a)}
+.lx--unit .swatch.b{background:var(--lx-b)}
+.lx--unit .swatch.today{background:transparent;border:2px solid var(--lx-today)}
+
+.lx--unit .unit-frame-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.lx--unit .uf-item{min-width:0;padding:14px 16px;display:flex;flex-direction:column;gap:4px;
+  border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface)}
+.lx--unit .uf-label,.lx--unit .meta-label,.lx--unit .field-label,.lx--unit .card .meta-eyebrow{
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.lx--unit .uf-value{font-size:15px;line-height:24px;color:var(--myp-text)}
+.lx--unit .uf-value.gc{color:var(--gc);font-weight:600}
+.lx--unit .soi{margin:0;padding:14px 16px;border-left:4px solid var(--myp-accent);border-radius:var(--myp-radius-field);
+  background:var(--myp-tint);font-size:16px;line-height:26px;font-style:italic;color:var(--myp-text)}
+.lx--unit .uf-note{margin:0;font-size:14px;line-height:22px;color:var(--myp-muted)}
+
+.lx--unit .crit-pill{display:inline-flex;align-items:center;padding:4px 12px;border-radius:var(--myp-radius-chip);
+  font:600 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);letter-spacing:.08em}
+.lx--unit .crit-pill.a{color:var(--lx-a);background:var(--lx-a-tint)}
+.lx--unit .crit-pill.b{color:var(--lx-b);background:var(--lx-b-tint)}
+.lx--unit .crit-label{font:500 13px/20px var(--myp-font-mono);color:var(--myp-muted)}
+
+.lx--unit .node{position:relative;margin:0 0 16px}
+.lx--unit .node:last-child{margin-bottom:0}
+.lx--unit .node-dot{position:absolute;left:-28px;top:22px;width:16px;height:16px;border-radius:50%;
+  background:var(--myp-surface);border:2px solid var(--lx-a);box-shadow:0 0 0 4px var(--myp-surface)}
+.lx--unit .crit-b .node-dot{border-color:var(--lx-b)}
+.lx--unit .node.today .node-dot{background:var(--lx-today);border-color:var(--lx-today)}
+.lx--unit .node.today .card{border-color:var(--lx-today);box-shadow:0 0 0 1px var(--lx-today)}
+.lx--unit .card-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 8px}
+.lx--unit .datetime{margin-right:4px;font:500 13px/20px var(--myp-font-mono);color:var(--myp-muted)}
+.lx--unit .strand-badge,.lx--unit .fa-tag,.lx--unit .today-tag{padding:4px 10px;border-radius:var(--myp-radius-chip);
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em}
+.lx--unit .strand-badge{color:var(--lx-a);background:var(--lx-a-tint)}
+.lx--unit .crit-b .strand-badge{color:var(--lx-b);background:var(--lx-b-tint)}
+.lx--unit .fa-tag{color:var(--myp-ok);background:var(--myp-ok-tint)}
+.lx--unit .today-tag{color:var(--lx-today);background:var(--lx-today-tint)}
+.lx--unit .card h3{margin:0 0 12px}
+.lx--unit .field{display:grid;grid-template-columns:110px minmax(0,1fr);gap:4px 16px;padding:10px 0;border-top:1px solid var(--myp-tint)}
+.lx--unit .field-label{padding-top:3px}
+.lx--unit .field-value{font-size:15px;line-height:24px;color:var(--myp-text)}
+.lx--unit .field-value.soft{color:var(--myp-body)}
+.lx--unit .meta-block{margin:12px 0 0;padding:14px 16px;border-radius:var(--myp-radius-field);background:var(--myp-bg)}
+.lx--unit .card .meta-block .meta-eyebrow{margin:0 0 10px}
+.lx--unit .meta-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 20px}
+.lx--unit .meta-item{display:flex;flex-direction:column;gap:4px;min-width:0}
+.lx--unit .meta-value{font-size:14px;line-height:22px;color:var(--myp-body)}
+.lx--unit .meta-value.gc-yes{color:var(--gc)}
+.lx--unit .meta-value.gc-indirect{color:var(--myp-warn)}
+.lx--unit .resources{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.lx--unit .resource-chip,.lx--unit .stat-chip{padding:6px 12px;border-radius:12px;font:500 13px/20px var(--myp-font-body)}
+.lx--unit .resource-chip{color:var(--myp-text);background:var(--myp-tint);border:1px solid var(--myp-border)}
+.lx--unit .stat-chip{color:var(--myp-ok);background:var(--myp-ok-tint);font-family:var(--myp-font-mono);font-size:12px}
+
+/* the unlogged weeks between Criterion A and B */
+.lx--unit .gap{position:relative;margin:16px 0 0;padding:0;border:0;background:none}
+.lx--unit .gap-line{display:flex;align-items:center;gap:12px}
+.lx--unit .gap-dash{position:absolute;left:-28px;top:0;bottom:0;width:16px}
+.lx--unit .gap-dash::before{content:"";position:absolute;left:7px;top:0;bottom:0;border-left:2px dashed var(--myp-surface)}
+.lx--unit .gap-note{flex:1;padding:12px 14px;border:1px dashed var(--myp-border);border-radius:var(--myp-radius-field);
+  font-size:14px;line-height:22px;color:var(--myp-muted)}
+.lx--unit .gap-note strong{font-family:var(--myp-font-mono);font-weight:600;color:var(--myp-text)}
+
+@media (max-width:760px){
+  .lx--unit .meta-grid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .lx .flow,.lx .timeline{padding-left:22px}
+  .lx .flow::before,.lx .timeline::before{left:5px}
+  .lx--stages .stage-dot,.lx--unit .node-dot,.lx--unit .gap-dash{left:-22px;width:12px;height:12px}
+  .lx--unit .node-dot{top:20px}
+  .lx--unit .field{grid-template-columns:1fr}
+  .lx--unit .field-label{padding-top:0}
+  .lx--unit .meta-block{padding:12px}
+}
+@media print{
+  .lx .card{break-inside:avoid}
+}

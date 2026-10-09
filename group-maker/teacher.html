@@ -4,65 +4,118 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Balanced Group Maker — Teacher</title>
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/theme.css">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="../assets/glass.css">
 </head>
 <body>
 
-<header class="hero">
-  <h1>Balanced Group Maker</h1>
-  <p>Live class list — form gender-balanced groups when everyone's in.</p>
-  <span class="badge-demo mono" id="demoBadge" hidden>Local demo mode — not connected to a sheet</span>
+<header class="topbar">
+  <div class="topbar__wrap">
+    <a class="topbar__brand" href="../index.html">
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
+    </a>
+    <div class="topbar__actions">
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="../myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
+    </div>
+  </div>
 </header>
 
-<main>
+<nav class="myp-tools" aria-label="Site tools">
+  <a class="myp-tool" href="../index.html"><span class="myp-icon myp-icon--house" aria-hidden="true"></span>Home</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
+  </div>
+</nav>
 
-  <section class="card">
-    <div class="stats">
-      <div class="stat-tile all">
-        <div class="num" id="statAll" data-count="0">0</div>
-        <div class="label">Joined</div>
-      </div>
-      <div class="stat-tile boys">
-        <div class="num" id="statBoys" data-count="0">0</div>
-        <div class="label">Boys</div>
-      </div>
-      <div class="stat-tile girls">
-        <div class="num" id="statGirls" data-count="0">0</div>
-        <div class="label">Girls</div>
-      </div>
-    </div>
-    <div class="roster" id="roster">
-      <span class="roster-empty">No one yet — share the join link with your class.</span>
-    </div>
-  </section>
+<main id="main">
 
-  <section class="card" id="teacherCard">
-    <h2>Form groups</h2>
-    <p class="sub">Set a group size, then form groups once the class has joined.</p>
-    <div class="teacher-row">
-      <div class="field">
-        <label for="groupSize">GROUP SIZE</label>
-        <input type="number" id="groupSize" min="2" max="12" value="4">
-      </div>
-      <div class="btn-row">
-        <button class="action go" id="formGroupsBtn">Form Groups</button>
-        <button class="action danger" id="clearAllBtn">Clear all</button>
-      </div>
-    </div>
-  </section>
+<header class="myp-hero">
+  <p class="myp-eyebrow">Group maker</p>
+  <h1 class="myp-title">Balanced Group Maker</h1>
+  <p class="myp-lede">Live class list &mdash; form gender-balanced groups when everyone's in.</p>
+  <div class="myp-hero__chips" id="demoBadge" hidden><span class="myp-chip">Local demo mode &mdash; not connected to a sheet</span></div>
+</header>
 
-  <section class="card" id="resultsCard">
-    <h2>Groups</h2>
-    <div class="groups" id="groupsOut"></div>
-  </section>
+<section class="myp-panel" aria-labelledby="listTitle">
+  <h2 class="myp-panel__title" id="listTitle">Live class list</h2>
+  <div class="myp-stats gm-stats">
+    <div class="myp-stat">
+      <p class="myp-stat__label">Joined</p>
+      <p class="myp-stat__value" id="statAll" data-count="0">0</p>
+    </div>
+    <div class="myp-stat stat-boys">
+      <p class="myp-stat__label">Boys</p>
+      <p class="myp-stat__value" id="statBoys" data-count="0">0</p>
+    </div>
+    <div class="myp-stat stat-girls">
+      <p class="myp-stat__label">Girls</p>
+      <p class="myp-stat__value" id="statGirls" data-count="0">0</p>
+    </div>
+  </div>
+  <div class="roster" id="roster" aria-live="polite">
+    <span class="roster-empty">No one yet — share the join link with your class.</span>
+  </div>
+</section>
+
+<section class="myp-panel" id="teacherCard" aria-labelledby="formTitle">
+  <div class="myp-panel__head">
+    <h2 class="myp-panel__title" id="formTitle">Form groups</h2>
+    <p class="myp-panel__sub">Set a group size, then form groups once the class has joined.</p>
+  </div>
+  <div class="myp-input">
+    <label class="myp-input__label" for="groupSize">Group size</label>
+    <div class="gm-stepper">
+      <button type="button" class="myp-button myp-button--secondary" data-step="-1" aria-label="Smaller groups">&minus;</button>
+      <input type="number" id="groupSize" min="2" max="12" value="4" inputmode="numeric">
+      <button type="button" class="myp-button myp-button--secondary" data-step="1" aria-label="Bigger groups">+</button>
+    </div>
+  </div>
+  <div class="gm-actions">
+    <button type="button" class="myp-button myp-button--primary" id="formGroupsBtn"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Form Groups</button>
+    <button type="button" class="myp-button myp-button--danger" id="clearAllBtn"><span class="myp-icon myp-icon--trash-2" aria-hidden="true"></span>Clear all</button>
+  </div>
+</section>
+
+<section class="myp-panel" id="resultsCard" aria-labelledby="groupsTitle" hidden>
+  <h2 class="myp-panel__title" id="groupsTitle">Groups</h2>
+  <div class="groups" id="groupsOut"></div>
+</section>
 
 </main>
 
-<footer>Balanced Group Maker — teacher view. Students join at <span class="mono">index.html</span>.</footer>
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><span>Group maker</span></p>
+  <p>Balanced Group Maker &mdash; teacher view. Students join at <a href="index.html">index.html</a>.</p>
+</footer>
+
+<div class="myp-dialog-backdrop myp-dialog-backdrop--center" id="clearDialog" hidden>
+  <form class="myp-dialog myp-dialog--form" role="dialog" aria-modal="true" aria-labelledby="clearTitle" aria-describedby="clearDesc" id="clearForm">
+    <h2 class="myp-dialog__title" id="clearTitle">Clear the whole roster?</h2>
+    <p class="myp-dialog__desc" id="clearDesc">This cannot be undone.</p>
+    <label class="myp-input" for="clearPin">
+      <span class="myp-input__label">Teacher PIN</span>
+      <input type="password" id="clearPin" autocomplete="off" required>
+    </label>
+    <p class="myp-error-line" id="clearError" role="alert" hidden></p>
+    <div class="myp-dialog__stack">
+      <button type="submit" class="myp-button myp-button--danger" id="clearConfirm"><span class="myp-icon myp-icon--trash-2" aria-hidden="true"></span>Confirm clear</button>
+      <button type="button" class="myp-button myp-button--secondary" id="clearCancel">Cancel</button>
+    </div>
+  </form>
+</div>
 
 <script src="shared.js"></script>
 <script>
@@ -79,10 +132,17 @@
     statGirls: document.getElementById("statGirls"),
     roster: document.getElementById("roster"),
     groupSize: document.getElementById("groupSize"),
+    steps: document.querySelectorAll("[data-step]"),
     formGroupsBtn: document.getElementById("formGroupsBtn"),
     clearAllBtn: document.getElementById("clearAllBtn"),
     resultsCard: document.getElementById("resultsCard"),
-    groupsOut: document.getElementById("groupsOut")
+    groupsOut: document.getElementById("groupsOut"),
+    dialog: document.getElementById("clearDialog"),
+    clearForm: document.getElementById("clearForm"),
+    clearPin: document.getElementById("clearPin"),
+    clearError: document.getElementById("clearError"),
+    clearConfirm: document.getElementById("clearConfirm"),
+    clearCancel: document.getElementById("clearCancel")
   };
 
   if (GroupMaker.isDemo && els.demoBadge) els.demoBadge.hidden = false;
@@ -95,6 +155,7 @@
     GroupMaker.animateCount(els.statBoys, boys);
     GroupMaker.animateCount(els.statGirls, girls);
 
+    if (!els.roster) return;
     if (!students.length) {
       els.roster.innerHTML = '<span class="roster-empty">No one yet — share the join link with your class.</span>';
       return;
@@ -134,39 +195,108 @@
       }
 
       html += '<div class="group-card" style="animation-delay:' + (i * 70) + 'ms">' +
-        '<div class="band" style="background:' + band + '"></div>' +
+        '<div class="group-band" style="background:' + band + '"></div>' +
         '<div class="body">' +
         "<h3>Group " + (i + 1) + "</h3>" +
-        '<div class="group-tag">Boys: ' + boys + " · Girls: " + girls + "</div>" +
+        '<p class="group-tag">Boys: ' + boys + " · Girls: " + girls + "</p>" +
         '<ul class="group-members">' + memberHtml + "</ul>" +
         "</div></div>";
     }
     els.groupsOut.innerHTML = html;
-    els.resultsCard.style.display = "block";
-    els.resultsCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    els.resultsCard.hidden = false;
+    try { els.resultsCard.scrollIntoView({ behavior: "smooth", block: "start" }); } catch (e) {}
+  }
+
+  // ---- group size stepper ----
+  function clampSize(n) {
+    var min = parseInt(els.groupSize.getAttribute("min"), 10) || 2;
+    var max = parseInt(els.groupSize.getAttribute("max"), 10) || 12;
+    if (isNaN(n)) n = 4;
+    return Math.min(max, Math.max(min, n));
+  }
+  if (els.groupSize) {
+    for (var st = 0; st < els.steps.length; st++) {
+      els.steps[st].addEventListener("click", function (ev) {
+        var d = parseInt(ev.currentTarget.getAttribute("data-step"), 10) || 0;
+        els.groupSize.value = clampSize((parseInt(els.groupSize.value, 10) || 4) + d);
+      });
+    }
+    els.groupSize.addEventListener("change", function () {
+      els.groupSize.value = clampSize(parseInt(els.groupSize.value, 10));
+    });
   }
 
   if (els.formGroupsBtn) {
     els.formGroupsBtn.addEventListener("click", function () {
       GroupMaker.fetchRoster().then(function (students) {
         if (!students.length) return;
-        var size = parseInt(els.groupSize.value, 10) || 4;
+        var size = clampSize(parseInt(els.groupSize.value, 10));
         renderGroups(GroupMaker.formGroups(students, size));
       });
     });
   }
 
-  if (els.clearAllBtn) {
-    els.clearAllBtn.addEventListener("click", function () {
-      if (!confirm("Clear the whole roster? This cannot be undone.")) return;
-      var pin = prompt("Enter the teacher PIN to confirm:");
-      if (pin === null) return;
+  // ---- clear-roster dialog (Figma 87) ----
+  var lastFocus = null;
+
+  function setClearError(msg) {
+    if (!els.clearError) return;
+    els.clearError.textContent = msg || "";
+    els.clearError.hidden = !msg;
+  }
+
+  function openClear() {
+    if (!els.dialog) return;
+    lastFocus = document.activeElement;
+    els.clearPin.value = "";
+    setClearError("");
+    els.clearConfirm.disabled = false;
+    els.dialog.hidden = false;
+    document.body.classList.add("myp-noscroll");
+    try { els.clearPin.focus(); } catch (e) {}
+  }
+
+  function closeClear() {
+    if (!els.dialog || els.dialog.hidden) return;
+    els.dialog.hidden = true;
+    document.body.classList.remove("myp-noscroll");
+    if (lastFocus && lastFocus.focus) { try { lastFocus.focus(); } catch (e) {} }
+  }
+
+  if (els.clearAllBtn) els.clearAllBtn.addEventListener("click", openClear);
+  if (els.clearCancel) els.clearCancel.addEventListener("click", closeClear);
+  if (els.dialog) {
+    els.dialog.addEventListener("click", function (e) { if (e.target === els.dialog) closeClear(); });
+    // on the document: focus can leave the dialog while Confirm is disabled
+    document.addEventListener("keydown", function (e) {
+      if (els.dialog.hidden) return;
+      if (e.key === "Escape" || e.key === "Esc") { closeClear(); return; }
+      if (e.key !== "Tab") return;
+      // keep focus inside the dialog
+      var f = els.dialog.querySelectorAll("input, button:not([disabled])");
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+  }
+
+  if (els.clearForm) {
+    els.clearForm.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var pin = els.clearPin.value;
+      if (!pin) { setClearError("Enter the teacher PIN to confirm."); return; }
+      els.clearConfirm.disabled = true;
+      setClearError("");
       GroupMaker.clearAll(pin).then(function (result) {
+        els.clearConfirm.disabled = false;
         if (!result || !result.ok) {
-          alert((result && result.error) || "Could not clear the roster.");
+          setClearError((result && result.error) || "Could not clear the roster.");
+          try { els.clearPin.select(); } catch (e) {}
           return;
         }
-        els.resultsCard.style.display = "none";
+        closeClear();
+        els.resultsCard.hidden = true;
         els.groupsOut.innerHTML = "";
         refreshRoster();
       });
@@ -177,5 +307,6 @@
   startPolling();
 })();
 </script>
+<script src="../assets/theme.js"></script>
 </body>
 </html>

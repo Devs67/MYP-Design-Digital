@@ -4,125 +4,137 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Appendix, Citations &amp; Bibliography — MYP Design</title>
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
-<style>
-/* ---- page-specific additions, on top of assets/style.css ---- */
-
-.mast .sub{max-width:66ch}
-
-/* level pills in the masthead */
-.levelrow{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 0}
-.levelchip{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
-  padding:8px 14px;border-radius:99px;display:inline-flex;align-items:center;gap:8px}
-.levelchip b{width:8px;height:8px;border-radius:50%;display:inline-block}
-.levelchip--simple{background:var(--moss-tint);color:var(--moss)}
-.levelchip--simple b{background:var(--moss)}
-.levelchip--deep{background:var(--amber-tint);color:var(--amber)}
-.levelchip--deep b{background:var(--amber)}
-
-/* IB Guide quote block — distinct from the moss-tinted worked-example .quote */
-.ibq{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--ink);
-  border-radius:12px;padding:20px 24px 22px;margin:16px 0 0}
-.ibq p{margin:0 0 8px;font-family:var(--display);font-size:16.5px;font-style:italic;
-  line-height:1.55;color:var(--ink)}
-.ibq p:last-of-type{margin-bottom:0}
-.ibq cite{display:block;margin-top:10px;font-family:var(--mono);font-style:normal;
-  font-size:11px;letter-spacing:.08em;color:var(--slate)}
-
-/* historically-grounded flag */
-.histflag{display:inline-flex;align-items:center;gap:6px;margin:12px 0 0;padding:8px 13px;
-  background:var(--rule-soft);border-radius:7px;font-size:12.5px;color:var(--slate);line-height:1.5}
-.histflag b{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;
-  color:var(--slate);white-space:nowrap}
-
-/* open-question flag, section 7 — always visible, never collapsed */
-.oq{background:var(--clay-tint);border:2px solid var(--clay);border-radius:12px;
-  padding:22px 24px 24px;margin:18px 0 0}
-.oq__tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.13em;
-  text-transform:uppercase;color:#fff;background:var(--clay);padding:5px 11px;border-radius:7px;
-  margin:0 0 12px}
-.oq h4{font-family:var(--display);font-size:18px;font-weight:600;margin:0 0 8px;color:var(--clay)}
-.oq p{margin:0 0 10px;font-size:14.5px;line-height:1.6}
-.oq p:last-child{margin-bottom:0}
-.oq ul{margin:10px 0 0;padding-left:20px}
-.oq li{font-size:14.5px;line-height:1.55;margin-bottom:8px}
-.oq li:last-child{margin-bottom:0}
-
-/* citation anatomy — clickable */
-.anatomy{background:var(--card);border:1px solid var(--rule);border-radius:12px;
-  padding:22px 24px 24px;margin:16px 0 0}
-.anatomy__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--slate);margin:0 0 14px}
-.anatomy__chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
-.achip{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:8px 13px;
-  border-radius:7px;border:1px solid var(--rule);background:var(--paper);color:var(--slate);
-  cursor:pointer;transition:background .18s ease,color .18s ease,border-color .18s ease}
-.achip:hover{border-color:var(--amber);color:var(--ink)}
-.achip.active{background:var(--amber);border-color:var(--amber);color:#fff}
-.anatomy__string{margin:0;padding:16px 18px;background:var(--paper);border-radius:12px;
-  font-family:var(--display);font-size:17px;line-height:1.9}
-.aseg{border-radius:5px;padding:2px 3px;transition:background .18s ease,box-shadow .18s ease}
-.aseg.active{background:var(--amber-tint);box-shadow:0 0 0 2px var(--amber-tint)}
-.anatomy__hint{margin:12px 0 0;font-size:12.5px;color:var(--slate)}
-
-/* checklist counter */
-.ckcount{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--slate);margin:0 0 16px}
-.ckcount b{color:var(--moss)}
-
-/* practice-task card */
-.taskcard{background:var(--ink);color:#E4EEF1;border-radius:12px;padding:26px 28px 28px}
-.taskcard h3{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 10px;color:#fff}
-.taskcard p{margin:0 0 10px;font-size:15px;line-height:1.65;color:#C7D6DB}
-.taskcard p:last-child{margin-bottom:0}
-.taskcard b{color:#fff}
-
-@media (max-width:600px){
-  .anatomy__string{font-size:15px;line-height:2.1}
-  .ibq p{font-size:15.5px}
-}
-</style>
 <link rel="stylesheet" href="assets/theme.css">
 <link rel="stylesheet" href="assets/glass.css">
+<style>
+/* ---- page-specific pieces, on the Blue Glass tokens (glass.css loads first here) ---- */
+
+/* reading paragraphs */
+.prose{margin:0;max-width:72ch;font-size:16px;line-height:26px;color:var(--myp-body)}
+.prose:last-child{margin-bottom:0}
+.prose--quiet{font-size:14px;line-height:24px;color:var(--myp-muted)}
+.prose-w{max-width:72ch}
+.mt{margin-top:16px !important}
+.rules{margin:0 0 4px;padding-left:22px;max-width:72ch}
+.rules li{margin:0 0 6px;font-size:16px;line-height:26px;color:var(--myp-body)}
+.rules li::marker{color:var(--myp-accent);font-weight:600}
+
+/* the slides embed sits straight in its panel */
+.sec .myp-embed{margin-top:4px}
+
+/* IB Guide quote */
+.ibq{margin:16px 0 0;padding:16px 20px;border:1px solid var(--myp-border);border-left:4px solid var(--myp-accent);
+  border-radius:var(--myp-radius-field);background:var(--myp-surface)}
+.ibq p{margin:0 0 8px;font-size:16px;line-height:26px;font-style:italic;color:var(--myp-text)}
+.ibq p:last-of-type{margin-bottom:0}
+.ibq cite{display:block;margin-top:10px;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+
+/* sourcing flag */
+.histflag{display:block;margin:12px 0 0;padding:12px 14px;border-radius:var(--myp-radius-field);
+  background:var(--myp-tint);font-size:14px;line-height:22px;color:var(--myp-body)}
+.histflag b{display:block;margin:0 0 2px;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+
+/* open question: always visible, never collapsed */
+.oq{margin:20px 0 0;padding:20px 24px;border:1px solid var(--myp-warn);border-radius:var(--myp-radius-inner);background:var(--myp-warn-tint)}
+.oq__tag{display:inline-block;margin:0 0 10px;padding:4px 10px;border-radius:var(--myp-radius-chip);
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--myp-warn);background:var(--myp-surface)}
+.oq h4{margin:0 0 8px;font:500 20px/28px var(--myp-font-display);color:var(--myp-text)}
+.oq p,.oq li{font-size:15px;line-height:24px;color:var(--myp-body)}
+.oq p{margin:0 0 10px}
+.oq p:last-child{margin-bottom:0}
+.oq ul{margin:10px 0 0;padding-left:20px}
+.oq li{margin-bottom:8px}
+
+/* citation anatomy: tap a part */
+.anatomy{margin:0;padding:20px 24px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface)}
+.anatomy__lbl{margin:0 0 12px;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.anatomy__chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.achip{min-height:40px;padding:8px 14px;border-radius:12px;border:1px solid var(--myp-border);background:var(--myp-tint);
+  color:var(--myp-accent);font:600 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);cursor:pointer}
+.achip:hover{color:var(--myp-hover);border-color:var(--myp-hover)}
+.achip:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
+.achip.active{color:var(--myp-on-accent);background:var(--myp-accent);border-color:var(--myp-accent)}
+.anatomy__string{margin:0;padding:16px 18px;border-radius:var(--myp-radius-field);background:var(--myp-bg);
+  font-size:17px;line-height:32px;color:var(--myp-text)}
+.aseg{padding:2px 3px;border-radius:6px;cursor:pointer}
+.aseg.active{background:var(--myp-tint);box-shadow:0 0 0 2px var(--myp-accent)}
+.anatomy__hint{margin:12px 0 0;font-size:14px;line-height:22px;color:var(--myp-muted)}
+
+/* worked citations */
+.cite{margin:0 0 10px;padding:12px 16px;border-radius:var(--myp-radius-field);background:var(--myp-bg);
+  font-size:16px;line-height:26px;color:var(--myp-text);padding-left:40px;text-indent:-24px}
+.cite-meta{margin:0 0 10px;font-size:14px;line-height:22px;color:var(--myp-muted)}
+
+/* checklist counter */
+.ckcount{margin:0 0 16px;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.ckcount b{color:var(--myp-ok)}
+
+/* practice task */
+.taskcard{padding:20px 24px;border:1px solid var(--myp-accent);border-radius:var(--myp-radius-inner);background:var(--myp-tint)}
+.taskcard h3{margin:0 0 8px;font:500 20px/28px var(--myp-font-display);color:var(--myp-text)}
+.taskcard p{margin:0 0 10px;font-size:16px;line-height:26px;color:var(--myp-body)}
+.taskcard p:last-child{margin-bottom:0}
+.taskcard b{color:var(--myp-text)}
+
+/* spacing between the blocks of a section (the script wraps them in .secbody) */
+.secbody > * + *,.secbody > .oq{margin-top:16px}
+.aspects .asp{background:var(--myp-surface);border:1px solid var(--myp-border)}
+.sec .flow{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:700px){.sec .flow{grid-template-columns:1fr}}
+
+@media (max-width:600px){
+  .anatomy{padding:16px}
+  .anatomy__string{font-size:15px;line-height:30px}
+  .oq{padding:16px}
+  .taskcard{padding:16px}
+}
+</style>
 </head>
 <body>
 
 <header class="topbar">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <span class="cur">Appendix, citations & bibliography</span>
-    </nav>
     <div class="topbar__actions">
-      <div class="topbar__grades">
-        <a href="myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
-        <a href="myp3/index.html" data-g="myp3">3</a>
-        <a href="myp4-5/index.html" data-g="myp4-5">4&ndash;5</a>
-      </div>
-      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="myp1-2/index.html" data-g="myp1-2">MYP 1 &amp; 2</a>
+        <a href="myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
+<nav class="myp-tools" aria-label="Site tools">
+  <a class="myp-tool" href="index.html"><span class="myp-icon myp-icon--house" aria-hidden="true"></span>Home</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
+  </div>
+</nav>
 
-<header class="mast">
-  <div class="wrap">
-    <a class="homelink" href="index.html">&larr; Back to all criteria</a>
-    <p class="eyebrow">IB MYP Design &middot; Reference</p>
-    <h1>Appendix, Citations &amp; Bibliography</h1>
-    <p class="sub">How to build your appendix, cite a source properly, and format your Bibliography &mdash; the mechanics that sit underneath every criterion, checked against the current MYP Design Guide.</p>
-    <div class="levelrow">
-      <span class="levelchip levelchip--simple"><b></b>Simple &mdash; always shown</span>
-      <span class="levelchip levelchip--deep"><b></b>Go deeper &mdash; tap to expand</span>
-    </div>
+<header class="myp-hero">
+  <p class="myp-eyebrow">IB MYP Design &middot; Reference</p>
+  <h1 class="myp-title">Appendix, Citations &amp; Bibliography</h1>
+  <p class="myp-lede">How to build your appendix, cite a source properly, and format your Bibliography &mdash; the mechanics that sit underneath every criterion, checked against the current MYP Design Guide.</p>
+  <div class="myp-hero__chips">
+    <span class="myp-chip myp-chip--live myp-chip--dot">Simple &mdash; always shown</span>
+    <span class="myp-chip myp-chip--accent myp-chip--dot">Go deeper &mdash; tap to expand</span>
   </div>
 </header>
 
@@ -133,7 +145,7 @@
   <div class="wrap">
     <p class="eyebrow">0 &middot; Why this matters</p>
     <h2>This is what makes the work yours</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0">When you hand in your Design ePortfolio, you are telling your teacher: &ldquo;I made this. These are my ideas.&rdquo; A citation is how you prove that is true when part of what you used &mdash; a survey answer, a sensor spec, a sentence from a website &mdash; came from somewhere else. It is not extra homework. It is the difference between &ldquo;I found this and used it honestly&rdquo; and &ldquo;I copied this and hoped no one would notice.&rdquo;</p>
+    <p class="prose">When you hand in your Design ePortfolio, you are telling your teacher: &ldquo;I made this. These are my ideas.&rdquo; A citation is how you prove that is true when part of what you used &mdash; a survey answer, a sensor spec, a sentence from a website &mdash; came from somewhere else. It is not extra homework. It is the difference between &ldquo;I found this and used it honestly&rdquo; and &ldquo;I copied this and hoped no one would notice.&rdquo;</p>
 
     <details class="docwrap">
       <summary><b>Go deeper</b> <i>the IB regulation behind this</i></summary>
@@ -143,7 +155,7 @@
           <p>&ldquo;Plagiarism and collusion are unprincipled breaches of IB regulations, potentially subjecting candidates to consequences for academic misconduct.&rdquo;</p>
           <cite>IB MYP Design Guide, p.48</cite>
         </div>
-        <p class="dnote" style="margin-top:16px">This is not a style preference &mdash; it is an IB regulation with real consequences attached. A well-organised appendix and a correctly built Bibliography are how you make your &ldquo;this is my own work&rdquo; claim checkable at a glance, by a teacher or a moderator, in seconds rather than minutes.</p>
+        <p class="dnote mt">This is not a style preference &mdash; it is an IB regulation with real consequences attached. A well-organised appendix and a correctly built Bibliography are how you make your &ldquo;this is my own work&rdquo; claim checkable at a glance, by a teacher or a moderator, in seconds rather than minutes.</p>
       </div>
     </details>
   </div>
@@ -155,16 +167,17 @@
     <p class="eyebrow">Walkthrough</p>
     <h2>Appendix, citations &amp; bibliography slides</h2>
     <p class="sub">The Academic Integrity Workshop deck, slide by slide.</p>
-    <details class="docwrap" open>
-      <summary><b>Appendix, Citations &amp; Bibliography</b><i>Google Slides &middot; opens in page</i></summary>
-      <div class="pdfbox">
-        <iframe src="https://docs.google.com/presentation/d/1hQ6tWk-RNGQYdv2-w4llLa2mVIJ3mrLE-qfahlUkEaM/embed?start=false&amp;loop=false&amp;delayms=3000" title="Appendix, citations and bibliography slides" loading="lazy" allowfullscreen></iframe>
-      </div>
-      <div class="pdfbar">
+    <div class="myp-panel__bar">
+      <p class="myp-label">Appendix, Citations &amp; Bibliography</p>
+      <span class="myp-chip">Google Slides &middot; opens in page</span>
+    </div>
+    <div class="myp-embed">
+      <iframe src="https://docs.google.com/presentation/d/1hQ6tWk-RNGQYdv2-w4llLa2mVIJ3mrLE-qfahlUkEaM/embed?start=false&amp;loop=false&amp;delayms=3000" title="Appendix, citations and bibliography slides" loading="lazy" allowfullscreen></iframe>
+      <div class="myp-embed__bar">
         <span>Blank or not loading?</span>
-        <a href="https://docs.google.com/presentation/d/1hQ6tWk-RNGQYdv2-w4llLa2mVIJ3mrLE-qfahlUkEaM/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Slides</a>
+        <a class="myp-button myp-button--secondary" href="https://docs.google.com/presentation/d/1hQ6tWk-RNGQYdv2-w4llLa2mVIJ3mrLE-qfahlUkEaM/edit?usp=sharing" target="_blank" rel="noopener">Open in Google Slides<span class="myp-icon myp-icon--sm myp-icon--external-link" aria-hidden="true"></span></a>
       </div>
-    </details>
+    </div>
   </div>
 </section>
 
@@ -173,7 +186,7 @@
   <div class="wrap">
     <p class="eyebrow">1 &middot; The appendix</p>
     <h2>What is the appendix?</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 14px">Your Design report has a page limit. But sometimes you need to show extra evidence &mdash; a full set of survey answers, a long interview, extra sketches &mdash; that would use up too many pages if it went in the main report. The <b>appendix</b> is a separate space for that extra evidence. It does not count toward your main report's page limit.</p>
+    <p class="prose">Your Design report has a page limit. But sometimes you need to show extra evidence &mdash; a full set of survey answers, a long interview, extra sketches &mdash; that would use up too many pages if it went in the main report. The <b>appendix</b> is a separate space for that extra evidence. It does not count toward your main report's page limit.</p>
 
     <details class="docwrap">
       <summary><b>Go deeper</b> <i>the exact limits, and what "unassessed" means</i></summary>
@@ -182,7 +195,7 @@
           <p>&ldquo;Submission limits (examiners will not read beyond these limits): Written work &mdash; 40 A4 pages. Appendix (unassessed) &mdash; 10 A4 pages.&rdquo;</p>
           <cite>IB MYP Design Guide, p.50</cite>
         </div>
-        <p class="dnote warn" style="margin-top:16px"><b>The critical detail students miss:</b> examiners will not read past these limits at all. It is not that overflow pages get a lower mark &mdash; they are never seen. If your argument depends on something on page 42, it does not exist as far as grading is concerned.</p>
+        <p class="dnote warn mt"><b>The critical detail students miss:</b> examiners will not read past these limits at all. It is not that overflow pages get a lower mark &mdash; they are never seen. If your argument depends on something on page 42, it does not exist as far as grading is concerned.</p>
         <p class="dnote">The appendix itself is unassessed directly &mdash; it does not earn marks on its own &mdash; but a moderator can open it to check that a claim you made in your main report is actually backed up. It can be uploaded as a separate document from your main report.</p>
       </div>
     </details>
@@ -194,7 +207,7 @@
   <div class="wrap">
     <p class="eyebrow">2 &middot; Stays or goes?</p>
     <h2>What goes in the appendix vs. what stays in your report</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 16px">Ask yourself one question about anything you are deciding where to put: <em>&ldquo;If I deleted this from the appendix, would my report still make sense?&rdquo;</em></p>
+    <p class="prose">Ask yourself one question about anything you are deciding where to put: <em>&ldquo;If I deleted this from the appendix, would my report still make sense?&rdquo;</em></p>
 
     <div class="flip">
       <div class="flip__side yes"><b>Yes, it still makes sense</b><p>It belongs in the appendix &mdash; it is supporting evidence, not the argument itself.</p></div>
@@ -215,7 +228,7 @@
             </tbody>
           </table>
         </div>
-        <p class="dnote" style="margin-top:16px">The pattern: the report holds your <b>thinking</b>. The appendix holds the <b>raw material</b> that thinking is built on.</p>
+        <p class="dnote mt">The pattern: the report holds your <b>thinking</b>. The appendix holds the <b>raw material</b> that thinking is built on.</p>
       </div>
     </details>
   </div>
@@ -226,7 +239,7 @@
   <div class="wrap">
     <p class="eyebrow">3 &middot; Numbering</p>
     <h2>Choosing your numbering system</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 16px">Every item in the appendix needs a label, like a name tag, so someone can find it fast. Pick <b>one</b> system for your whole appendix and never switch partway through &mdash; mixing systems is confusing and looks careless.</p>
+    <p class="prose">Every item in the appendix needs a label, like a name tag, so someone can find it fast. Pick <b>one</b> system for your whole appendix and never switch partway through &mdash; mixing systems is confusing and looks careless.</p>
 
     <div class="aspects">
       <div class="asp"><b>Sequential</b><span>Number items in the order you first mention them. Appendix 1, 2, 3, 4&hellip;</span></div>
@@ -237,7 +250,7 @@
       <summary><b>Go deeper</b> <i>three additions that make either system work in practice</i></summary>
       <div class="doc">
         <p class="dnote"><b>Both systems are valid</b> &mdash; this is a strategic choice, not an IB requirement either way.</p>
-        <ul class="needs" style="margin-top:14px">
+        <ul class="needs mt">
           <li><b>Appendix index.</b> Start your appendix with a one-page contents list: label, short title, page number &mdash; a table of contents just for your evidence.</li>
           <li><b>Page-numbering consistency.</b> Decide once whether your appendix pages continue your main report's page numbers, or start their own sequence with a prefix &mdash; then stick with it.</li>
           <li><b>Mirror it digitally.</b> If you are building an ePortfolio, the order of pages/files on the platform should match your appendix index exactly. A reader should not have to guess why item A3 is filed after item B1.</li>
@@ -252,7 +265,7 @@
   <div class="wrap">
     <p class="eyebrow">4 &middot; The golden rule</p>
     <h2>Label, cross-reference, caption</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 20px">Every time you put something in the appendix, do three things.</p>
+    <p class="prose">Every time you put something in the appendix, do three things.</p>
 
     <div class="flow">
       <div class="fstep"><b>Step 1</b><h4>Give it a label</h4><p>A code that matches your numbering system.</p></div>
@@ -269,7 +282,7 @@
             <div class="asp"><b>Inline parenthetical</b><span>&ldquo;(Refer Appendix A1)&rdquo; placed right after the claim it supports.</span></div>
             <div class="asp"><b>Superscript footnote</b><span>A small marker in the text, linked to a footnote key.</span></div>
           </div>
-          <p class="dnote" style="margin-top:14px">Pick one and stay consistent. In a digital ePortfolio, your cross-reference can be a hyperlink &mdash; one click takes the reader straight to the evidence, instead of them flipping pages.</p>
+          <p class="dnote mt">Pick one and stay consistent. In a digital ePortfolio, your cross-reference can be a hyperlink &mdash; one click takes the reader straight to the evidence, instead of them flipping pages.</p>
         </div>
 
         <div class="dblock">
@@ -284,7 +297,7 @@
             <div class="flip__side no"><b>&#10007; Wrong</b><p>&ldquo;&hellip;as shown in my research (Refer Appendix C).&rdquo; This tells the reader <em>where</em> to look, but not <em>what</em> they are looking at or who made it.</p></div>
             <div class="flip__side yes"><b>&#10003; Right</b><p>&ldquo;&hellip;as shown in my research from a nutritionist interview (Refer Appendix A1).&rdquo;</p></div>
           </div>
-          <p class="dnote warn" style="margin-top:14px">The rule to repeat until it sticks: <b>every reference needs a source named, every single time</b> &mdash; never just a page pointer on its own.</p>
+          <p class="dnote warn mt">The rule to repeat until it sticks: <b>every reference needs a source named, every single time</b> &mdash; never just a page pointer on its own.</p>
         </div>
       </div>
     </details>
@@ -296,8 +309,8 @@
   <div class="wrap">
     <p class="eyebrow">5 &middot; Citation content</p>
     <h2>What a citation needs, and the no-copy-paste rule</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 14px">Whenever you use information from somewhere else &mdash; a website, an interview, a datasheet &mdash; you need to be able to answer: <b>What is it called? Who made it? When was it made or published? Who published it?</b> (And for books specifically: <b>what is its ISBN?</b>)</p>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0">You also cannot just copy sentences from a website into your report. Say the idea <b>in your own words</b>, and explain <b>why it matters</b> to your design.</p>
+    <p class="prose">Whenever you use information from somewhere else &mdash; a website, an interview, a datasheet &mdash; you need to be able to answer: <b>What is it called? Who made it? When was it made or published? Who published it?</b> (And for books specifically: <b>what is its ISBN?</b>)</p>
+    <p class="prose">You also cannot just copy sentences from a website into your report. Say the idea <b>in your own words</b>, and explain <b>why it matters</b> to your design.</p>
 
     <details class="docwrap">
       <summary><b>Go deeper</b> <i>the five-element checklist and the IB quote on paraphrasing</i></summary>
@@ -305,7 +318,7 @@
         <p class="dnote">The five things a complete reference needs, every time: <b>Title, Author, Publication date, Publisher</b>, and &mdash; for books only &mdash; <b>ISBN</b>. Simple test: could a reader find this exact source using only what you wrote? If not, it is incomplete.</p>
         <div class="histflag"><b>Sourcing note</b> This five-element list comes from the IB's older &ldquo;From principles into practice&rdquo; document rather than the current Design Guide &mdash; treat it as strong, historically-grounded guidance rather than a quoted current rule.</div>
 
-        <div class="ibq" style="margin-top:18px">
+        <div class="ibq mt">
           <p>&ldquo;Students should concisely summarize only the useful and relevant information they have found through their research. They will present this information in their own words. Students should not copy and paste information from sources without analysis or indicating relevance.&rdquo;</p>
           <cite>IB MYP Design Guide, Notes for Criterion A, p.46</cite>
         </div>
@@ -319,7 +332,7 @@
   <div class="wrap">
     <p class="eyebrow">6 &middot; Examples</p>
     <h2>Correct examples vs. common mistakes</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 16px">Here is the same mistake, made wrong and made right, side by side.</p>
+    <p class="prose">Here is the same mistake, made wrong and made right, side by side.</p>
 
     <div class="tabwrap">
       <table class="rtab">
@@ -337,7 +350,7 @@
       <summary><b>Go deeper</b> <i>structural pitfalls beyond citation content</i></summary>
       <div class="doc">
         <p class="dnote">Beyond citation-content mistakes, watch for structural pitfalls in the appendix itself.</p>
-        <div class="traps" style="margin-top:14px">
+        <div class="traps mt">
           <div class="trap"><h4>Mixed numbering</h4><p>Switching numbering systems partway through the appendix.</p></div>
           <div class="trap"><h4>No appendix index</h4><p>Skipping the one-page contents list at the start.</p></div>
           <div class="trap"><h4>A split Bibliography</h4><p>Splitting it by criterion or page instead of keeping one single list.</p></div>
@@ -354,13 +367,13 @@
   <div class="wrap">
     <p class="eyebrow">7 &middot; The bibliography</p>
     <h2>Bibliography basics: naming it and arranging it</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 16px">A <b>citation</b> is the short pointer you use <em>in the moment</em> &mdash; just enough to say &ldquo;this came from somewhere.&rdquo; A <b>Bibliography</b> is the full list, gathered once at the end of your report, with one complete entry for every outside source you used anywhere in your portfolio.</p>
+    <p class="prose">A <b>citation</b> is the short pointer you use <em>in the moment</em> &mdash; just enough to say &ldquo;this came from somewhere.&rdquo; A <b>Bibliography</b> is the full list, gathered once at the end of your report, with one complete entry for every outside source you used anywhere in your portfolio.</p>
 
-    <ol style="margin:0;padding-left:20px">
-      <li style="font-size:15px;line-height:1.7;margin-bottom:6px"><b>Alphabetical order</b>, by the author's last name (no author? alphabetise by title instead).</li>
-      <li style="font-size:15px;line-height:1.7;margin-bottom:6px"><b>Hanging indent</b> &mdash; the first line of each entry sits at the margin; every line after that is indented.</li>
-      <li style="font-size:15px;line-height:1.7;margin-bottom:6px"><b>One single list</b> &mdash; never split it up by criterion, page, or source type.</li>
-      <li style="font-size:15px;line-height:1.7"><b>Double-spaced</b>, same as the rest of your document.</li>
+    <ol class="rules">
+      <li><b>Alphabetical order</b>, by the author's last name (no author? alphabetise by title instead).</li>
+      <li><b>Hanging indent</b> &mdash; the first line of each entry sits at the margin; every line after that is indented.</li>
+      <li><b>One single list</b> &mdash; never split it up by criterion, page, or source type.</li>
+      <li><b>Double-spaced</b>, same as the rest of your document.</li>
     </ol>
 
     <div class="oq">
@@ -371,10 +384,10 @@
         <li><b>One view (the recommended default here):</b> put it inside your 10-page appendix. This protects your 40-page main-report limit.</li>
         <li><b>An alternative view</b>, from a separate school workshop resource: the Bibliography is <em>not</em> part of the appendix at all &mdash; it is its own required third section, placed after it (Main Body &rarr; Appendix &rarr; Bibliography). No IB source is cited for this position either.</li>
       </ul>
-      <p style="margin-top:12px"><b>Confirm your department's actual policy</b> before treating either answer as settled.</p>
+      <p class="mt"><b>Confirm your department's actual policy</b> before treating either answer as settled.</p>
     </div>
 
-    <details class="docwrap" style="margin-top:18px">
+    <details class="docwrap mt">
       <summary><b>Go deeper</b> <i>"Bibliography" vs "Works Cited" — the naming note</i></summary>
       <div class="doc">
         <p class="dnote">Your school's heading may be <b>&ldquo;Bibliography,&rdquo;</b> formatted in MLA 9 style. Technically, MLA's own term for this page is <b>&ldquo;Works Cited&rdquo;</b> (only sources actually cited in the text) &mdash; &ldquo;Bibliography&rdquo; (sources consulted, even if not directly cited) is more of a Chicago-style term. Use whichever heading your teacher specifies &mdash; the important thing is consistency, not the label itself.</p>
@@ -388,14 +401,14 @@
   <div class="wrap">
     <p class="eyebrow">8 &middot; MLA 9 mechanics</p>
     <h2>MLA 9 core elements, and the anatomy of a citation</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 14px">MLA 9 (the citation style used here) has nine possible pieces of information you <em>could</em> include in a citation. You only use the ones that actually apply to your source, in this order, then stop:</p>
-    <p class="t" style="font-size:14.5px;line-height:1.8;max-width:70ch;color:var(--slate);margin:0 0 14px">1. Author &middot; 2. Title of Source &middot; 3. Title of Container &middot; 4. Other Contributors &middot; 5. Version &middot; 6. Number &middot; 7. Publisher &middot; 8. Publication Date &middot; 9. Location</p>
-    <p class="dnote warn" style="max-width:70ch"><b>One rule to remember:</b> if the Author and Publisher are the same organisation, drop the Publisher &mdash; do not list it twice.</p>
+    <p class="prose">MLA 9 (the citation style used here) has nine possible pieces of information you <em>could</em> include in a citation. You only use the ones that actually apply to your source, in this order, then stop:</p>
+    <p class="prose prose--quiet">1. Author &middot; 2. Title of Source &middot; 3. Title of Container &middot; 4. Other Contributors &middot; 5. Version &middot; 6. Number &middot; 7. Publisher &middot; 8. Publication Date &middot; 9. Location</p>
+    <p class="dnote warn prose-w"><b>One rule to remember:</b> if the Author and Publisher are the same organisation, drop the Publisher &mdash; do not list it twice.</p>
 
     <details class="docwrap" open>
       <summary><b>Go deeper</b> <i>see it built, piece by piece — tap a label</i></summary>
       <div class="doc">
-        <p class="anatomy__lbl" style="margin:0 0 14px">Tap a part below, or tap a highlighted word in the citation itself</p>
+        <p class="anatomy__lbl">Tap a part below, or tap a highlighted word in the citation itself</p>
         <div class="anatomy" data-anatomy>
           <div class="anatomy__chips">
             <button type="button" class="achip" data-part="author">Author</button>
@@ -423,36 +436,36 @@
   <div class="wrap">
     <p class="eyebrow">9 &middot; Worked examples</p>
     <h2>Worked MLA 9 examples, across source types</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0">A correctly formatted citation for four kinds of sources you will actually use in a Design portfolio: a book, a website, a technical datasheet, and a video.</p>
+    <p class="prose">A correctly formatted citation for four kinds of sources you will actually use in a Design portfolio: a book, a website, a technical datasheet, and a video.</p>
 
-    <details class="docwrap" style="margin-top:20px">
+    <details class="docwrap mt">
       <summary><b>Go deeper</b> <i>all four, plus two mechanics rules</i></summary>
       <div class="doc">
 
         <div class="dblock">
           <div class="dhd"><h3>Book, with edition</h3><span class="spill">Practice example</span></div>
-          <p class="doc__meta" style="margin-bottom:10px;padding-bottom:0;border:0">Demonstrates the &ldquo;Version&rdquo; element, used whenever a source names an edition.</p>
-          <p class="t" style="font-family:var(--display);font-size:16px">Nguyen, Priya. <em>Sustainable Materials in Product Design.</em> 2nd ed., Bloomsbury, 2022.</p>
+          <p class="cite-meta">Demonstrates the &ldquo;Version&rdquo; element, used whenever a source names an edition.</p>
+          <p class="cite">Nguyen, Priya. <em>Sustainable Materials in Product Design.</em> 2nd ed., Bloomsbury, 2022.</p>
           <p class="dnote warn"><b>Not a real, existing title.</b> Swap in a genuine book before using this with students, or keep it clearly labelled as illustrative.</p>
         </div>
 
         <div class="dblock">
           <div class="dhd"><h3>Website / online article</h3><span class="spill">Practice example</span></div>
-          <p class="t" style="font-family:var(--display);font-size:16px">Smith, Jane. &ldquo;The Digital Wallet: Discretionary Spending Patterns of Generation Z.&rdquo; <em>Financial Literacy Institute,</em> 14&nbsp;July&nbsp;2024, financialliteracyinst.org/gen-z-spending.</p>
+          <p class="cite">Smith, Jane. &ldquo;The Digital Wallet: Discretionary Spending Patterns of Generation Z.&rdquo; <em>Financial Literacy Institute,</em> 14&nbsp;July&nbsp;2024, financialliteracyinst.org/gen-z-spending.</p>
           <p class="dnote warn"><b>Not a real, clickable source.</b> Label it as such for students.</p>
         </div>
 
         <div class="dblock">
           <div class="dhd"><h3>Technical datasheet</h3><span class="spill">Verify before use</span></div>
-          <p class="doc__meta" style="margin-bottom:10px;padding-bottom:0;border:0">A very common Design-subject source &mdash; sensors, components.</p>
-          <p class="t" style="font-family:var(--display);font-size:16px">Aosong Electronics. <em>Digital-Output Humidity and Temperature Sensor DHT22/AM2302 Datasheet.</em> Rev. 2, 2020, p.&nbsp;4. aosong.com/dht22-spec.</p>
+          <p class="cite-meta">A very common Design-subject source &mdash; sensors, components.</p>
+          <p class="cite">Aosong Electronics. <em>Digital-Output Humidity and Temperature Sensor DHT22/AM2302 Datasheet.</em> Rev. 2, 2020, p.&nbsp;4. aosong.com/dht22-spec.</p>
           <p class="dnote">Publisher is omitted here because it is the same organisation as the Author. Verify the exact URL resolves before showing this to a class.</p>
         </div>
 
         <div class="dblock">
           <div class="dhd"><h3>YouTube video</h3><span class="spill">Real example</span></div>
-          <p class="doc__meta" style="margin-bottom:10px;padding-bottom:0;border:0">Pulled from an actual student portfolio.</p>
-          <p class="t" style="font-family:var(--display);font-size:16px">Breier, Chris. &ldquo;What Colors Make Brown? The Ultimate Guide to Mixing Brown.&rdquo; <em>Www.youtube.com,</em> 2020, www.youtube.com/watch?v=U3xJasFwWSg&amp;t=214s. Accessed 12&nbsp;Apr.&nbsp;2023.</p>
+          <p class="cite-meta">Pulled from an actual student portfolio.</p>
+          <p class="cite">Breier, Chris. &ldquo;What Colors Make Brown? The Ultimate Guide to Mixing Brown.&rdquo; <em>Www.youtube.com,</em> 2020, www.youtube.com/watch?v=U3xJasFwWSg&amp;t=214s. Accessed 12&nbsp;Apr.&nbsp;2023.</p>
         </div>
 
         <div class="dblock">
@@ -461,7 +474,7 @@
             <li>Drop <code>https://</code> from the front of a URL in your Bibliography.</li>
             <li>Only add an &ldquo;Accessed [date]&rdquo; note when the page itself has no publication date.</li>
           </ul>
-          <p class="dnote" style="margin-top:12px">Live-verified against current library guidance. Sources: Douglas College MLA 9 guide; MLA Style Center.</p>
+          <p class="dnote mt">Live-verified against current library guidance. Sources: Douglas College MLA 9 guide; MLA Style Center.</p>
         </div>
 
       </div>
@@ -474,12 +487,12 @@
   <div class="wrap">
     <p class="eyebrow">10 &middot; Formatting</p>
     <h2>Setting the hanging indent</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0">A &ldquo;hanging indent&rdquo; means the first line of each Bibliography entry starts at the margin, and every line after that is pushed in half an inch. Do not fake this by pressing Tab or Space &mdash; use your word processor's actual indent setting, so it stays correct no matter how the text reflows.</p>
+    <p class="prose">A &ldquo;hanging indent&rdquo; means the first line of each Bibliography entry starts at the margin, and every line after that is pushed in half an inch. Do not fake this by pressing Tab or Space &mdash; use your word processor's actual indent setting, so it stays correct no matter how the text reflows.</p>
 
-    <details class="docwrap" style="margin-top:18px">
+    <details class="docwrap mt">
       <summary><b>Go deeper</b> <i>the how-to, Google Docs and Word</i></summary>
       <div class="doc">
-        <div class="mm" style="margin:0">
+        <div class="mm">
           <div class="mm__split">
             <div class="mm__branch">
               <div class="mm__bhd">Google Docs</div>
@@ -517,13 +530,13 @@
   <div class="wrap">
     <p class="eyebrow">11 &middot; Tools</p>
     <h2>Citation tools &mdash; the links page</h2>
-    <p class="t" style="font-size:15.5px;line-height:1.7;max-width:70ch;margin:0 0 14px">You do not have to build every citation by hand. These tools will generate one for you &mdash; but <b>always double-check what they give you</b> before it goes in your Bibliography. Tools get details wrong more often than you would expect.</p>
+    <p class="prose">You do not have to build every citation by hand. These tools will generate one for you &mdash; but <b>always double-check what they give you</b> before it goes in your Bibliography. Tools get details wrong more often than you would expect.</p>
 
-    <div class="gap" style="max-width:70ch">
+    <div class="gap prose-w">
       <b>Not hypothetical caution:</b> while preparing this exact set of teaching materials, an AI tool produced a citation with a redundant, duplicated publisher and a wrong element list &mdash; both had to be caught and corrected by hand. If a generator can get it wrong while <em>making the lesson about getting it right</em>, it can get it wrong for a student too. Verify, always.
     </div>
 
-    <details class="docwrap" style="margin-top:18px">
+    <details class="docwrap mt">
       <summary><b>Go deeper</b> <i>the four generators, and where to verify their output</i></summary>
       <div class="doc">
         <div class="tabwrap">
@@ -537,7 +550,7 @@
             </tbody>
           </table>
         </div>
-        <p class="dnote" style="margin-top:16px"><b>Verification reference:</b> <a href="https://owl.purdue.edu/" target="_blank" rel="noopener">Purdue OWL</a> &mdash; owl.purdue.edu. Use it to check anything a generator produces, especially capitalisation, author order, and missing dates &mdash; the most common auto-generated errors.</p>
+        <p class="dnote mt"><b>Verification reference:</b> <a href="https://owl.purdue.edu/" target="_blank" rel="noopener">Purdue OWL</a> &mdash; owl.purdue.edu. Use it to check anything a generator produces, especially capitalisation, author order, and missing dates &mdash; the most common auto-generated errors.</p>
       </div>
     </details>
   </div>
@@ -577,11 +590,9 @@
 
 </main>
 
-<footer>
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
-    <span>Design Team - SIS</span>
-    <span>Reference &middot; all year groups</span>
-  </div>
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="index.html">MYP Digital Design</a><span>Reference &middot; all year groups</span></p>
+  <p class="myp-footer__links"><a href="index.html">Home</a><a href="myp1-2/index.html">MYP 1 &amp; 2</a><a href="myp3/index.html">MYP 3</a><a href="myp4-5/index.html">MYP 4 &amp; 5</a><a href="tsc.html">Task-specific clarifications</a><span>Design Team - SIS</span></p>
 </footer>
 
 <button class="totop" id="totop" aria-label="Back to top" title="Back to top">
