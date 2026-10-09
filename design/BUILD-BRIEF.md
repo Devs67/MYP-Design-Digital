@@ -168,6 +168,15 @@ the workspace; Home still redirects old `index.html#myp4-5` bookmarks.
 
 Reusable pieces for later sessions, all in `glass.css` section 10: `.myp-hero`, `.myp-panel`,
 `.myp-list` / `.myp-row`, `.myp-input`, `footer.myp-footer`, and the strand-page panel styles.
+Session 5 is done (run before 2–4): `appendix-citations.html`, `teacher-bookmarks.html`,
+`tsc.html`, `group-maker/` (join, joined, teacher, clear-roster dialog) and the four
+`lesson-experience/*.html` logs. New shared pieces in `glass.css` section 12 (`.myp-embed`,
+`.myp-note`, `.myp-stats` / `.myp-stat`, `.myp-button--danger`, `.myp-hero__chips`,
+`.myp-panel__bar`); the logs share `assets/lesson-log.css`. Shared pages and the group maker
+use **Home** in the tools bar (they have no workspace); the logs use **Back to Lesson
+Experience**. The Figma frames for these pages are flat text imports, so their structure was
+rebuilt from the HTML.
+
 Criteria B and C still carry their own inline sync code: in session 2, delete it and link
 `assets/progress.js` with `data-page="criterion-b"` / `"criterion-c"` (keep those keys).
 

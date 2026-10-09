@@ -1168,3 +1168,53 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 @media (hover:hover) and (pointer:fine) and (min-width:900px){
   .sec > .wrap,.myp-panel{background:var(--myp-panel-fill)}
 }
+
+
+/* ============ 12  SHARED PAGES, GROUP MAKER, LESSON LOGS ============
+   Session 5 (Figma 01, 03, 04, 67-70, 73-75, 87). Interactive parts reuse
+   .myp-button, .myp-tool and .myp-row so the section 11 palette (and the
+   berry step later) reaches them without page edits. */
+
+/* chips under a hero */
+.myp-hero__chips{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 0}
+.myp-chip--accent{color:var(--myp-accent);background:var(--myp-tint)}
+.myp-chip--dot::before{content:"";width:8px;height:8px;margin-right:8px;border-radius:50%;background:currentColor}
+
+/* a heading row inside a panel: title on the left, meta on the right */
+.myp-panel__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
+.myp-panel__eyebrow{margin:0 0 4px}
+
+/* embedded document with its open-elsewhere fallback */
+.myp-embed{border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);overflow:hidden;background:var(--myp-surface)}
+.myp-embed iframe{display:block;width:100%;height:720px;border:0;background:var(--myp-bg)}
+.myp-embed__bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:12px 16px;
+  border-top:1px solid var(--myp-border);font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-muted)}
+.myp-embed__bar .myp-button{min-height:40px;padding:8px 14px}
+@media (max-width:700px){.myp-embed iframe{height:440px}}
+
+/* callout: a short note that sits in the reading flow */
+.myp-note{margin:0;padding:14px 16px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);
+  background:var(--myp-tint);font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-body)}
+.myp-note b,.myp-note strong{color:var(--myp-text)}
+
+/* stat tiles */
+.myp-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px;margin:0}
+.myp-stat{min-width:0;margin:0;padding:16px;display:flex;flex-direction:column;gap:6px;
+  border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface)}
+.myp-stat__label{margin:0;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.myp-stat__value{margin:0;font:500 32px/40px var(--myp-font-display);letter-spacing:-.02em;color:var(--myp-text)}
+.myp-stat__value--text{font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);letter-spacing:0}
+
+/* destructive action (clear roster) */
+.myp-button--danger{color:var(--myp-error);background:var(--myp-surface);border-color:var(--myp-error);font-weight:600}
+.myp-button--danger:hover,.myp-button--danger:active{color:var(--myp-surface);background:var(--myp-error);
+  border-color:var(--myp-error);box-shadow:none}
+.myp-button--danger:focus-visible{outline:2px solid var(--myp-error);outline-offset:2px}
+
+/* a form field label that sits outside the box */
+.myp-label{display:block;margin:0 0 8px;font:500 var(--myp-label-size)/var(--myp-label-line) var(--myp-font-body);color:var(--myp-text)}
+.myp-hint{margin:0;font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-muted)}
+.myp-error-line{margin:0;padding:12px 14px;border-radius:var(--myp-radius-field);font:500 var(--myp-small-size)/var(--myp-small-line) var(--myp-font-body);
+  color:var(--myp-error);background:var(--clay-tint)}
+.myp-error-line:empty,.myp-error-line[hidden]{display:none}
