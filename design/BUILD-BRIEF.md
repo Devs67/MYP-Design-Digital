@@ -303,35 +303,52 @@ selected state, the fixed 696 px / 520 px hero columns (make them fluid), empty 
 year card text if `min-height: 292px` leaves a gap, the unscoped `* {}` / `body {}` resets,
 `color-mix()` without an `rgba()` fallback, `backdrop-filter` without `-webkit-`.
 
-### Motion (Dev asked for it: `design/figma-export-berry/animation-notes.md`)
+### Motion (Dev's spec, final — overrides `animation-notes.md` where they differ)
 
-Build all eight sections of the notes, with these adjustments so it stays inside `CLAUDE.md`
-and runs smoothly on school iPads:
+**Background (Flow behaviour from feralui.dev/gradients).**
+- 3–4 large white and soft-blue fields (#FFFFFF, #DCEBFF, #A9D0FF), 48–96 px blur,
+  12–32% opacity. Dark mode: same motion with dark-token fields.
+- Deform them continuously with translate, scale, rotate **and changing border-radius**.
+  No simple left-to-right blob movement.
+- Loop durations **19 s, 23 s and 27 s**, slow ease-in-out, `alternate` direction.
+- Grid, cards, text and header stay completely still. No berry in the background.
+- CSS/SVG is enough; no shader.
+- Performance: border-radius on a blurred layer repaints every frame. Apply the blur once on a
+  wrapper, and drop the border-radius keyframes (keep translate/scale/rotate) on small or touch
+  screens (`(max-width: 900px)`, `(hover: none)`) so school iPads stay smooth. Pause the loop
+  when the tab is hidden if that is easy.
+- Applies wherever the Blue Glass backdrop shows (Home first; other pages may share it if it
+  stays smooth).
 
-- **Fluid background (Home only).** Three or four oversized fields (#FFFFFF, #DCEBFF, #A9D0FF,
-  12–32% opacity) that are blurred once, statically, then animated with `transform`
-  (translate3d + scale + rotate) and `opacity` only, on 14–24 s loops with different durations,
-  `alternate`, ease-in-out. Do not animate `border-radius`, `filter`/blur or SVG displacement
-  (they repaint every frame); give the fields irregular shapes up front instead so they read as
-  bending colour, not bouncing circles. No WebGL. Grid stays still. No berry in the background.
-  Dark mode uses the same motion with dark-token fields. Dev approves this one exception to the
-  ~600 ms limit: the background loop only.
-- **Page-load entrance (Home):** the staggered fades and 8–12 px rises in section 2. CSS only,
-  `animation-fill-mode: both`, so content is visible if anything fails.
-- **Site-wide:** berry link hover (180–220 ms, 1–2 px rise or underline), card hover lift for
-  cards that are links (2 px, 220–280 ms), animated berry focus outline (~160 ms), the
-  "Enter …" arrow glide (4–8 px, 250–350 ms). The A–D overview on Home does not move.
-- **Criterion and strand switching** (criterion tabs on the workspaces, strand tabs on criterion
-  pages): outgoing content to ~0.15 opacity, incoming glides 24–32 px from the direction of
-  travel, 450–550 ms ease-out; the selected indicator glides rather than jumps. Keep tabs,
-  deep links and the checklist tracker working.
-- **Theme switch:** crossfade with `document.startViewTransition` where supported (opacity
-  only, 300–400 ms, no white flash); instant switch elsewhere.
-- **Motion rules:** everything inside `@media (prefers-reduced-motion: no-preference)`. Under
-  `reduce`: static backdrop, no movement, opacity changes under 150 ms, focus and selected states
-  still visible. No layout shift, no horizontal scroll. Add the background exception to the
-  motion paragraph in `CLAUDE.md`.
-- Check section 8 of the notes on desktop, mobile and with reduced motion turned on.
+**Page entrance.** Header: fade + rise 8 px, 350 ms. Hero: fade + rise 12 px, 450 ms. Cycle
+panel: fade, 500 ms. Cards: fade + rise 12 px, 450–700 ms. Stagger sections 50–70 ms. CSS only
+with `animation-fill-mode: both`, so content is visible if anything fails.
+
+**Hover and focus (site-wide).** Links: berry colour transition 180–220 ms with a subtle
+underline or 1–2 px rise. Cards that are links: lift 2 px and stronger shadow, 220–280 ms.
+Keyboard focus: berry outline, animated over 160 ms. The A–D overview is not clickable and does
+not move.
+
+**A → B transition** (criterion tabs on the workspaces, strand tabs on criterion pages). Header
+and background stay fixed. Current content fades to 15% opacity; incoming content slides
+24–32 px into place; 450–550 ms, ease-out. The selected button or criterion indicator glides
+with the content. Attach the interaction to the button or action label, not the whole card.
+Tabs, deep links and the checklist tracker keep working.
+
+**Theme transition.** Crossfade background, surfaces, borders and text over 300–400 ms (use
+`document.startViewTransition` where supported, colour transitions on the main surfaces
+otherwise). Layout dimensions unchanged. No white flash between themes.
+
+**Reduced motion** (`prefers-reduced-motion: reduce`). Stop the fluid background (static
+backdrop). Remove entrance movement and card lift. Keep transitions under 150 ms. Focus and
+selected states stay visible.
+
+**`CLAUDE.md` exceptions to record (approved by Dev):** the background loop may exceed ~600 ms
+and may animate `border-radius`; the theme crossfade may transition colours. Everything else
+stays transform/opacity, under ~600 ms, inside `prefers-reduced-motion: no-preference`.
+
+Check: no layout shift or horizontal scroll, text stays readable over the moving background,
+berry links work by keyboard and touch; desktop, 390 px and reduced motion.
 
 ## Checking, every session
 
