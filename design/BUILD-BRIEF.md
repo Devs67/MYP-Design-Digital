@@ -159,9 +159,31 @@ Redirect pages (`criterion-a.html`, `criterion-b.html`, `frameworks.html`,
 
 Run each in a **fresh chat** to keep cost down. Each ends with a push, screenshots and a stop.
 
-**Status:** sessions 1 and 2 are done. Next is session 3 (MYP 3), or step 8 (berry) first if
-later sessions should be built in berry. Step 8 must also repoint the section 12 controls
-(`.myp-chips`, `.myp-seg`, `.fw__src` rows in `myp4-5/frameworks.html`), which use `--myp-accent`.
+**Status:** sessions 1 to 6 are done and merged into `claude/epic-hamilton-5yr4s4`. Next is
+step 8 (berry), then step 7 (final check and go live). Step 8 must also repoint the section 12
+controls (`.myp-chips`, `.myp-seg`, `.fw__src` rows in `myp4-5/frameworks.html`), which use
+`--myp-accent`, and the copy of `.myp-chips` in `assets/glass-tools.css`.
+
+Sessions 3 to 6 ran in parallel on their own branches and each added a "section 12" to
+`glass.css`. After the merge they are: **12** session 2 (year resource pages), **13** session 3
+(reference pages), **14** session 5 (shared pages, group maker, lesson logs). Session 4 put its
+tool-page styles in `assets/glass-tools.css` and session 6 in the app's own `src/app.css`.
+Where two sessions styled the same class differently, the merge kept both looks and scoped them:
+
+- `.myp-stats` / `.myp-stat`: section 12 has the box and the `<dl>` form (dt / dd); section 14
+  adds the `<div>` form with `.myp-stat__label` / `.myp-stat__value` under `div.myp-stats`.
+- `.myp-embed`: one box, iframe and bar (section 14). Section 13 adds the collapsible
+  `<details>` form with a summary row. `glass-tools.css` sizes the MYP 1–2 slide embeds.
+- `.myp-note` is the session 3 note (body size). The smaller session 5 note is
+  `.myp-note--small` (`tsc.html` was given that class; no wording changed).
+- `.myp-input select` in section 12 now only styles a select with no class of its own, so the
+  group maker's `.gm-select` and the app's `.lx-select` keep their own rules.
+- Session 3's `.myp-panel__head > *{margin:0}` applies everywhere. It tightens the "Start here"
+  eyebrow on the session 1 Home by 11 px above and below; step 8 replaces that page anyway.
+
+Checked after the merge: every rebuilt page was rendered from its own session branch and from
+the merged branch at 1440 and 390, and every element's box and computed styles compared. Apart
+from the Home eyebrow above, they match. No page's checklist text was touched by the merge.
 
 Session 1: commit `bb3536d` laid the foundation (`assets/glass.css`, backdrops, Lucide icons,
 `design/link-glass.js`, Light/Dark control and Search dialog in `assets/theme.js`, `CLAUDE.md`
@@ -181,46 +203,40 @@ table becomes stacked cards on phones, and note status is a three-button control
 planned / addressed). The Worker host is blocked from the build container, so the teacher
 dashboard was checked against mocked data only; check it once with the real key.
 
-Reusable pieces for later sessions: `glass.css` section 10 (`.myp-hero`, `.myp-panel`,
-`.myp-list` / `.myp-row`, `.myp-input`, `footer.myp-footer`, strand-page panel styles) and
-section 12 (`.docwrap` embeds inside a panel, `.myp-kv` unit table, `.myp-stats`, the
-`.tl` timeline, `.myp-chips` filters, `.myp-seg` segmented control, `select` in `.myp-input`).
-MYP 3 and MYP 1–2 units, sa and journey pages can reuse section 12 directly.
+Shared pieces: `glass.css` section 10 (`.myp-hero`, `.myp-panel`, `.myp-list` / `.myp-row`,
+`.myp-input`, `footer.myp-footer`, strand-page panel styles) and section 12 (`.docwrap` embeds
+inside a panel, `.myp-kv` unit table, `.myp-stats`, the `.tl` timeline, `.myp-chips` filters,
+`.myp-seg` segmented control, `select` in `.myp-input`).
 
-**Session 3 (MYP 3) is done**, run before session 2. Every page in `myp3/` is rebuilt on the
-shell (header, tools bar, hero, panels, footer). New shared pieces: `glass.css` section 12
-(`.myp-defs` for units, `.myp-note`, `.myp-embed` for embedded slides, `.myp-panel__lead`) and
-`assets/worksheet.css` for the Brief Builder and Task Sheet, which the MYP 1–2 copies of those
-two pages can reuse in session 4. Research Planner and Product Analysis keep inline CSS so their
-"Save my copy" download still looks right offline. MYP 3 checklists stay in-memory only (no
-progress code), although frame 32 shows the progress card: that needs a Worker page key and a
-teacher view, so it waits for Dev.
+Session 3 (MYP 3): every page in `myp3/` is rebuilt on the shell (header, tools bar, hero,
+panels, footer). New shared pieces: `glass.css` section 13 (`.myp-defs` for units, `.myp-note`,
+the collapsible `.myp-embed` for embedded slides, `.myp-panel__lead`) and `assets/worksheet.css`
+for the MYP 3 Brief Builder and Task Sheet. Research Planner and Product Analysis keep inline
+CSS so their "Save my copy" download still looks right offline. MYP 3 checklists stay in-memory
+only (no progress code), although frame 32 shows the progress card: that needs a Worker page key
+and a teacher view, so it waits for Dev.
 
-**Session 4 (MYP 1–2) is done**, ahead of sessions 2 and 3. Every page in `myp1-2/` has the
-pill header, tools bar (back link, Search, Design Team, Design quote, Light / Dark), hero, glass
-panels and Figma footer. Tool pages (quizzes, worksheets, live host, results) also link
-`assets/glass-tools.css`, which holds the quiz cards, confirm dialog, result tiles, teacher
-tables (stacked cards on phones), the Brief Builder components (`main.bb`) and the PEEL / CRAAP /
-SWOT worksheet shell (`main.ws`, page colours on `--ws-*` tokens with dark values). Sessions 3
-and 6 can reuse it for `myp3/fa.html`, `myp3/brief-builder*.html` and the other worksheets.
-New behaviour, from frames 14 / 76: the closed MYP 1 FA has "Review archived assessment"
+Session 4 (MYP 1–2): every page in `myp1-2/` has the pill header, tools bar (back link, Search,
+Design Team, Design quote, Light / Dark), hero, glass panels and Figma footer. Tool pages
+(quizzes, worksheets, live host, results) also link `assets/glass-tools.css`, which holds the
+quiz cards, confirm dialog, result tiles, teacher tables (stacked cards on phones), the Brief
+Builder components (`main.bb`) and the PEEL / CRAAP / SWOT worksheet shell (`main.ws`, page
+colours on `--ws-*` tokens with dark values). So the two Brief Builders are styled from
+different files: MYP 3 from `worksheet.css`, MYP 1–2 from `glass-tools.css`. New behaviour, from
+frames 14 / 76: the closed MYP 1 FA has "Review archived assessment"
 (`criterion-b-fa-quiz.html?view=archive`, with `&level=2` for Level 2), a read-only view that
 marks the right answer and shows the feedback on every question; nothing is saved or sent.
 
-
-Reusable pieces for later sessions, all in `glass.css` section 10: `.myp-hero`, `.myp-panel`,
-`.myp-list` / `.myp-row`, `.myp-input`, `footer.myp-footer`, and the strand-page panel styles.
-Session 5 is done (run before 2–4): `appendix-citations.html`, `teacher-bookmarks.html`,
-`tsc.html`, `group-maker/` (join, joined, teacher, clear-roster dialog) and the four
-`lesson-experience/*.html` logs. New shared pieces in `glass.css` section 12 (`.myp-embed`,
-`.myp-note`, `.myp-stats` / `.myp-stat`, `.myp-button--danger`, `.myp-hero__chips`,
-`.myp-panel__bar`); the logs share `assets/lesson-log.css`. Shared pages and the group maker
-use **Home** in the tools bar (they have no workspace); the logs use **Back to Lesson
+Session 5 (shared pages): `appendix-citations.html`, `teacher-bookmarks.html`, `tsc.html`,
+`group-maker/` (join, joined, teacher, clear-roster dialog) and the four
+`lesson-experience/*.html` logs. New shared pieces in `glass.css` section 14 (`.myp-note--small`,
+the `<div>` stat tiles, `.myp-button--danger`, `.myp-hero__chips`, `.myp-panel__bar`,
+`.myp-label`, `.myp-hint`); the logs share `assets/lesson-log.css`. Shared pages and the group
+maker use **Home** in the tools bar (they have no workspace); the logs use **Back to Lesson
 Experience**. The Figma frames for these pages are flat text imports, so their structure was
 rebuilt from the HTML.
 
-Criteria B and C still carry their own inline sync code: in session 2, delete it and link
-`assets/progress.js` with `data-page="criterion-b"` / `"criterion-c"` (keep those keys).
+Session 6 (lesson experience app): see step 6 below and `lesson-experience-app/README.md`.
 
 1. **Foundation + pilot:** `assets/glass.css`, dark backdrops, icons, shared header / tools bar /
    footer / search dialog / progress-code dialogs, `CLAUDE.md` house-style update. Then Home,
@@ -233,8 +249,8 @@ Criteria B and C still carry their own inline sync code: in session 2, delete it
    `theme.css`, `glass.css` and `theme.js` instead of using Tailwind, with the shared header,
    tools bar and footer in its `index.html`. See `lesson-experience-app/README.md`.
 7. Final check of the whole site, then merge to `main` only after Dev says yes.
-8. **Berry interaction colour + new Home.** See the section below. Dev's numbering; it can run
-   at any point before step 7, and running it early means later sessions build in berry.
+8. **Berry interaction colour + new Home.** See the section below. Dev's numbering; it runs
+   before step 7.
 
 ## Step 8: berry interaction colour and the new Home
 

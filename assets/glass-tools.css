@@ -88,7 +88,7 @@
 @media (max-width:560px){.myp-fields{grid-template-columns:1fr}}
 .myp-input select,.myp-input textarea{width:100%;min-width:0;margin:0;padding:0;border:0;outline:0;background:transparent;
   color:var(--myp-text);font:400 16px/26px var(--myp-font-body)}
-.myp-input select{-webkit-appearance:none;appearance:none;cursor:pointer;padding-right:28px;
+.myp-input select{min-height:0;-webkit-appearance:none;appearance:none;cursor:pointer;padding-right:28px;
   background:url("icons/chevron-down.svg") no-repeat right center / 18px 18px}
 :root.dark .myp-input select{background:none}
 .myp-input select option{color:#111;background:#fff}

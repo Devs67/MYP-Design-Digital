@@ -29,6 +29,9 @@
     12  Year resource pages (embeds, unit table, stats, timeline,
         filter chips, segmented control)
     13  Reference pages: units, notices, embedded slides
+    14  Shared pages, group maker, lesson logs
+   Sections 12 to 14 share .myp-stats, .myp-embed and .myp-note: the base
+   rule is written once and each section adds only its own form.
    Worksheets (Brief Builder, Task Sheet) add assets/worksheet.css.
    ============================================================ */
 
@@ -857,7 +860,8 @@ footer > .wrap{width:100%}
    journey, sa, units, teacher), every page in myp3/ (session 3) and
    every page in myp1-2/ (session 4; tool pages there also use
    glass-tools.css).
-   Section 12 holds the session 2 pieces, section 13 the session 3 ones. */
+   Shared pages, the group maker and the lesson logs are session 5.
+   Section 12 holds the session 2 pieces, 13 session 3, 14 session 5. */
 
 /* ---- hero ---- */
 .myp-hero{width:var(--myp-col);margin:24px auto 0}
@@ -1309,10 +1313,11 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-seg button[aria-pressed="true"]{color:var(--myp-on-accent);background:var(--myp-accent);border-color:var(--myp-accent)}
 .myp-seg button:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
 
-/* select inside the input field */
-.myp-input select{width:100%;min-height:30px;margin:0;padding:0 24px 0 0;border:0;outline:0;background:transparent;
+/* select inside the input field (a select with its own class, as in the
+   group maker and the lesson app, keeps its own rules) */
+.myp-input select:where(:not([class])){width:100%;min-height:30px;margin:0;padding:0 24px 0 0;border:0;outline:0;background:transparent;
   color:var(--myp-text);font:400 16px/26px var(--myp-font-body);cursor:pointer}
-.myp-input select option{color:#111;background:#fff}
+.myp-input select:where(:not([class])) option{color:#111;background:#fff}
 /* the hidden attribute must win over the panel's display:flex */
 .myp-panel[hidden],.myp-stats[hidden]{display:none}
 
@@ -1352,7 +1357,8 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-note b{color:var(--myp-accent);font-weight:600}
 
 /* ---- embedded slides / document, collapsible ---- */
-.myp-embed{border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface);overflow:hidden}
+/* the box, its iframe and the bar are in section 14; these rules add the
+   <details> version with a summary row */
 .myp-embed > summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:16px 20px}
 .myp-embed > summary::-webkit-details-marker{display:none}
 .myp-embed > summary::before{content:"";width:28px;height:28px;flex:0 0 28px;border:1px solid var(--myp-border);border-radius:10px;
@@ -1363,13 +1369,10 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-embed > summary i{margin-left:auto;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);font-style:normal;
   letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
 .myp-embed[open] > summary{border-bottom:1px solid var(--myp-border)}
-.myp-embed__frame iframe{display:block;width:100%;height:720px;border:0;background:var(--myp-bg)}
-.myp-embed__bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:12px 20px;border-top:1px solid var(--myp-border);
-  font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-muted)}
-.myp-embed__bar a{display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none}
-.myp-embed__bar a:hover{text-decoration:underline}
+details.myp-embed > .myp-embed__bar{gap:8px 14px;padding:12px 20px}
+.myp-embed__bar a:not(.myp-button){display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none}
+.myp-embed__bar a:not(.myp-button):hover{text-decoration:underline}
 @media (max-width:700px){
-  .myp-embed__frame iframe{height:440px}
   .myp-embed > summary{padding:14px 16px}
   .myp-embed > summary i{margin-left:42px}
 }
@@ -1387,7 +1390,6 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 
 /* a heading row inside a panel: title on the left, meta on the right */
 .myp-panel__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
-.myp-panel__eyebrow{margin:0 0 4px}
 
 /* embedded document with its open-elsewhere fallback */
 .myp-embed{border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);overflow:hidden;background:var(--myp-surface)}
@@ -1397,15 +1399,15 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-embed__bar .myp-button{min-height:40px;padding:8px 14px}
 @media (max-width:700px){.myp-embed iframe{height:440px}}
 
-/* callout: a short note that sits in the reading flow */
-.myp-note{margin:0;padding:14px 16px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);
-  background:var(--myp-tint);font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-body)}
-.myp-note b,.myp-note strong{color:var(--myp-text)}
+/* callout: a short note that sits in the reading flow. The box is
+   .myp-note in section 13; this is the smaller, quieter version */
+.myp-note--small{font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-body)}
+.myp-note--small b,.myp-note--small strong{color:var(--myp-text);font-weight:700}
 
-/* stat tiles */
-.myp-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px;margin:0}
-.myp-stat{min-width:0;margin:0;padding:16px;display:flex;flex-direction:column;gap:6px;
-  border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface)}
+/* stat tiles. The grid and the tile box are in section 12, written for
+   <dl> with dt / dd; these are the <div> tiles with label and value classes */
+div.myp-stats{grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr))}
+div.myp-stats > :where(.myp-stat){min-width:0;padding:16px;display:flex;flex-direction:column;gap:6px}
 .myp-stat__label{margin:0;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);
   letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
 .myp-stat__value{margin:0;font:500 32px/40px var(--myp-font-display);letter-spacing:-.02em;color:var(--myp-text)}

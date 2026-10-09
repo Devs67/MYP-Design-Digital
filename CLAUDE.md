@@ -86,8 +86,9 @@ eyebrows, micro labels and codes. Fraunces is retired. Loaded from Google Fonts.
 Corner radii: 24px on panels and dialogs, 16px on cards and buttons, 12px on fields and
 checklist rows, pill (999px) on chips and progress bars.
 
-Worksheets (the Brief Builder and its Task Sheet) also link `assets/worksheet.css`, just before
-`glass.css`; its classes start with `ws-`. Worksheets with a "Save my copy (.html)" button
+The MYP 3 Brief Builder and its Task Sheet also link `assets/worksheet.css`, just before
+`glass.css`; its classes start with `ws-`. (The MYP 1–2 copies use `glass-tools.css` instead.)
+The four `lesson-experience/*.html` logs link `assets/lesson-log.css` after `glass.css`. Worksheets with a "Save my copy (.html)" button
 (Research Planner, Product Analysis) keep their CSS inline instead, written on the tokens with a
 light fallback (`var(--myp-surface,#FFFFFF)`), because the downloaded copy cannot reach `assets/`.
 
