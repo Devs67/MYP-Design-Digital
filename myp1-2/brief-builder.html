@@ -7,263 +7,64 @@
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --paper:#F2F5F6;
-    --card:#FFFFFF;
-    --ink:#14303C;
-    --slate:#5A727B;
-    --slate-2:#8FA0A6;
-    --rule:#D3E0E5;
-    --rule-strong:#B7C8CE;
-    --grid-line:rgba(20,48,60,0.05);
-    --shadow:0 1px 2px rgba(20,48,60,0.05), 0 8px 22px rgba(20,48,60,0.06);
-
-    --coral:#B0431C;
-    --coral-soft:#FBEAE2;
-    --coral-line:#EFC3AC;
-
-    --indigo:#3E5C99;
-    --indigo-soft:#E9EDF7;
-    --indigo-line:#C4CFE8;
-
-    --teal:#0D7A70;
-    --teal-soft:#E1F2EF;
-    --teal-line:#A9DAD2;
-
-    --amber:#B05A1C;
-    --amber-soft:#FBEEE2;
-    --amber-line:#EFCE8E;
-
-    --display:"Fraunces",Georgia,"Times New Roman",serif;
-    --body:"Work Sans","Segoe UI",system-ui,sans-serif;
-    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-  }
-  /* Deliberately single-theme: this worksheet always stays light paper,
-     in print, in a dark-mode browser — it needs to read the same way
-     for every student regardless of device. */
-
-  @page{ margin:0.6in; }
-
-  *{ box-sizing:border-box; }
-  html{ background:var(--paper); }
-  body{
-    margin:0;
-    background-color:var(--paper);
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size:28px 28px;
-    color:var(--ink);
-    font-family:var(--body);
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
-
-  .wrap{ max-width:800px; margin:0 auto; padding:56px 24px 96px; }
-
-  ::selection{ background:var(--coral); color:#fff; }
-  a{ color:var(--coral); }
-
-  h1,h2,h3{ font-family:var(--display); text-wrap:balance; margin:0; color:var(--ink); }
-  p{ margin:0 0 14px; color:var(--ink); }
-  p:last-child{ margin-bottom:0; }
-
-  .backlink{
-    display:inline-flex; align-items:center; gap:6px;
-    font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
-    color:var(--slate); text-decoration:none; margin-bottom:24px;
-  }
-  .backlink:hover{ color:var(--ink); }
-
-  .eyebrow{
-    font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:0.14em;
-    text-transform:uppercase; color:var(--coral); margin:0 0 10px; display:flex; align-items:center; gap:8px;
-  }
-  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--coral); display:inline-block; }
-
-  h1.title{
-    font-size:clamp(32px, 5vw, 44px); font-weight:700; line-height:1.08; margin:0 0 12px;
-  }
-  h1.title em{ font-style:italic; font-weight:500; color:var(--coral); }
-
-  .subtitle{ font-size:15.5px; color:var(--slate); max-width:60ch; margin:0 0 18px; }
-
-  .tags{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px; }
-  .tag{
-    font-family:var(--mono); font-size:11.5px; letter-spacing:0.03em; padding:5px 10px;
-    border-radius:6px; border:1px solid var(--rule); color:var(--slate); background:var(--card);
-  }
-
-  /* ---------------- Parts ---------------- */
-  .part{ margin-top:52px; }
-  .part-head{ display:flex; align-items:baseline; gap:13px; margin-bottom:16px; }
-  .part-num{
-    font-family:var(--display); font-weight:900; font-size:14px; color:#fff; background:var(--ink-fixed);
-    width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center;
-    flex:none; transform:translateY(2px);
-  }
-  .part h2{ font-size:24px; font-weight:700; }
-  .lede{ color:var(--slate); margin-bottom:16px; font-size:15px; }
-
-  .card{ background:var(--card); border:1px solid var(--rule); border-radius:12px; box-shadow:var(--shadow); padding:20px 22px; }
-
-  /* callouts */
-  .callout{ border-radius:12px; padding:16px 18px; border:1px solid; }
-  .callout-head{
-    display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11.5px;
-    letter-spacing:0.08em; text-transform:uppercase; font-weight:700; margin-bottom:8px;
-  }
-  .callout p{ font-size:14.5px; }
-  .callout.coral{ background:var(--coral-soft); border-color:var(--coral-line); }
-  .callout.coral .callout-head{ color:var(--coral); }
-  .callout.teal{ background:var(--teal-soft); border-color:var(--teal-line); }
-  .callout.teal .callout-head{ color:var(--teal); }
-  .callout.amber{ background:var(--amber-soft); border-color:var(--amber-line); }
-  .callout.amber .callout-head{ color:var(--amber); }
-
-  /* reason grid */
-  .reason-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  @media (max-width:620px){ .reason-grid{ grid-template-columns:1fr; } }
-  .reason{ background:var(--card); border:1px solid var(--rule); border-radius:10px; padding:15px 17px; display:flex; gap:12px; }
-  .reason svg{ flex:none; width:21px; height:21px; margin-top:2px; }
-  .reason p{ font-size:14px; color:var(--slate); }
-  .reason p strong{ color:var(--ink); }
-  .reason.c1 svg{ color:var(--indigo); }
-  .reason.c2 svg{ color:var(--teal); }
-  .reason.c3 svg{ color:var(--amber); }
-  .reason.c4 svg{ color:var(--coral); }
-
-  /* builder steps */
-  .builder{ display:flex; flex-direction:column; }
-  .step{ display:grid; grid-template-columns:48px 1fr; gap:16px; }
-  .step-rail{ display:flex; flex-direction:column; align-items:center; }
-  .step-badge{
-    width:36px; height:36px; border-radius:50%; background:var(--ink-fixed); color:#fff;
-    font-family:var(--display); font-weight:700; font-size:15px;
-    display:flex; align-items:center; justify-content:center; flex:none;
-  }
-  .step-line{ width:2px; flex:1; background:var(--rule-strong); margin:4px 0; min-height:30px; }
-  .step:last-child .step-line{ display:none; }
-  .step-body{ padding-bottom:28px; }
-  .step:last-child .step-body{ padding-bottom:0; }
-  .step-body h3{ font-size:17px; font-weight:700; margin-bottom:6px; }
-  .step-body p{ color:var(--slate); font-size:14.5px; }
-  .formula{
-    margin-top:10px; font-family:var(--mono); font-size:13px; color:var(--ink);
-    background:var(--paper); border:1px solid var(--rule-strong);
-    border-radius:8px; padding:10px 13px; line-height:1.6;
-  }
-
-  /* examples */
-  .example{ border-radius:12px; border:1px solid var(--rule); background:var(--card); box-shadow:var(--shadow); overflow:hidden; margin-bottom:18px; }
-  .example:last-child{ margin-bottom:0; }
-  .example-top{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:13px 20px; border-bottom:1px solid var(--rule); }
-  .example.tag-indigo .example-top{ background:var(--indigo-soft); }
-  .example.tag-amber .example-top{ background:var(--amber-soft); }
-  .example.tag-teal .example-top{ background:var(--teal-soft); }
-  .example-name{ font-family:var(--display); font-weight:700; font-size:16.5px; }
-  .example.tag-indigo .example-name{ color:var(--indigo); }
-  .example.tag-amber .example-name{ color:var(--amber); }
-  .example.tag-teal .example-name{ color:var(--teal); }
-  .example-chip{ font-family:var(--mono); font-size:11px; letter-spacing:0.04em; color:var(--slate-2); }
-  .example-body{ padding:18px 20px 20px; }
-  .example-problem{ font-style:italic; color:var(--slate); font-size:14px; margin-bottom:14px; }
-
-  .field-row{ display:grid; grid-template-columns:120px 1fr; gap:10px; padding:9px 0; border-top:1px solid var(--rule); font-size:14px; }
-  .field-row:first-of-type{ border-top:none; }
-  .field-label{ font-family:var(--mono); font-size:11px; letter-spacing:0.05em; text-transform:uppercase; font-weight:700; color:var(--slate-2); padding-top:2px; }
-
-  /* slides embed */
-  .slide-embed{
-    position:relative; width:100%; height:0; padding-bottom:59.27%;
-    border-radius:12px; overflow:hidden; border:1px solid var(--rule); box-shadow:var(--shadow);
-    background:var(--card); margin-bottom:22px;
-  }
-  .slide-embed iframe{ position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
-
-  /* CTA to the task sheet */
-  .cta h3{ font-size:18px; font-weight:700; margin-bottom:6px; }
-  .cta p{ color:var(--slate); font-size:14.5px; }
-  .btn{
-    display:inline-block; text-decoration:none;
-    font-family:var(--mono); font-size:12.5px; font-weight:600; letter-spacing:0.03em; border-radius:7px;
-    padding:11px 18px; cursor:pointer; border:1px solid var(--ink); background:var(--paper); color:var(--ink);
-  }
-  .btn.primary{ background:var(--ink-fixed); color:#fff; border-color:var(--ink-fixed); margin-top:6px; }
-  .btn:focus-visible{ outline:2px solid var(--coral); outline-offset:2px; }
-
-  footer{
-    max-width:800px; margin:56px auto 0; padding:18px 0 0; border-top:1px solid var(--rule);
-    font-family:var(--mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
-    color:var(--slate-2); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
-  }
-
-  @media (prefers-reduced-motion: no-preference){
-    .btn{ transition:opacity 0.15s ease; }
-    .btn.primary:hover{ opacity:0.85; }
-  }
-
-  @media print{
-    body{ background-image:none !important; background-color:#fff !important; }
-    .backlink, .slide-embed, .cta{ display:none !important; }
-    .example, .card, .callout, .reason{ break-inside:avoid; box-shadow:none; }
-    .part{ break-inside:avoid; }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/theme.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0}
+</style>
 <link rel="stylesheet" href="../assets/glass.css">
+<link rel="stylesheet" href="../assets/glass-tools.css">
 </head>
 <body>
 
 <header class="topbar" data-grade="myp1-2">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="../index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="../myp1-2/index.html">MYP 1 &amp; 2</a>
-      <span>&rsaquo;</span>
-      <span class="cur">Brief Builder</span>
-    </nav>
     <div class="topbar__actions">
-      <div class="topbar__grades">
-        <a href="../myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
-        <a href="../myp3/index.html" data-g="myp3">3</a>
-        <a href="../myp4-5/index.html" data-g="myp4-5">4&ndash;5</a>
-      </div>
-      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
-      </button>
-      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
-        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="index.html" data-g="myp1-2" aria-current="page">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="criterion-a.html#iv"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to Criterion A</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
+  </div>
+</nav>
 
-<div class="wrap">
-
-  <a class="backlink" href="index.html">&larr; All criteria</a>
-  <span class="eyebrow"><span class="dot"></span>IB MYP Design &nbsp;&middot;&nbsp; Year 1 &nbsp;&middot;&nbsp; Criterion A, Strand iv</span>
-  <h1 class="title">The <em>Brief</em> Builder</h1>
-  <p class="subtitle">A one-page toolkit for turning your research into a design brief — one clear paragraph that says exactly what you're going to design, and why.</p>
-  <div class="tags">
+<main id="main" class="bb">
+<header class="myp-hero">
+  <p class="myp-eyebrow">IB MYP Design &middot; Year 1 &middot; Criterion A, Strand iv</p>
+  <h1 class="myp-title">The <em>Brief</em> Builder</h1>
+  <p class="myp-lede">A one-page toolkit for turning your research into a design brief &mdash; one clear paragraph that says exactly what you&rsquo;re going to design, and why.</p>
+<div class="tags">
     <span class="tag">MYP 1</span>
     <span class="tag">Command term: Summarise</span>
     <span class="tag">No new research beyond this point</span>
   </div>
+</header>
 
-  <!-- PART 1 -->
-  <section class="part">
-    <div class="part-head"><span class="part-num">01</span><h2>What Is a Design Brief?</h2></div>
+
+  <section class="myp-panel" aria-labelledby="part01">
+    <div class="myp-panel__head">
+      <p class="myp-part__num">Part 01</p>
+      <h2 class="myp-panel__title" id="part01">What Is a Design Brief?</h2>
+    </div>
     <p>A design brief is a short paragraph — usually just two or three sentences — that pulls together everything you found out while investigating your problem, and clearly states what you are going to design and why.</p>
-    <p style="margin-bottom:20px;">Think of it as the bridge between your research (Strands i&ndash;iii, where you proved a real problem exists) and your ideas (Criterion B, where you design a solution). The design brief is the last stop before you start designing.</p>
+    <p>Think of it as the bridge between your research (Strands i&ndash;iii, where you proved a real problem exists) and your ideas (Criterion B, where you design a solution). The design brief is the last stop before you start designing.</p>
 
     <div class="callout coral">
       <div class="callout-head">
@@ -273,10 +74,11 @@
       <p>Strands i, ii and iii are <strong>never</strong> allowed to name a product. Strand iv is the very first place in your whole project where you're allowed to say what you will design — a poster, an app, a container, a game, anything. Before this strand, you were only proving the problem was real.</p>
     </div>
   </section>
-
-  <!-- PART 2 -->
-  <section class="part">
-    <div class="part-head"><span class="part-num">02</span><h2>Why Do We Write One?</h2></div>
+  <section class="myp-panel" aria-labelledby="part02">
+    <div class="myp-panel__head">
+      <p class="myp-part__num">Part 02</p>
+      <h2 class="myp-panel__title" id="part02">Why Do We Write One?</h2>
+    </div>
     <div class="reason-grid">
       <div class="reason c1">
         <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -296,10 +98,11 @@
       </div>
     </div>
   </section>
-
-  <!-- PART 3 -->
-  <section class="part">
-    <div class="part-head"><span class="part-num">03</span><h2>How Do We Write One?</h2></div>
+  <section class="myp-panel" aria-labelledby="part03">
+    <div class="myp-panel__head">
+      <p class="myp-part__num">Part 03</p>
+      <h2 class="myp-panel__title" id="part03">How Do We Write One?</h2>
+    </div>
     <p class="lede">Use the 3-Part Brief Builder. Every design brief you write, for the rest of your MYP Design journey, can follow this same shape.</p>
 
     <div class="builder">
@@ -329,10 +132,11 @@
       </div>
     </div>
   </section>
-
-  <!-- PART 4 -->
-  <section class="part">
-    <div class="part-head"><span class="part-num">04</span><h2>Three Example Design Briefs</h2></div>
+  <section class="myp-panel" aria-labelledby="part04">
+    <div class="myp-panel__head">
+      <p class="myp-part__num">Part 04</p>
+      <h2 class="myp-panel__title" id="part04">Three Example Design Briefs</h2>
+    </div>
     <p class="lede">Read all three. Each one follows the exact same three-part shape, and each names only ONE type of product — never a list of options. You'll analyse them properly on the Task Sheet.</p>
 
     <div class="example tag-indigo">
@@ -374,29 +178,31 @@
       </div>
     </div>
   </section>
-
-  <!-- PART 5 -->
-  <section class="part">
-    <div class="part-head"><span class="part-num">05</span><h2>Watch It Explained</h2></div>
+  <section class="myp-panel" aria-labelledby="part05">
+    <div class="myp-panel__head">
+      <p class="myp-part__num">Part 05</p>
+      <h2 class="myp-panel__title" id="part05">Watch It Explained</h2>
+    </div>
     <p class="lede">A short walkthrough of everything above, slide by slide.</p>
 
     <div class="slide-embed">
       <iframe src="https://docs.google.com/presentation/d/1vefrGD2YZlT5cVkyJ24r4B_ocD1hC7cuuxAPbaSolYY/embed?start=false&amp;loop=false&amp;delayms=3000" allowfullscreen="true" loading="lazy" title="The Brief Builder — slides"></iframe>
     </div>
 
-    <div class="card cta">
+    <div class="cta">
       <h3>Ready to write your own brief?</h3>
       <p>Head to the Task Sheet to turn a hypothetical problem into your own three-part design brief — the same shape you just read about above.</p>
-      <a class="btn primary" href="brief-builder-task-sheet.html">Open the Task Sheet &rarr;</a>
+      <a class="myp-button myp-button--primary" href="brief-builder-task-sheet.html">Open the Task Sheet<span class="myp-icon myp-icon--arrow-right" aria-hidden="true"></span></a>
     </div>
   </section>
 
-  <footer>
-    <span>MYP Design &middot; Criterion A &middot; Strand iv</span>
-    <span>Answers are not saved automatically</span>
-  </footer>
+</main>
 
-</div>
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 1 &amp; 2</a><a href="criterion-a.html#iv">Criterion A</a><span>Brief Builder</span></p>
+  <p>MYP Design &middot; Criterion A &middot; Strand iv. Answers are not saved automatically.</p>
+  <p class="myp-footer__links"><a href="../index.html">Home</a><a href="../myp3/index.html">MYP 3</a><a href="../myp4-5/index.html">MYP 4 &amp; 5</a><a href="frameworks.html">Frameworks</a><a href="../appendix-citations.html">MLA 9 &amp; appendix</a><span>Design Team - SIS</span></p>
+</footer>
 
 <script src="../assets/theme.js"></script>
 </body>

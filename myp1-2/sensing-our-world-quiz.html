@@ -1,261 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sensing Our World — System Check</title>
-<style>
-  :root{
-    --bg:#0A1826;
-    --panel:#0F2438;
-    --panel-alt:#142D47;
-    --border:#1F3A54;
-    --border-hover:#2C4E6D;
-    --accent:#34F5B0;
-    --accent-dark:#0B3A2C;
-    --danger:#FF6B6B;
-    --text:#EAF3FA;
-    --muted:#8AA2B8;
-    --mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
-  *{ box-sizing:border-box; }
-  html,body{ margin:0; padding:0; }
-  body{
-    background:
-      radial-gradient(circle at 1px 1px, rgba(52,245,176,0.08) 1px, transparent 0) 0 0/24px 24px,
-      var(--bg);
-    color:var(--text);
-    font-family:var(--sans);
-    line-height:1.55;
-    min-height:100vh;
-    padding-bottom:4rem;
-  }
-
-  header.console{
-    position:sticky; top:0; z-index:10;
-    background:rgba(10,24,38,0.94);
-    backdrop-filter: blur(6px);
-    border-bottom:1px solid var(--border);
-    padding:0.9rem 1.25rem;
-  }
-  .console-top{
-    display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;
-    max-width:960px; margin:0 auto;
-  }
-  .console-brand{
-    font-family:var(--mono); font-size:0.72rem; letter-spacing:0.14em; color:var(--muted); text-transform:uppercase;
-  }
-  .lcd-score{
-    font-family:var(--mono); font-size:0.95rem; letter-spacing:0.08em;
-    background:#06140F; color:var(--accent);
-    border:1px solid #0F3A2C; border-radius:4px;
-    padding:0.35rem 0.7rem;
-    text-shadow:0 0 6px rgba(52,245,176,0.55);
-  }
-
-  .pipeline{
-    max-width:960px; margin:0.75rem auto 0; display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;
-  }
-  .pipe-node{
-    display:flex; align-items:center; gap:0.4rem;
-    font-family:var(--mono); font-size:0.68rem; letter-spacing:0.1em; color:var(--muted); white-space:nowrap;
-  }
-  .node-dot{
-    width:8px; height:8px; border-radius:50%; background:#1F3A54; display:inline-block;
-    transition:background 0.3s ease, box-shadow 0.3s ease;
-  }
-  .pipe-node.lit{ color:var(--accent); }
-  .pipe-node.lit .node-dot{ background:var(--accent); box-shadow:0 0 8px rgba(52,245,176,0.8); }
-  .pipe-line{ flex:1 1 16px; min-width:12px; height:1px; background:var(--border); }
-
-  main{ max-width:900px; margin:0 auto; padding:0 1.25rem; }
-
-  .intro{ padding:2.4rem 0 1.2rem; }
-  .intro h1{ font-family:var(--mono); font-size:1.5rem; letter-spacing:0.01em; margin:0 0 0.7rem; }
-  .intro p{ color:var(--muted); max-width:64ch; margin:0 0 0.5rem; }
-
-  .quiz-section{ margin:2.2rem 0; }
-  .section-head{ margin-bottom:1rem; }
-  .tag{
-    display:inline-block; font-family:var(--mono); font-size:0.68rem; letter-spacing:0.14em;
-    color:var(--accent); background:var(--accent-dark); border-radius:3px; padding:0.2rem 0.55rem; margin-bottom:0.55rem;
-  }
-  .section-head h2{ margin:0; font-family:var(--mono); font-size:1.15rem; font-weight:600; }
-  .section-head p{ color:var(--muted); margin:0.4rem 0 0; font-size:0.92rem; }
-
-  fieldset.q-card{
-    background:var(--panel); border:1px solid var(--border); border-radius:10px;
-    padding:1.1rem 1.2rem; margin:0 0 0.9rem;
-  }
-  legend.q-text{
-    font-weight:600; padding:0 0.3rem; display:flex; gap:0.6rem; align-items:baseline;
-  }
-  .q-num{ font-family:var(--mono); font-size:0.72rem; color:var(--accent); flex:none; }
-
-  .options{ display:flex; flex-direction:column; gap:0.5rem; margin-top:0.6rem; }
-  .option{
-    display:flex; align-items:center; gap:0.6rem;
-    background:var(--panel-alt); border:1px solid var(--border); border-radius:8px;
-    padding:0.55rem 0.75rem; cursor:pointer; transition:background 0.15s ease, border-color 0.15s ease;
-  }
-  .option:hover{ border-color:var(--border-hover); }
-  .option input{ accent-color:var(--accent); width:16px; height:16px; flex:none; }
-  .option input:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
-  .option.correct{ background:rgba(52,245,176,0.12); border-color:var(--accent); }
-  .option.incorrect{ background:rgba(255,107,107,0.12); border-color:var(--danger); }
-
-  .explain{ font-size:0.88rem; color:var(--muted); margin:0.7rem 0 0; padding-top:0.6rem; border-top:1px dashed var(--border); }
-
-  .match-subhead{
-    font-family:var(--mono); font-size:0.75rem; letter-spacing:0.08em; color:var(--muted);
-    margin:1.2rem 0 0.6rem; text-transform:uppercase;
-  }
-  .match-row{
-    display:grid; grid-template-columns: 1fr 1.5fr auto; gap:0.6rem; align-items:center;
-    background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:0.7rem 0.9rem; margin-bottom:0.6rem;
-  }
-  .match-term{ font-weight:600; }
-  .match-select{
-    font-family:var(--sans); font-size:0.9rem; color:var(--text);
-    background:var(--panel-alt); border:1px solid var(--border); border-radius:6px; padding:0.45rem 0.5rem;
-  }
-  .match-select:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
-  .match-feedback{ font-family:var(--mono); font-size:0.76rem; text-align:right; min-width:2rem; }
-  .match-row.correct{ border-color:var(--accent); }
-  .match-row.incorrect{ border-color:var(--danger); }
-  .match-row.correct .match-feedback{ color:var(--accent); }
-  .match-row.incorrect .match-feedback{ color:var(--danger); }
-
-  .fill-row{
-    background:var(--panel); border:1px solid var(--border); border-radius:10px;
-    padding:0.9rem 1.1rem; margin-bottom:0.7rem; display:flex; gap:0.7rem; align-items:flex-start; flex-wrap:wrap;
-  }
-  .fill-sentence{ flex:1 1 260px; }
-  .fill-input{
-    font-family:var(--sans); font-size:0.95rem; color:var(--text);
-    background:var(--panel-alt); border:1px solid var(--border); border-bottom:2px solid var(--accent);
-    border-radius:4px; padding:0.25rem 0.5rem; width:9.5rem; margin:0 0.2rem;
-  }
-  .fill-input:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
-  .fill-row.correct .fill-input{ border-color:var(--accent); background:rgba(52,245,176,0.12); }
-  .fill-row.incorrect .fill-input{ border-color:var(--danger); background:rgba(255,107,107,0.12); }
-  .fill-feedback{ font-family:var(--mono); font-size:0.76rem; white-space:nowrap; flex:none; }
-  .fill-row.correct .fill-feedback{ color:var(--accent); }
-  .fill-row.incorrect .fill-feedback{ color:var(--danger); }
-
-  .check-btn{
-    font-family:var(--mono); font-size:0.85rem; letter-spacing:0.05em; text-transform:uppercase;
-    background:var(--accent); color:#06251C; border:none; border-radius:8px;
-    padding:0.65rem 1.3rem; cursor:pointer; margin-top:0.4rem;
-    transition:box-shadow 0.15s ease;
-  }
-  .check-btn:hover{ box-shadow:0 0 0 3px rgba(52,245,176,0.25); }
-  .check-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
-  .section-result{ font-family:var(--mono); font-size:0.85rem; color:var(--muted); margin-top:0.7rem; min-height:1.2rem; }
-
-  .result-section{
-    margin:2.6rem 0 1rem; padding:1.4rem 1.4rem; background:var(--panel); border:1px solid var(--border); border-radius:12px;
-  }
-  .result-section h2{ font-family:var(--mono); margin-top:0; }
-  #finalPanel{ color:var(--muted); }
-  .final-score{ font-family:var(--mono); font-size:2rem; color:var(--accent); margin:0.4rem 0; text-shadow:0 0 10px rgba(52,245,176,0.5); }
-  .final-breakdown{ display:flex; gap:1.4rem; flex-wrap:wrap; font-family:var(--mono); font-size:0.82rem; color:var(--muted); margin:0.6rem 0 1rem; }
-  .final-msg{ font-size:0.98rem; color:var(--text); }
-
-  .restart-btn{
-    font-family:var(--mono); font-size:0.8rem; background:transparent; color:var(--muted);
-    border:1px solid var(--border); border-radius:6px; padding:0.5rem 1rem; cursor:pointer; margin-top:0.9rem;
-  }
-  .restart-btn:hover{ color:var(--text); border-color:var(--border-hover); }
-  .restart-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
-
-  .pdf-row{ display:flex; gap:0.7rem; align-items:center; flex-wrap:wrap; margin-top:1.1rem; }
-  .focus-msg{ color:var(--text) !important; margin-top:0.6rem !important; padding-top:0.6rem; border-top:1px dashed var(--border); }
-  .focus-msg strong{ color:var(--accent); }
-
-  footer{ max-width:900px; margin:2rem auto 0; padding:0 1.25rem 2rem; color:var(--muted); font-size:0.78rem; }
-
-  .name-field{
-    background:var(--panel); border:1px solid var(--border); border-radius:10px;
-    padding:0.9rem 1.1rem; margin:1.1rem 0 0.4rem; display:flex; flex-direction:column; gap:0.4rem; max-width:26rem;
-  }
-  .name-field label{ font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase; }
-  .name-field input{
-    font-family:var(--sans); font-size:0.98rem; color:var(--text);
-    background:var(--panel-alt); border:1px solid var(--border); border-radius:6px; padding:0.5rem 0.6rem;
-  }
-  .name-field input:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
-
-  .check-btn:disabled{ opacity:0.4; cursor:not-allowed; box-shadow:none; }
-  .pdf-hint{ font-size:0.82rem; color:var(--muted); margin:0.7rem 0 0; }
-
-  @media (max-width:600px){
-    .match-row{ grid-template-columns: 1fr; }
-    .match-feedback{ text-align:left; }
-    .console-top{ flex-direction:column; align-items:flex-start; gap:0.5rem; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{ transition:none !important; animation:none !important; }
-  }
-
-  @media print{
-    header.console{ position:static; box-shadow:none; background:#fff !important; border-bottom:1px solid #999 !important; backdrop-filter:none !important; }
-    .check-btn, .restart-btn, #downloadPdfBtn, #printBtn, .pdf-hint{ display:none; }
-    body{ background:#fff !important; color:#000; }
-    fieldset.q-card, .match-row, .fill-row, .result-section, .name-field{ background:#fff !important; border:1px solid #999 !important; }
-    .option, .match-select, .fill-input, .name-field input{ background:#fff !important; border-color:#999 !important; color:#000 !important; }
-    .name-field label{ color:#333 !important; }
-    .option.correct{ background:#eafaf3 !important; }
-    .option.incorrect{ background:#fdecec !important; }
-    .fill-row.correct .fill-input{ background:#eafaf3 !important; }
-    .fill-row.incorrect .fill-input{ background:#fdecec !important; }
-    .lcd-score{ background:#fff !important; color:#000 !important; border-color:#999 !important; text-shadow:none !important; }
-    .node-dot{ background:#999 !important; box-shadow:none !important; }
-    .pipe-node, .pipe-node.lit{ color:#000 !important; }
-    .tag{ background:#eee !important; color:#000 !important; }
-    .console-brand, .q-num, .match-feedback, .fill-feedback, .section-result{ color:#333 !important; }
-    .final-score{ color:#000 !important; text-shadow:none !important; }
-    .focus-msg strong{ color:#000 !important; }
-    .explain, .section-head p, .intro p, .muted{ color:#333 !important; }
-  }
-</style>
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/theme.css">
+<style>
+/* Sensing Our World: the pipeline bar and the three stages. Shell, panels,
+   buttons and fields come from glass.css and glass-tools.css. */
+*{box-sizing:border-box}
+body{margin:0}
+
+/* the pipeline: Event > Input > Process > Output > Result, with the live score */
+.sow-console{position:sticky;top:104px;z-index:15;width:var(--myp-col);margin:24px auto 0;padding:12px 20px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;border:1px solid var(--myp-glass-border);
+  border-radius:var(--myp-radius-button);background:var(--myp-glass-fill);box-shadow:var(--myp-glass-shadow);
+  -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+.pipeline{flex:1 1 420px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
+.pipe-node{display:flex;align-items:center;gap:6px;white-space:nowrap;
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;color:var(--myp-muted)}
+.node-dot{width:10px;height:10px;border-radius:50%;background:var(--myp-border);display:inline-block}
+.pipe-node.lit{color:var(--myp-ok);font-weight:600}
+.pipe-node.lit .node-dot{background:var(--myp-ok);box-shadow:0 0 0 3px var(--myp-ok-tint)}
+.pipe-line{flex:1 1 16px;min-width:12px;height:2px;border-radius:2px;background:var(--myp-tint)}
+.lcd-score{padding:6px 12px;border-radius:var(--myp-radius-chip);background:var(--myp-ok-tint);color:var(--myp-ok);
+  font:600 13px/20px var(--myp-font-mono);letter-spacing:.06em;white-space:nowrap}
+@media (max-width:760px){.sow-console{top:8px;padding:10px 14px}}
+@media (max-width:560px){.pipe-line{display:none}.pipeline{gap:6px 12px}}
+
+/* stage panels */
+.myp-panel .tag{align-self:flex-start;padding:4px 10px;border-radius:var(--myp-radius-chip);background:var(--myp-tint);
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-accent)}
+.qlist{display:flex;flex-direction:column;gap:12px}
+fieldset.q-card{margin:0;min-width:0;padding:20px;border:1px solid var(--myp-border);border-radius:var(--myp-radius-inner);background:var(--myp-surface)}
+legend.q-text{float:left;width:100%;padding:0;margin:0 0 12px;display:flex;gap:10px;align-items:baseline;
+  font:500 18px/26px var(--myp-font-body);color:var(--myp-text)}
+legend.q-text + *{clear:both}
+.q-num{flex:none;font:600 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);letter-spacing:.04em;color:var(--myp-accent)}
+.options{display:grid;gap:8px}
+.option{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border:1px solid var(--myp-border);
+  border-radius:var(--myp-radius-field);background:var(--myp-surface);cursor:pointer;color:var(--myp-body);line-height:24px}
+.option:hover{border-color:var(--myp-accent)}
+.option:has(input:checked){border-color:var(--myp-accent);background:var(--myp-tint);color:var(--myp-text)}
+.option input{width:18px;height:18px;margin:3px 0 0;flex:none;accent-color:var(--myp-accent)}
+.option.correct{border-color:var(--myp-ok);background:var(--myp-ok-tint);color:var(--myp-text)}
+.option.incorrect{border-color:var(--myp-error);background:var(--clay-tint);color:var(--myp-text)}
+.explain{margin:12px 0 0;padding:12px 16px;border:1px solid var(--myp-border);border-left:4px solid var(--myp-accent);
+  border-radius:var(--myp-radius-field);background:var(--myp-bg);font-size:15px;line-height:24px;color:var(--myp-body)}
+.explain[hidden]{display:none}
+
+.match-subhead{margin:8px 0 0;font:500 var(--myp-eyebrow-size)/var(--myp-eyebrow-line) var(--myp-font-mono);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+.match-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) auto;gap:12px;align-items:center;padding:12px 16px;
+  border:1px solid var(--myp-border);border-radius:var(--myp-radius-field);background:var(--myp-surface)}
+.match-row + .match-row{margin-top:8px}
+.match-term{font-weight:600;color:var(--myp-text)}
+.match-select{width:100%;min-height:44px;padding:8px 12px;border:1px solid var(--myp-border);border-radius:10px;
+  background:var(--myp-tint);color:var(--myp-text);font:500 15px/22px var(--myp-font-body)}
+.match-select:focus-visible,.fill-input:focus-visible{outline:2px solid var(--myp-accent);outline-offset:1px;border-color:var(--myp-accent)}
+.match-feedback,.fill-feedback{min-width:2rem;text-align:right;
+  font:600 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase}
+.match-row.correct,.fill-row.correct{border-color:var(--myp-ok);background:var(--myp-ok-tint)}
+.match-row.incorrect,.fill-row.incorrect{border-color:var(--myp-error);background:var(--clay-tint)}
+.match-row.correct .match-feedback,.fill-row.correct .fill-feedback{color:var(--myp-ok)}
+.match-row.incorrect .match-feedback,.fill-row.incorrect .fill-feedback{color:var(--myp-error)}
+
+.fill-row{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:baseline;padding:14px 16px;border:1px solid var(--myp-border);
+  border-radius:var(--myp-radius-field);background:var(--myp-surface)}
+.fill-row + .fill-row{margin-top:8px}
+.fill-sentence{flex:1 1 260px;color:var(--myp-body);line-height:40px}
+.fill-input{width:10rem;max-width:100%;min-height:36px;margin:0 4px;padding:4px 10px;border:1px solid var(--myp-border);
+  border-bottom:2px solid var(--myp-accent);border-radius:8px;background:var(--myp-tint);color:var(--myp-text);font:500 15px/24px var(--myp-font-body)}
+.fill-row.correct .fill-input{border-color:var(--myp-ok)}
+.fill-row.incorrect .fill-input{border-color:var(--myp-error)}
+.section-result{min-height:0;font:600 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;
+  text-transform:uppercase;color:var(--myp-ok)}
+.section-result:empty{display:none}
+
+/* result */
+#finalPanel{color:var(--myp-muted)}
+.final-score{font:500 64px/1 var(--myp-font-display);letter-spacing:-.04em;color:var(--myp-text);margin:4px 0 8px}
+.final-breakdown{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.final-breakdown span{padding:6px 12px;border-radius:var(--myp-radius-chip);background:var(--myp-tint);
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-accent)}
+.final-msg{margin:0;color:var(--myp-body)}
+.focus-msg{margin-top:12px !important;padding-top:12px;border-top:1px solid var(--myp-tint)}
+.focus-msg strong{color:var(--myp-text)}
+.pdf-hint{margin:0;font-size:var(--myp-small-size);line-height:var(--myp-small-line);color:var(--myp-muted)}
+.pdf-hint--warn{color:var(--myp-error);font-weight:600}
+
+@media (max-width:560px){fieldset.q-card{padding:14px}}
+@media (max-width:600px){
+  .match-row{grid-template-columns:1fr}
+  .match-feedback{text-align:left}
+}
+@media print{
+  .sow-console{position:static;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .myp-btnrow,.pdf-hint{display:none !important}
+  fieldset.q-card,.match-row,.fill-row,.option{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
 <link rel="stylesheet" href="../assets/glass.css">
+<link rel="stylesheet" href="../assets/glass-tools.css">
 </head>
 <body>
 
 <header class="topbar" data-grade="myp1-2">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="../index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="../myp1-2/index.html">MYP 1 &amp; 2</a>
-      <span>&rsaquo;</span>
-      <span class="cur">Sensing Our World</span>
-    </nav>
     <div class="topbar__actions">
-      <div class="topbar__grades">
-        <a href="../myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
-        <a href="../myp3/index.html" data-g="myp3">3</a>
-        <a href="../myp4-5/index.html" data-g="myp4-5">4&ndash;5</a>
-      </div>
-      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="index.html" data-g="myp1-2" aria-current="page">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
-
-<header class="console">
-  <div class="console-top">
-    <div class="console-brand">Sensing Our World // System Check</div>
-    <div class="lcd-score" id="scoreDisplay" aria-live="polite">SCORE 00 / 27</div>
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="index.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to workspace</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
   </div>
+</nav>
+
+<main id="main">
+<header class="myp-hero">
+  <p class="myp-eyebrow">Sensing Our World // System Check</p>
+  <h1 class="myp-title">Can you complete the circuit?</h1>
+  <p class="myp-lede">Every automated system you studied follows the same loop: an <strong>EVENT</strong> triggers an <strong>INPUT</strong>, a <strong>PROCESS</strong> makes a decision, and an <strong>OUTPUT</strong> produces a <strong>RESULT</strong>. Work through the three checks below in order, hit &ldquo;check&rdquo; on each one, and watch the pipeline below light up as you go.</p>
+</header>
+
+<div class="sow-console" role="group" aria-label="System check progress">
   <div class="pipeline" id="pipeline">
     <div class="pipe-node" data-node="event"><span class="node-dot"></span>EVENT</div>
     <div class="pipe-line"></div>
@@ -267,72 +155,80 @@
     <div class="pipe-line"></div>
     <div class="pipe-node" data-node="result"><span class="node-dot"></span>RESULT</div>
   </div>
-</header>
+  <div class="lcd-score" id="scoreDisplay" aria-live="polite">SCORE 00 / 27</div>
+</div>
 
-<main>
-  <section class="intro">
-    <h1>Can you complete the circuit?</h1>
-    <p>Every automated system you studied follows the same loop: an <strong>EVENT</strong> triggers an <strong>INPUT</strong>, a <strong>PROCESS</strong> makes a decision, and an <strong>OUTPUT</strong> produces a <strong>RESULT</strong>. Work through the three checks below in order, hit "check" on each one, and watch the pipeline above light up as you go.</p>
-    <p>This quiz marks itself and builds your PDF report right in your browser — nothing is sent anywhere unless you hand in the file you download.</p>
-    <div class="name-field">
-      <label for="studentName">Your name (for the PDF report)</label>
-      <input type="text" id="studentName" placeholder="Full name" autocomplete="name">
-    </div>
-  </section>
+<section class="myp-panel" aria-labelledby="nameTitle">
+  <div class="myp-panel__head">
+    <p class="myp-eyebrow">Before you start</p>
+    <h2 class="myp-panel__title" id="nameTitle">Your name</h2>
+  </div>
+  <p>This quiz marks itself and builds your PDF report right in your browser &mdash; nothing is sent anywhere unless you hand in the file you download.</p>
+  <label class="myp-input" style="max-width:420px">
+    <span class="myp-input__label">Your name (for the PDF report)</span>
+    <input type="text" id="studentName" placeholder="Full name" autocomplete="name">
+  </label>
+</section>
 
-  <section id="section-input" class="quiz-section">
-    <div class="section-head">
-      <span class="tag">Stage 1 · Input</span>
-      <h2>Multiple Choice</h2>
-      <p>Select the best answer for each question.</p>
-    </div>
-    <div id="mcqList"></div>
-    <button class="check-btn" id="checkMcqBtn" type="button">Check Input Section</button>
-    <div class="section-result" id="mcqResult"></div>
-  </section>
+<section id="section-input" class="myp-panel quiz-section" aria-labelledby="section-input-t">
+  <div class="myp-panel__head">
+    <span class="tag">Stage 1 &middot; Input</span>
+    <h2 class="myp-panel__title" id="section-input-t">Multiple Choice</h2>
+    <p class="myp-panel__sub">Select the best answer for each question.</p>
+  </div>
+  <div class="qlist" id="mcqList"></div>
+  <div class="myp-btnrow"><button class="myp-button myp-button--primary check-btn" id="checkMcqBtn" type="button">Check Input Section</button></div>
+  <p class="section-result" id="mcqResult" aria-live="polite"></p>
+</section>
 
-  <section id="section-process" class="quiz-section">
-    <div class="section-head">
-      <span class="tag">Stage 2 · Process</span>
-      <h2>Match the Component to its Function</h2>
-      <p>Choose the correct function for each sensor and actuator from the dropdown.</p>
-    </div>
-    <p class="match-subhead">Sensors</p>
-    <div id="sensorMatchList"></div>
-    <p class="match-subhead">Actuators</p>
-    <div id="actuatorMatchList"></div>
-    <button class="check-btn" id="checkMatchBtn" type="button">Check Process Section</button>
-    <div class="section-result" id="matchResult"></div>
-  </section>
+<section id="section-process" class="myp-panel quiz-section" aria-labelledby="section-process-t">
+  <div class="myp-panel__head">
+    <span class="tag">Stage 2 &middot; Process</span>
+    <h2 class="myp-panel__title" id="section-process-t">Match the Component to its Function</h2>
+    <p class="myp-panel__sub">Choose the correct function for each sensor and actuator from the dropdown.</p>
+  </div>
+  <p class="match-subhead">Sensors</p>
+  <div id="sensorMatchList"></div>
+  <p class="match-subhead">Actuators</p>
+  <div id="actuatorMatchList"></div>
+  <div class="myp-btnrow"><button class="myp-button myp-button--primary check-btn" id="checkMatchBtn" type="button">Check Process Section</button></div>
+  <p class="section-result" id="matchResult" aria-live="polite"></p>
+</section>
 
-  <section id="section-output" class="quiz-section">
-    <div class="section-head">
-      <span class="tag">Stage 3 · Output</span>
-      <h2>Fill in the Blanks</h2>
-      <p>Type one word or short phrase in each gap.</p>
-    </div>
-    <div id="fillList"></div>
-    <button class="check-btn" id="checkFillBtn" type="button">Check Output Section</button>
-    <div class="section-result" id="fillResult"></div>
-  </section>
+<section id="section-output" class="myp-panel quiz-section" aria-labelledby="section-output-t">
+  <div class="myp-panel__head">
+    <span class="tag">Stage 3 &middot; Output</span>
+    <h2 class="myp-panel__title" id="section-output-t">Fill in the Blanks</h2>
+    <p class="myp-panel__sub">Type one word or short phrase in each gap.</p>
+  </div>
+  <div id="fillList"></div>
+  <div class="myp-btnrow"><button class="myp-button myp-button--primary check-btn" id="checkFillBtn" type="button">Check Output Section</button></div>
+  <p class="section-result" id="fillResult" aria-live="polite"></p>
+</section>
 
-  <section id="section-result" class="result-section">
-    <h2>Result</h2>
-    <div id="finalPanel">
-      <p>Complete all three stages above to trigger the final result.</p>
-    </div>
-    <div class="pdf-row">
-      <button class="check-btn" id="downloadPdfBtn" type="button" disabled>Download PDF Report</button>
-      <button class="restart-btn" id="printBtn" type="button">Print / Save Page as PDF</button>
-      <button class="restart-btn" id="restartBtn" type="button">Restart System Check</button>
-    </div>
-    <p class="pdf-hint">Enter your name above and finish all three stages to unlock the results PDF (score, breakdown, and what to focus on next). You can also print this page any time and choose "Save as PDF" in the print dialog. Submit either file to your teacher.</p>
-    <p class="pdf-hint" id="printHint" style="color:var(--danger);font-weight:600;" hidden></p>
-  </section>
+<section id="section-result" class="myp-panel myp-panel--accent result-section" aria-labelledby="resTitle">
+  <div class="myp-panel__head">
+    <p class="myp-eyebrow">Your report</p>
+    <h2 class="myp-panel__title" id="resTitle">Result</h2>
+  </div>
+  <div id="finalPanel">
+    <p>Complete all three stages above to trigger the final result.</p>
+  </div>
+  <div class="myp-btnrow pdf-row">
+    <button class="myp-button myp-button--primary" id="downloadPdfBtn" type="button" disabled><span class="myp-icon myp-icon--download" aria-hidden="true"></span>Download PDF Report</button>
+    <button class="myp-button myp-button--secondary" id="printBtn" type="button">Print / Save Page as PDF</button>
+    <button class="myp-button myp-button--secondary" id="restartBtn" type="button"><span class="myp-icon myp-icon--refresh-cw" aria-hidden="true"></span>Restart System Check</button>
+  </div>
+  <p class="pdf-hint">Enter your name above and finish all three stages to unlock the results PDF (score, breakdown, and what to focus on next). You can also print this page any time and choose &ldquo;Save as PDF&rdquo; in the print dialog. Submit either file to your teacher.</p>
+  <p class="pdf-hint pdf-hint--warn" id="printHint" hidden></p>
+</section>
+
 </main>
 
-<footer>
-  Sensing Our World — Engineering Solutions for Community Wellbeing. Self-marking review.
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 1 &amp; 2</a><span>Sensing Our World</span></p>
+  <p>Sensing Our World &mdash; Engineering Solutions for Community Wellbeing. Self-marking review.</p>
+  <p class="myp-footer__links"><a href="../index.html">Home</a><a href="../myp3/index.html">MYP 3</a><a href="../myp4-5/index.html">MYP 4 &amp; 5</a><a href="frameworks.html">Frameworks</a><a href="../appendix-citations.html">MLA 9 &amp; appendix</a><span>Design Team - SIS</span></p>
 </footer>
 
 <script>

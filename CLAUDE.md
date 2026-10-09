@@ -37,6 +37,8 @@ The site uses the **Blue Glass** look. Its single source is `assets/glass.css`, 
 **last** element in `<head>` on every page so it wins over the page's own `<style>`. New pages
 link it the same way (`node design/link-glass.js` adds it to any page that lacks it). The Figma
 handoff it was built from is in `design/figma-export/`; the plan is `design/BUILD-BRIEF.md`.
+Quizzes, worksheets and teacher screens also link `assets/glass-tools.css` straight after
+it (section list at the top of that file).
 
 Tokens, light / dark (dark applies under `:root.dark`):
 

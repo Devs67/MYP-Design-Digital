@@ -847,7 +847,8 @@ footer > .wrap{width:100%}
    hero, section panels, list rows, the input field, the footer,
    and the progress-code card and dialogs (frames 84-86).
    Pages rebuilt so far: index.html, myp4-5/index.html,
-   myp4-5/criterion-a.html. */
+   myp4-5/criterion-a.html, every page in myp1-2/ (tool pages there
+   also use glass-tools.css). */
 
 /* ---- hero ---- */
 .myp-hero{width:var(--myp-col);margin:24px auto 0}

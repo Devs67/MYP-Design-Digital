@@ -8,147 +8,97 @@
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
-  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
-  --amber:#B05A1C; --amber-tint:#FBEEE2;
-  --moss:#2F6B4F; --moss-tint:#E8F1EC;
-  --clay:#9C3E2F; --clay-tint:#F8E9E6;
-  --dev:#6A4C93; --dev-tint:#EFEAF6;
-  --display:"Fraunces",Georgia,serif;
-  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
-:root.dark{--dev-tint:#241C33}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
-  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1100px;margin:0 auto;padding:0 30px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--dev);margin:0}
-
-.mast{padding:48px 0 18px}
-.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,40px);line-height:1.12;letter-spacing:-.02em;margin:10px 0 0}
-.mast .sub{margin:12px 0 0;color:var(--slate);max-width:70ch}
-
-.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;margin:16px 0}
-.teacher{border-top:4px solid var(--dev)}
-
-.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chips button{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 13px;
-  border:1px solid var(--rule);border-radius:7px;background:var(--card);color:var(--slate);cursor:pointer}
-.chips button.on{border-color:var(--dev);background:var(--dev-tint);color:var(--dev);font-weight:600}
-.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-select,.btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;
-  border:1px solid var(--rule);border-radius:7px;background:var(--card);color:var(--ink);cursor:pointer}
-.btn:hover,select:hover{border-color:var(--slate)}
-button:focus-visible,select:focus-visible{outline:2px solid var(--dev);outline-offset:2px}
-.updated{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--slate)}
-.err{color:var(--clay);font-size:14px;margin:10px 0 0;min-height:1em}
-
-.counts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-.count{background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:12px 14px}
-.count b{display:block;font-family:var(--display);font-size:28px;font-weight:600;line-height:1.1}
-.count span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
-
-.tablewrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:15px}
-th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);font-weight:500;
-  text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
-td{padding:10px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
-td.num{font-family:var(--mono);white-space:nowrap}
-td.pct{font-family:var(--mono);white-space:nowrap;font-weight:600}
-.hi{color:var(--moss)} .mid{color:var(--amber)} .lo{color:var(--clay)}
-.try{display:inline-block;margin-left:6px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
-  padding:1px 6px;border-radius:7px;background:var(--amber-tint);color:var(--amber)}
-.empty{color:var(--slate);font-size:14px;padding:14px 0}
-
-footer{margin-top:40px;padding:28px 0 54px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
-@media (max-width:760px){ .wrap{padding:0 14px} .card{padding:16px} }
-@media print{ .bar .tools,.chips{display:none} }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/theme.css">
+<style>
+:root{--dev:#6A4C93}
+*{box-sizing:border-box}
+body{margin:0}
+</style>
 <link rel="stylesheet" href="../assets/glass.css">
+<link rel="stylesheet" href="../assets/glass-tools.css">
 </head>
 <body>
 
 <header class="topbar" data-grade="myp1-2">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="../index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="../myp1-2/index.html">MYP 1 &amp; 2</a>
-      <span>&rsaquo;</span>
-      <span class="cur">Quiz results</span>
-    </nav>
     <div class="topbar__actions">
-      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
-        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="index.html" data-g="myp1-2" aria-current="page">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
-<header class="mast">
-  <div class="wrap">
-    <p class="eyebrow">Teacher &middot; MYP 2 Criterion B quiz &middot; Sensing Our World</p>
-    <h1>Quiz results</h1>
-    <p class="sub">Every student appears here as soon as they check their score. The page updates itself every 20 seconds.</p>
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="criterion-b.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to Criterion B</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
   </div>
+</nav>
+
+<main id="main">
+<header class="myp-hero">
+  <p class="myp-eyebrow">Teacher &middot; MYP 2 Criterion B quiz &middot; Sensing Our World</p>
+  <h1 class="myp-title">Quiz results</h1>
+  <p class="myp-lede">Every student appears here as soon as they check their score. The page updates itself every 20 seconds.</p>
 </header>
 
-<div class="wrap">
-
-  <section class="card teacher">
-    <div class="bar">
-      <div class="chips" id="sections" role="group" aria-label="Section"></div>
-      <div class="tools">
-        <label class="updated" for="sortBy">Sort</label>
-        <select id="sortBy">
-          <option value="new">Newest first</option>
-          <option value="name">Name A–Z</option>
-          <option value="high">Score high–low</option>
-          <option value="low">Score low–high</option>
-        </select>
-        <button class="btn" id="refreshBtn" type="button">Refresh</button>
-        <span class="updated" id="updated"></span>
-      </div>
+<section class="myp-panel myp-panel--teacher" aria-label="Filter and sort">
+  <div class="myp-toolrow">
+    <div class="myp-chips" id="sections" role="group" aria-label="Section"></div>
+    <div class="myp-toolrow__end">
+      <label class="myp-updated" for="sortBy">Sort</label>
+      <select class="myp-select" id="sortBy">
+        <option value="new">Newest first</option>
+        <option value="name">Name A–Z</option>
+        <option value="high">Score high–low</option>
+        <option value="low">Score low–high</option>
+      </select>
+      <button class="myp-button myp-button--secondary" id="refreshBtn" type="button"><span class="myp-icon myp-icon--refresh-cw" aria-hidden="true"></span>Refresh</button>
+      <span class="myp-updated" id="updated"></span>
     </div>
-    <p class="err" id="err" role="alert"></p>
-  </section>
-
-  <section class="card">
-    <div class="counts">
-      <div class="count"><b id="nDone">0</b><span>Results</span></div>
-      <div class="count"><b id="avg">–</b><span>Average</span></div>
-      <div class="count"><b id="best">–</b><span>Highest</span></div>
-      <div class="count"><b id="worst">–</b><span>Lowest</span></div>
-    </div>
-  </section>
-
-  <section class="card">
-    <div class="tablewrap">
-      <table>
-        <thead><tr><th>Name</th><th>Section</th><th>Score</th><th>%</th><th>Strand i</th><th>Strand ii</th><th>Strand iii</th><th>Strand iv</th><th>Checked</th></tr></thead>
-        <tbody id="rows"></tbody>
-      </table>
-    </div>
-    <p class="empty" id="empty">No results yet. They appear here as soon as a student checks their score.</p>
-  </section>
-
-</div>
-
-<footer>
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
-    <span>Design Team - SIS</span>
-    <span>Teacher page</span>
   </div>
+  <p class="myp-err" id="err" role="alert"></p>
+</section>
+
+<section class="myp-panel" aria-labelledby="sumTitle">
+  <h2 class="myp-panel__title" id="sumTitle">Class summary</h2>
+  <div class="myp-counts">
+    <div class="myp-count"><b id="nDone">0</b><span>Results</span></div>
+    <div class="myp-count"><b id="avg">–</b><span>Average</span></div>
+    <div class="myp-count"><b id="best">–</b><span>Highest</span></div>
+    <div class="myp-count"><b id="worst">–</b><span>Lowest</span></div>
+  </div>
+</section>
+
+<section class="myp-panel" aria-labelledby="resTitle">
+  <h2 class="myp-panel__title" id="resTitle">Every result</h2>
+  <div class="myp-tablewrap myp-tablewrap--stack">
+    <table class="myp-table">
+      <thead><tr><th>Name</th><th>Section</th><th>Score</th><th>%</th><th>Strand i</th><th>Strand ii</th><th>Strand iii</th><th>Strand iv</th><th>Checked</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p class="myp-empty" id="empty">No results yet. They appear here as soon as a student checks their score.</p>
+</section>
+
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 1 &amp; 2</a><a href="criterion-b.html">Criterion B</a><span>Quiz results</span></p>
+  <p>Teacher page</p>
+  <p class="myp-footer__links"><a href="../index.html">Home</a><a href="../myp3/index.html">MYP 3</a><a href="../myp4-5/index.html">MYP 4 &amp; 5</a><a href="frameworks.html">Frameworks</a><a href="../appendix-citations.html">MLA 9 &amp; appendix</a><span>Design Team - SIS</span></p>
 </footer>
 
 <script>
@@ -224,6 +174,8 @@ footer{margin-top:40px;padding:28px 0 54px;border-top:1px solid var(--rule);font
       tr.appendChild(el('td', 'pct ' + band(p), p + '%'));
       ['i', 'ii', 'iii', 'iv'].forEach(function (k) { tr.appendChild(el('td', 'num', frac(r.per, k))); });
       tr.appendChild(el('td', 'num', when(r.checked)));
+      var heads = ['Name', 'Section', 'Score', '%', 'Strand i', 'Strand ii', 'Strand iii', 'Strand iv', 'Checked'];
+      for (var c = 0; c < tr.children.length; c++) tr.children[c].setAttribute('data-l', heads[c]);
       rowsEl.appendChild(tr);
     });
   }
