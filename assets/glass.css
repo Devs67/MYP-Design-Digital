@@ -40,13 +40,21 @@
   --myp-orb:#6BAEFF;
 
   /* rgba() first: color-mix() fails on iOS 16.1 and older */
-  --myp-glass-fill:rgba(255,255,255,.86);
+  --myp-glass-fill:rgba(255,255,255,.90);
   --myp-glass-fill-soft:rgba(255,255,255,.72);
   --myp-glass-border:rgba(186,206,233,.82);
   --myp-glass-blur:18px;
   --myp-glass-shadow:0 18px 50px rgba(40,98,174,.10);
-  --myp-focus-ring:0 0 0 3px rgba(40,98,174,.24);
-  --myp-grid-line:rgba(40,98,174,.08);
+  /* hover ring: a darker blue edge (focus uses a solid outline, section 11) */
+  --myp-focus-ring:0 0 0 1px var(--myp-hover);
+  --myp-grid-line:rgba(40,98,174,.06);
+  /* Dev's colour table (section 11 applies it) */
+  --myp-body:#344054;            /* descriptions, instructions, longer reading */
+  --myp-hover:#1D4D8A;           /* hover and pressed */
+  --myp-on-accent:#FFFFFF;       /* label on a primary button */
+  --myp-disabled-bg:#EEF2F7;  --myp-disabled-text:#78869B;
+  --myp-error:#B42318;
+  --myp-panel-fill:rgba(255,255,255,.94);   /* reading panels: nearly opaque */
   --myp-header-shadow:0 10px 30px rgba(0,0,0,.12);
 
   --myp-radius-card:24px;
@@ -78,8 +86,8 @@
   --myp-col:min(1312px, calc(100% - 2 * var(--myp-gutter)));
 
   /* status chips (teacher notes) */
-  --myp-ok:#17603A;     --myp-ok-tint:#D9F6E6;
-  --myp-warn:#735A00;   --myp-warn-tint:#FFF0B3;
+  --myp-ok:#236B50;     --myp-ok-tint:#DDF3E9;
+  --myp-warn:#8A5B12;   --myp-warn-tint:#FFF1D6;
 
   --myp-ease:cubic-bezier(.22,.61,.36,1);
 
@@ -101,8 +109,14 @@
   --myp-glass-fill-soft:rgba(24,37,56,.74);
   --myp-glass-border:rgba(57,84,116,.88);
   --myp-glass-shadow:0 18px 50px rgba(0,0,0,.26);
-  --myp-focus-ring:0 0 0 3px rgba(146,197,255,.30);
   --myp-grid-line:rgba(146,197,255,.06);
+  /* dark equivalents of the colour table (the table gives light values only) */
+  --myp-body:#D3DCEA;
+  --myp-hover:#C2DEFF;
+  --myp-on-accent:#0B1220;
+  --myp-disabled-bg:#1E2A3B;  --myp-disabled-text:#8391A6;
+  --myp-error:#FDA29B;
+  --myp-panel-fill:rgba(24,37,56,.94);
   --myp-header-shadow:0 10px 30px rgba(0,0,0,.36);
   --myp-ok:#8BE3B5;     --myp-ok-tint:#173A2A;
   --myp-warn:#F2D37A;   --myp-warn-tint:#3A3214;
@@ -111,7 +125,7 @@
 }
 @supports (color:color-mix(in srgb, red 50%, transparent)){
   :root,:root.dark{
-    --myp-glass-fill:color-mix(in srgb, var(--myp-surface) 86%, transparent);
+    --myp-glass-fill:color-mix(in srgb, var(--myp-surface) 90%, transparent);
     --myp-glass-fill-soft:color-mix(in srgb, var(--myp-surface) 72%, transparent);
     --myp-glass-border:color-mix(in srgb, var(--myp-border) 82%, transparent);
   }
@@ -137,7 +151,7 @@
    are repeated here so these win on source order.
    Criterion colours (--a to --d) and --dev keep their page values. */
 :root,:root.dark{
-  --ink:var(--myp-text);
+  --ink:var(--myp-body);
   --paper:var(--myp-bg);
   --card:var(--myp-surface);
   --rule:var(--myp-border);
@@ -151,7 +165,7 @@
   --ease-out:var(--myp-ease);
 }
 :root{
-  --moss:#1D6B45;  --moss-tint:#DDF3E7;
+  --moss:#236B50;  --moss-tint:#DDF3E9;
   --clay:#A8402F;  --clay-tint:#FBEAE6;
   /* chips that always carry white text */
   --ink-fixed:#1B2F4E;
@@ -168,7 +182,7 @@
    32px grid (CSS, so it never scales). Fixed pseudo-elements rather
    than background-attachment:fixed, which iOS ignores. */
 html{background-color:var(--myp-bg)}
-body{background:transparent;color:var(--myp-text);font-family:var(--myp-font-body);
+body{background:transparent;color:var(--myp-body);font-family:var(--myp-font-body);
   font-size:var(--myp-body-size);line-height:1.625;-webkit-font-smoothing:antialiased}
 :root body::before,:root.dark body::before{content:"";position:fixed;inset:0;z-index:-2;
   pointer-events:none;-webkit-mask-image:none;mask-image:none;
@@ -191,7 +205,8 @@ body{background:transparent;color:var(--myp-text);font-family:var(--myp-font-bod
 
 ::selection{background:var(--myp-tint);color:var(--myp-text)}
 a{color:var(--myp-accent)}
-:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px;border-radius:8px}
+a:hover{color:var(--myp-hover)}
+:focus-visible{outline:2px solid var(--myp-accent);outline-offset:2px}
 
 
 /* ============ 4  BLUE GLASS COMPONENTS ============
@@ -1060,4 +1075,96 @@ footer.myp-footer{width:var(--myp-col);margin:56px auto 0;padding:24px 0 32px;bo
   .myp-dialog-backdrop--center{align-items:center}
   .myp-dialog--form{max-height:calc(100vh - 24px)}
   .myp-dialog--form .myp-dialog__title{font-size:28px;line-height:36px}
+}
+
+
+/* ============ 11  PALETTE ============
+   Dev's colour table. Light values are Dev's; dark values are their
+   equivalents on the dark tokens (section 1).
+     headings #111            body text #344054       secondary #515D70
+     links and clickable headings: blue #2862AE, bold
+     selected tabs: #E8F1FF with bold blue text
+     primary button: blue fill, white bold label   secondary: #E8F1FF, blue
+     hover / pressed #1D4D8A   focus: a clear blue outline
+     disabled #EEF2F7 / #78869B
+     success #236B50   warning #8A5B12   error #B42318 */
+
+/* headings stay near-black; reading text is the softer body colour */
+h1,h2,h3,h4,h5,h6,
+.myp-title,.myp-panel__title,.myp-dialog__title,.myp-sync__title,.mast h1,.sec h2,.step h3,.dhd h3,
+.tpl__txt h3,.fstep h4,.fwc h4,.clgroup h3,.cterm,.ctile__term,.ctg b,.band__n,.obj__head b{color:var(--myp-text)}
+.myp-lede,.myp-panel__sub,.sec .sub,.sec .note,.mast .sub,.myp-row__body,.tpl__txt p,.fstep p,.flownote,
+.ctbox__note,.ctg span,.band p,.step li,.obj,.ck span,.myp-sync__txt p,.myp-dialog__note,.myp-row__points{color:var(--myp-body)}
+.obj__head b,.ctbox__lbl,.ex__lbl,.step__n,.fstep b{color:var(--myp-accent)}
+
+/* links: blue and bold */
+p a,li a,td a,.attrib a{font-weight:600}
+.myp-footer a{color:var(--myp-accent);font-weight:600}
+.myp-footer a:hover{color:var(--myp-hover)}
+
+/* clickable headings: the title of a whole-card link, and anything that opens */
+a.myp-row .myp-row__title{color:var(--myp-accent);font-weight:600}
+a.myp-row:hover .myp-row__title{color:var(--myp-hover)}
+a.myp-row--dev .myp-row__title{color:var(--dev)}
+.myp-row__go{font-weight:600}
+.docwrap > summary b,.fwgroup__hd h3,.ctall summary{color:var(--myp-accent);font-weight:600}
+.docwrap > summary:hover b,.fwgroup > summary:hover h3,.ctall summary:hover{color:var(--myp-hover)}
+@media (max-width:760px){
+  .sechead h2,.sec.open .sechead h2{color:var(--myp-accent);font-weight:600}
+}
+
+/* navigation: year tabs and tools are links, so blue and bold */
+.topbar__grades a{color:var(--myp-accent);font-weight:600}
+.topbar__grades a:hover{color:var(--myp-hover);background:var(--myp-tint)}
+.topbar__grades a.on,.topbar__grades a[aria-current]{color:var(--myp-accent);background:var(--myp-tint)}
+.myp-tool{font-weight:600}
+.myp-tool:hover{color:var(--myp-hover);border-color:var(--myp-hover);box-shadow:none}
+.myp-tool[aria-current="page"]{background:var(--myp-tint);border-color:var(--myp-accent)}
+
+/* selected tabs: pale blue with bold blue text */
+.myp-theme-toggle{background:var(--myp-glass-fill-soft)}
+.myp-theme-toggle button{color:var(--myp-accent);font-weight:600}
+.myp-theme-toggle button:hover{color:var(--myp-hover)}
+.myp-theme-toggle button[aria-pressed="true"]{color:var(--myp-accent);background:var(--myp-tint);
+  box-shadow:inset 0 0 0 1px var(--myp-accent)}
+.tab,.tab.on{font-weight:600}
+.tab{color:var(--myp-accent);background:var(--myp-glass-fill-soft);border-color:var(--myp-border)}
+.tab:hover{color:var(--myp-hover);background:var(--myp-tint);border-color:var(--myp-hover)}
+.tab.on,.tab.on:hover{color:var(--myp-accent);background:var(--myp-tint);border-color:var(--myp-accent);
+  box-shadow:inset 0 0 0 1px var(--myp-accent);font-weight:700}
+
+/* primary buttons: blue fill, white bold label; darker blue on hover and press */
+.myp-button--primary,.tpl__btn,.sync__btn,.qm__btn,.wl__btn{color:var(--myp-on-accent);background:var(--myp-accent);
+  border-color:var(--myp-accent);font-weight:600}
+.myp-button--primary:hover,.myp-button--primary:active,.tpl__btn:hover,.sync__btn:hover,.qm__btn:hover,.wl__btn:hover{
+  color:var(--myp-on-accent);background:var(--myp-hover);border-color:var(--myp-hover);box-shadow:none}
+
+/* secondary buttons: pale blue fill, blue text */
+.myp-button--secondary,.tpl__btn--ghost,.tpl__btn.tpl__btn--ghost,.sync__btn--ghost,.sync__btn.sync__btn--ghost,
+.rst,.gradecard__cta{color:var(--myp-accent);background:var(--myp-tint);border-color:var(--myp-border);font-weight:600}
+.myp-button--secondary:hover,.myp-button--secondary:active,.tpl__btn--ghost:hover,.tpl__btn.tpl__btn--ghost:hover,
+.sync__btn--ghost:hover,.sync__btn.sync__btn--ghost:hover,.rst:hover{
+  color:var(--myp-hover);background:var(--myp-tint);border-color:var(--myp-hover);box-shadow:none}
+
+/* disabled: visibly inactive */
+.myp-button[disabled],.myp-tool[disabled],.tpl__btn[disabled],.sync__btn[disabled],button[disabled].tab,
+.myp-button[disabled]:hover{color:var(--myp-disabled-text);background:var(--myp-disabled-bg);
+  border-color:var(--myp-disabled-bg);box-shadow:none;opacity:1;cursor:not-allowed;transform:none}
+.tab.todo{color:var(--myp-disabled-text);background:var(--myp-disabled-bg);border-color:var(--myp-disabled-bg);opacity:1}
+
+/* keyboard focus: a clear blue outline on every control */
+.myp-tool:focus-visible,.myp-button:focus-visible,.tab:focus-visible,.myp-theme-toggle button:focus-visible,
+a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.sync__btn:focus-visible,
+.rst:focus-visible,.ctile:focus-visible,.topbar__grades a:focus-visible,summary:focus-visible{
+  outline:2px solid var(--myp-accent);outline-offset:2px}
+.myp-input:focus-within,.myp-field:focus,.herosearch input:focus,.sync input:focus{
+  border-color:var(--myp-accent);box-shadow:0 0 0 1px var(--myp-accent)}
+
+/* status: success, warning, error */
+.myp-status-line.ok,.sync__status.ok{color:var(--myp-ok)}
+.myp-status-line.err,.sync__status.err{color:var(--myp-error)}
+
+/* glass cards about 90% white; reading panels nearly opaque */
+@media (hover:hover) and (pointer:fine) and (min-width:900px){
+  .sec > .wrap,.myp-panel{background:var(--myp-panel-fill)}
 }

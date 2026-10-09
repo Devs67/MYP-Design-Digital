@@ -47,8 +47,27 @@ Tokens, light / dark (dark applies under `:root.dark`):
 --myp-muted    #515D70 / #B5C3D8   secondary text
 --myp-accent   #2862AE / #92C5FF   links, active states, emphasis
 --myp-border   #BACEE9 / #395474   borders
---myp-tint     #E8F1FF / #203955   chips, selected states, soft fills
+--myp-tint     #E8F1FF / #203955   chips, selected tabs, secondary buttons, soft fills
+--myp-body     #344054 / #D3DCEA   body text: descriptions, instructions, longer reading
+--myp-hover    #1D4D8A / #C2DEFF   hover and pressed states
+--myp-disabled-bg / -text   #EEF2F7 + #78869B / #1E2A3B + #8391A6
+--myp-ok       #236B50 / #8BE3B5   success: saved, completed, addressed
+--myp-warn     #8A5B12 / #F2D37A   warning: needs attention
+--myp-error    #B42318 / #FDA29B   error: invalid input, failed action
 ```
+
+How Dev's colour table is applied (`glass.css` section 11):
+
+- Page and section headings `--myp-text` (#111). Reading text `--myp-body`. Captions and
+  metadata `--myp-muted`.
+- Links, navigation, card actions and clickable headings (a card's title when the whole card
+  is a link, anything that opens or closes) are `--myp-accent` and **bold**.
+- Selected tabs: `--myp-tint` fill with bold blue text and a blue edge.
+- Primary button: blue fill, white bold label (dark mode: light-blue fill, dark label).
+  Secondary button: `--myp-tint` fill, blue text. Both go `--myp-hover` on hover and press.
+- Keyboard focus is a solid 2px blue outline. Disabled controls use the disabled pair.
+- Glass cards about 90% white; dialogs and reading panels nearly opaque (94%).
+- Fluid background: #FFFFFF, #DCEBFF and #A9D0FF fields. Grid: blue at 6%.
 
 The old names still work and are remapped in `glass.css`: `--ink` → text, `--paper` → bg,
 `--card` → surface, `--rule` → border, `--slate` → muted, `--amber` → accent. `--moss` stays
