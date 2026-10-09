@@ -7,339 +7,143 @@
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-:root{
-  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
-  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
-  --amber:#B05A1C; --amber-tint:#FBEEE2;
-  --moss:#2F6B4F; --moss-tint:#E8F1EC;
-  --clay:#9C3E2F; --clay-tint:#F8E9E6;
-  --a:#12707F; --a-tint:#E1F1F3;
-  --b:#96700A; --b-tint:#F8F0D9;
-  --display:"Fraunces",Georgia,serif;
-  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
+/* page only: tag colours and the inline diagrams. Everything else is glass.css + glass-tools.css */
+:root{--a:#12707F;--a-tint:#E1F1F3;--b:#96700A;--b-tint:#F8F0D9}
+:root.dark{--a:#5FC2D0;--a-tint:#12343A;--b-tint:#3A3214}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
-  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:820px;margin:0 auto;padding:0 30px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;
-  text-transform:uppercase;color:var(--amber);margin:0}
-
-.homelink{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);
-  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--slate);
-  text-decoration:none;padding:7px 13px;border:1px solid var(--rule);border-radius:7px;
-  background:var(--card);margin-bottom:20px;transition:.15s}
-.homelink:hover{border-color:var(--slate);color:var(--ink)}
-
-.mast{padding:56px 0 20px}
-.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,44px);
-  line-height:1.12;letter-spacing:-.02em;margin:12px 0 0;max-width:22ch}
-.mast .sub{margin:16px 0 0;font-size:16px;color:var(--slate);max-width:64ch}
-
-.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:22px 24px;margin:16px 0}
-.card h2{font-family:var(--display);font-size:20px;font-weight:600;margin:6px 0 10px;letter-spacing:-.01em}
-.card p{margin:0}
-.context{border-left:4px solid var(--b)}
-.context .eyebrow{color:var(--b)}
-
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-label.f{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--slate);margin-bottom:6px}
-input[type=text],select{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--paper);
-  border:1px solid var(--rule);border-radius:7px;padding:10px 12px}
-input[type=text]:disabled,select:disabled{opacity:.7}
-input[type=text]:focus,select:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber)}
-button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
-.hint{color:var(--slate);font-size:13.5px;margin:12px 0 0}
-
-.progress{position:sticky;top:62px;z-index:5;background:var(--paper);
-  padding:12px 0;display:flex;align-items:center;gap:14px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate)}
-.bar{flex:1;height:8px;background:var(--rule-soft);border:1px solid var(--rule);border-radius:99px;overflow:hidden}
-.bar > span{display:block;height:100%;width:100%;background:var(--moss);
-  transform:scaleX(0);transform-origin:left center}
-
-.strand{margin-top:34px}
-.strand .eyebrow{color:var(--b)}
-.strand h2{font-family:var(--display);font-size:22px;font-weight:600;margin:6px 0 4px;letter-spacing:-.01em}
-
-.q{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:20px 22px;
-  margin:14px 0;min-width:0;scroll-margin-top:120px}
-.q legend{padding:0;display:contents}
-.q.missing{border-color:var(--clay);box-shadow:0 0 0 2px var(--clay-tint)}
-.q-num{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--slate);margin:0 0 6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.type-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--slate);border:1px solid var(--rule);border-radius:7px;padding:1px 7px}
-.chip{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
-  border-radius:7px;padding:2px 8px}
-.chip--spec{color:var(--amber);background:var(--amber-tint)}
-.chip--testing{color:var(--moss);background:var(--moss-tint)}
-.chip--sketch{color:var(--b);background:var(--b-tint)}
-.chip--ipo{color:var(--a);background:var(--a-tint)}
-.chip--wb{color:var(--slate);background:var(--rule-soft)}
-.q-text{font-weight:600;margin:0 0 14px;line-height:1.5}
-.multi-hint{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--slate);margin:-6px 0 10px}
-.multi-hint.warn{color:var(--clay)}
-.opts{display:grid;gap:8px}
-.opt{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border:1px solid var(--rule);
-  border-radius:7px;cursor:pointer;background:var(--paper);font-size:15px;line-height:1.5}
-.opt:hover{border-color:var(--amber)}
-.opt input{margin-top:4px;accent-color:var(--amber);flex-shrink:0}
-.opt.chosen{border-color:var(--amber);background:var(--amber-tint)}
-.locked .opt{cursor:default}
-.locked .opt:hover{border-color:var(--rule)}
-.opt.is-correct,.locked .opt.is-correct:hover{border-color:var(--moss);background:var(--moss-tint)}
-.opt.is-wrong,.locked .opt.is-wrong:hover{border-color:var(--clay);background:var(--clay-tint)}
-.opt > span:not(.tag){flex:1;min-width:0}
-.tag{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
-  font-weight:500;white-space:nowrap;padding-left:8px;padding-top:2px}
-.is-correct .tag{color:var(--moss)}
-.is-wrong .tag{color:var(--clay)}
-
-/* matching */
-.match{display:grid;gap:8px}
-.match-row{display:grid;grid-template-columns:1fr 220px;gap:12px;align-items:center;padding:11px 13px;
-  border:1px solid var(--rule);border-radius:7px;background:var(--paper);font-size:15px;line-height:1.5}
-.match-row select{width:100%;padding:5px 10px;font-weight:600;background:var(--card);line-height:1.4}
-.match-row > span{min-width:0}
-.match-row.is-correct{border-color:var(--moss);background:var(--moss-tint)}
-.match-row.is-wrong{border-color:var(--clay);background:var(--clay-tint)}
-.fix{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
-  font-weight:500;margin-top:4px;line-height:1.5}
-.is-correct .fix{color:var(--moss)}
-.is-wrong .fix{color:var(--clay)}
-
-/* decision matrix table */
-.q-tablewrap{overflow-x:auto;margin:0 0 16px}
-.q-table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.4}
-.q-table th,.q-table td{border:1px solid var(--rule);padding:7px 10px;text-align:left}
-.q-table th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);
-  font-weight:500;background:var(--paper)}
-.q-table td + td,.q-table th + th{text-align:center;width:70px}
-.q-table tfoot td{font-weight:600;background:var(--paper)}
-
-/* photos and supplied images */
-.q-img{margin:0 0 16px}
-.q-img img{display:block;width:100%;max-width:600px;height:auto;border:1px solid var(--rule);border-radius:7px;background:#fff}
-
+body{margin:0}
+.chip--spec{color:var(--myp-accent) !important;background:var(--myp-tint) !important}
+.chip--testing{color:var(--myp-ok) !important;background:var(--myp-ok-tint) !important}
+.chip--sketch{color:var(--myp-warn) !important;background:var(--myp-warn-tint) !important}
+.chip--ipo{color:var(--a) !important;background:var(--a-tint) !important}
+.sbox--spec .k{color:var(--myp-accent)}
+.sbox--testing .k{color:var(--myp-ok)}
+.sbox--sketch .k{color:var(--myp-warn)}
+.sbox--ipo .k{color:var(--a)}
 /* diagrams (drawn inline so they follow light and dark mode) */
-.dg{margin:0 0 16px;color:var(--ink)}
-.dg svg{display:block;width:100%;height:auto;max-width:600px;background:var(--card);border:1px solid var(--rule);border-radius:7px}
+.dg{margin:0 0 16px;color:var(--myp-text)}
+.dg svg{display:block;width:100%;height:auto;max-width:600px;background:var(--myp-surface);border:1px solid var(--myp-border);border-radius:12px}
 .dg .ln{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .dg .thin{stroke-width:1.2}
-.dg .fl{fill:var(--paper);stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.dg .fl{fill:var(--myp-bg);stroke:currentColor;stroke-width:2;stroke-linejoin:round}
 .dg .brd{fill:var(--a-tint);stroke:currentColor;stroke-width:2}
 .dg .dark{fill:currentColor;opacity:.2}
 .dg .hdr{fill:currentColor;opacity:.8}
-.dg .pin{fill:var(--card)}
+.dg .pin{fill:var(--myp-surface)}
 .dg .dot{fill:currentColor}
-.dg .trk{fill:none;stroke:var(--clay);stroke-width:2.5}
-.dg .ac{fill:var(--amber)}
-.dg .lead{stroke:var(--amber);stroke-width:2}
+.dg .trk{fill:none;stroke:var(--myp-error);stroke-width:2.5}
+.dg .ac{fill:var(--myp-accent)}
+.dg .lead{stroke:var(--myp-accent);stroke-width:2}
 .dg .arrowhead{fill:currentColor}
 .dg text{fill:currentColor;font-family:var(--mono);font-size:11px}
 .dg text.sm{font-size:9.5px}
 .dg text.bd{font-family:var(--body);font-size:14px}
-.dg text.dim{fill:var(--slate);font-size:12px}
+.dg text.dim{fill:var(--myp-muted);font-size:12px}
 .dg text.tl{fill:#fff;font-size:15px;font-weight:600}
-
-.fb{display:none;margin-top:14px;padding:11px 14px;border-radius:7px;font-size:14px;line-height:1.55;
-  background:var(--paper);border-left:3px solid var(--rule)}
-.locked .fb{display:block}
-.fb.good{border-left-color:var(--moss)}
-.fb.nope{border-left-color:var(--clay)}
-.fb strong.good{color:var(--moss)}
-.fb strong.nope{color:var(--clay)}
-
-.actions{margin-top:30px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);
-  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;border-radius:7px;
-  padding:14px 22px;cursor:pointer;border:1px solid var(--amber);background:var(--amber);color:#fff}
-.btn:hover{opacity:.88}
-.btn.secondary{background:var(--card);color:var(--ink);border-color:var(--rule)}
-.btn.secondary:hover{opacity:1;border-color:var(--slate)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.btn.wide{width:100%}
-.err{color:var(--clay);font-size:14px;margin:10px 0 0;min-height:1em}
-.once{color:var(--slate);font-size:13.5px;margin:10px 0 0;text-align:center}
-.sendnote{font-size:14px;margin:16px 0 0 !important;color:var(--slate)}
-.sendnote.ok{color:var(--moss)}
-.sendnote.bad{color:var(--clay)}
-#sendRetry{margin-top:10px}
-
-/* one-try confirmation */
-.cm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;display:flex;align-items:center;justify-content:center;
-  padding:20px;background:rgba(20,48,60,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.cm[hidden]{display:none}
-.cm__card{max-width:460px;width:100%;background:var(--card);border-radius:12px;padding:28px 26px 24px;
-  box-shadow:0 24px 60px rgba(20,48,60,.3);border-top:4px solid var(--amber)}
-.cm__card h2{font-family:var(--display);font-size:22px;font-weight:600;margin:8px 0 10px;letter-spacing:-.01em}
-.cm__card p{margin:0 0 10px;font-size:15px}
-.cm__card ul{margin:0 0 18px;padding-left:20px;font-size:15px;color:var(--slate)}
-.cm__btns{display:flex;gap:10px;flex-wrap:wrap}
-.cm__btns .btn{flex:1 1 180px}
-
-#results{display:none;border-top:4px solid var(--amber)}
-#results.show{display:block}
-.who{color:var(--slate);font-size:14px;margin:6px 0 0 !important}
-.score-big{font-family:var(--display);font-size:clamp(44px,10vw,60px);font-weight:600;line-height:1;
-  letter-spacing:-.02em;margin:12px 0 4px !important}
-.score-big small{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--slate);font-weight:400}
-.msg{margin:14px 0 0 !important}
-.strands{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:18px}
-.sbox{background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:12px 14px}
-.sbox .k{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);line-height:1.45}
-.sbox .v{font-family:var(--display);font-size:24px;font-weight:600;margin-top:4px}
-.sbox--spec .k{color:var(--amber)}
-.sbox--testing .k{color:var(--moss)}
-.sbox--sketch .k{color:var(--b)}
-.sbox--ipo .k{color:var(--a)}
-
-footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
-  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
-
-@media (prefers-reduced-motion:no-preference){
-  .bar > span{transition:transform .3s ease}
-  .btn{transition:opacity .15s ease}
-  .cm{animation:cmFade .25s ease both}
-  .cm__card{animation:cmRise .35s cubic-bezier(.22,.61,.36,1) both .04s}
-  @keyframes cmFade{from{opacity:0}to{opacity:1}}
-  @keyframes cmRise{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
-}
-
-@media (max-width:760px){
-  .wrap{padding:0 14px}
-  .mast{padding:40px 0 16px}
-  .card{padding:18px}
-  .q{padding:16px}
-}
-@media (max-width:560px){
-  .fields{grid-template-columns:1fr}
-  .opt{flex-wrap:wrap}
-  .tag{flex-basis:100%;margin-left:23px;padding-left:0}
-  .match-row{grid-template-columns:1fr}
-}
-
-@media print{
-  /* always print on the light palette: dark mode text would come out white on white paper */
-  html:root.dark{--ink:#14303C;--paper:#F2F5F6;--card:#FFF;--rule:#D3E0E5;--rule-soft:#E7EEF0;--slate:#5A727B;
-    --amber:#B05A1C;--amber-tint:#FBEEE2;--moss:#2F6B4F;--moss-tint:#E8F1EC;--clay:#9C3E2F;--clay-tint:#F8E9E6;
-    --a:#12707F;--a-tint:#E1F1F3;--b:#96700A;--b-tint:#F8F0D9}
-  .progress,.actions,.homelink,.cm,#sendRetry{display:none !important}
-  body,html:root.dark body{background:#fff;color:#000}
-  .opt.is-correct,.opt.is-wrong,.match-row.is-correct,.match-row.is-wrong{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .card,.q{break-inside:avoid;border-color:#bbb}
-}
 </style>
-<link rel="stylesheet" href="../assets/theme.css">
 <link rel="stylesheet" href="../assets/glass.css">
+<link rel="stylesheet" href="../assets/glass-tools.css">
 </head>
 <body>
 
 <header class="topbar" data-grade="myp1-2">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="../index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="../myp1-2/index.html">MYP 1 &amp; 2</a>
-      <span>&rsaquo;</span>
-      <a href="criterion-b.html">Criterion B</a>
-      <span>&rsaquo;</span>
-      <span class="cur">MYP 2 quiz</span>
-    </nav>
     <div class="topbar__actions">
-      <div class="topbar__grades">
-        <a href="../myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
-        <a href="../myp3/index.html" data-g="myp3">3</a>
-        <a href="../myp4-5/index.html" data-g="myp4-5">4&ndash;5</a>
-      </div>
-      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
-      </button>
-      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
-        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="index.html" data-g="myp1-2" aria-current="page">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
-<header class="mast">
-  <div class="wrap">
-    <a class="homelink" href="criterion-b.html">&larr; Criterion B</a>
-    <p class="eyebrow">MYP 2 Design &middot; Quiz</p>
-    <h1>Criterion B &mdash; Developing ideas</h1>
-    <p class="sub">Unit 1 &middot; Sensing Our World &middot; <span id="qCount">30</span> questions &middot; Strands i to iv</p>
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="criterion-b.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to Criterion B</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
   </div>
+</nav>
+
+<main id="main" class="myp-quiz">
+<header class="myp-hero">
+  <p class="myp-eyebrow">MYP 2 Design &middot; Quiz</p>
+  <h1 class="myp-title">Criterion B &mdash; Developing ideas</h1>
+  <p class="myp-lede">Unit 1 &middot; Sensing Our World &middot; <span id="qCount">30</span> questions &middot; Strands i to iv</p>
 </header>
 
-<div class="wrap">
-
-  <section class="card context" aria-labelledby="ctxTitle">
-    <p class="eyebrow">The brief</p>
-    <h2 id="ctxTitle">Your design challenge</h2>
-    <p>The school gardener cannot tell when each garden bed is too dry, so plants are wilting. Your job is to design a <strong>soil-moisture alert</strong>, simulated in Wokwi, that tells the gardener when to water. Answer every question, then press <strong>Check my score</strong>.</p>
-  </section>
-
-  <section class="card" aria-labelledby="detailsTitle">
-    <p class="eyebrow">Before you start</p>
-    <h2 id="detailsTitle">Your details</h2>
-    <div class="fields">
-      <div>
-        <label class="f" for="stuName">Full name</label>
-        <input type="text" id="stuName" autocomplete="name" placeholder="e.g. Riya Sharma">
-      </div>
-      <div>
-        <label class="f" for="stuSection">Section</label>
-        <select id="stuSection">
-          <option value="">Choose your section…</option>
-          <option value="MYP 2A">MYP 2A</option>
-          <option value="MYP 2B">MYP 2B</option>
-          <option value="MYP 2C">MYP 2C</option>
-          <option value="MYP 2D">MYP 2D</option>
-        </select>
-      </div>
-    </div>
-    <p class="hint">Your name and section appear on your result.</p>
-  </section>
-
-  <div class="progress" aria-live="polite">
-    <span id="progText">0 / 30 answered</span>
-    <div class="bar" aria-hidden="true"><span id="progBar"></span></div>
+<section class="myp-panel myp-panel--accent" aria-labelledby="ctxTitle">
+  <div class="myp-panel__head">
+    <p class="myp-eyebrow">The brief</p>
+    <h2 class="myp-panel__title" id="ctxTitle">Your design challenge</h2>
   </div>
+  <p>The school gardener cannot tell when each garden bed is too dry, so plants are wilting. Your job is to design a <strong>soil-moisture alert</strong>, simulated in Wokwi, that tells the gardener when to water. Answer every question, then press <strong>Check my score</strong>.</p>
+</section>
 
-  <main id="quiz"></main>
-
-  <div class="actions">
-    <button class="btn wide" id="checkBtn" type="button">Check my score</button>
-    <p class="err" id="err" role="alert"></p>
-    <p class="once" id="onceNote">You can only check your score once. Your answers lock after that.</p>
+<section class="myp-panel" aria-labelledby="detailsTitle">
+  <div class="myp-panel__head">
+    <p class="myp-eyebrow">Before you start</p>
+    <h2 class="myp-panel__title" id="detailsTitle">Your details</h2>
   </div>
+  <div class="myp-fields">
+    <label class="myp-input">
+      <span class="myp-input__label">Full name</span>
+      <input type="text" id="stuName" autocomplete="name" placeholder="e.g. Riya Sharma">
+    </label>
+    <label class="myp-input">
+      <span class="myp-input__label">Section</span>
+      <select id="stuSection">
+        <option value="">Choose your section…</option>
+        <option value="MYP 2A">MYP 2A</option>
+        <option value="MYP 2B">MYP 2B</option>
+        <option value="MYP 2C">MYP 2C</option>
+        <option value="MYP 2D">MYP 2D</option>
+      </select>
+    </label>
+  </div>
+  <p class="myp-hint">Your name and section appear on your result.</p>
+</section>
 
-  <section class="card" id="results" aria-live="polite" tabindex="-1">
-    <p class="eyebrow">Your result</p>
-    <p class="who" id="resWho"></p>
-    <p class="score-big" id="resScore"></p>
-    <div class="strands" id="resStrands"></div>
-    <p class="msg" id="resMsg"></p>
-
-    <p class="sendnote" id="sendNote" aria-live="polite"></p>
-    <button class="btn secondary" id="sendRetry" type="button" hidden>Send my score again</button>
-    <p class="hint">Scroll down to see which answers were right and read the feedback on each question.</p>
-  </section>
-
+<div class="progress" aria-live="polite">
+  <span id="progText">0 / 30 answered</span>
+  <div class="bar" aria-hidden="true"><span id="progBar"></span></div>
 </div>
+
+<div id="quiz"></div>
+
+<div class="actions">
+  <button class="myp-button myp-button--primary myp-button--wide" id="checkBtn" type="button">Check my score</button>
+  <p class="err" id="err" role="alert"></p>
+  <p class="once" id="onceNote">You can only check your score once. Your answers lock after that.</p>
+</div>
+
+<section class="myp-panel myp-panel--accent" id="results" aria-live="polite" tabindex="-1">
+  <div class="myp-panel__head">
+    <p class="myp-eyebrow">Your result</p>
+    <p class="who" id="resWho"></p>
+  </div>
+  <p class="score-big" id="resScore"></p>
+  <div class="strands" id="resStrands"></div>
+  <p class="msg" id="resMsg"></p>
+  <p class="sendnote" id="sendNote" aria-live="polite"></p>
+  <div class="myp-btnrow"><button class="myp-button myp-button--secondary" id="sendRetry" type="button" hidden>Send my score again</button></div>
+  <p class="myp-hint">Scroll down to see which answers were right and read the feedback on each question.</p>
+</section>
 
 <div class="cm" id="confirmBox" role="dialog" aria-modal="true" aria-labelledby="cmTitle" aria-describedby="cmText" hidden>
   <div class="cm__card">
-    <p class="eyebrow">One try only</p>
+    <p class="myp-eyebrow">One try only</p>
     <h2 id="cmTitle">Check your score now?</h2>
     <p id="cmText">You can only do this <strong>once</strong>. After you check:</p>
     <ul>
@@ -347,17 +151,18 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
       <li>you will see the right answers and feedback</li>
     </ul>
     <div class="cm__btns">
-      <button class="btn secondary" id="cmNo" type="button">Go back and review</button>
-      <button class="btn" id="cmYes" type="button">Yes, check my score</button>
+      <button class="myp-button myp-button--secondary" id="cmNo" type="button">Go back and review</button>
+      <button class="myp-button myp-button--primary" id="cmYes" type="button">Yes, check my score</button>
     </div>
   </div>
 </div>
 
-<footer>
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
-    <span>Design Team - SIS</span>
-    <span>MYP Years 1&ndash;2</span>
-  </div>
+
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 1 &amp; 2</a><a href="criterion-b.html">Criterion B</a><span>MYP 2 quiz</span></p>
+  <p class="myp-footer__links"><a href="../index.html">Home</a><a href="../myp3/index.html">MYP 3</a><a href="../myp4-5/index.html">MYP 4 &amp; 5</a><a href="frameworks.html">Frameworks</a><a href="../appendix-citations.html">MLA 9 &amp; appendix</a><span>Design Team - SIS</span></p>
 </footer>
 
 <script>

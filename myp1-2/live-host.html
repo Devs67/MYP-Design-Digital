@@ -8,204 +8,137 @@
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#14303C; --paper:#F2F5F6; --card:#FFF;
-  --rule:#D3E0E5; --rule-soft:#E7EEF0; --slate:#5A727B;
-  --amber:#B05A1C; --amber-tint:#FBEEE2;
-  --moss:#2F6B4F; --moss-tint:#E8F1EC;
-  --clay:#9C3E2F; --clay-tint:#F8E9E6;
-  --dev:#6A4C93; --dev-tint:#EFEAF6;
-  --display:"Fraunces",Georgia,serif;
-  --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-}
-:root.dark{--dev-tint:#241C33}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
-  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:980px;margin:0 auto;padding:0 30px}
-.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--dev);margin:0}
-
-.mast{padding:48px 0 18px}
-.mast h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,40px);line-height:1.12;letter-spacing:-.02em;margin:10px 0 0}
-.mast .sub{margin:12px 0 0;color:var(--slate);max-width:64ch}
-
-.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:22px 24px;margin:16px 0}
-.card h2{font-family:var(--display);font-size:20px;font-weight:600;margin:6px 0 10px;letter-spacing:-.01em}
-.card p{margin:0}
-.teacher{border-top:4px solid var(--dev)}
-
-label.f{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);margin:0 0 6px}
-input[type=password],input[type=text]{width:100%;max-width:340px;font:inherit;font-size:15px;color:var(--ink);background:var(--paper);
-  border:1px solid var(--rule);border-radius:7px;padding:10px 12px}
-input:focus{outline:2px solid var(--dev);outline-offset:1px;border-color:var(--dev)}
-button:focus-visible{outline:2px solid var(--dev);outline-offset:2px}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:12px}
-
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);font-size:11.5px;
-  letter-spacing:.1em;text-transform:uppercase;font-weight:500;border-radius:7px;padding:13px 20px;cursor:pointer;
-  border:1px solid var(--dev);background:var(--dev);color:#fff}
-.btn:hover{opacity:.88}
-.btn.go{background:var(--moss);border-color:var(--moss)}
-.btn.stop{background:var(--card);color:var(--clay);border-color:var(--clay)}
-.btn.plain{background:var(--card);color:var(--ink);border-color:var(--rule)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.err{color:var(--clay);font-size:14px;margin:10px 0 0 !important;min-height:1em}
-.hint{color:var(--slate);font-size:13.5px;margin-top:10px !important}
-
-.join{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
-.code{font-family:var(--mono);font-weight:500;font-size:clamp(56px,11vw,96px);letter-spacing:.14em;line-height:1;color:var(--dev);
-  background:var(--dev-tint);border-radius:12px;padding:18px 26px}
-.join ol{margin:8px 0 0;padding-left:20px}
-.join li{margin:2px 0}
-.status{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
-  padding:4px 10px;border-radius:7px;background:var(--rule-soft);color:var(--slate)}
-.status.live{background:var(--moss-tint);color:var(--moss)}
-.status.ended{background:var(--clay-tint);color:var(--clay)}
-.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}
-
-.counts{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 14px}
-.count{background:var(--paper);border:1px solid var(--rule);border-radius:7px;padding:10px 14px;min-width:120px}
-.count b{display:block;font-family:var(--display);font-size:26px;font-weight:600;line-height:1.1}
-.count span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
-.names{display:flex;flex-wrap:wrap;gap:6px}
-.names span{font-size:14px;padding:5px 10px;border-radius:7px;background:var(--paper);border:1px solid var(--rule)}
-.empty{color:var(--slate);font-size:14px}
-
-table{width:100%;border-collapse:collapse;font-size:15px}
-th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);font-weight:500;
-  text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule)}
-td{padding:10px;border-bottom:1px solid var(--rule-soft)}
-td.rank{font-family:var(--display);font-weight:700;font-size:20px;width:56px}
-td.num{font-family:var(--mono);white-space:nowrap}
-tr.top1 td.rank{color:var(--amber)}
-.tablewrap{overflow-x:auto}
-
-footer{margin-top:40px;padding:28px 0 54px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11px;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
-[hidden]{display:none !important}
-@media (prefers-reduced-motion:no-preference){.btn{transition:opacity .15s ease}}
-@media (max-width:760px){
-  .wrap{padding:0 14px}
-  .card{padding:18px}
-  .join{grid-template-columns:1fr;gap:16px}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/theme.css">
+<style>
+:root{--dev:#6A4C93}
+*{box-sizing:border-box}
+body{margin:0}
+</style>
 <link rel="stylesheet" href="../assets/glass.css">
+<link rel="stylesheet" href="../assets/glass-tools.css">
 </head>
 <body>
 
 <header class="topbar" data-grade="myp1-2">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="../index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="../myp1-2/index.html">MYP 1 &amp; 2</a>
-      <span>&rsaquo;</span>
-      <span class="cur">Live quiz host</span>
-    </nav>
     <div class="topbar__actions">
-      <button type="button" class="topbar__btn topbar__theme" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">
-        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="index.html" data-g="myp1-2" aria-current="page">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
-<header class="mast">
-  <div class="wrap">
-    <p class="eyebrow">Teacher only &middot; Criterion B FA quiz, Level 2</p>
-    <h1>Live quiz host</h1>
-    <p class="sub">Start a class session, let students join with a code, then start the quiz for everyone at once. The leaderboard shows only on this screen.</p>
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="criterion-b.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to Criterion B</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
   </div>
+</nav>
+
+<main id="main">
+<header class="myp-hero">
+  <p class="myp-eyebrow">Teacher only &middot; Criterion B FA quiz, Level 2</p>
+  <h1 class="myp-title">Live quiz host</h1>
+  <p class="myp-lede">Start a class session, let students join with a code, then start the quiz for everyone at once. The leaderboard shows only on this screen.</p>
 </header>
 
-<div class="wrap">
-
-  <section class="card teacher" id="keyCard">
-    <p class="eyebrow">Step 1</p>
-    <h2>Teacher key</h2>
-    <p>Enter the key for the live quiz Worker. It stays on this device only and is never shown on screen.</p>
-    <div class="row">
-      <div style="flex:1 1 240px">
-        <label class="f" for="keyIn">Key</label>
-        <input type="password" id="keyIn" autocomplete="current-password">
-      </div>
-      <button class="btn" id="keyBtn" type="button">Unlock</button>
-    </div>
-    <p class="err" id="keyErr" role="alert"></p>
-  </section>
-
-  <section class="card teacher" id="newCard" hidden>
-    <p class="eyebrow">Step 2</p>
-    <h2>Start a live quiz</h2>
-    <p>This makes a new join code for your class. Nothing starts until you press <strong>Start the quiz</strong>.</p>
-    <div class="row">
-      <button class="btn" id="createBtn" type="button">Make a join code</button>
-      <button class="btn plain" id="lockBtn" type="button">Forget key</button>
-    </div>
-    <p class="err" id="createErr" role="alert"></p>
-  </section>
-
-  <div id="session" hidden>
-    <section class="card teacher">
-      <div class="join">
-        <div class="code" id="codeBig" aria-label="Join code">----</div>
-        <div>
-          <p class="eyebrow">Students join</p>
-          <ol>
-            <li>Open the <strong>Criterion B</strong> page and press <strong>Level 2 &middot; harder</strong>.</li>
-            <li>Type your name and section, then press <strong>Join live quiz</strong>.</li>
-            <li>Enter the code on the left.</li>
-          </ol>
-        </div>
-      </div>
-      <div class="bar">
-        <span class="status" id="statusChip">Waiting</span>
-        <button class="btn go" id="startBtn" type="button">Start the quiz</button>
-        <button class="btn stop" id="endBtn" type="button" hidden>End the quiz</button>
-        <button class="btn plain" id="againBtn" type="button" hidden>New live quiz</button>
-      </div>
-      <p class="err" id="sessErr" role="alert"></p>
-    </section>
-
-    <section class="card">
-      <div class="counts">
-        <div class="count"><b id="nJoined">0</b><span>Joined</span></div>
-        <div class="count"><b id="nDone">0</b><span>Finished</span></div>
-      </div>
-      <div id="lobby">
-        <p class="eyebrow" id="waitLabel">In the room</p>
-        <div class="names" id="names" style="margin-top:10px"><span class="empty">No one has joined yet.</span></div>
-      </div>
-    </section>
-
-    <section class="card" id="boardCard" hidden>
-      <p class="eyebrow">Leaderboard</p>
-      <h2>Score first, then fastest</h2>
-      <div class="tablewrap">
-        <table>
-          <thead><tr><th>#</th><th>Name</th><th>Section</th><th>Score</th><th>Time</th></tr></thead>
-          <tbody id="boardBody"></tbody>
-        </table>
-      </div>
-      <p class="empty" id="boardEmpty">Scores appear here as students finish.</p>
-    </section>
+<section class="myp-panel myp-panel--teacher" id="keyCard" aria-labelledby="keyTitle">
+  <div class="myp-panel__head">
+    <p class="myp-eyebrow">Step 1</p>
+    <h2 class="myp-panel__title" id="keyTitle">Teacher key</h2>
   </div>
+  <p>Enter the key for the live quiz Worker. It stays on this device only and is never shown on screen.</p>
+  <div class="liverow">
+    <label class="myp-input" style="flex:0 1 340px">
+      <span class="myp-input__label">Key</span>
+      <input type="password" id="keyIn" autocomplete="current-password">
+    </label>
+    <button class="myp-button myp-button--primary" id="keyBtn" type="button">Unlock</button>
+  </div>
+  <p class="myp-err" id="keyErr" role="alert"></p>
+</section>
 
+<section class="myp-panel myp-panel--teacher" id="newCard" aria-labelledby="newTitle" hidden>
+  <div class="myp-panel__head">
+    <p class="myp-eyebrow">Step 2</p>
+    <h2 class="myp-panel__title" id="newTitle">Start a live quiz</h2>
+  </div>
+  <p>This makes a new join code for your class. Nothing starts until you press <strong>Start the quiz</strong>.</p>
+  <div class="myp-btnrow">
+    <button class="myp-button myp-button--primary" id="createBtn" type="button"><span class="myp-icon myp-icon--plus" aria-hidden="true"></span>Make a join code</button>
+    <button class="myp-button myp-button--secondary" id="lockBtn" type="button">Forget key</button>
+  </div>
+  <p class="myp-err" id="createErr" role="alert"></p>
+</section>
+
+<div id="session" hidden>
+  <section class="myp-panel myp-panel--teacher" aria-labelledby="joinTitle">
+    <div class="myp-panel__head">
+      <p class="myp-eyebrow">Step 3</p>
+      <h2 class="myp-panel__title" id="joinTitle">Students join</h2>
+    </div>
+    <div class="joincode">
+      <div class="joincode__code" id="codeBig" aria-label="Join code">----</div>
+      <ol>
+        <li>Open the <strong>Criterion B</strong> page and press <strong>Level 2 &middot; harder</strong>.</li>
+        <li>Type your name and section, then press <strong>Join live quiz</strong>.</li>
+        <li>Enter the code on the left.</li>
+      </ol>
+    </div>
+    <div class="myp-btnrow">
+      <span class="myp-state" id="statusChip">Waiting</span>
+      <button class="myp-button myp-button--go" id="startBtn" type="button">Start the quiz</button>
+      <button class="myp-button myp-button--danger" id="endBtn" type="button" hidden>End the quiz</button>
+      <button class="myp-button myp-button--secondary" id="againBtn" type="button" hidden>New live quiz</button>
+    </div>
+    <p class="myp-err" id="sessErr" role="alert"></p>
+  </section>
+
+  <section class="myp-panel" aria-labelledby="roomTitle">
+    <h2 class="myp-panel__title" id="roomTitle">The room</h2>
+    <div class="myp-counts">
+      <div class="myp-count"><b id="nJoined">0</b><span>Joined</span></div>
+      <div class="myp-count"><b id="nDone">0</b><span>Finished</span></div>
+    </div>
+    <div id="lobby" class="myp-stack" style="gap:8px">
+      <p class="myp-eyebrow" id="waitLabel">In the room</p>
+      <div class="myp-names" id="names"><span class="empty">No one has joined yet.</span></div>
+    </div>
+  </section>
+
+  <section class="myp-panel" id="boardCard" aria-labelledby="boardTitle" hidden>
+    <div class="myp-panel__head">
+      <p class="myp-eyebrow">Leaderboard</p>
+      <h2 class="myp-panel__title" id="boardTitle">Score first, then fastest</h2>
+    </div>
+    <div class="myp-tablewrap myp-tablewrap--stack">
+      <table class="myp-table">
+        <thead><tr><th>#</th><th>Name</th><th>Section</th><th>Score</th><th>Time</th></tr></thead>
+        <tbody id="boardBody"></tbody>
+      </table>
+    </div>
+    <p class="myp-empty" id="boardEmpty">Scores appear here as students finish.</p>
+  </section>
 </div>
 
-<footer>
-  <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
-    <span>Design Team - SIS</span>
-    <span>Teacher only</span>
-  </div>
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 1 &amp; 2</a><a href="criterion-b.html">Criterion B</a><span>Live quiz host</span></p>
+  <p>Teacher only</p>
+  <p class="myp-footer__links"><a href="../index.html">Home</a><a href="../myp3/index.html">MYP 3</a><a href="../myp4-5/index.html">MYP 4 &amp; 5</a><a href="frameworks.html">Frameworks</a><a href="../appendix-citations.html">MLA 9 &amp; appendix</a><span>Design Team - SIS</span></p>
 </footer>
 
 <script>
@@ -255,7 +188,7 @@ footer{margin-top:40px;padding:28px 0 54px;border-top:1px solid var(--rule);font
 
   function render(d) {
     var chip = $('statusChip');
-    chip.className = 'status' + (d.status === 'live' ? ' live' : d.status === 'ended' ? ' ended' : '');
+    chip.className = 'myp-state' + (d.status === 'live' ? ' live' : d.status === 'ended' ? ' ended' : '');
     chip.textContent = d.status === 'live' ? 'Live' : d.status === 'ended' ? 'Finished' : 'Waiting to start';
     $('startBtn').hidden = d.status !== 'waiting';
     $('endBtn').hidden = d.status !== 'live';
@@ -280,6 +213,8 @@ footer{margin-top:40px;padding:28px 0 54px;border-top:1px solid var(--rule);font
       tr.appendChild(el('td', null, p.section || ''));
       tr.appendChild(el('td', 'num', p.score + ' / ' + p.total));
       tr.appendChild(el('td', 'num', fmt(p.seconds)));
+      var heads = ['#', 'Name', 'Section', 'Score', 'Time'];
+      for (var c = 0; c < tr.children.length; c++) tr.children[c].setAttribute('data-l', heads[c]);
       body.appendChild(tr);
     });
     if (d.status === 'ended') stopPolling();

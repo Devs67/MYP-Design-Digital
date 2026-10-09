@@ -196,6 +196,17 @@ two pages can reuse in session 4. Research Planner and Product Analysis keep inl
 progress code), although frame 32 shows the progress card: that needs a Worker page key and a
 teacher view, so it waits for Dev.
 
+**Session 4 (MYP 1–2) is done**, ahead of sessions 2 and 3. Every page in `myp1-2/` has the
+pill header, tools bar (back link, Search, Design Team, Design quote, Light / Dark), hero, glass
+panels and Figma footer. Tool pages (quizzes, worksheets, live host, results) also link
+`assets/glass-tools.css`, which holds the quiz cards, confirm dialog, result tiles, teacher
+tables (stacked cards on phones), the Brief Builder components (`main.bb`) and the PEEL / CRAAP /
+SWOT worksheet shell (`main.ws`, page colours on `--ws-*` tokens with dark values). Sessions 3
+and 6 can reuse it for `myp3/fa.html`, `myp3/brief-builder*.html` and the other worksheets.
+New behaviour, from frames 14 / 76: the closed MYP 1 FA has "Review archived assessment"
+(`criterion-b-fa-quiz.html?view=archive`, with `&level=2` for Level 2), a read-only view that
+marks the right answer and shows the feedback on every question; nothing is saved or sent.
+
 1. **Foundation + pilot:** `assets/glass.css`, dark backdrops, icons, shared header / tools bar /
    footer / search dialog / progress-code dialogs, `CLAUDE.md` house-style update. Then Home,
    `myp4-5/index.html` and `myp4-5/criterion-a.html` (all four strands). Stop for Dev's review.

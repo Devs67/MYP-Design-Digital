@@ -2,7 +2,7 @@
    Kept as a hand-maintained list of real pages on the site —
    add an entry here when a new page is published. */
 var MYP_SEARCH_INDEX = [
-  { t:"Criterion guides", d:"Criteria A–D hub for MYP 1 & 2, with strand tags per resource.", grade:"MYP 1–2", href:"myp1-2/index.html", badge:"1–2", tone:"a" },
+  { t:"MYP 1 & 2 workspace", d:"Criteria A–D, this year's units, summative tasks, frameworks and Unit 1 resources.", grade:"MYP 1–2", href:"myp1-2/index.html", badge:"1–2", tone:"a" },
   { t:"Frameworks — MYP 1–2", d:"PEEL, CRAAP, SWOT and Brief Builder — one page each, with practice built in.", grade:"MYP 1–2", href:"myp1-2/frameworks.html", badge:"FW", tone:"ink" },
   { t:"PEEL — Explaining Your Design Problem", d:"Turn research into a clearly explained paragraph using Point, Evidence, Explain, Link.", grade:"MYP 1–2", href:"myp1-2/PEEL_MYP1_Strand_i.html", badge:"P", tone:"amber" },
   { t:"CRAAP — Is This Source Worth Using?", d:"Currency, Relevance, Authority, Accuracy, Purpose — test a source before you cite it.", grade:"MYP 1–2", href:"myp1-2/CRAAP_MYP1.html", badge:"C", tone:"amber" },

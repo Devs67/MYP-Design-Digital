@@ -1,66 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CRAAP — Is This Source Worth Using?</title>
+<script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/theme.css">
 <style>
-  :root {
-    --navy: #1E2761;
-    --teal: #0F9488;
-    --amber: #C2750F;
-    --maroon: #9D174D;
-    --purple: #6D28D9;
-    --ink: #201C1A;
-    --muted: #6B6A66;
-    --paper: #FFFFFF;
-    --soft: #F7F8F7;
-    --line: #E4E2DD;
-    --good: #15803D;
-    --warn: #B45309;
-    --bad: #B91C1C;
-    --radius: 14px;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: var(--ink);
-    background: var(--paper);
-    line-height: 1.55;
-  }
-
-  .wrap {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 48px 24px 96px;
-  }
-
-  .eyebrow {
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin: 0 0 10px;
-  }
-
-  h1 {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(28px, 4.5vw, 42px);
-    line-height: 1.14;
-    margin: 0 0 14px;
-    color: var(--ink);
-  }
-
-  .lede {
-    font-size: 17px;
-    color: var(--muted);
-    max-width: 660px;
-    margin: 0 0 8px;
-  }
+  :root{--ws-navy:#33449A;--ws-teal:#0F766E;--ws-amber:#A85A0A;--ws-maroon:#9D174D;--ws-purple:#6D28D9;
+    --ws-good:#236B50;--ws-warn:#8A5B12;--ws-bad:#B42318;
+    --ws-strength:#236B50;--ws-weakness:#A85A0A;--ws-opportunity:#1B5C9E;--ws-threat:#9D174D;
+    --ws-on:#FFFFFF;--ws-ink:var(--myp-text);--ws-muted:var(--myp-muted);--ws-paper:var(--myp-surface);
+    --ws-soft:var(--myp-tint);--ws-line:var(--myp-border);--ws-radius:16px}
+  :root.dark{--ws-navy:#AEB9FF;--ws-teal:#5EEAD4;--ws-amber:#F8C278;--ws-maroon:#F9A8D4;--ws-purple:#C4B5FD;
+    --ws-good:#8BE3B5;--ws-warn:#F2D37A;--ws-bad:#FDA29B;
+    --ws-strength:#8BE3B5;--ws-weakness:#F8C278;--ws-opportunity:#92C5FF;--ws-threat:#F9A8D4;--ws-on:#0B1220}
+  *{box-sizing:border-box}
+  body{margin:0}
 
   .craap-mark {
     display: flex;
@@ -71,60 +30,18 @@
     width: 42px; height: 42px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-family: Georgia, serif;
+    font-family: var(--myp-font-display);
     font-weight: 700;
     font-size: 18px;
-    color: #fff;
+    color: var(--ws-on);
   }
 
-  .head-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 20px;
-    flex-wrap: wrap;
-    border-bottom: 2px solid var(--ink);
-    padding-bottom: 22px;
-  }
-  .idbox {
-    display: flex;
-    gap: 18px;
-    flex: none;
-  }
-  .idbox div { display: flex; flex-direction: column; }
-  .idbox label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-  .idbox input {
-    border: none;
-    border-bottom: 1px solid var(--line);
-    background: transparent;
-    font-size: 13.5px;
-    padding: 2px 2px 5px;
-    width: 130px;
-    font-family: inherit;
-    color: var(--ink);
-  }
-  .idbox input:focus { outline: none; border-bottom-color: var(--amber); }
-  @media (max-width: 640px) {
-    .head-row { flex-direction: column; align-items: flex-start; }
+  @media (max-width: 640px){
+
   }
 
-  section { margin-top: 64px; }
-
-  h2 {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 26px;
-    margin: 0 0 6px;
-    color: var(--ink);
-  }
   .section-sub {
-    color: var(--muted);
+    color: var(--ws-muted);
     font-size: 15px;
     margin: 0 0 28px;
     max-width: 660px;
@@ -136,26 +53,26 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 14px;
   }
-  @media (max-width: 980px) {
+  @media (max-width: 980px){
     .cards { grid-template-columns: repeat(3, 1fr); }
   }
-  @media (max-width: 620px) {
+  @media (max-width: 620px){
     .cards { grid-template-columns: 1fr; }
   }
 
   .card {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border: 1px solid var(--ws-line);
+    border-radius: var(--ws-radius);
     padding: 18px 16px 20px;
-    background: var(--paper);
+    background: var(--ws-paper);
   }
   .badge {
     width: 38px; height: 38px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-family: Georgia, serif;
+    font-family: var(--myp-font-display);
     font-weight: 700;
-    color: #fff;
+    color: var(--ws-on);
     font-size: 16px;
     margin-bottom: 12px;
   }
@@ -166,13 +83,13 @@
   .card p {
     margin: 0 0 12px;
     font-size: 13px;
-    color: var(--ink);
+    color: var(--ws-ink);
   }
   .example {
     font-size: 12px;
     font-style: italic;
-    color: var(--muted);
-    border-top: 1px solid var(--line);
+    color: var(--ws-muted);
+    border-top: 1px solid var(--ws-line);
     padding-top: 11px;
     margin: 0;
   }
@@ -182,7 +99,7 @@
     font-size: 10.5px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--ws-muted);
     margin-bottom: 4px;
     font-weight: 700;
   }
@@ -190,8 +107,8 @@
   .source-tag {
     display: inline-block;
     font-size: 12.5px;
-    color: var(--muted);
-    background: var(--soft);
+    color: var(--ws-muted);
+    background: var(--ws-soft);
     border-radius: 999px;
     padding: 6px 14px;
     margin-bottom: 24px;
@@ -202,9 +119,9 @@
     font: inherit;
     font-size: 13.5px;
     font-weight: 600;
-    color: var(--ink);
-    background: var(--soft);
-    border: 1px solid var(--line);
+    color: var(--ws-ink);
+    background: var(--ws-soft);
+    border: 1px solid var(--ws-line);
     border-radius: 999px;
     padding: 10px 18px;
     cursor: pointer;
@@ -216,15 +133,15 @@
     display: none;
     margin-top: 16px;
     padding: 22px 24px;
-    background: var(--soft);
-    border-radius: var(--radius);
+    background: var(--ws-soft);
+    border-radius: var(--ws-radius);
   }
   .worked-box.open { display: block; }
   .worked-row {
     display: flex;
     gap: 14px;
     padding: 10px 0;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--ws-line);
     font-size: 14px;
   }
   .worked-row:last-child { border-bottom: none; }
@@ -233,16 +150,16 @@
     width: 26px; height: 26px;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    color: #fff;
-    font-family: Georgia, serif;
+    color: var(--ws-on);
+    font-family: var(--myp-font-display);
     font-weight: 700;
     font-size: 12.5px;
   }
-  .worked-row .wtext { color: var(--ink); }
+  .worked-row .wtext { color: var(--ws-ink); }
   .worked-verdict {
     margin-top: 14px;
     padding-top: 14px;
-    border-top: 2px solid var(--line);
+    border-top: 2px solid var(--ws-line);
     font-size: 14.5px;
     font-weight: 600;
   }
@@ -250,7 +167,7 @@
   /* ---- Source tables (spreadsheet style, one per source) ---- */
   .source-block {
     margin-bottom: 26px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--ws-line);
     border-radius: 10px;
     overflow: hidden;
   }
@@ -274,7 +191,7 @@
   .src-remove {
     font-size: 11px;
     font-weight: 600;
-    color: var(--muted);
+    color: var(--ws-muted);
     background: rgba(255,255,255,0.6);
     border: 1px solid rgba(0,0,0,0.15);
     border-radius: 999px;
@@ -286,12 +203,12 @@
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--ink);
+    color: var(--ws-ink);
     background: rgba(255,255,255,0.55);
   }
   .crit-cell { font-weight: 700; width: 20%; }
-  .q-cell { font-style: italic; color: var(--ink); width: 42%; }
-  .notes-cell { width: 38%; background: var(--paper); }
+  .q-cell { font-style: italic; color: var(--ws-ink); width: 42%; }
+  .notes-cell { width: 38%; background: var(--ws-paper); }
 
   /* colour themes */
   .theme-green .src-title-row td, .theme-green .col-head-row td { background: #DCEEDC; }
@@ -315,13 +232,13 @@
     border-radius: 999px;
     border: 1px solid rgba(0,0,0,0.18);
     background: rgba(255,255,255,0.7);
-    color: var(--ink);
+    color: var(--ws-ink);
     cursor: pointer;
   }
   .type-pill.active {
-    background: var(--ink);
-    color: #fff;
-    border-color: var(--ink);
+    background: var(--ws-ink);
+    color: var(--ws-on);
+    border-color: var(--ws-ink);
   }
 
   .toggle-group {
@@ -335,60 +252,60 @@
     font-weight: 600;
     padding: 5px 11px;
     border-radius: 999px;
-    border: 1px solid var(--line);
-    background: var(--paper);
-    color: var(--muted);
+    border: 1px solid var(--ws-line);
+    background: var(--ws-paper);
+    color: var(--ws-muted);
     cursor: pointer;
   }
-  .toggle-btn[data-val="pass"].active { background: var(--good); color: #fff; border-color: var(--good); }
-  .toggle-btn[data-val="unsure"].active { background: var(--warn); color: #fff; border-color: var(--warn); }
-  .toggle-btn[data-val="fail"].active { background: var(--bad); color: #fff; border-color: var(--bad); }
+  .toggle-btn[data-val="pass"].active { background: var(--ws-good); color: var(--ws-on); border-color: var(--ws-good); }
+  .toggle-btn[data-val="unsure"].active { background: var(--ws-warn); color: var(--ws-on); border-color: var(--ws-warn); }
+  .toggle-btn[data-val="fail"].active { background: var(--ws-bad); color: var(--ws-on); border-color: var(--ws-bad); }
 
   .notes {
     width: 100%;
     min-height: 46px;
     resize: vertical;
-    border: 1px solid var(--line);
-    background: var(--paper);
+    border: 1px solid var(--ws-line);
+    background: var(--ws-paper);
     border-radius: 6px;
     padding: 7px 9px;
     font: inherit;
     font-size: 12.5px;
-    color: var(--ink);
+    color: var(--ws-ink);
   }
-  .notes:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .notes:focus { outline: 2px solid var(--ws-ink); outline-offset: 1px; }
 
-  .src-url-row td { padding: 12px 12px 14px; background: var(--paper); }
+  .src-url-row td { padding: 12px 12px 14px; background: var(--ws-paper); }
   .src-url-label {
     display: block;
     font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--ws-muted);
     margin-bottom: 6px;
   }
   .src-url {
     width: 100%;
-    border: 1px solid var(--line);
-    background: var(--paper);
+    border: 1px solid var(--ws-line);
+    background: var(--ws-paper);
     border-radius: 6px;
     padding: 8px 10px;
     font: inherit;
     font-size: 13px;
-    color: var(--ink);
+    color: var(--ws-ink);
   }
-  .src-url:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .src-url:focus { outline: 2px solid var(--ws-ink); outline-offset: 1px; }
 
   /* ---- per-source meter + conclusion (footer row of each table) ---- */
-  .conclusion-row td { background: var(--paper); }
+  .conclusion-row td { background: var(--ws-paper); }
   .meter-mini { margin-bottom: 14px; }
   .meter-label {
     font-size: 10.5px;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--muted);
+    color: var(--ws-muted);
     margin: 0 0 8px;
   }
   .meter-track {
@@ -397,12 +314,12 @@
     height: 9px;
     border-radius: 999px;
     overflow: hidden;
-    background: var(--line);
+    background: var(--ws-line);
   }
-  .meter-seg { flex: 1; background: var(--line); }
-  .meter-seg.pass { background: var(--good); }
-  .meter-seg.unsure { background: var(--warn); }
-  .meter-seg.fail { background: var(--bad); }
+  .meter-seg { flex: 1; background: var(--ws-line); }
+  .meter-seg.pass { background: var(--ws-good); }
+  .meter-seg.unsure { background: var(--ws-warn); }
+  .meter-seg.fail { background: var(--ws-bad); }
   .meter-verdict {
     margin-top: 10px;
     font-size: 13.5px;
@@ -410,7 +327,7 @@
   }
   .meter-sub {
     font-size: 11.5px;
-    color: var(--muted);
+    color: var(--ws-muted);
     margin-top: 3px;
   }
 
@@ -424,15 +341,15 @@
     width: 100%;
     min-height: 70px;
     resize: vertical;
-    border: 1px solid var(--line);
-    background: var(--paper);
+    border: 1px solid var(--ws-line);
+    background: var(--ws-paper);
     border-radius: 8px;
     padding: 10px 12px;
     font: inherit;
     font-size: 13.5px;
-    color: var(--ink);
+    color: var(--ws-ink);
   }
-  textarea.conclusion:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+  textarea.conclusion:focus { outline: 2px solid var(--ws-ink); outline-offset: 1px; }
 
   .add-source-wrap {
     text-align: center;
@@ -442,9 +359,9 @@
     font: inherit;
     font-size: 13.5px;
     font-weight: 600;
-    color: var(--ink);
-    background: var(--soft);
-    border: 1px dashed var(--muted);
+    color: var(--ws-ink);
+    background: var(--ws-soft);
+    border: 1px dashed var(--ws-muted);
     border-radius: 999px;
     padding: 11px 22px;
     cursor: pointer;
@@ -464,44 +381,37 @@
     border-radius: 999px;
     padding: 10px 18px;
     cursor: pointer;
-    border: 1px solid var(--line);
-    background: var(--paper);
-    color: var(--ink);
+    border: 1px solid var(--ws-line);
+    background: var(--ws-paper);
+    color: var(--ws-ink);
   }
   .btn.primary {
-    background: var(--ink);
-    color: #fff;
-    border-color: var(--ink);
+    background: var(--ws-ink);
+    color: var(--ws-on);
+    border-color: var(--ws-ink);
   }
   .btn:hover { opacity: 0.85; }
 
   .note {
     margin-top: 32px;
     font-size: 12.5px;
-    color: var(--muted);
-    border-top: 1px solid var(--line);
+    color: var(--ws-muted);
+    border-top: 1px solid var(--ws-line);
     padding-top: 18px;
   }
 
-  .print-hint { margin-top: 10px; font-size: 12.5px; color: var(--warn); font-weight: 600; }
+  .print-hint { margin-top: 10px; font-size: 12.5px; color: var(--ws-warn); font-weight: 600; }
 
-  footer {
-    margin-top: 56px;
-    font-size: 12px;
-    color: var(--muted);
+  @media (prefers-reduced-motion: reduce){
+
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
-  }
-
-  @media print {
+  @media print{
     .no-print { display: none !important; }
     .print-hide { display: none !important; }
-    body { color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact; }
-    .wrap { max-width: 100%; padding: 20px 28px; }
+
     .card, .source-block, .worked-box { break-inside: avoid; }
-    section { margin-top: 32px; }
+
     textarea { display: none; }
     .print-mirror { display: block !important; }
   }
@@ -514,12 +424,12 @@
     border-radius: 8px;
     padding: 9px 11px;
     font-size: 13.5px;
-    color: var(--ink);
+    color: var(--ws-ink);
     min-height: 50px;
   }
   .print-mirror:empty::before {
     content: "(no notes written)";
-    color: var(--muted);
+    color: var(--ws-muted);
     font-style: italic;
   }
   .conclusion-mirror {
@@ -528,96 +438,97 @@
   }
   .conclusion-mirror:empty::before {
     content: "(no conclusion written)";
-    color: var(--muted);
+    color: var(--ws-muted);
     font-style: italic;
   }
 </style>
-<link rel="stylesheet" href="../assets/theme.css">
 <link rel="stylesheet" href="../assets/glass.css">
+<link rel="stylesheet" href="../assets/glass-tools.css">
 </head>
 <body>
 
 <header class="topbar" data-grade="myp1-2">
   <div class="topbar__wrap">
     <a class="topbar__brand" href="../index.html">
-      <span class="topbar__logo">IB</span>
-      <span class="topbar__word"><b>MYP Design</b><i>Digital Curriculum</i></span>
+      <span class="topbar__logo">MYP</span>
+      <span class="topbar__word"><b>Digital design</b></span>
     </a>
-    <nav class="topbar__crumb" aria-label="Breadcrumb">
-      <a href="../myp1-2/index.html">MYP 1 &amp; 2</a>
-      <span>&rsaquo;</span>
-      <span class="cur">CRAAP</span>
-    </nav>
     <div class="topbar__actions">
-      <div class="topbar__grades">
-        <a href="../myp1-2/index.html" data-g="myp1-2">1&ndash;2</a>
-        <a href="../myp3/index.html" data-g="myp3">3</a>
-        <a href="../myp4-5/index.html" data-g="myp4-5">4&ndash;5</a>
-      </div>
-      <button type="button" class="topbar__btn" id="quoteBtn" title="Design quote of the day" aria-label="Design quote of the day">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.9L12 3z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>
-      </button>
+      <nav class="topbar__grades" aria-label="Year groups">
+        <a href="index.html" data-g="myp1-2" aria-current="page">MYP 1 &amp; 2</a>
+        <a href="../myp3/index.html" data-g="myp3">MYP 3</a>
+        <a href="../myp4-5/index.html" data-g="myp4-5">MYP 4 &amp; 5</a>
+      </nav>
     </div>
   </div>
 </header>
 
-<div class="wrap">
-
-  <a href="frameworks.html" class="no-print" style="display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--muted);text-decoration:none;margin-bottom:22px">&larr; Frameworks</a>
-
-  <div class="head-row">
-    <div>
-      <p class="eyebrow">MYP 1 · Design · Criterion A</p>
-      <h1>CRAAP: Is This Source Worth Using?</h1>
-      <p class="lede">Before you use something you found online in your research, run it through five quick checks to see if it's actually trustworthy.</p>
-    </div>
-    <div class="idbox">
-      <div><label>Name</label><input type="text"></div>
-      <div><label>Class</label><input type="text" style="width:80px;"></div>
-      <div><label>Date</label><input type="text" style="width:100px;"></div>
-    </div>
+<nav class="myp-tools" aria-label="Page tools">
+  <a class="myp-tool" href="frameworks.html"><span class="myp-icon myp-icon--arrow-left" aria-hidden="true"></span>Back to frameworks</a>
+  <button type="button" class="myp-tool" data-search-open><span class="myp-icon myp-icon--search" aria-hidden="true"></span>Search</button>
+  <a class="myp-tool" href="../myp4-5/teacher.html"><span class="myp-icon myp-icon--users" aria-hidden="true"></span>Design Team</a>
+  <button type="button" class="myp-tool" id="quoteBtn"><span class="myp-icon myp-icon--sparkles" aria-hidden="true"></span>Design quote</button>
+  <div class="myp-theme-toggle" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-set="light" aria-pressed="true"><span class="myp-icon myp-icon--sun" aria-hidden="true"></span>Light</button>
+    <button type="button" data-theme-set="dark" aria-pressed="false"><span class="myp-icon myp-icon--moon" aria-hidden="true"></span>Dark</button>
   </div>
+</nav>
 
-  <div class="craap-mark no-print">
-    <span style="background:var(--amber)">C</span>
-    <span style="background:var(--teal)">R</span>
-    <span style="background:var(--navy)">A</span>
-    <span style="background:var(--maroon)">A</span>
-    <span style="background:var(--purple)">P</span>
+<main id="main" class="ws">
+<header class="myp-hero">
+  <p class="myp-eyebrow">MYP 1 · Design · Criterion A</p>
+  <h1 class="myp-title">CRAAP: Is This Source Worth Using?</h1>
+  <p class="myp-lede">Before you use something you found online in your research, run it through five quick checks to see if it's actually trustworthy.</p>
+  <div class="craap-mark no-print" aria-hidden="true">
+    <span style="background:var(--ws-amber)">C</span>
+    <span style="background:var(--ws-teal)">R</span>
+    <span style="background:var(--ws-navy)">A</span>
+    <span style="background:var(--ws-maroon)">A</span>
+    <span style="background:var(--ws-purple)">P</span>
   </div>
+</header>
 
-  <!-- ============ LEARN ============ -->
-  <section class="print-hide">
-    <h2>Learn</h2>
+<section class="myp-panel" aria-labelledby="idTitle">
+  <h2 class="myp-panel__title" id="idTitle">Your details</h2>
+  <div class="ws-fields">
+    <label class="myp-input"><span class="myp-input__label">Name</span><input type="text" autocomplete="name"></label>
+    <label class="myp-input"><span class="myp-input__label">Class</span><input type="text"></label>
+    <label class="myp-input"><span class="myp-input__label">Date</span><input type="text"></label>
+  </div>
+</section>
+
+<!-- ============ LEARN ============ -->
+  <section class="myp-panel ws-sec print-hide" aria-labelledby="learnTitle">
+    <h2 class="myp-panel__title" id="learnTitle">Learn</h2>
     <p class="section-sub">Not everything you find online is worth using in your research. CRAAP gives you five quick checks to decide if a source is trustworthy enough to rely on.</p>
 
     <div class="cards">
       <div class="card">
-        <div class="badge" style="background:var(--amber)">C</div>
+        <div class="badge" style="background:var(--ws-amber)">C</div>
         <h3>Currency</h3>
         <p>Is it recent enough to trust for this topic?</p>
         <p class="example"><b>Example</b>Posted in 2015 — quite old for advice that changes fast, like event promotion.</p>
       </div>
       <div class="card">
-        <div class="badge" style="background:var(--teal)">R</div>
+        <div class="badge" style="background:var(--ws-teal)">R</div>
         <h3>Relevance</h3>
         <p>Does it actually match what you're researching?</p>
         <p class="example"><b>Example</b>It's about promoting events in general, not about reaching schools across a whole country.</p>
       </div>
       <div class="card">
-        <div class="badge" style="background:var(--navy)">A</div>
+        <div class="badge" style="background:var(--ws-navy)">A</div>
         <h3>Authority</h3>
         <p>Who wrote it, and do they know the topic?</p>
         <p class="example"><b>Example</b>No author name is given, so there's no way to know if they're qualified to say this.</p>
       </div>
       <div class="card">
-        <div class="badge" style="background:var(--maroon)">A</div>
+        <div class="badge" style="background:var(--ws-maroon)">A</div>
         <h3>Accuracy</h3>
         <p>Can you check this information somewhere else?</p>
         <p class="example"><b>Example</b>No links or sources are given for any of its tips — nothing to double-check.</p>
       </div>
       <div class="card">
-        <div class="badge" style="background:var(--purple)">P</div>
+        <div class="badge" style="background:var(--ws-purple)">P</div>
         <h3>Purpose</h3>
         <p>Why does this source exist — to inform, sell, or persuade?</p>
         <p class="example"><b>Example</b>It looks like it mainly exists to get clicks and ad views, not to genuinely help schools.</p>
@@ -628,18 +539,18 @@
     <br>
     <button class="reveal-btn no-print" id="revealBtn" type="button">See the full evaluation &darr;</button>
     <div class="worked-box" id="workedBox">
-      <div class="worked-row"><div class="wl" style="background:var(--amber)">C</div><div class="wtext">Posted in 2015 — too old to trust for fast-changing promotion advice.</div></div>
-      <div class="worked-row"><div class="wl" style="background:var(--teal)">R</div><div class="wtext">Only loosely related — general event tips, not reaching schools nationwide.</div></div>
-      <div class="worked-row"><div class="wl" style="background:var(--navy)">A</div><div class="wtext">No author listed — impossible to check who wrote it or why they'd know.</div></div>
-      <div class="worked-row"><div class="wl" style="background:var(--maroon)">A</div><div class="wtext">No links or sources given — nothing to cross-check.</div></div>
-      <div class="worked-row"><div class="wl" style="background:var(--purple)">P</div><div class="wtext">Seems designed for clicks and ads, not genuinely informing schools.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--ws-amber)">C</div><div class="wtext">Posted in 2015 — too old to trust for fast-changing promotion advice.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--ws-teal)">R</div><div class="wtext">Only loosely related — general event tips, not reaching schools nationwide.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--ws-navy)">A</div><div class="wtext">No author listed — impossible to check who wrote it or why they'd know.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--ws-maroon)">A</div><div class="wtext">No links or sources given — nothing to cross-check.</div></div>
+      <div class="worked-row"><div class="wl" style="background:var(--ws-purple)">P</div><div class="wtext">Seems designed for clicks and ads, not genuinely informing schools.</div></div>
       <div class="worked-verdict">Verdict: fails 4 of 5 checks — look for a more recent, clearly authored source instead.</div>
     </div>
   </section>
 
   <!-- ============ PRACTICE ============ -->
-  <section>
-    <h2>Practice</h2>
+  <section class="myp-panel ws-sec" aria-labelledby="practiceTitle">
+    <h2 class="myp-panel__title" id="practiceTitle">Practice</h2>
     <p class="section-sub">Evaluate up to three sources from your own research (or add more). Mark each check, add a short note, and write a conclusion for each source.</p>
 
     <div id="sourcesContainer"></div>
@@ -648,18 +559,23 @@
       <button class="add-source-btn" id="addSourceBtn" type="button">+ Add another source</button>
     </div>
 
-    <div class="actions no-print" style="margin-top:-6px;">
-      <button class="btn primary no-print" id="copyBtn" type="button">Copy evaluation</button>
-      <button class="btn no-print" id="clearBtn" type="button">Clear all</button>
-      <button class="btn no-print" id="printBtn" type="button">Print my evaluation</button>
+    <div class="actions myp-btnrow no-print">
+      <button class="myp-button myp-button--primary no-print" id="copyBtn" type="button">Copy evaluation</button>
+      <button class="myp-button myp-button--secondary no-print" id="clearBtn" type="button">Clear all</button>
+      <button class="myp-button myp-button--secondary no-print" id="printBtn" type="button">Print my evaluation</button>
     </div>
 
     <p class="note no-print">Printing only prints your name/class/date and your written evaluation below — not the Learn section above. Your evaluation isn't saved once you close this page — copy it into your workbook before you leave.</p>
     <p class="print-hint no-print" id="printHint" hidden></p>
   </section>
 
-  <footer>MYP 1 · Design · Criterion A — Evaluating the credibility of your research sources.</footer>
-</div>
+</main>
+
+<footer class="myp-footer">
+  <p class="myp-footer__crumb"><a href="../index.html">MYP Digital Design</a><a href="index.html">MYP 1 &amp; 2</a><a href="frameworks.html">Frameworks</a><span>CRAAP</span></p>
+  <p>MYP 1 &middot; Design &middot; Criterion A &mdash; Evaluating the credibility of your research sources.</p>
+  <p class="myp-footer__links"><a href="../index.html">Home</a><a href="../myp3/index.html">MYP 3</a><a href="../myp4-5/index.html">MYP 4 &amp; 5</a><a href="frameworks.html">Frameworks</a><a href="../appendix-citations.html">MLA 9 &amp; appendix</a><span>Design Team - SIS</span></p>
+</footer>
 
 <script>
   const revealBtn = document.getElementById('revealBtn');
@@ -788,20 +704,20 @@
 
     if (marked.length < 5) {
       verdictEl.textContent = 'Mark all five checks to see your verdict.';
-      verdictEl.style.color = 'var(--ink)';
+      verdictEl.style.color = 'var(--ws-ink)';
       return;
     }
     const passCount = vals.filter(v => v === 'pass').length;
     const failCount = vals.filter(v => v === 'fail').length;
     if (failCount >= 2) {
       verdictEl.textContent = 'Look for a better source \u2014 this one fails too many checks.';
-      verdictEl.style.color = 'var(--bad)';
+      verdictEl.style.color = 'var(--ws-bad)';
     } else if (passCount >= 4) {
       verdictEl.textContent = 'Good to use \u2014 this source holds up well.';
-      verdictEl.style.color = 'var(--good)';
+      verdictEl.style.color = 'var(--ws-good)';
     } else {
       verdictEl.textContent = 'Use with caution \u2014 check it against a second source.';
-      verdictEl.style.color = 'var(--warn)';
+      verdictEl.style.color = 'var(--ws-warn)';
     }
   }
 

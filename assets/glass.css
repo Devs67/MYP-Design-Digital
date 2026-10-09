@@ -854,7 +854,9 @@ footer > .wrap{width:100%}
    and the progress-code card and dialogs (frames 84-86).
    Pages rebuilt so far: index.html, all of myp4-5/ (session 1:
    index, criterion-a; session 2: criterion-b, criterion-c, frameworks,
-   journey, sa, units, teacher) and every page in myp3/ (session 3).
+   journey, sa, units, teacher), every page in myp3/ (session 3) and
+   every page in myp1-2/ (session 4; tool pages there also use
+   glass-tools.css).
    Section 12 holds the session 2 pieces, section 13 the session 3 ones. */
 
 /* ---- hero ---- */
