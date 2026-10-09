@@ -23,6 +23,7 @@ function siteShell(): Plugin {
           // glass.css goes last in <head>, as on every other page
           {tag: 'link', attrs: {rel: 'stylesheet', href: `${root}assets/glass.css`}, injectTo: 'head'},
           {tag: 'script', attrs: {src: `${root}assets/theme.js`}, injectTo: 'body'},
+          {tag: 'script', attrs: {src: `${root}assets/glide.js`}, injectTo: 'body'},
         ];
       },
     },

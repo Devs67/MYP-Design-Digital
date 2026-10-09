@@ -19,7 +19,7 @@ body{margin:0}
 .sow-console{position:sticky;top:104px;z-index:15;width:var(--myp-col);margin:24px auto 0;padding:12px 20px;
   display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;border:1px solid var(--myp-glass-border);
   border-radius:var(--myp-radius-button);background:var(--myp-glass-fill);box-shadow:var(--myp-glass-shadow);
-  -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+  -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
 .pipeline{flex:1 1 420px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
 .pipe-node{display:flex;align-items:center;gap:6px;white-space:nowrap;
   font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;color:var(--myp-muted)}
@@ -1107,5 +1107,6 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var n,r,i,a,
 })();
 </script>
 <script src="../assets/theme.js"></script>
+<script src="../assets/glide.js"></script>
 </body>
 </html>

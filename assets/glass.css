@@ -36,6 +36,7 @@
     15  Berry Home (index.html)
     16  Motion: fluid background, page entrance, hover and focus,
         strand tab transition, theme crossfade, reduced motion
+    17  Real glass on every surface, and the gliding selection pill
    Sections 12 to 14 share .myp-stats, .myp-embed and .myp-note: the base
    rule is written once and each section adds only its own form.
    Worksheets (Brief Builder, Task Sheet) add assets/worksheet.css.
@@ -60,11 +61,15 @@
   --myp-orb:#6BAEFF;
 
   /* rgba() first: color-mix() fails on iOS 16.1 and older */
-  --myp-glass-fill:rgba(255,255,255,.90);
+  --myp-glass-fill:rgba(255,255,255,.84);        /* header, tools bar, panels */
+  --myp-card-fill:rgba(255,255,255,.76);         /* cards */
   --myp-glass-fill-soft:rgba(255,255,255,.72);
   --myp-glass-border:rgba(186,206,233,.82);
-  --myp-glass-blur:18px;
-  --myp-glass-shadow:0 18px 50px rgba(40,98,174,.10);
+  --myp-glass-blur:20px;
+  --myp-glass-filter:blur(20px) saturate(140%);
+  /* the soft shadow plus a faint top highlight */
+  --myp-glass-shadow:0 18px 50px rgba(40,98,174,.10), inset 0 1px 0 rgba(255,255,255,.6);
+  --myp-glass-edge:inset 0 1px 0 rgba(255,255,255,.6);
   /* hover ring: a darker berry edge (focus uses a solid outline, section 11) */
   --myp-focus-ring:0 0 0 1px var(--myp-hover);
   --myp-grid-line:rgba(40,98,174,.06);
@@ -132,10 +137,12 @@
   --myp-border:#395474;
   --myp-tint:#203955;
   --myp-orb:#5A95DD;
-  --myp-glass-fill:rgba(24,37,56,.88);
+  --myp-glass-fill:rgba(24,37,56,.82);
+  --myp-card-fill:rgba(24,37,56,.70);
   --myp-glass-fill-soft:rgba(24,37,56,.74);
   --myp-glass-border:rgba(57,84,116,.88);
-  --myp-glass-shadow:0 18px 50px rgba(0,0,0,.26);
+  --myp-glass-shadow:0 18px 50px rgba(0,0,0,.26), inset 0 1px 0 rgba(255,255,255,.08);
+  --myp-glass-edge:inset 0 1px 0 rgba(255,255,255,.08);
   --myp-grid-line:rgba(146,197,255,.06);
   /* dark equivalents of the colour table (the table gives light values only) */
   --myp-body:#D3DCEA;
@@ -153,12 +160,14 @@
 }
 @supports (color:color-mix(in srgb, red 50%, transparent)){
   :root,:root.dark{
-    --myp-glass-fill:color-mix(in srgb, var(--myp-surface) 90%, transparent);
+    --myp-glass-fill:color-mix(in srgb, var(--myp-surface) 84%, transparent);
+    --myp-card-fill:color-mix(in srgb, var(--myp-surface) 76%, transparent);
     --myp-glass-fill-soft:color-mix(in srgb, var(--myp-surface) 72%, transparent);
     --myp-glass-border:color-mix(in srgb, var(--myp-border) 82%, transparent);
   }
   :root.dark{
-    --myp-glass-fill:color-mix(in srgb, var(--myp-surface) 88%, transparent);
+    --myp-glass-fill:color-mix(in srgb, var(--myp-surface) 82%, transparent);
+    --myp-card-fill:color-mix(in srgb, var(--myp-surface) 70%, transparent);
     --myp-glass-fill-soft:color-mix(in srgb, var(--myp-surface) 74%, transparent);
     --myp-glass-border:color-mix(in srgb, var(--myp-border) 88%, transparent);
   }
@@ -170,6 +179,10 @@
 }
 @media (max-width:560px){
   :root{--myp-gutter:16px}
+}
+/* small and touch screens: a lighter blur, on fewer layers (section 17) */
+@media (max-width:900px),(hover:none){
+  :root{--myp-glass-filter:blur(11px) saturate(140%)}
 }
 
 
@@ -277,7 +290,7 @@ a:hover{color:var(--myp-interaction-hover)}
 
 .myp-glass-card,.myp-dialog,.myp-status-card{border:1px solid var(--myp-glass-border);
   border-radius:var(--myp-radius-card);background:var(--myp-glass-fill);box-shadow:var(--myp-glass-shadow);
-  -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+  -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
 .myp-glass-card{padding:var(--myp-space-4)}
 
 .myp-tool,.myp-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -314,7 +327,7 @@ a:hover{color:var(--myp-interaction-hover)}
 .topbar,:root.dark .topbar{position:sticky;top:12px;z-index:50;width:var(--myp-col);margin:24px auto 0;
   background:var(--myp-glass-fill);border:1px solid var(--myp-glass-border);
   border-radius:var(--myp-radius-chip);box-shadow:var(--myp-header-shadow);
-  -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+  -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
 .topbar__wrap{max-width:none;height:auto;min-height:0;padding:16px 16px 16px 24px;gap:24px}
 .topbar__brand{gap:25px}
 .topbar__logo{width:auto;height:auto;border-radius:0;background:none;color:var(--myp-accent);
@@ -444,7 +457,7 @@ body.myp-noscroll{overflow:hidden}
    near-opaque panel instead, which looks the same over the soft backdrop. */
 @media (hover:hover) and (pointer:fine) and (min-width:900px){
   .sec > .wrap{background:var(--myp-glass-fill);
-    -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+    -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
 }
 .sec h2{font:500 var(--myp-section-size)/var(--myp-section-line) var(--myp-font-display);
   letter-spacing:-.025em;margin:6px 0 6px;color:var(--myp-text)}
@@ -479,7 +492,7 @@ footer > .wrap{width:100%}
 
 /* back to top */
 .totop{background:var(--myp-glass-fill);border:1px solid var(--myp-glass-border);box-shadow:var(--myp-glass-shadow);
-  -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+  -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
 .totop .trk{stroke:var(--myp-tint)}
 .totop .prg{stroke:var(--myp-interaction)}
 .totop .arw{color:var(--myp-interaction)}
@@ -606,7 +619,7 @@ footer > .wrap{width:100%}
 /* strand tabs: a sticky glass bar under the header */
 .tabs{position:sticky;top:90px;z-index:20;width:var(--myp-col);margin:0 auto;padding:6px;
   border:1px solid var(--myp-glass-border);border-radius:20px;background:var(--myp-glass-fill);
-  box-shadow:var(--myp-glass-shadow);-webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+  box-shadow:var(--myp-glass-shadow);-webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
 .tabs .wrap,.tabs .wrap:first-child{width:auto;display:flex;gap:6px;flex-wrap:nowrap;padding:0;align-items:stretch}
 .tab,.tab.on{flex:1 1 0;min-height:44px;top:0;padding:10px 14px;border:1px solid transparent;border-radius:14px;
   background:transparent;background-image:none;box-shadow:none;color:var(--myp-muted);
@@ -832,11 +845,11 @@ footer > .wrap{width:100%}
 
 /* ============ 9  MOTION ============
    Short glides only. Everything sits under no-preference; transform
-   and opacity are animated, colours change instantly.
+   and opacity are animated, and link colours fade over 200ms.
    The step 8 motion (background, entrance, tabs, theme) is section 16. */
 @media (prefers-reduced-motion:no-preference){
   .myp-tool,.myp-button,.tpl__btn,.sync__btn,.rst,.homelink,.backlink,.gradecard__cta{
-    transition:transform .22s var(--myp-ease)}
+    transition:color .2s ease,transform .22s var(--myp-ease)}
   .myp-tool:hover,.myp-button:hover,.homelink:hover,.backlink:hover{transform:translateY(-1px)}
   .myp-button--text:hover{transform:none}
   .myp-dialog-backdrop:not([hidden]){animation:mypFade .24s ease-out both}
@@ -898,7 +911,7 @@ footer > .wrap{width:100%}
   background:var(--myp-surface);box-shadow:var(--myp-glass-shadow)}
 @media (hover:hover) and (pointer:fine) and (min-width:900px){
   .myp-panel{background:var(--myp-glass-fill);
-    -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+    -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
 }
 .myp-panel > *{margin:0}
 .myp-panel__head{display:flex;flex-direction:column;gap:4px}
@@ -1200,9 +1213,9 @@ a.myp-row:focus-visible,.myp-search__row:focus-visible,.tpl__btn:focus-visible,.
 .myp-status-line.ok,.sync__status.ok{color:var(--myp-ok)}
 .myp-status-line.err,.sync__status.err{color:var(--myp-error)}
 
-/* glass cards about 90% white; reading panels nearly opaque */
+/* long reading panels stay nearly opaque (94%); the rest is glass (section 17) */
 @media (hover:hover) and (pointer:fine) and (min-width:900px){
-  .sec > .wrap,.myp-panel{background:var(--myp-panel-fill)}
+  .sec > .wrap{background:var(--myp-panel-fill)}
 }
 
 
@@ -1505,7 +1518,7 @@ div.myp-stats > :where(.myp-stat){min-width:0;padding:16px;display:flex;flex-dir
   border:1px solid var(--myp-glass-border);border-radius:var(--myp-radius-card);
   background:var(--myp-glass-fill);box-shadow:var(--myp-glass-shadow)}
 @media (hover:hover) and (pointer:fine) and (min-width:900px){
-  .myp-card{-webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur))}
+  .myp-card{-webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
 }
 .myp-card h3{margin:12px 0;font:700 var(--myp-card-size)/var(--myp-card-line) var(--myp-font-display);
   letter-spacing:-.015em;color:var(--myp-text)}
@@ -1536,9 +1549,10 @@ div.myp-stats > :where(.myp-stat){min-width:0;padding:16px;display:flex;flex-dir
 /* ============ 16  MOTION (step 8) ============
    Dev's motion spec, design/BUILD-BRIEF.md. Everything here runs only
    under prefers-reduced-motion: no-preference and animates transform
-   and opacity for 600ms or less, with three approved exceptions
+   and opacity for 600ms or less, with the approved exceptions
    (CLAUDE.md): the background loop is long and animates border-radius,
-   the theme crossfade changes colours, and the focus outline eases in.
+   the theme crossfade changes colours, link colours fade over 200ms,
+   the focus outline eases in, and the pill (section 17) animates width.
    Without motion: the backdrop is still, nothing enters or lifts. */
 
 /* ---- fluid background (Flow) ----
@@ -1640,10 +1654,13 @@ div.myp-stats > :where(.myp-stat){min-width:0;padding:16px;display:flex;flex-dir
 }
 
 /* ---- hover and focus (every page) ----
-   The colour changes at once; what moves is the arrow, the 1px rise
-   on buttons (section 9) and the 2px lift on cards that are links. */
+   Link colours fade over 200ms (approved exception). The arrow glides,
+   buttons rise 1px (section 9) and cards that are links lift 2px. */
 @media (prefers-reduced-motion:no-preference){
-  .myp-action .myp-icon,.myp-row__go .myp-icon,.topbar__grades a{transition:transform .2s var(--myp-ease)}
+  :where(a){transition:color .2s ease}
+  .myp-action,.myp-row__title,.myp-row__go,.tab{transition:color .2s ease}
+  .myp-action .myp-icon,.myp-row__go .myp-icon{transition:transform .2s var(--myp-ease)}
+  .topbar__grades a{transition:color .2s ease,transform .2s var(--myp-ease)}
   .myp-action:hover .myp-icon--arrow-right,a.myp-row:hover .myp-row__go .myp-icon--arrow-right{transform:translateX(4px)}
   a.myp-row,.myp-card{transition:transform .24s var(--myp-ease)}
   a.myp-row::after,.myp-card::before{transition:opacity .24s var(--myp-ease)}
@@ -1663,19 +1680,11 @@ a.myp-row::after{content:"";position:absolute;inset:-1px;border-radius:inherit;b
 
 /* ---- A to B: strand tabs ----
    The page's own script swaps the panels. theme.js adds the direction
-   (--myp-dir, 1 forward / -1 back) and measures the selected tab, so the
-   marker glides to it while the new strand slides into place. */
-.tabs .wrap.has-ind{position:relative}
-.tabs .wrap.has-ind::before{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--myp-ind-w,0);
-  border-radius:var(--myp-radius-button);background:var(--myp-interaction-tint);
-  box-shadow:inset 0 0 0 2px var(--myp-interaction);transform:translateX(var(--myp-ind-x,0));pointer-events:none}
-.tabs .wrap.has-ind .tab{position:relative}
-.tabs .wrap.has-ind .tab.on,.tabs .wrap.has-ind .tab.on:hover{background:transparent;border-color:transparent;box-shadow:none}
-@media (max-width:760px){.tabs .wrap.has-ind::before{border-radius:14px}}
+   (--myp-dir, 1 forward / -1 back) so the new strand slides into place,
+   and the pill (section 17) glides to the selected tab. */
 /* the slide must not widen the page */
 :root.myp-tabbed main{overflow-x:clip}
 @media (prefers-reduced-motion:no-preference){
-  .tabs .wrap.has-ind::before{transition:transform .5s var(--myp-ease)}
   :root.myp-tabbed [data-panel]:not([hidden]){animation:mypPanelIn .5s var(--myp-ease) backwards}
   @keyframes mypPanelIn{from{opacity:.15;transform:translateX(calc(var(--myp-dir,1) * 28px))}}
 }
@@ -1698,3 +1707,59 @@ a.myp-row::after{content:"";position:absolute;inset:-1px;border-radius:inherit;b
     animation-duration:.01ms !important;animation-delay:0s !important;animation-iteration-count:1 !important;
     scroll-behavior:auto !important}
 }
+
+
+/* ============ 17  REAL GLASS AND THE GLIDING PILL (step 9) ============ */
+
+/* ---- glass ----
+   The page reads as frosted glass over the moving fields. Fills are in
+   section 1: header, tools bar and panels 84% (dark 82%), cards 76%
+   (dark 70%), dialogs and long reading panels 94%. Every glass surface
+   has a 1px border, a faint top highlight and the soft shadow.
+   Blur: 20px + saturate on large screens; 11px on small or touch screens,
+   and there only on the header, tools bar, dialogs and Home cards, so no
+   more than about a dozen layers are ever blurred. */
+.myp-tool{background:var(--myp-tint-soft);box-shadow:var(--myp-glass-edge);
+  -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
+.myp-panel{background:var(--myp-panel-fill)}
+.myp-card{background:var(--myp-card-fill);
+  -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
+@media (hover:hover) and (pointer:fine) and (min-width:900px){
+  .myp-panel{background:var(--myp-glass-fill);
+    -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
+}
+/* long reading panels are 94% opaque, where a blur would cost a lot and
+   show nothing: they are not blurred */
+.sec > .wrap{-webkit-backdrop-filter:none;backdrop-filter:none}
+/* cards inside a panel: translucent, with the highlight. They are not
+   blurred themselves: the panel behind them already is. */
+.myp-row:not(.myp-row--off),.myp-stat,.myp-sync,.fstep,.ck,.ck:first-of-type,.step,.band,.trap,.fwc,.ctg,
+.myp-panel .tlcard{background:var(--myp-card-fill);box-shadow:var(--myp-glass-edge)}
+@media (max-width:760px){
+  .topbar__brand{background:var(--myp-glass-fill);
+    -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter)}
+}
+
+/* ---- gliding selection pill (assets/glide.js) ----
+   One pill behind the items of every selector group. glide.js puts it on
+   the selected item; when the selection changes it slides there.
+   Without the script there is no pill and the item keeps its own
+   highlight. */
+.myp-glide{position:relative}
+.myp-glide__pill{position:absolute;left:0;top:0;width:0;height:0;display:none;box-sizing:border-box;pointer-events:none;
+  border:1px solid var(--myp-interaction);background:var(--myp-interaction-tint);box-shadow:0 4px 14px rgba(161,60,102,.14)}
+:root.dark .myp-glide__pill{box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.myp-glide--on > .myp-glide__pill{display:block}
+.myp-glide > :not(.myp-glide__pill){position:relative}
+/* the pill is the highlight now: the selected item is bold berry on it */
+.myp-glide.myp-glide--on > :is(.on,.active,[aria-pressed="true"],[aria-current]):not(.myp-glide__pill),
+.myp-glide.myp-glide--on > :is(.on,.active,[aria-pressed="true"],[aria-current]):not(.myp-glide__pill):hover{
+  color:var(--myp-interaction);background:transparent;border-color:transparent;box-shadow:none;font-weight:700}
+@media (prefers-reduced-motion:no-preference){
+  /* width is an approved exception: the pill is out of the flow */
+  .myp-glide--ready > .myp-glide__pill{transition:transform .32s var(--myp-ease),width .32s var(--myp-ease)}
+  /* between pages the year pill glides too, where the browser can */
+  @view-transition{navigation:auto}
+  .topbar__grades > .myp-glide__pill{view-transition-name:myp-year-pill}
+}
+@media print{.myp-glide__pill{display:none !important}}

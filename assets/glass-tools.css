@@ -106,7 +106,7 @@
 .myp-quiz .progress{position:sticky;top:104px;z-index:15;width:var(--myp-col);margin:24px auto 0;padding:12px 20px;
   display:flex;align-items:center;gap:16px;border:1px solid var(--myp-glass-border);border-radius:var(--myp-radius-button);
   background:var(--myp-glass-fill);box-shadow:var(--myp-glass-shadow);
-  -webkit-backdrop-filter:blur(var(--myp-glass-blur));backdrop-filter:blur(var(--myp-glass-blur));
+  -webkit-backdrop-filter:var(--myp-glass-filter);backdrop-filter:var(--myp-glass-filter);
   font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
 .myp-quiz .progress[hidden]{display:none}
 .myp-quiz .bar{flex:1;height:8px;border:0;border-radius:var(--myp-radius-chip);background:var(--myp-tint);overflow:hidden}

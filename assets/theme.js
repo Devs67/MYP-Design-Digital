@@ -304,33 +304,18 @@
     if(srOpener && srOpener.focus) srOpener.focus();
   }
 
-  // ---- strand tabs: the direction of travel and the gliding marker ----
-  // The page's own script still swaps the panels. This only tells the CSS
-  // (glass.css section 16) which way the content moves and where the
-  // selected tab sits.
+  // ---- strand tabs: the direction of travel ----
+  // The page's own script still swaps the panels, and glide.js moves the
+  // pill. This only tells the CSS (glass.css section 16) which way the
+  // content moves.
   function initTabs(){
     var wrap = document.querySelector('.tabs .wrap');
     if(!wrap) return;
-    var tabs = wrap.querySelectorAll('.tab');
-    if(!tabs.length) return;
 
     function indexOfTab(el){
+      var tabs = wrap.querySelectorAll('.tab');
       for(var i=0;i<tabs.length;i++){ if(tabs[i] === el) return i; }
       return -1;
-    }
-
-    // Only touch the wrap's class when it actually changes: the observer
-    // below watches class changes, so an unconditional add re-fires it
-    // forever and freezes the page.
-    function place(){
-      var on = wrap.querySelector('.tab.on');
-      if(!on){
-        if(wrap.classList.contains('has-ind')) wrap.classList.remove('has-ind');
-        return;
-      }
-      wrap.style.setProperty('--myp-ind-x', on.offsetLeft + 'px');
-      wrap.style.setProperty('--myp-ind-w', on.offsetWidth + 'px');
-      if(!wrap.classList.contains('has-ind')) wrap.classList.add('has-ind');
     }
 
     // capture phase, so this runs before the page's handler moves .on
@@ -344,16 +329,18 @@
       root.style.setProperty('--myp-dir', to < from ? '-1' : '1');
       root.classList.add('myp-tabbed');
     }, true);
+  }
 
-    if('MutationObserver' in window){
-      try{
-        // watch the tabs themselves, not the wrap, for .on moving
-        var mo = new MutationObserver(place);
-        for(var k=0;k<tabs.length;k++) mo.observe(tabs[k], {attributes:true, attributeFilter:['class']});
-      }catch(e){}
-    }
-    window.addEventListener('resize', place);
-    place();
+  // ---- the moving backdrop (glass.css section 16) ----
+  // Home carries it in its markup; every other page gets it here, so
+  // without this script a page keeps the still backdrop.
+  function initFlow(){
+    if(!document.body || document.querySelector('.myp-flow')) return;
+    var flow = document.createElement('div');
+    flow.className = 'myp-flow';
+    flow.setAttribute('aria-hidden', 'true');
+    flow.innerHTML = '<div class="myp-flow__blur"><i></i><i></i><i></i><i></i></div>';
+    document.body.insertBefore(flow, document.body.firstChild);
   }
 
   // the moving backdrop rests while the tab is in the background
@@ -365,6 +352,7 @@
   document.addEventListener('DOMContentLoaded', function(){
     rewriteLinks(currentTheme());
     initTabs();
+    initFlow();
 
     var themeBtn = document.getElementById('themeBtn');
     if(themeBtn) themeBtn.addEventListener('click', toggleTheme);

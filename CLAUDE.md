@@ -47,28 +47,42 @@ Tokens, light / dark (dark applies under `:root.dark`):
 --myp-surface  #FFFFFF / #182538   cards, dialogs
 --myp-text     #111111 / #F4F7FF   body text
 --myp-muted    #515D70 / #B5C3D8   secondary text
---myp-accent   #2862AE / #92C5FF   links, active states, emphasis
+--myp-accent   #2862AE / #92C5FF   brand blue: the MYP mark, eyebrows, labels, bullets, bands
 --myp-border   #BACEE9 / #395474   borders
 --myp-tint     #E8F1FF / #203955   chips, selected tabs, secondary buttons, soft fills
 --myp-body     #344054 / #D3DCEA   body text: descriptions, instructions, longer reading
---myp-hover    #1D4D8A / #C2DEFF   hover and pressed states
 --myp-disabled-bg / -text   #EEF2F7 + #78869B / #1E2A3B + #8391A6
 --myp-ok       #236B50 / #8BE3B5   success: saved, completed, addressed
 --myp-warn     #8A5B12 / #F2D37A   warning: needs attention
 --myp-error    #B42318 / #FDA29B   error: invalid input, failed action
 ```
 
+Berry is the interaction colour: everything a student can click, and what is selected.
+
+```
+--myp-interaction        #A13C66 / #EE9FC0   links, nav, year tabs, actions, primary button fill,
+                                             checklist ticks, focus rings, interactive icons
+--myp-interaction-hover  #7D2D4E / #F7C6DA   hover and pressed (--myp-hover is the old name for it)
+--myp-interaction-tint   #F8E9F0 / #3A2233   selected tab fill, secondary button fill, the pill
+--myp-on-interaction     #FFFFFF / #0B1220   label on a primary button
+```
+
+Never use #A13C66 in dark mode: it is only 2.5 to 3.0:1 on the dark surfaces. Blue stays on the
+brand mark, eyebrows, labels, bullets, bands, borders and the backdrop. Success, warning, error,
+status chips, criterion colours and `--dev` are unchanged.
+
 How Dev's colour table is applied (`glass.css` section 11):
 
 - Page and section headings `--myp-text` (#111). Reading text `--myp-body`. Captions and
   metadata `--myp-muted`.
 - Links, navigation, card actions and clickable headings (a card's title when the whole card
-  is a link, anything that opens or closes) are `--myp-accent` and **bold**.
-- Selected tabs: `--myp-tint` fill with bold blue text and a blue edge.
-- Primary button: blue fill, white bold label (dark mode: light-blue fill, dark label).
-  Secondary button: `--myp-tint` fill, blue text. Both go `--myp-hover` on hover and press.
-- Keyboard focus is a solid 2px blue outline. Disabled controls use the disabled pair.
-- Glass cards about 90% white; dialogs and reading panels nearly opaque (94%).
+  is a link, anything that opens or closes) are `--myp-interaction` and **bold**.
+- Selected tabs: `--myp-interaction-tint` fill with bold berry text and a berry edge.
+- Primary button: berry fill, white bold label (dark mode: light-berry fill, dark label).
+  Secondary button: berry tint fill, berry text. Both go `--myp-interaction-hover` on hover and
+  press.
+- Keyboard focus is a solid 2px berry outline. Disabled controls use the disabled pair.
+- Headings, reading text and the A to D overview on Home stay neutral.
 - Fluid background: #FFFFFF, #DCEBFF and #A9D0FF fields. Grid: blue at 6%.
 
 The old names still work and are remapped in `glass.css`: `--ink` → text, `--paper` → bg,
@@ -76,9 +90,17 @@ The old names still work and are remapped in `glass.css`: `--ink` → text, `--p
 success / progress, `--clay` stays warnings and "what is missing", `--dev` stays teacher-only.
 Criterion colours `--a` teal, `--b` gold, `--c` green, `--d` red are unchanged.
 
-Glass: section panels, the header, tools bar and dialogs use a translucent surface, a 1px
-border and a soft shadow, with an 18px backdrop blur (blur only on large desktop screens for
-section panels, to keep school iPads smooth). Cards inside a panel are solid surfaces.
+Glass (`glass.css` section 17): the page reads as frosted glass over the moving fields. Header,
+tools bar and panels are 84% (dark 82%), cards 76% (dark 70%), dialogs and long reading panels
+94%. Each has a 1px border, a faint top highlight and the soft shadow. Blur is
+`var(--myp-glass-filter)`: 20px + saturate(140%) on large screens; 11px on small or touch
+screens, and there only on the header, tools bar, dialogs and Home cards. Cards inside a panel
+are translucent but not blurred themselves. Never blur more than about a dozen large layers.
+
+Selector groups (year tabs, Light / Dark, strand tabs, filter chips, segmented controls, the
+lesson app tabs) get a gliding pill from `assets/glide.js`, linked after `theme.js`. Mark a new
+group `data-glide`; the selected item is the child with `.on`, `.active`, `aria-pressed="true"`
+or `aria-current`. The page's own script still decides what is selected.
 
 Typefaces: **Work Sans** for everything, display headings included. **IBM Plex Mono** for
 eyebrows, micro labels and codes. Fraunces is retired. Loaded from Google Fonts.
@@ -102,6 +124,18 @@ See `assets/icons/README.md`.
 `transform` and `opacity`. Nothing longer than ~600ms. Scroll reveals must fail *visible* —
 if JS or IntersectionObserver is unavailable, content shows immediately rather than staying
 hidden.
+
+Exceptions, approved by Dev (`glass.css` sections 16 and 17). Nothing else may break the rule:
+
+- The fluid background loop runs 19 s, 23 s and 27 s and animates `border-radius`.
+- The theme crossfade transitions colours (300–400 ms).
+- Links fade their colour over 200 ms.
+- The keyboard focus outline eases in over 160 ms.
+- The selection pill transitions `width` as well as `transform` (it is absolutely positioned,
+  so nothing reflows).
+
+Under `prefers-reduced-motion: reduce` the background is still, nothing enters or lifts, and the
+pill jumps.
 
 ---
 

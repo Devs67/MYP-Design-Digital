@@ -209,6 +209,8 @@ export default function App() {
       </header>
 
       <nav className="lx-tabs" aria-label="Lesson views">
+        {/* the selection pill: assets/glide.js moves it to the current view */}
+        <span className="myp-glide__pill" aria-hidden="true" />
         {LIST_VIEWS.map((v) => (
           <button
             key={v.id}

@@ -53,6 +53,7 @@ export function LessonFinder<T extends string>({
         </span>
       </label>
       <div className="lx-seg" role="group" aria-label={filterLabel}>
+        <span className="myp-glide__pill" aria-hidden="true" />
         {options.map((o) => (
           <button key={o.id} type="button" aria-pressed={filter === o.id} onClick={() => onFilter(o.id)}>
             {o.label}
