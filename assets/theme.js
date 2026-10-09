@@ -319,12 +319,18 @@
       return -1;
     }
 
+    // Only touch the wrap's class when it actually changes: the observer
+    // below watches class changes, so an unconditional add re-fires it
+    // forever and freezes the page.
     function place(){
       var on = wrap.querySelector('.tab.on');
-      if(!on){ wrap.classList.remove('has-ind'); return; }
+      if(!on){
+        if(wrap.classList.contains('has-ind')) wrap.classList.remove('has-ind');
+        return;
+      }
       wrap.style.setProperty('--myp-ind-x', on.offsetLeft + 'px');
       wrap.style.setProperty('--myp-ind-w', on.offsetWidth + 'px');
-      wrap.classList.add('has-ind');
+      if(!wrap.classList.contains('has-ind')) wrap.classList.add('has-ind');
     }
 
     // capture phase, so this runs before the page's handler moves .on
@@ -341,7 +347,9 @@
 
     if('MutationObserver' in window){
       try{
-        new MutationObserver(place).observe(wrap, {attributes:true, attributeFilter:['class'], subtree:true});
+        // watch the tabs themselves, not the wrap, for .on moving
+        var mo = new MutationObserver(place);
+        for(var k=0;k<tabs.length;k++) mo.observe(tabs[k], {attributes:true, attributeFilter:['class']});
       }catch(e){}
     }
     window.addEventListener('resize', place);
