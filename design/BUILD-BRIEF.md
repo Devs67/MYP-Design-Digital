@@ -406,6 +406,111 @@ Screen-record or screenshot sequences of the pill moving on Home, a workspace, a
 and the lesson app; glass visibly blurring the moving fields; contrast pass; reduced motion;
 1440 and 390, light and dark.
 
+## Step 10: strand workspace layout (pilot, one strand)
+
+Source: `design/strand-workspace/ref-strand-i.png` (Dev's mock-up of MYP 4 & 5, Criterion A,
+strand i). There is no Figma frame or mobile frame for it yet.
+
+**Scope: one strand only.** Build MYP 4 & 5 Criterion A strand i as a new pilot page,
+`myp4-5/strand-pilot.html`. Do not change `myp4-5/criterion-a.html` or any other page, and do
+not link the pilot from the site. Dev tests the pilot, then decides whether the other strands
+and criteria follow. Mark the pilot `<meta name="robots" content="noindex">`.
+
+### What moves where
+
+The content is the strand i panel of `criterion-a.html` (`<div data-panel="i">`), rearranged.
+Copy the wording exactly; nothing is rewritten.
+
+- **Header row, as in the picture:** the "MYP Design" mark (links to Home), breadcrumb
+  (MYP 4 & 5 / Criterion A / Strand i), "Search resources" (opens the existing Search
+  dialog), Design Team, and one theme button that shows the current mode and switches it.
+  This replaces the shared pill header on the pilot only. Still load `theme.js` and
+  `glide.js`.
+- **Left sidebar** (sticky on desktop):
+  - "All criteria" back link to `index.html`, the year label and the criterion name.
+  - A B C D switch: A selected, B and C link to `criterion-b.html` / `criterion-c.html`, D is
+    disabled ("Coming"). Mark it `data-glide`.
+  - Strands i to iv: i selected. ii to iv link to `criterion-a.html#ii` etc. for now.
+  - "On this strand": Worked response, Frameworks, Achievement levels, Full checklist. Each
+    jumps to that section of the pilot page.
+  - "Your progress": the count from the checklist tracker ("0 / 15 checked") and Save progress,
+    which opens the existing progress-code dialog from `assets/progress.js`.
+  - A collapse button for the sidebar.
+- **Main column:**
+  - Hero: eyebrow (Criterion A / Strand i), title, the objective line, and a primary "Open
+    writing template" button (the existing template link; keep the Preview button beside it).
+  - Step strip 01 to 04, from the "Four steps, in this order" flow. The current step is
+    selected; mark the strip `data-glide`.
+  - The steps as an accordion from "What goes into each step": one step open, the others shown
+    as collapsed rows that open in place. Opening a step updates the strip and the URL
+    (`#step-2`), so a link can open a given step.
+- **Right rail** (sticky on desktop): the command terms box for this strand, the "Open
+  command-term glossary" link (the existing full list), then the example for the open step
+  (that step's `.ex` block), which changes with the step.
+- **Below, full width, in this order:** worked response, frameworks for each step,
+  task-specific clarification (bands), checklist, the four traps. Same components as now.
+
+### Rules
+
+- **Checklist IDs must not change.** Keep `data-panel="i"`, every `.ck` label's text
+  (including `<small>`), and load `assets/progress.js` with `data-page="criterion-a"`. Then a
+  student's saved ticks show on the pilot and the live page alike. Confirm all 15 labels hash
+  to the same IDs as on `criterion-a.html`.
+- **Wording.** Body content (what to include, examples, frameworks, bands, checklist, traps)
+  is copied from the live page, never rewritten. The picture's interface labels are used as
+  drawn: the title "Make the case for a solution.", "Step 1 of 4", "What to include",
+  "Keep in mind", "See it in a portfolio", "On this strand", "Your progress", and the step
+  subtitles ("Build the explanation" on steps 1 to 3, "Build the justification" on step 4).
+  The one-line step intro ("Set the problem in its wider world.") exists in the picture for
+  step 1 only: leave steps 2 to 4 without one and list them for Dev. "Keep in mind" holds
+  that step's existing `.concepts` / `.tools` note.
+- **"TSC" and "Page limit · 1.5 pages":** show them as drawn, but report the page limit to
+  Dev as unconfirmed. It is not on the live page. Never write a band descriptor from the
+  picture.
+- Command terms and their bands (State 1–2, Outline 3–4, Explain 5–6, Justify 7–8) come from
+  the live `.ctbox`, not from the picture.
+- **Look: follow the picture.** Flat white cards with a 1px border on the pale blue page, no
+  moving backdrop and no blur on this page. "Open writing template" is the blue
+  (`--myp-accent`) button as drawn. Everything else clickable or selected is berry: the A
+  switch, the selected strand, the selected step, links, Save progress. Eyebrows and step
+  numbers are blue. Dark mode uses the dark tokens (never #A13C66 in dark). Record the blue
+  template button in `CLAUDE.md` as an exception for this page.
+- New layout CSS goes in one new file, `assets/strand.css`, linked after `glass.css` on the
+  pilot only. No inline 700-line copy. One `<script>` block, IIFE; the page is new, so modern
+  syntax is allowed, but guard every lookup.
+- Motion: only what `CLAUDE.md` allows. The accordion opens with opacity and transform, not a
+  height animation.
+- Works without JS: all four steps and every section are visible, nothing is hidden behind
+  the accordion.
+
+### Mobile (390)
+
+There is no mock-up. Sidebar becomes a row at the top (criterion switch, then strands) and
+"On this strand" becomes the existing jump menu. The step strip scrolls sideways. The right
+rail drops under the open step. Progress sits above the checklist as it does now. No
+horizontal page scroll.
+
+### Checking
+
+- Every piece of strand i content on `criterion-a.html` is on the pilot (compare the text of
+  the two panels; report anything missing).
+- Checklist: 15 items, same IDs; tick, save with a progress code, reload, and open the same
+  code on `criterion-a.html`.
+- Steps: strip, accordion, `#step-n` links, keyboard (Tab, Enter, arrow keys on the strip).
+- Template Preview, worked example, framework groups, command-term glossary still open.
+- Loads and stays responsive in light, dark and reduced motion at 1440 and 390 (the load test
+  from step 9), with screenshots of each beside the mock-up.
+
+### Decided by Dev
+
+Build it like the picture: its header, its flat cards and its blue template button. Strands ii
+to iv in the sidebar link to the current `criterion-a.html#ii` etc. until they are rebuilt.
+
+### Report back to Dev
+
+The page limit (unconfirmed), the missing step intros for steps 2 to 4, anything on the live
+strand i panel that did not fit the new layout, and screenshots beside the picture.
+
 ## Checking, every session
 
 - Playwright (pre-installed) screenshots at 1440 and 390, light and dark; compare with the
