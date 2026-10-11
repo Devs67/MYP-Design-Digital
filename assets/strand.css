@@ -1,0 +1,289 @@
+/* ============================================================
+   Strand workspace layout (design/BUILD-BRIEF.md, step 10).
+
+   Linked after glass.css, on the pilot page only:
+   myp4-5/strand-pilot.html. Layout only: colours, type and the
+   content components (.ex, .band, .ck ...) come from glass.css.
+
+   The look follows design/strand-workspace/ref-strand-i.png: flat
+   white cards with a 1px border on the pale blue page. No moving
+   backdrop and no blur here.
+
+   Exception, approved by Dev: "Open writing template" is blue
+   (--myp-accent). Everything else that can be clicked or is
+   selected stays berry.
+
+     1  page and backdrop      5  hero
+     2  header row             6  step strip
+     3  shell and sidebar      7  steps (accordion)
+     4  buttons                8  right rail
+                               9  sections below, motion, mobile
+   ============================================================ */
+
+
+/* ============ 1  PAGE AND BACKDROP ============ */
+.sw-page{--sw-top:68px;--sw-side:232px}
+/* flat page: glass.css paints the wash, the grid and the moving fields */
+:root body.sw-page::before,:root.dark body.sw-page::before{background-image:none}
+:root body.sw-page::after,:root.dark body.sw-page::after{display:none}
+.sw-page .myp-flow{display:none}
+
+.sw-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.myp-icon--chevron-down{-webkit-mask-image:url("icons/chevron-down.svg");mask-image:url("icons/chevron-down.svg")}
+
+.sw-main [id]{scroll-margin-top:calc(var(--sw-top) + 16px)}
+
+
+/* ============ 2  HEADER ROW ============ */
+.sw-top{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:8px 32px;
+  min-height:var(--sw-top);padding:10px 24px;background:var(--myp-surface);border-bottom:1px solid var(--myp-border)}
+.sw-brand,.sw-brand:hover{display:inline-flex;align-items:center;gap:10px;flex:0 0 calc(var(--sw-side) - 24px);
+  font:700 17px/24px var(--myp-font-body);letter-spacing:-.01em;color:var(--myp-text);text-decoration:none}
+.sw-brand .myp-icon{color:var(--myp-accent)}
+.sw-crumbs{display:flex;flex-wrap:wrap;align-items:center;min-width:0;font:500 13px/20px var(--myp-font-body);color:var(--myp-muted)}
+.sw-crumbs a{font-weight:600;text-decoration:none}
+.sw-crumbs a:hover{text-decoration:underline}
+.sw-crumbs > * + *::before{content:"/";margin:0 12px;color:var(--myp-muted);font-weight:400}
+.sw-top__tools{display:flex;align-items:center;gap:8px;margin-left:auto}
+.sw-search,.sw-toplink{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:8px 14px;border-radius:10px;
+  border:1px solid transparent;background:transparent;color:var(--myp-interaction);cursor:pointer;white-space:nowrap;
+  font:700 13px/20px var(--myp-font-body);text-decoration:none}
+.sw-search{min-width:210px;border-color:var(--myp-border);background:var(--myp-surface)}
+.sw-search:hover,.sw-toplink:hover{color:var(--myp-interaction-hover);border-color:var(--myp-interaction-hover)}
+.sw-search .myp-icon,.sw-toplink .myp-icon{width:18px;height:18px;flex-basis:18px}
+
+
+/* ============ 3  SHELL AND SIDEBAR ============ */
+.sw-shell{display:grid;grid-template-columns:var(--sw-side) minmax(0,1fr);align-items:start}
+.sw-shell.is-collapsed{grid-template-columns:minmax(0,1fr)}
+.sw-shell.is-collapsed .sw-side{display:none}
+.sw-main{min-width:0;width:100%;max-width:1344px;padding:28px 32px 0}
+
+.sw-side{position:sticky;top:var(--sw-top);height:calc(100vh - var(--sw-top));overflow-y:auto;
+  padding:22px 16px 24px;background:var(--myp-tint-soft);border-right:1px solid var(--myp-border)}
+.sw-side p{margin:0}
+.sw-back{display:inline-flex;align-items:center;gap:8px;font:700 13px/20px var(--myp-font-body);text-decoration:none}
+.sw-back .myp-icon{width:18px;height:18px;flex-basis:18px}
+.sw-side .eyebrow{margin:18px 0 6px;font-size:var(--myp-micro-size)}
+.sw-side .sw-side__crit{font:700 19px/26px var(--myp-font-display);letter-spacing:-.015em;color:var(--myp-text);max-width:9em}
+.sw-side .sw-side__lbl{margin:22px 0 8px;padding-top:16px;border-top:1px solid var(--myp-border);
+  font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--myp-muted)}
+
+/* A B C D: glide.js slides the pill; without it the selected one keeps this fill */
+.sw-crit{display:flex;gap:4px;margin-top:14px}
+.sw-crit > a,.sw-crit > span:not(.myp-glide__pill){display:grid;place-items:center;width:36px;height:36px;border-radius:10px;
+  font:700 12px/1 var(--myp-font-mono);color:var(--myp-interaction);text-decoration:none}
+.sw-crit > a:hover{color:var(--myp-interaction-hover);background:var(--myp-interaction-tint)}
+.sw-crit > [aria-current]{background:var(--myp-interaction-tint);box-shadow:inset 0 0 0 1px var(--myp-interaction)}
+.sw-crit > .is-off:not(.myp-glide__pill){color:var(--myp-disabled-text);cursor:not-allowed}
+
+.sw-strands,.sw-jump{display:flex;flex-direction:column;gap:2px}
+.sw-strands > *,.sw-jump > a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;
+  font:600 13px/20px var(--myp-font-body);color:var(--myp-interaction);text-decoration:none}
+.sw-strands > a:hover,.sw-jump > a:hover{color:var(--myp-interaction-hover);background:var(--myp-interaction-tint)}
+.sw-strands i{flex:0 0 16px;font:600 13px/20px var(--myp-font-body);font-style:normal}
+.sw-strands > [aria-current]{background:var(--myp-interaction-tint);box-shadow:inset 0 0 0 1px var(--myp-interaction);font-weight:700}
+.sw-jump .myp-icon{width:18px;height:18px;flex-basis:18px}
+
+.sw-prog{margin-top:20px;padding:14px;border:1px solid var(--myp-border);border-radius:14px;background:var(--myp-surface)}
+.sw-prog .sw-prog__t{font:700 13px/20px var(--myp-font-body);color:var(--myp-text)}
+.sw-prog .sw-prog__n{margin:2px 0 12px;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.04em;color:var(--myp-muted)}
+.sw-prog .sw-btn{display:flex;min-height:40px;padding:8px 12px;font-size:13px}
+.sw-prog .sw-prog__hint{margin-top:10px;font-size:12px;line-height:18px;color:var(--myp-muted)}
+
+.sw-collapse{position:fixed;left:calc(var(--sw-side) - 16px);top:55%;z-index:45;display:grid;place-items:center;
+  width:32px;height:32px;padding:0;border:1px solid var(--myp-border);border-radius:10px;background:var(--myp-surface);
+  color:var(--myp-interaction);cursor:pointer}
+.sw-collapse[hidden]{display:none}
+.sw-collapse:hover{color:var(--myp-interaction-hover);border-color:var(--myp-interaction-hover)}
+.sw-collapse .myp-icon{transform:rotate(90deg)}
+.sw-collapse[aria-expanded="false"]{left:8px}
+.sw-collapse[aria-expanded="false"] .myp-icon{transform:rotate(-90deg)}
+
+
+/* ============ 4  BUTTONS ============ */
+.sw-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 20px;
+  border:1px solid transparent;border-radius:12px;font:700 15px/22px var(--myp-font-body);text-decoration:none;
+  white-space:nowrap;cursor:pointer}
+.sw-btn--primary,.sw-btn--primary:hover{color:var(--myp-on-interaction);background:var(--myp-interaction);border-color:var(--myp-interaction)}
+.sw-btn--primary:hover{background:var(--myp-interaction-hover);border-color:var(--myp-interaction-hover)}
+.sw-btn--ghost{color:var(--myp-interaction);background:var(--myp-interaction-tint);border-color:var(--myp-border)}
+.sw-btn--ghost:hover{color:var(--myp-interaction-hover);border-color:var(--myp-interaction-hover)}
+/* the one blue button on the page (see the note at the top) */
+.sw-btn--template,.sw-btn--template:hover{min-height:60px;padding:12px 28px;color:var(--myp-on-accent);
+  background:var(--myp-accent);border-color:var(--myp-accent);box-shadow:0 8px 20px rgba(40,98,174,.18)}
+.sw-btn--template:hover{filter:brightness(.92)}
+
+
+/* ============ 5  HERO ============ */
+.sw-hero{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:20px 40px}
+.sw-hero__txt{flex:1 1 420px;min-width:0}
+.sw-hero .eyebrow{margin:0;font-size:var(--myp-micro-size)}
+.sw-hero h1{margin:8px 0 10px;font:700 36px/42px var(--myp-font-display);letter-spacing:-.025em;color:var(--myp-text)}
+.sw-hero__obj{margin:0;font-size:15px;line-height:24px;color:var(--myp-body);max-width:68ch}
+.sw-hero__side{flex:0 1 auto;display:flex;flex-direction:column;gap:8px;min-width:0}
+.sw-hero__acts{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
+.sw-hero__acts .sw-btn--ghost{min-height:60px}
+.sw-hero__acts .sw-btn--template{flex:1 1 auto}
+.sw-hero__note{margin:0;max-width:44ch;font-size:13px;line-height:20px;color:var(--myp-muted)}
+.sw-hero__meta{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.sw-hero__tsc{font:700 15px/22px var(--myp-font-body);text-decoration:none}
+.sw-hero__tsc:hover{text-decoration:underline}
+.sw-hero__limit{margin:0;font:600 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--myp-accent)}
+.sw-main > [data-panel] > .docpreview{margin:20px 0 0}
+
+
+/* ============ 6  STEP STRIP ============ */
+.sw-flow{margin-top:22px}
+.sw-strip{overflow-x:auto;border:1px solid var(--myp-border);border-radius:14px;background:var(--myp-surface)}
+.sw-strip__row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.sw-strip__item{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 16px;border-radius:13px;text-decoration:none}
+.sw-strip__n{font:600 22px/28px var(--myp-font-display);letter-spacing:-.01em;color:var(--myp-accent)}
+.sw-strip__t{min-width:0}
+.sw-strip__t b{display:block;font:700 13.5px/19px var(--myp-font-body);color:var(--myp-interaction)}
+.sw-strip__t small{display:block;font:400 11px/16px var(--myp-font-body);color:var(--myp-muted)}
+.sw-strip__item:hover b{color:var(--myp-interaction-hover)}
+/* without glide.js the selected step keeps this fill */
+.sw-strip__item[aria-current]{background:var(--myp-interaction-tint);box-shadow:inset 0 0 0 1px var(--myp-interaction)}
+.sw-strip__item:focus-visible{outline-offset:-3px}
+.sw-flownote{margin:10px 2px 0;font-size:13px;line-height:20px;color:var(--myp-muted)}
+
+
+/* ============ 7  STEPS ============
+   Base rules show all four steps in full (no script). Under .sw-js the
+   steps that are not open become rows that open in place. */
+.sw-work{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start;margin-top:20px}
+.sw-steps,.sw-rail{min-width:0;border:1px solid var(--myp-border);border-radius:16px;background:var(--myp-surface)}
+.sw-steps{padding:28px}
+
+.sw-step + .sw-step{margin-top:28px;padding-top:28px;border-top:1px solid var(--myp-border)}
+.sw-step__hd{display:flex;align-items:flex-start;gap:14px}
+.sw-step__ttl{flex:1 1 auto;min-width:0}
+.sw-step__ttl p{margin:0}
+.sw-step__eye{font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--myp-accent)}
+.sw-step h3{margin:10px 0 0;font:700 26px/32px var(--myp-font-display);letter-spacing:-.02em;color:var(--myp-text)}
+.sw-step__n{display:none;font:600 22px/28px var(--myp-font-display);letter-spacing:-.01em;color:var(--myp-accent)}
+.sw-step__next{font-size:12px;line-height:18px;color:var(--myp-muted)}
+.sw-step__tog{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;padding:0;border:1px solid var(--myp-border);
+  border-radius:10px;background:var(--myp-surface);color:var(--myp-interaction);cursor:pointer}
+.sw-step__tog[hidden]{display:none}
+.sw-step__tog:hover{color:var(--myp-interaction-hover);border-color:var(--myp-interaction-hover)}
+.sw-step.is-open .sw-step__tog .myp-icon{transform:rotate(180deg)}
+
+.sw-step__intro{margin:14px 0 0;padding-bottom:18px;border-bottom:1px solid var(--myp-border);font-size:15px;line-height:24px;color:var(--myp-muted)}
+.sw-step__body h4{margin:18px 0 6px;font:700 15px/22px var(--myp-font-body);color:var(--myp-text)}
+.sw-step__body > ul{margin:0;padding:0;list-style:none}
+.sw-step__body > ul > li{position:relative;padding:7px 0 7px 24px;font-size:15px;line-height:24px;color:var(--myp-body)}
+.sw-step__body > ul > li::before{content:"";position:absolute;left:5px;top:16px;width:6px;height:6px;border-radius:50%;background:var(--myp-accent)}
+
+/* "Keep in mind": the step's existing notes, in one tinted box */
+.sw-mind{margin-top:16px;padding:16px 18px;border-radius:12px;background:var(--myp-tint)}
+.sw-mind__lbl{margin:0 0 8px;font:500 var(--myp-micro-size)/var(--myp-micro-line) var(--myp-font-mono);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--myp-accent)}
+.sw-mind .concepts,.sw-mind .tools{margin:0;padding:0;border:0;border-radius:0;background:none;box-shadow:none;
+  font-size:14px;line-height:22px;color:var(--myp-body)}
+.sw-mind .concepts + div,.sw-mind .tools + div{margin-top:12px;padding-top:12px;border-top:1px solid var(--myp-border)}
+
+.sw-js .sw-step + .sw-step{margin-top:12px;padding-top:0;border-top:0}
+.sw-js .sw-step.is-open + .sw-step,.sw-js .sw-step + .sw-step.is-open{margin-top:20px}
+.sw-js .sw-step:not(.is-open){padding:14px 16px;border:1px solid var(--myp-border);border-radius:12px;background:var(--myp-tint);cursor:pointer}
+.sw-js .sw-step + .sw-step:not(.is-open){padding-top:14px;border-top:1px solid var(--myp-border)}
+.sw-js .sw-step:not(.is-open):hover{border-color:var(--myp-interaction-hover)}
+.sw-js .sw-step:not(.is-open) .sw-step__hd{align-items:center}
+.sw-js .sw-step:not(.is-open) .sw-step__n{display:block}
+.sw-js .sw-step:not(.is-open) .sw-step__eye{display:none}
+.sw-js .sw-step:not(.is-open) h3{margin:0;font:700 16px/22px var(--myp-font-body);letter-spacing:0;color:var(--myp-interaction)}
+.sw-js .sw-step:not(.is-open) .sw-step__body{display:none}
+
+
+/* ============ 8  RIGHT RAIL ============ */
+.sw-rail{padding:22px}
+.sw-rail .ctbox{margin:0;padding:0;border:0;border-radius:0;background:none}
+.sw-rail .ctbox__lbl,.sw-rail .eyebrow{margin:0;font-size:var(--myp-micro-size);text-transform:uppercase}
+.sw-rail__h{margin:8px 0 14px;font:700 20px/28px var(--myp-font-display);letter-spacing:-.015em;color:var(--myp-text)}
+.sw-terms{padding:4px 16px;border-radius:12px;background:var(--myp-tint)}
+.sw-terms .ctrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 6px;padding:11px 0;border-top:1px solid var(--myp-border)}
+.sw-terms .ctrow:first-child{border-top:0}
+.sw-terms .ctrow b{order:1;flex:0 0 auto;font:700 13.5px/20px var(--myp-font-body);color:var(--myp-accent)}
+.sw-terms .ctrow i.ctband{order:2;flex:0 0 auto;font:700 13.5px/20px var(--myp-font-body);font-style:normal;letter-spacing:0;color:var(--myp-accent)}
+.sw-terms .ctrow i.ctband::before{content:"\00b7\00a0"}
+.sw-terms .ctrow span{order:3;flex:1 1 100%;margin-top:2px;font-size:13.5px;line-height:21px;color:var(--myp-body)}
+.sw-rail .ctbox__note{margin:12px 0 0;font-size:13.5px;line-height:21px}
+.sw-rail .ctall{margin-top:12px;padding-top:12px}
+.sw-rail .ctall summary{display:flex;align-items:center;gap:10px;cursor:pointer}
+.sw-rail .sw-ctall__lbl{margin:12px 0 10px;font:600 13px/20px var(--myp-font-body);color:var(--myp-text)}
+.sw-rail .ctgrid{grid-template-columns:minmax(0,1fr);gap:8px;margin-top:0}
+.sw-rail .ctg{padding:12px 14px}
+
+.sw-example{margin-top:18px;padding-top:18px;border-top:1px solid var(--myp-border)}
+.sw-example[hidden]{display:none}
+.sw-example__sub{margin:-8px 0 14px;font-size:13px;line-height:20px;color:var(--myp-muted)}
+.sw-rail [data-ex-slot] > .ex{margin:0;padding:0;border:0}
+
+@media (min-width:1240px){
+  .sw-work{grid-template-columns:minmax(0,1fr) clamp(320px,27vw,372px)}
+  .sw-rail{position:sticky;top:calc(var(--sw-top) + 16px);max-height:calc(100vh - var(--sw-top) - 32px);overflow-y:auto;scrollbar-width:thin}
+}
+
+
+/* ============ 9  SECTIONS BELOW, MOTION, MOBILE ============ */
+/* the same components as criterion-a.html, in flat cards */
+.sw-main .sec{padding:20px 0 0}
+.sw-main .sec > .wrap{width:auto;border-color:var(--myp-border);border-radius:16px;background:var(--myp-surface);
+  box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.sw-main footer.myp-footer{width:auto;margin-top:40px}
+
+@media (prefers-reduced-motion:no-preference){
+  @keyframes swIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .sw-js .sw-step.is-open .sw-step__body,.sw-rail [data-ex-slot] > .ex{animation:swIn .3s var(--myp-ease) both}
+  .sw-step__tog .myp-icon{transition:transform .2s var(--myp-ease)}
+}
+
+/* tablet and phone: the sidebar becomes rows at the top */
+@media (max-width:900px){
+  .sw-top{position:static;flex-wrap:wrap;gap:8px 4px;padding:10px 16px}
+  .sw-brand,.sw-brand:hover{flex:1 1 auto}
+  .sw-top__tools{display:contents}
+  .sw-toplink{padding:8px 6px;gap:6px}
+  .sw-search{order:3;flex:1 1 100%;min-width:0}
+  .sw-crumbs{order:4;flex:1 1 100%}
+  .sw-crumbs > * + *::before{margin:0 8px}
+
+  .sw-main [id]{scroll-margin-top:12px}
+  .sw-shell,.sw-shell.is-collapsed{display:block}
+  .sw-shell.is-collapsed .sw-side{display:block}
+  .sw-collapse,.sw-prog{display:none}
+  .sw-side{position:static;height:auto;overflow:visible;padding:14px 16px;border-right:0;border-bottom:1px solid var(--myp-border)}
+  .sw-side__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+  .sw-side .sw-back{flex:1 1 100%}
+  .sw-side .eyebrow{margin:8px 0 0}
+  .sw-side .sw-side__crit{max-width:none;font-size:17px;line-height:24px}
+  .sw-crit{margin-top:10px}
+  .sw-side .sw-side__lbl{margin:12px 0 6px;padding-top:0;border-top:0}
+  /* strands, and "On this strand" as the jump menu: rows that scroll sideways */
+  .sw-strands,.sw-jump{flex-direction:row;gap:6px;overflow-x:auto;margin:0 -16px;padding:1px 16px 4px;scrollbar-width:none}
+  .sw-strands::-webkit-scrollbar,.sw-jump::-webkit-scrollbar{display:none}
+  .sw-strands > *,.sw-jump > a{flex:0 0 auto;min-height:40px;white-space:nowrap;border:1px solid var(--myp-border);
+    border-radius:var(--myp-radius-chip);padding:9px 14px;background:var(--myp-surface)}
+
+  .sw-main{padding:20px 16px 0}
+  .sw-hero h1{font-size:28px;line-height:34px}
+  .sw-hero__side{flex:1 1 100%}
+  .sw-hero__acts .sw-btn{flex:1 1 auto}
+  .sw-hero__note{max-width:none}
+  .sw-strip__row{grid-template-columns:repeat(4,minmax(208px,1fr))}
+  .sw-steps{padding:20px 16px}
+  .sw-step h3{font-size:22px;line-height:28px}
+  .sw-rail{padding:18px 16px}
+}
+@media (max-width:420px){
+  .sw-btn--template,.sw-btn--template:hover{padding-left:16px;padding-right:16px}
+}
+
+@media print{
+  .sw-top__tools,.sw-side,.sw-collapse,.sw-strip{display:none}
+  .sw-shell{display:block}
+}

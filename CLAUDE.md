@@ -137,6 +137,12 @@ Exceptions, approved by Dev (`glass.css` sections 16 and 17). Nothing else may b
 Under `prefers-reduced-motion: reduce` the background is still, nothing enters or lifts, and the
 pill jumps.
 
+Strand workspace pilot (`myp4-5/strand-pilot.html`, `design/BUILD-BRIEF.md` step 10): its layout
+CSS is `assets/strand.css`, linked after `glass.css` on that page only; classes start with `sw-`.
+The page is flat: white cards with a 1px border, no moving backdrop and no blur. Exception,
+approved by Dev, for this page only: "Open writing template" is a blue (`--myp-accent`) button.
+Everything else that can be clicked or is selected stays berry.
+
 ---
 
 ## House style — JavaScript
