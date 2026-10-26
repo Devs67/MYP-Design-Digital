@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<title>Dev — MYP Design Timetable</title>
+<style>
+  :root {
+    --blue: #5b8fd9;
+    --teal: #3fa79a;
+    --lavender: #a98fd2;
+    --coral: #e8615c;
+    --pink: #d9a7c2;
+    --orange: #f2a53c;
+    --yellow: #fdfd3d;
+    --gray: #808080;
+    --purple: #3a0d2c;
+    --break: #e78a8a;
+    --border: #444;
+    --ink: #1c1c1c;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 24px 12px 60px;
+    color: var(--ink);
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 1.4rem;
+    margin: 0 0 18px;
+    letter-spacing: 0.02em;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #fff;
+    border: 1px solid var(--border);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 980px;
+    table-layout: fixed;
+  }
+
+  th, td {
+    border: 1px solid var(--border);
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 0.82rem;
+    vertical-align: middle;
+  }
+
+  thead th {
+    background: #fff;
+    font-weight: 700;
+  }
+
+  thead tr.header-title th {
+    font-size: 1rem;
+    padding: 8px;
+  }
+
+  .time-row td, .time-row th {
+    font-weight: 600;
+    font-size: 0.78rem;
+    background: #fafafa;
+  }
+
+  .day-col {
+    background: #fff;
+    font-weight: 700;
+    width: 90px;
+  }
+
+  .brk {
+    background: var(--break);
+  }
+
+  .cell {
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .cell small {
+    display: block;
+    font-weight: 600;
+    font-size: 0.72rem;
+  }
+
+  .blue   { background: var(--blue); color: #fff; }
+  .teal   { background: var(--teal); color: #fff; }
+  .lavender { background: var(--lavender); color: #fff; }
+  .coral  { background: var(--coral); color: #fff; }
+  .pink   { background: var(--pink); color: #3a1424; }
+  .orange { background: var(--orange); color: #4a2600; }
+  .yellow { background: var(--yellow); color: #3a3600; }
+  .gray   { background: var(--gray); color: #fff; }
+  .purple { background: var(--purple); color: #fff; }
+  .empty  { background: #fff; }
+
+  .old-tt { opacity: 0.7; }
+
+  .legend {
+    max-width: 1200px;
+    margin: 18px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    justify-content: center;
+    font-size: 0.82rem;
+  }
+
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .swatch {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    border: 1px solid #333;
+  }
+
+  .note {
+    max-width: 1200px;
+    margin: 10px auto 0;
+    font-size: 0.75rem;
+    color: #666;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 1.15rem;
+    margin: 42px 0 18px;
+    letter-spacing: 0.02em;
+  }
+
+  .assess-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .assess-group {
+    background: #fff;
+    border: 1px solid var(--border);
+  }
+
+  .assess-group-head {
+    padding: 8px 14px;
+    font-weight: 700;
+    color: #fff;
+    font-size: 0.95rem;
+  }
+
+  .assess-rows {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .assess-card {
+    background: #fff;
+    padding: 10px 12px;
+    border-left: 6px solid transparent;
+  }
+
+  .assess-card .a-title {
+    font-weight: 700;
+    font-size: 0.82rem;
+    margin-bottom: 2px;
+  }
+
+  .assess-card .a-date {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .assess-card .a-desc {
+    font-size: 0.78rem;
+    color: #444;
+    margin: 3px 0 6px;
+  }
+
+  .assess-card .a-slot {
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+
+  @media (max-width: 700px) {
+    th, td { font-size: 0.72rem; padding: 4px 2px; }
+    .cell small { font-size: 0.64rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Dev — MYP Design Timetable</h1>
+
+<!-- NEW TIMETABLE (from 26 Oct 2026) -->
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr class="header-title">
+      <th class="day-col">Day</th>
+      <th colspan="10">Dev - MYP Design · from 26 Oct 2026</th>
+    </tr>
+    <tr>
+      <th class="day-col"></th>
+      <th>Lesson 1</th>
+      <th>Lesson 2</th>
+      <th>Lesson 3</th>
+      <th class="brk">Morning Break</th>
+      <th>Lesson 4</th>
+      <th>Lesson 5</th>
+      <th>Lesson 6</th>
+      <th>Lesson 7</th>
+      <th>Lesson 8</th>
+      <th class="brk">Lunch</th>
+    </tr>
+    <tr class="time-row">
+      <th class="day-col">Time</th>
+      <td>8.20–8.55</td>
+      <td>8.55–9.30</td>
+      <td>9.30–10.05</td>
+      <td class="brk">10.05–10.15</td>
+      <td>10.15–10.50</td>
+      <td>10.50–11.25</td>
+      <td>11.25–12.00</td>
+      <td>12.00–12.35</td>
+      <td>12.35–13.10</td>
+      <td class="brk">13.10–13.45</td>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Monday -->
+    <tr>
+      <th class="day-col">Monday</th>
+      <td class="cell yellow" colspan="2">MYP 4B<small>(IBG7)</small></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="cell blue" colspan="2">MYP 1B<small>(IBG12)</small></td>
+      <td class="empty"></td>
+      <td class="cell purple">DM Duty<small>(DBF6)</small></td>
+      <td class="brk"></td>
+    </tr>
+    <!-- Tuesday -->
+    <tr>
+      <th class="day-col">Tuesday</th>
+      <td class="cell teal" colspan="2">MYP 2D<small>(IBG10)</small></td>
+      <td class="cell pink" colspan="3">MYP 2A<small>(IBG1)</small></td>
+      <td class="cell orange" colspan="2">MYP 3B<small>(IBF4)</small></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+    </tr>
+    <!-- Wednesday -->
+    <tr>
+      <th class="day-col">Wednesday</th>
+      <td class="cell gray">Homeroom<small>MYP 2A</small></td>
+      <td class="empty"></td>
+      <td class="cell yellow" colspan="3">MYP 4B<small>(IBG7)</small></td>
+      <td class="cell blue" colspan="2">MYP 1B<small>(IBG12)</small></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+    </tr>
+    <!-- Thursday -->
+    <tr>
+      <th class="day-col">Thursday</th>
+      <td class="cell pink" colspan="2">MYP 2A<small>(IBG1)</small></td>
+      <td class="cell teal" colspan="3">MYP 2D<small>(IBG9)</small></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+    </tr>
+    <!-- Friday -->
+    <tr>
+      <th class="day-col">Friday</th>
+      <td class="cell orange" colspan="2">MYP 3B<small>(IBF4)</small></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="legend">
+  <span><i class="swatch" style="background:var(--blue)"></i> MYP 1B (IBG12)</span>
+  <span><i class="swatch" style="background:var(--teal)"></i> MYP 2D (IBG9/IBG10)</span>
+  <span><i class="swatch" style="background:var(--pink)"></i> MYP 2A — Design (IBG1)</span>
+  <span><i class="swatch" style="background:var(--gray)"></i> MYP 2A — Homeroom (not Design)</span>
+  <span><i class="swatch" style="background:var(--orange)"></i> MYP 3B (IBF4)</span>
+  <span><i class="swatch" style="background:var(--yellow)"></i> MYP 4B (IBG7)</span>
+  <span><i class="swatch" style="background:var(--purple)"></i> DM Duty (DBF6)</span>
+  <span><i class="swatch" style="background:var(--break)"></i> Morning Break / Lunch</span>
+</div>
+
+<!-- OLD TIMETABLE (until 23 Oct 2026) -->
+<h2>Previous timings (until 23 Oct 2026)</h2>
+
+<div class="table-wrap old-tt">
+<table>
+  <thead>
+    <tr class="header-title">
+      <th class="day-col">Day</th>
+      <th colspan="11">Dev - MYP Design · old timings</th>
+    </tr>
+    <tr>
+      <th class="day-col"></th>
+      <th>Registration</th>
+      <th>Lesson 1</th>
+      <th>Lesson 2</th>
+      <th class="brk">Milk Break</th>
+      <th>Lesson 3</th>
+      <th>Lesson 4</th>
+      <th>Lesson 5</th>
+      <th>Lesson 6</th>
+      <th class="brk">Lunch</th>
+      <th>Lesson 7</th>
+      <th>Lesson 8</th>
+    </tr>
+    <tr class="time-row">
+      <th class="day-col">Time</th>
+      <td>8.25–8.40</td>
+      <td>8.45–9.25</td>
+      <td>9.25–10.05</td>
+      <td class="brk">10.05–10.15</td>
+      <td>10.15–10.55</td>
+      <td>10.55–11.35</td>
+      <td>11.35–12.15</td>
+      <td>12.15–12.55</td>
+      <td class="brk">12.55–13.30</td>
+      <td>13.30–14.10</td>
+      <td>14.10–14.50</td>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Monday -->
+    <tr>
+      <th class="day-col">Monday</th>
+      <td class="empty"></td>
+      <td class="cell yellow" colspan="2">MYP 4B<small>(IBG7)</small></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="cell blue" colspan="2">MYP 1B<small>(IBG12)</small></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="cell purple">DM Duty<small>(DBF6)</small></td>
+    </tr>
+    <!-- Tuesday -->
+    <tr>
+      <th class="day-col">Tuesday</th>
+      <td class="empty"></td>
+      <td class="cell teal" colspan="2">MYP 2D<small>(IBG10)</small></td>
+      <td class="brk"></td>
+      <td class="cell pink" colspan="2">MYP 2A<small>(IBG1)</small></td>
+      <td class="cell orange" colspan="2">MYP 3B<small>(IBF4)</small></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+    </tr>
+    <!-- Wednesday -->
+    <tr>
+      <th class="day-col">Wednesday</th>
+      <td class="empty"></td>
+      <td class="cell gray">Homeroom<small>MYP 2A</small></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+      <td class="cell yellow" colspan="2">MYP 4B<small>(IBG7)</small></td>
+      <td class="cell blue" colspan="2">MYP 1B<small>(IBG12)</small></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+    </tr>
+    <!-- Thursday -->
+    <tr>
+      <th class="day-col">Thursday</th>
+      <td class="empty"></td>
+      <td class="cell pink" colspan="2">MYP 2A<small>(IBG1)</small></td>
+      <td class="brk"></td>
+      <td class="cell teal" colspan="2">MYP 2D<small>(IBG9)</small></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+    </tr>
+    <!-- Friday -->
+    <tr>
+      <th class="day-col">Friday</th>
+      <td class="empty"></td>
+      <td class="cell orange" colspan="2">MYP 3B<small>(IBF4)</small></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="brk"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Ishita Ma'am — Weekly Teaching Schedule</h2>
+
+<div class="table-wrap" style="margin-top:0;">
+<table>
+  <thead>
+    <tr>
+      <th class="day-col"></th>
+      <th>Lesson 1</th>
+      <th>Lesson 2</th>
+      <th>Lesson 3</th>
+      <th>Lesson 4</th>
+      <th>Lesson 5</th>
+      <th>Lesson 6</th>
+      <th>Lesson 8</th>
+    </tr>
+    <tr class="time-row">
+      <th class="day-col">Time</th>
+      <td>8.20–8.55</td>
+      <td>8.55–9.30</td>
+      <td>9.30–10.05</td>
+      <td>10.15–10.50</td>
+      <td>10.50–11.25</td>
+      <td>11.25–12.00</td>
+      <td>12.35–13.10</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th class="day-col">Monday</th>
+      <td class="cell lavender" colspan="2">MYP 4A ~</td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="cell blue" colspan="2">MYP 1D</td>
+      <td class="cell gray">Departmental duty</td>
+    </tr>
+    <tr>
+      <th class="day-col">Tuesday</th>
+      <td class="cell coral" colspan="2">MYP 5B ~</td>
+      <td class="cell teal" colspan="2">MYP 2B</td>
+      <td class="cell orange" colspan="2">MYP 3C</td>
+      <td class="empty"></td>
+    </tr>
+    <tr>
+      <th class="day-col">Wednesday</th>
+      <td class="cell orange" colspan="2">MYP 3C<small>IBF1</small></td>
+      <td class="cell lavender" colspan="2">MYP 4A ~</td>
+      <td class="cell blue" colspan="2">MYP 1D</td>
+      <td class="empty"></td>
+    </tr>
+    <tr>
+      <th class="day-col">Thursday</th>
+      <td class="cell teal" colspan="2">MYP 2B</td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+    </tr>
+    <tr>
+      <th class="day-col">Friday</th>
+      <td class="cell orange" colspan="2">MYP 3C<small>IBF1</small></td>
+      <td class="cell coral" colspan="2">MYP 5B ~<small>VA Room</small></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+      <td class="empty"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="legend">
+  <span><i class="swatch" style="background:var(--lavender)"></i> MYP 4A</span>
+  <span><i class="swatch" style="background:var(--coral)"></i> MYP 5B</span>
+  <span><i class="swatch" style="background:var(--teal)"></i> MYP 2B</span>
+  <span><i class="swatch" style="background:var(--orange)"></i> MYP 3C</span>
+  <span><i class="swatch" style="background:var(--blue)"></i> MYP 1D</span>
+  <span><i class="swatch" style="background:var(--gray)"></i> Departmental duty</span>
+</div>
+
+<p class="note">~ division/room best estimate — extra co-teaching names in source beyond a clean 1:1 match. Lesson 7, Morning Break and Lunch columns omitted as they weren't shown in the source schedule.</p>
+
+
+<h2>Assessment calendar</h2>
+<p style="text-align:center; margin:-8px 0 18px; font-size:0.85rem;">
+  <a href="https://docs.google.com/document/d/1SuOIQCFgeFyHWONB71KwB7TBtSin3OvIxKunQ68DCRA/edit?tab=t.cxmb7lmtwv6a" target="_blank" rel="noopener" style="color:#1a56b0; text-decoration:underline;">
+    View full Design team assessment calendar →
+  </a>
+</p>
+<div class="assess-wrap">
+
+  <!-- MYP 1B -->
+  <div class="assess-group">
+    <div class="assess-group-head" style="background:var(--blue)">MYP 1B (Mon &amp; Wed, L5–6)</div>
+    <div class="assess-rows">
+      <div class="assess-card" style="border-left-color:var(--blue)">
+        <div class="a-title">FA1 — Criteria A, S2</div>
+        <div class="a-date">Aug 12</div>
+        <div class="a-desc">Wednesday</div>
+        <span class="a-slot" style="background:var(--blue);color:#fff">L5–6 · 11.35–12.55</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--blue)">
+        <div class="a-title">SA1 — Criteria B, S1</div>
+        <div class="a-date">Sept 2</div>
+        <div class="a-desc">Wednesday</div>
+        <span class="a-slot" style="background:var(--blue);color:#fff">L5–6 · 11.35–12.55</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--blue)">
+        <div class="a-title">FA2 — Criteria C, S1&amp;S3 (Video)</div>
+        <div class="a-date">Nov 4</div>
+        <div class="a-desc">Wednesday</div>
+        <span class="a-slot" style="background:var(--blue);color:#fff">L5–6 · 10.50–12.00</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--blue)">
+        <div class="a-title">SA2 — Criteria D, S1</div>
+        <div class="a-date">Nov 16</div>
+        <div class="a-desc">Monday</div>
+        <span class="a-slot" style="background:var(--blue);color:#fff">L5–6 · 10.50–12.00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MYP 2A -->
+  <div class="assess-group">
+    <div class="assess-group-head" style="background:var(--pink);color:#3a1424">MYP 2A (Tue &amp; Thu — Design)</div>
+    <div class="assess-rows">
+      <div class="assess-card" style="border-left-color:var(--pink)">
+        <div class="a-title">FA1 — Criteria A, S1</div>
+        <div class="a-date">Aug 6</div>
+        <div class="a-desc">Thursday</div>
+        <span class="a-slot" style="background:var(--pink);color:#3a1424">L1–2 · 8.45–10.05</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--pink)">
+        <div class="a-title">SA1 — Criteria B, S4</div>
+        <div class="a-date">Sept 29</div>
+        <div class="a-desc">Tuesday</div>
+        <span class="a-slot" style="background:var(--pink);color:#3a1424">L3–4 · 10.15–11.35</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--pink)">
+        <div class="a-title">SA2 — Criteria C, S1&amp;S3 (Screen rec.)</div>
+        <div class="a-date">Nov 3</div>
+        <div class="a-desc">Tuesday</div>
+        <span class="a-slot" style="background:var(--pink);color:#3a1424">L3–4 · 9.30–10.50</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--pink)">
+        <div class="a-title">FA2 — Criteria D</div>
+        <div class="a-date">Nov 24</div>
+        <div class="a-desc">Tuesday</div>
+        <span class="a-slot" style="background:var(--pink);color:#3a1424">L3–4 · 9.30–10.50</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MYP 2D -->
+  <div class="assess-group">
+    <div class="assess-group-head" style="background:var(--teal)">MYP 2D (Tue &amp; Thu)</div>
+    <div class="assess-rows">
+      <div class="assess-card" style="border-left-color:var(--teal)">
+        <div class="a-title">FA1 — Criteria A, S1</div>
+        <div class="a-date">Aug 6</div>
+        <div class="a-desc">Thursday</div>
+        <span class="a-slot" style="background:var(--teal);color:#fff">L3–4 · 10.15–11.35</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--teal)">
+        <div class="a-title">SA1 — Criteria B, S4</div>
+        <div class="a-date">Sept 29</div>
+        <div class="a-desc">Tuesday</div>
+        <span class="a-slot" style="background:var(--teal);color:#fff">L1–2 · 8.45–10.05</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--teal)">
+        <div class="a-title">SA2 — Criteria C, S1&amp;S3 (Screen rec.)</div>
+        <div class="a-date">Nov 3</div>
+        <div class="a-desc">Tuesday</div>
+        <span class="a-slot" style="background:var(--teal);color:#fff">L1–2 · 8.20–9.30</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--teal)">
+        <div class="a-title">FA2 — Criteria D</div>
+        <div class="a-date">Nov 24</div>
+        <div class="a-desc">Tuesday</div>
+        <span class="a-slot" style="background:var(--teal);color:#fff">L1–2 · 8.20–9.30</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MYP 3B -->
+  <div class="assess-group">
+    <div class="assess-group-head" style="background:var(--orange);color:#4a2600">MYP 3B (Tue &amp; Fri)</div>
+    <div class="assess-rows">
+      <div class="assess-card" style="border-left-color:var(--orange)">
+        <div class="a-title">FA1 — Criteria A, S3</div>
+        <div class="a-date">Aug 21</div>
+        <div class="a-desc">Friday</div>
+        <span class="a-slot" style="background:var(--orange);color:#4a2600">L1–2 · 8.45–10.05</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--orange)">
+        <div class="a-title">SA1 — Criteria B, S4 (Flowcharts &amp; wireframes)</div>
+        <div class="a-date">Sept 29</div>
+        <div class="a-desc">Tuesday</div>
+        <span class="a-slot" style="background:var(--orange);color:#4a2600">L5–6 · 11.35–12.55</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--orange)">
+        <div class="a-title">SA2 — Criteria C, S1&amp;S3 (Screen rec.)</div>
+        <div class="a-date">Nov 10</div>
+        <div class="a-desc">Tuesday</div>
+        <span class="a-slot" style="background:var(--orange);color:#4a2600">L5–6 · 10.50–12.00</span>
+      </div>
+      <div class="assess-card" style="border-left-color:var(--orange)">
+        <div class="a-title">FA2 — Criteria D</div>
+        <div class="a-date">Nov 27</div>
+        <div class="a-desc">Friday</div>
+        <span class="a-slot" style="background:var(--orange);color:#4a2600">L1–2 · 8.20–9.30</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
