@@ -156,6 +156,10 @@ button:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .cm{position:fixed;top:0;right:0;bottom:0;left:0;z-index:200;display:flex;align-items:center;justify-content:center;
   padding:20px;background:rgba(20,48,60,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .cm[hidden]{display:none}
+.resume{border-left:4px solid var(--amber)}
+.resume .btn-row{margin-top:14px}
+/* while a saved copy is waiting for "Is this you?", hide the quiz below it */
+.resume-pending #resumeCard ~ *{display:none !important}
 .levels[hidden]{display:none}
 .cm__card{max-width:460px;width:100%;background:var(--card);border-radius:12px;padding:28px 26px 24px;
   box-shadow:0 24px 60px rgba(20,48,60,.3);border-top:4px solid var(--amber)}
@@ -282,6 +286,16 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     <p class="eyebrow">The brief</p>
     <h2 id="ctxTitle">Your design challenge</h2>
     <p>Ignite is going pan-India! Your job is to design a <strong>logo</strong> and <strong>poster</strong> that get students from schools across India to register for Ignite. Answer every question, then press <strong>Check my score</strong>.</p>
+  </section>
+
+  <section class="card resume" id="resumeCard" aria-labelledby="resumeTitle" hidden>
+    <p class="eyebrow">Saved on this device</p>
+    <h2 id="resumeTitle">Are you <span id="resumeWho">the last student on this device</span>?</h2>
+    <p>This device has saved answers. If they are yours, carry on where you left off. If not, start fresh: their saved answers will be cleared from this device.</p>
+    <div class="btn-row">
+      <button class="btn" id="resumeYes" type="button">Yes, carry on</button>
+      <button class="btn secondary" id="resumeNo" type="button">No, start fresh</button>
+    </div>
   </section>
 
   <section class="card" aria-labelledby="detailsTitle">
@@ -563,8 +577,8 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   /* ---------- Autosave in the URL hash (this site never uses browser storage) ---------- */
   // #l=level&s=seed&a=answers&n=name&c=section&d=checked-time. The hash stays on the device:
   // a refresh keeps it, and it is never sent to a server.
-  function readHash() {
-    var out = {}, h = location.hash.replace(/^#/, '');
+  function readHash(src) {
+    var out = {}, h = (src == null ? location.hash : src).replace(/^#/, '');
     if (!h) return out;
     h.split('&').forEach(function (kv) {
       var i = kv.indexOf('=');
@@ -574,6 +588,41 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
   }
   var saved = readHash();
   if (saved.l !== String(LEVEL)) saved = {};
+
+  /* ---------- Keep a copy on this device ---------- */
+  // The URL hash is lost when the tab or browser is closed, so save() also keeps the same
+  // hash in localStorage. School iPads are shared: the copy only comes back after the
+  // student confirms it is theirs.
+  var STORE = 'myp-quiz-critb-fa1-l' + LEVEL;
+  function stored() { try { return localStorage.getItem(STORE) || ''; } catch (e) { return ''; } }
+  function store(h) { try { localStorage.setItem(STORE, h); } catch (e) {} }
+  function unstore() { try { localStorage.removeItem(STORE); } catch (e) {} }
+  function hasWork(o) { return !!((o.n && o.n.replace(/\s/g, '')) || /[^.\-]/.test(o.a || '') || /[^|]/.test(o.t || '')); }
+  var resumePending = false;
+  (function () {
+    var draft = stored();
+    var card = document.getElementById('resumeCard');
+    if (!draft || !card || hasWork(saved)) return;
+    var d = readHash(draft);
+    if (!hasWork(d)) return;
+    var who = document.getElementById('resumeWho');
+    if (who && d.n && d.n.replace(/\s/g, '')) who.textContent = d.n + (d.c ? ' (' + d.c + ')' : '');
+    var yes = document.getElementById('resumeYes'), no = document.getElementById('resumeNo');
+    if (!yes || !no) return;
+    resumePending = true;
+    card.hidden = false;
+    document.body.classList.add('resume-pending');
+    yes.addEventListener('click', function () {
+      try { history.replaceState(null, '', location.pathname + location.search + '#' + draft); } catch (e) {}
+      location.reload();
+    });
+    no.addEventListener('click', function () {
+      unstore();
+      resumePending = false;
+      card.hidden = true;
+      document.body.classList.remove('resume-pending');
+    });
+  })();
   // seeded shuffle, so options stay in the same order after a refresh
   var seed0 = parseInt(saved.s, 36);
   if (!(seed0 > 0 && seed0 < 2147483647)) seed0 = Math.floor(Math.random() * 2147483646) + 1;
@@ -722,6 +771,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     if (result) parts.push('d=' + result.when.getTime().toString(36));
     if (live && live.player) parts.push('lc=' + live.code, 'lp=' + live.player, 'lx=' + (live.sent ? 1 : 0));
     try { history.replaceState(null, '', location.pathname + location.search + '#' + parts.join('&')); } catch (e) {}
+    if (!resumePending && (nameEl.value.replace(/\s/g, '') || answeredCount())) store(parts.join('&'));
   }
 
   function restore() {
@@ -753,7 +803,7 @@ footer{margin-top:44px;padding:28px 0 54px;border-top:1px solid var(--rule);
     });
     updateProgress();
     // they had already checked their score: show the locked result again
-    var when = parseInt(saved.d, 36);
+    var when = saved.d ? parseInt(saved.d, 36) : 0;
     if (when > 0 && nameEl.value.trim() && secEl.value && answeredCount() === TOTAL) {
       checked = true;
       grade(nameEl.value.trim(), secEl.value, new Date(when), true);
