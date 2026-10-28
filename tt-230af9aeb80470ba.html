@@ -257,6 +257,9 @@
   .lc-day.today .lc-dnum { background: var(--today); color: #fff; padding: 0 6px; }
   .lc-day.holiday { background: var(--holiday); }
   .lc-hol { font-size: 0.8rem; font-weight: 600; color: #6b5a40; }
+  .lc-day.trip { background: #e6eef9; }
+  .lc-day.trip .lc-hol { color: #1a56b0; }
+  .lc-ev { font-size: 0.7rem; font-weight: 600; color: #5b2a86; background: #f1eaf8; border: 1px solid #d9c8ec; padding: 2px 6px; }
 
   .lc-les { --cc: var(--gray); --cci: #fff; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px; align-items: start;
             background: color-mix(in srgb, var(--cc) 16%, #fff); border: 1px solid color-mix(in srgb, var(--cc) 50%, var(--line)); border-left: 4px solid var(--cc); padding: 5px; }
@@ -454,6 +457,8 @@
     <span><i style="background:#2e8b57"></i> Learning experience added</span>
     <span><i style="background:#c0392b"></i> Lesson passed or today, still missing one</span>
     <span><i style="background:#ece7de"></i> Holiday</span>
+    <span><i style="background:#e6eef9"></i> Learning trip (no classes)</span>
+    <span><i style="background:#f1eaf8"></i> School event / assessments</span>
     <span>Click a lesson to type what you planned</span>
   </div>
 </section>
@@ -801,15 +806,58 @@
 
 <script>
 /* Monthly lesson calendar. Ticks are saved in this browser (localStorage).
-   To add holidays later, list them in HOLIDAYS as "YYYY-MM-DD": "Name". */
+   Days off and events come from the SIS AY 2026-27 Academic Calendar. */
 (function () {
   "use strict";
-  var HOLIDAYS = {
-    // "2026-11-09": "Diwali",
-  };
+  // Expand "YYYY-MM-DD" ranges (weekdays only) into a map.
+  function range(from, to, label, into) {
+    var d = new Date(from + "T12:00:00"), end = new Date(to + "T12:00:00");
+    while (d <= end) {
+      var dw = d.getDay();
+      if (dw !== 0 && dw !== 6) {
+        var k = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+        if (Array.isArray(into[k])) into[k].push(label); else if (into === EVENTS) into[k] = [label]; else into[k] = label;
+      }
+      d.setDate(d.getDate() + 1);
+    }
+  }
+
+  // No classes on these days. kind "trip" is styled differently from holidays.
+  var HOLIDAYS = {}, TRIPS = {}, EVENTS = {};
+  range("2026-11-09", "2026-11-09", "Diwali holiday", HOLIDAYS);
+  range("2026-12-07", "2026-12-07", "Annual Day holiday", HOLIDAYS);
+  range("2026-12-21", "2026-12-31", "Winter break", HOLIDAYS);
+  range("2027-01-01", "2027-01-01", "New Year's Day", HOLIDAYS);
+  range("2027-01-13", "2027-01-13", "Bhogi", HOLIDAYS);
+  range("2027-01-14", "2027-01-14", "Makar Sankranti", HOLIDAYS);
+  range("2027-03-10", "2027-03-10", "Eid-ul-Fitr", HOLIDAYS);
+  range("2027-03-22", "2027-03-26", "Mid-term break", HOLIDAYS);
+  range("2027-04-07", "2027-04-07", "Ugadi", HOLIDAYS);
+  range("2026-10-29", "2026-10-30", "Learning trips (MYP 1 – DP 2)", TRIPS);
+
+  // Notes shown on the day; lessons stay on the calendar.
+  range("2026-12-04", "2026-12-04", "Annual Day run-through (evening)", EVENTS);
+  range("2026-12-08", "2026-12-18", "Summative cycle (Secondary)", EVENTS);
+  range("2027-01-04", "2027-01-04", "School reopens", EVENTS);
+  range("2027-01-05", "2027-01-12", "MYP 4–5 assessments", EVENTS);
+  range("2027-01-18", "2027-01-18", "MYP 4–5 assessments", EVENTS);
+  range("2027-01-26", "2027-01-26", "Republic Day / Sports Day", EVENTS);
+  range("2027-02-19", "2027-02-19", "PP Exhibition", EVENTS);
+  range("2027-03-05", "2027-03-05", "Award ceremony · MYP 4 orientation", EVENTS);
+  range("2027-04-02", "2027-04-02", "Swimming Gala", EVENTS);
+  range("2027-04-05", "2027-04-05", "PYP–MYP transition day", EVENTS);
+  range("2027-04-16", "2027-04-16", "MYP IDU Showcase", EVENTS);
+  range("2027-05-03", "2027-05-06", "Year-end assessments (MYP 1–3 & 4)", EVENTS);
+  range("2027-05-07", "2027-05-07", "MYP 1–3 last working day", EVENTS);
+  range("2027-05-10", "2027-05-13", "MYP 4 year-end assessments", EVENTS);
+  range("2027-05-14", "2027-05-14", "MYP 4 last working day", EVENTS);
+
+  // Last day each class meets.
+  var CLASS_END = { "1B": "2027-05-07", "2A": "2027-05-07", "2D": "2027-05-07", "3B": "2027-05-07", "4B": "2027-05-14" };
+
   var START = "2026-10-26";          // new timetable starts
   var FIRST = 2026 * 12 + 9;         // Oct 2026
-  var LAST  = 2027 * 12 + 5;         // Jun 2027
+  var LAST  = 2027 * 12 + 4;         // May 2027
   var STORE = "dev-myp-lesson-ticks-v1";
 
   var CLASSES = {
@@ -823,11 +871,11 @@
   var WEEK = {
     1: [ { c: "4B", room: "IBG7",  p: "L1–2", t: "8.20–9.30" },
          { c: "1B", room: "IBG12", p: "L5–6", t: "10.50–12.00" },
-         { x: "DM Duty (DBF6)", p: "L8", t: "12.35–13.10" } ],
+         { x: "DM Duty (DBF6)", p: "L8", t: "12.35–13.10", end: "2027-05-14" } ],
     2: [ { c: "2D", room: "IBG10", p: "L1–2", t: "8.20–9.30" },
          { c: "2A", room: "IBG1",  p: "L3–4", t: "9.30–10.50" },
          { c: "3B", room: "IBF4",  p: "L5–6", t: "10.50–12.00" } ],
-    3: [ { x: "Homeroom MYP 2A", p: "L1", t: "8.20–8.55" },
+    3: [ { x: "Homeroom MYP 2A", p: "L1", t: "8.20–8.55", end: "2027-05-07" },
          { c: "4B", room: "IBG7",  p: "L3–4", t: "9.30–10.50" },
          { c: "1B", room: "IBG12", p: "L5–6", t: "10.50–12.00" } ],
     4: [ { c: "2A", room: "IBG1",  p: "L1–2", t: "8.20–9.30" },
@@ -876,15 +924,22 @@
       head.innerHTML = '<span class="lc-dnum">' + n + '</span><span class="lc-dname">' + DAYS[dow] + '</span><span class="lc-dmeta"></span>';
       cell.appendChild(head);
 
-      if (HOLIDAYS[k] != null) {
-        cell.className += " holiday";
-        var h = document.createElement("div"); h.className = "lc-hol"; h.textContent = HOLIDAYS[k] || "Holiday";
+      if (HOLIDAYS[k] != null || TRIPS[k] != null) {
+        var isTrip = HOLIDAYS[k] == null;
+        cell.className += isTrip ? " trip" : " holiday";
+        var h = document.createElement("div"); h.className = "lc-hol"; h.textContent = isTrip ? TRIPS[k] : HOLIDAYS[k];
         cell.appendChild(h); days.appendChild(cell); continue;
       }
       if (k < START) { cell.className += " quiet"; days.appendChild(cell); continue; }
 
+      (EVENTS[k] || []).forEach(function (txt) {
+        var ev = document.createElement("div"); ev.className = "lc-ev"; ev.textContent = txt;
+        cell.appendChild(ev);
+      });
+
       var shown = 0, dt = 0, dd = 0;
       (WEEK[dow] || []).forEach(function (s) {
+        if ((s.c && k > CLASS_END[s.c]) || (s.end && k > s.end)) return;
         if (s.x) {
           if (filter || onlyMissing) return;
           var o = document.createElement("div"); o.className = "lc-other";
@@ -902,7 +957,7 @@
         cell.appendChild(lessonEl(id, k, dow, s, rec, isDone, isDue)); shown++;
       });
       if (dt) head.querySelector(".lc-dmeta").textContent = dd + "/" + dt + " done";
-      if (!shown && k !== TODAY) cell.className += " quiet";
+      if (!shown && k !== TODAY && !EVENTS[k]) cell.className += " quiet";
       days.appendChild(cell);
     }
     var rem = days.children.length % 5;
