@@ -212,6 +212,92 @@
     th, td { font-size: 0.72rem; padding: 4px 2px; }
     .cell small { font-size: 0.64rem; }
   }
+
+  /* ---------- Monthly lesson calendar ---------- */
+  .lc { --done: #2e8b57; --due: #c0392b; --today: #1a56b0; --muted: #5d6670; --soft: #f6f7f9; --line: #c9ced4; --holiday: #ece7de;
+        max-width: 1200px; margin: 0 auto; display: grid; gap: 14px; }
+  .lc button { font: inherit; color: inherit; }
+  .lc :focus-visible { outline: 2px solid var(--today); outline-offset: 2px; }
+  .lc-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }
+  .lc-month { font-size: 1.3rem; font-weight: 700; }
+  .lc-nav { display: flex; gap: 6px; }
+  .lc-btn { border: 1px solid var(--border); background: #fff; padding: 6px 12px; cursor: pointer; font-size: 0.85rem; font-weight: 600; min-height: 34px; }
+  .lc-btn:hover { background: var(--soft); }
+  .lc-btn:disabled { opacity: 0.4; cursor: default; }
+  .lc-summary { background: #fff; border: 1px solid var(--border); padding: 12px 14px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 12px 24px; align-items: center; }
+  .lc-num { font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+  .lc-num small { font-size: 0.9rem; color: var(--muted); font-weight: 600; }
+  .lc-label { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+  .lc-bar { height: 7px; background: var(--soft); border: 1px solid var(--line); margin-top: 8px; }
+  .lc-bar i { display: block; height: 100%; width: 0; background: var(--done); }
+  .lc-due { margin-top: 6px; font-size: 0.8rem; font-weight: 600; color: var(--due); }
+  .lc-due.ok { color: var(--done); }
+  .lc-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .lc-chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--soft); padding: 4px 10px 4px 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; border-radius: 99px; }
+  .lc-chip .dot { width: 20px; height: 20px; border-radius: 50%; background: var(--cc); color: var(--cci); display: grid; place-items: center; font-size: 0.6rem; font-weight: 700; }
+  .lc-chip .ct { color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 500; }
+  .lc-chip[aria-pressed="true"] { background: #fff; border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .lc-tools { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; margin-top: 10px; font-size: 0.8rem; }
+  .lc-toggle { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+  .lc-toggle input { width: 16px; height: 16px; }
+  .lc-backup { display: flex; gap: 6px; align-items: center; color: var(--muted); }
+  .lc-backup .lc-btn { padding: 3px 9px; min-height: 28px; font-size: 0.75rem; }
+
+  .lc-grid { background: #fff; border: 1px solid var(--border); }
+  .lc-dow, .lc-days { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .lc-dow div { padding: 7px 10px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); background: #fafafa; }
+  .lc-day { min-height: 140px; padding: 6px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+  .lc-day:nth-child(5n) { border-right: 0; }
+  .lc-day.blank { background: var(--soft); }
+  .lc-dhead { display: flex; align-items: baseline; gap: 6px; }
+  .lc-dnum { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .lc-dname { display: none; font-size: 0.8rem; color: var(--muted); }
+  .lc-dmeta { margin-left: auto; font-size: 0.7rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lc-day.past .lc-dnum { color: var(--muted); }
+  .lc-day.today .lc-dnum { background: var(--today); color: #fff; padding: 0 6px; }
+  .lc-day.holiday { background: var(--holiday); }
+  .lc-hol { font-size: 0.8rem; font-weight: 600; color: #6b5a40; }
+
+  .lc-les { --cc: var(--gray); --cci: #fff; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px; align-items: start;
+            background: color-mix(in srgb, var(--cc) 16%, #fff); border: 1px solid color-mix(in srgb, var(--cc) 50%, var(--line)); border-left: 4px solid var(--cc); padding: 5px; }
+  .lc-les.done { background: #fff; border-color: var(--line); border-left-color: var(--done); }
+  .lc-les.due { border-color: color-mix(in srgb, var(--due) 50%, var(--line)); border-left-color: var(--due); }
+  .lc-tick { width: 22px; height: 22px; border: 1.5px solid #6b7280; background: #fff; display: grid; place-items: center; cursor: pointer; padding: 0; }
+  .lc-tick svg { width: 13px; height: 13px; opacity: 0; stroke: #fff; }
+  .lc-les.done .lc-tick { background: var(--done); border-color: var(--done); }
+  .lc-les.done .lc-tick svg { opacity: 1; }
+  .lc-les.due .lc-tick { border-color: var(--due); }
+  .lc-body { text-align: left; border: 0; background: none; padding: 0; cursor: pointer; min-width: 0; display: grid; gap: 1px; }
+  .lc-row { display: flex; flex-wrap: wrap; gap: 0 6px; align-items: baseline; }
+  .lc-cls { font-weight: 700; font-size: 0.8rem; }
+  .lc-time { font-size: 0.68rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .lc-title { font-size: 0.75rem; color: var(--muted); overflow-wrap: anywhere; }
+  .lc-les.done .lc-title { color: var(--ink); }
+  .lc-title.add { font-style: italic; }
+  .lc-les.due .lc-title.add { color: var(--due); font-style: normal; font-weight: 600; }
+  .lc-other { font-size: 0.72rem; color: var(--muted); display: flex; gap: 6px; flex-wrap: wrap; }
+  .lc-key { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 0.78rem; color: var(--muted); justify-content: center; }
+  .lc-key span { display: inline-flex; gap: 6px; align-items: center; }
+  .lc-key i { width: 12px; height: 12px; display: inline-block; border: 1px solid #333; }
+
+  .lc-scrim { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: grid; place-items: center; padding: 16px; z-index: 20; }
+  .lc-scrim[hidden] { display: none; }
+  .lc-sheet { width: min(440px, 100%); background: #fff; border: 1px solid var(--border); padding: 18px; display: grid; gap: 12px; }
+  .lc-sheet h3 { margin: 0; font-size: 1.1rem; }
+  .lc-sheet .sub { font-size: 0.8rem; color: #5d6670; margin-top: 2px; }
+  .lc-sheet label.f { font-size: 0.82rem; font-weight: 700; }
+  .lc-sheet textarea { font: inherit; font-size: 0.9rem; border: 1px solid #c9ced4; padding: 8px; min-height: 90px; width: 100%; resize: vertical; }
+  .lc-actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .lc-btn.primary { background: #1a56b0; color: #fff; border-color: #1a56b0; }
+
+  @media (max-width: 760px) {
+    .lc-summary { grid-template-columns: minmax(0, 1fr); }
+    .lc-dow { display: none; }
+    .lc-days { grid-template-columns: minmax(0, 1fr); }
+    .lc-day { min-height: 0; border-right: 0; padding: 10px; }
+    .lc-day.blank, .lc-day.quiet { display: none; }
+    .lc-dname { display: inline; }
+  }
 </style>
 </head>
 <body>
@@ -324,6 +410,68 @@
   <span><i class="swatch" style="background:var(--yellow)"></i> MYP 4B (IBG7)</span>
   <span><i class="swatch" style="background:var(--purple)"></i> DM Duty (DBF6)</span>
   <span><i class="swatch" style="background:var(--break)"></i> Morning Break / Lunch</span>
+</div>
+
+<!-- MONTHLY LESSON CALENDAR -->
+<h2>Lesson calendar — learning experiences</h2>
+
+<section class="lc" id="lc">
+  <div class="lc-top">
+    <div class="lc-month" id="lcMonth">October 2026</div>
+    <div class="lc-nav">
+      <button class="lc-btn" id="lcPrev" aria-label="Previous month">&#8249; Prev</button>
+      <button class="lc-btn" id="lcNow">This month</button>
+      <button class="lc-btn" id="lcNext" aria-label="Next month">Next &#8250;</button>
+    </div>
+  </div>
+
+  <div class="lc-summary">
+    <div>
+      <div class="lc-num" id="lcNum">0<small> / 0</small></div>
+      <div class="lc-label">lessons with a learning experience added this month</div>
+      <div class="lc-bar"><i id="lcBar"></i></div>
+      <div class="lc-due" id="lcDue"></div>
+    </div>
+    <div>
+      <div class="lc-chips" id="lcChips"></div>
+      <div class="lc-tools">
+        <label class="lc-toggle"><input type="checkbox" id="lcMissing"> Show only lessons still missing a learning experience</label>
+        <span class="lc-backup">
+          <button class="lc-btn" id="lcExport" title="Save your ticks to a file">Back up ticks</button>
+          <button class="lc-btn" id="lcImport" title="Load ticks from a backup file">Restore</button>
+          <input type="file" id="lcFile" accept=".json,application/json" hidden>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lc-grid">
+    <div class="lc-dow"><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div></div>
+    <div class="lc-days" id="lcDays"></div>
+  </div>
+
+  <div class="lc-key">
+    <span><i style="background:#2e8b57"></i> Learning experience added</span>
+    <span><i style="background:#c0392b"></i> Lesson passed or today, still missing one</span>
+    <span><i style="background:#ece7de"></i> Holiday</span>
+    <span>Click a lesson to type what you planned</span>
+  </div>
+</section>
+
+<div class="lc-scrim" id="lcScrim" hidden>
+  <div class="lc-sheet" role="dialog" aria-modal="true" aria-labelledby="lcSheetTitle">
+    <div>
+      <h3 id="lcSheetTitle">MYP 4B</h3>
+      <div class="sub" id="lcSheetSub"></div>
+    </div>
+    <label class="f" for="lcText">Learning experience</label>
+    <textarea id="lcText" placeholder="e.g. Criterion B — sketching three design ideas with annotations"></textarea>
+    <label class="lc-toggle"><input type="checkbox" id="lcDone"> Learning experience added for this lesson</label>
+    <div class="lc-actions">
+      <button class="lc-btn" id="lcCancel">Cancel</button>
+      <button class="lc-btn primary" id="lcSave">Save</button>
+    </div>
+  </div>
 </div>
 
 <!-- OLD TIMETABLE (until 23 Oct 2026) -->
@@ -650,6 +798,210 @@
   </div>
 
 </div>
+
+<script>
+/* Monthly lesson calendar. Ticks are saved in this browser (localStorage).
+   To add holidays later, list them in HOLIDAYS as "YYYY-MM-DD": "Name". */
+(function () {
+  "use strict";
+  var HOLIDAYS = {
+    // "2026-11-09": "Diwali",
+  };
+  var START = "2026-10-26";          // new timetable starts
+  var FIRST = 2026 * 12 + 9;         // Oct 2026
+  var LAST  = 2027 * 12 + 5;         // Jun 2027
+  var STORE = "dev-myp-lesson-ticks-v1";
+
+  var CLASSES = {
+    "1B": { name: "MYP 1B", cc: "var(--blue)",   ink: "#fff" },
+    "2A": { name: "MYP 2A", cc: "var(--pink)",   ink: "#3a1424" },
+    "2D": { name: "MYP 2D", cc: "var(--teal)",   ink: "#fff" },
+    "3B": { name: "MYP 3B", cc: "var(--orange)", ink: "#4a2600" },
+    "4B": { name: "MYP 4B", cc: "var(--yellow)", ink: "#3a3600" }
+  };
+  var ORDER = ["1B", "2A", "2D", "3B", "4B"];
+  var WEEK = {
+    1: [ { c: "4B", room: "IBG7",  p: "L1–2", t: "8.20–9.30" },
+         { c: "1B", room: "IBG12", p: "L5–6", t: "10.50–12.00" },
+         { x: "DM Duty (DBF6)", p: "L8", t: "12.35–13.10" } ],
+    2: [ { c: "2D", room: "IBG10", p: "L1–2", t: "8.20–9.30" },
+         { c: "2A", room: "IBG1",  p: "L3–4", t: "9.30–10.50" },
+         { c: "3B", room: "IBF4",  p: "L5–6", t: "10.50–12.00" } ],
+    3: [ { x: "Homeroom MYP 2A", p: "L1", t: "8.20–8.55" },
+         { c: "4B", room: "IBG7",  p: "L3–4", t: "9.30–10.50" },
+         { c: "1B", room: "IBG12", p: "L5–6", t: "10.50–12.00" } ],
+    4: [ { c: "2A", room: "IBG1",  p: "L1–2", t: "8.20–9.30" },
+         { c: "2D", room: "IBG9",  p: "L3–4", t: "9.30–10.50" } ],
+    5: [ { c: "3B", room: "IBF4",  p: "L1–2", t: "8.20–9.30" } ]
+  };
+  var MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var DAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  var TICK = '<svg viewBox="0 0 16 16" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 6.5 12 13 4.5"/></svg>';
+
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function key(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function $(id) { return document.getElementById(id); }
+
+  var now = new Date(), TODAY = key(now);
+  var cur = Math.min(LAST, Math.max(FIRST, now.getFullYear() * 12 + now.getMonth()));
+  var ticks = {};
+  try { ticks = JSON.parse(localStorage.getItem(STORE) || "{}") || {}; } catch (e) { ticks = {}; }
+  var filter = null, onlyMissing = false, editing = null;
+
+  function persist() { try { localStorage.setItem(STORE, JSON.stringify(ticks)); } catch (e) {} }
+  function setTick(id, rec) {
+    if (!rec.done && !rec.title) delete ticks[id]; else ticks[id] = rec;
+    persist(); render();
+  }
+
+  function render() {
+    var y = Math.floor(cur / 12), m = cur % 12;
+    $("lcMonth").textContent = MONTHS[m] + " " + y;
+    $("lcPrev").disabled = cur <= FIRST;
+    $("lcNext").disabled = cur >= LAST;
+
+    var days = $("lcDays"); days.textContent = "";
+    var last = new Date(y, m + 1, 0, 12).getDate();
+    var started = false, total = 0, done = 0, due = 0, per = {};
+    ORDER.forEach(function (c) { per[c] = { t: 0, d: 0 }; });
+
+    for (var n = 1; n <= last; n++) {
+      var d = new Date(y, m, n, 12), dow = d.getDay();
+      if (dow === 0 || dow === 6) continue;
+      if (!started) { started = true; for (var b = 1; b < dow; b++) days.appendChild(blank()); }
+      var k = key(d);
+      var cell = document.createElement("div");
+      cell.className = "lc-day" + (k === TODAY ? " today" : "") + (k < TODAY ? " past" : "");
+      var head = document.createElement("div"); head.className = "lc-dhead";
+      head.innerHTML = '<span class="lc-dnum">' + n + '</span><span class="lc-dname">' + DAYS[dow] + '</span><span class="lc-dmeta"></span>';
+      cell.appendChild(head);
+
+      if (HOLIDAYS[k] != null) {
+        cell.className += " holiday";
+        var h = document.createElement("div"); h.className = "lc-hol"; h.textContent = HOLIDAYS[k] || "Holiday";
+        cell.appendChild(h); days.appendChild(cell); continue;
+      }
+      if (k < START) { cell.className += " quiet"; days.appendChild(cell); continue; }
+
+      var shown = 0, dt = 0, dd = 0;
+      (WEEK[dow] || []).forEach(function (s) {
+        if (s.x) {
+          if (filter || onlyMissing) return;
+          var o = document.createElement("div"); o.className = "lc-other";
+          o.innerHTML = "<span></span><span class=\"lc-time\"></span>";
+          o.firstChild.textContent = s.x; o.lastChild.textContent = s.p + " · " + s.t;
+          cell.appendChild(o); shown++; return;
+        }
+        var id = k + "_" + s.c, rec = ticks[id] || {};
+        var isDone = !!rec.done, isDue = !isDone && k <= TODAY;
+        total++; dt++; per[s.c].t++;
+        if (isDone) { done++; dd++; per[s.c].d++; }
+        if (isDue) due++;
+        if (filter && filter !== s.c) return;
+        if (onlyMissing && isDone) return;
+        cell.appendChild(lessonEl(id, k, dow, s, rec, isDone, isDue)); shown++;
+      });
+      if (dt) head.querySelector(".lc-dmeta").textContent = dd + "/" + dt + " done";
+      if (!shown && k !== TODAY) cell.className += " quiet";
+      days.appendChild(cell);
+    }
+    var rem = days.children.length % 5;
+    if (rem) for (var r = rem; r < 5; r++) days.appendChild(blank());
+
+    $("lcNum").innerHTML = done + "<small> / " + total + "</small>";
+    $("lcBar").style.width = total ? (done / total * 100) + "%" : "0";
+    var dl = $("lcDue");
+    if (!total) { dl.textContent = ""; }
+    else if (due) { dl.className = "lc-due"; dl.textContent = due + (due === 1 ? " lesson" : " lessons") + " up to today still need a learning experience"; }
+    else { dl.className = "lc-due ok"; dl.textContent = "Everything up to today is covered"; }
+
+    var chips = $("lcChips"); chips.textContent = "";
+    ORDER.forEach(function (c) {
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "lc-chip";
+      btn.setAttribute("aria-pressed", filter === c ? "true" : "false");
+      btn.style.setProperty("--cc", CLASSES[c].cc); btn.style.setProperty("--cci", CLASSES[c].ink);
+      btn.innerHTML = '<span class="dot">' + c + '</span>' + CLASSES[c].name + ' <span class="ct">' + per[c].d + "/" + per[c].t + "</span>";
+      btn.addEventListener("click", function () { filter = filter === c ? null : c; render(); });
+      chips.appendChild(btn);
+    });
+  }
+
+  function blank() { var e = document.createElement("div"); e.className = "lc-day blank"; return e; }
+
+  function lessonEl(id, k, dow, s, rec, isDone, isDue) {
+    var el = document.createElement("div");
+    el.className = "lc-les" + (isDone ? " done" : "") + (isDue ? " due" : "");
+    el.style.setProperty("--cc", CLASSES[s.c].cc);
+    var tick = document.createElement("button");
+    tick.type = "button"; tick.className = "lc-tick"; tick.innerHTML = TICK;
+    tick.setAttribute("aria-pressed", isDone ? "true" : "false");
+    tick.setAttribute("aria-label", (isDone ? "Unmark " : "Mark ") + CLASSES[s.c].name + " on " + k);
+    tick.addEventListener("click", function () { setTick(id, { done: !isDone, title: rec.title || "" }); });
+    var body = document.createElement("button");
+    body.type = "button"; body.className = "lc-body";
+    body.innerHTML = '<span class="lc-row"><span class="lc-cls"></span><span class="lc-time"></span></span><span class="lc-title"></span>';
+    body.querySelector(".lc-cls").textContent = CLASSES[s.c].name;
+    body.querySelector(".lc-time").textContent = s.p + " · " + s.t;
+    var tt = body.querySelector(".lc-title");
+    if (rec.title) tt.textContent = rec.title;
+    else { tt.textContent = isDone ? "Added" : "Add learning experience"; tt.className += " add"; }
+    body.addEventListener("click", function () { openSheet(id, k, dow, s, rec); });
+    el.appendChild(tick); el.appendChild(body);
+    return el;
+  }
+
+  function openSheet(id, k, dow, s, rec) {
+    editing = id;
+    var d = new Date(k + "T12:00:00");
+    $("lcSheetTitle").textContent = CLASSES[s.c].name + " · " + DAYS[dow] + " " + d.getDate() + " " + MONTHS[d.getMonth()].slice(0, 3);
+    $("lcSheetSub").textContent = s.p + " · " + s.t + " · " + s.room;
+    $("lcText").value = rec.title || "";
+    $("lcDone").checked = !!rec.done;
+    $("lcScrim").hidden = false;
+    setTimeout(function () { $("lcText").focus(); }, 0);
+  }
+  function closeSheet() { $("lcScrim").hidden = true; editing = null; }
+
+  $("lcText").addEventListener("input", function () { if (this.value.trim()) $("lcDone").checked = true; });
+  $("lcCancel").addEventListener("click", closeSheet);
+  $("lcScrim").addEventListener("click", function (e) { if (e.target === this) closeSheet(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("lcScrim").hidden) closeSheet(); });
+  $("lcSave").addEventListener("click", function () {
+    if (editing) setTick(editing, { done: $("lcDone").checked, title: $("lcText").value.trim() });
+    closeSheet();
+  });
+
+  $("lcPrev").addEventListener("click", function () { if (cur > FIRST) { cur--; render(); } });
+  $("lcNext").addEventListener("click", function () { if (cur < LAST) { cur++; render(); } });
+  $("lcNow").addEventListener("click", function () { cur = Math.min(LAST, Math.max(FIRST, now.getFullYear() * 12 + now.getMonth())); render(); });
+  $("lcMissing").addEventListener("change", function () { onlyMissing = this.checked; render(); });
+
+  $("lcExport").addEventListener("click", function () {
+    var blob = new Blob([JSON.stringify(ticks, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "lesson-ticks-" + TODAY + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+  $("lcImport").addEventListener("click", function () { $("lcFile").click(); });
+  $("lcFile").addEventListener("change", function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        if (data && typeof data === "object") { ticks = data; persist(); render(); }
+      } catch (e) { $("lcDue").textContent = "That file isn't a lesson-ticks backup."; }
+    };
+    reader.readAsText(f);
+    this.value = "";
+  });
+
+  render();
+})();
+</script>
 
 </body>
 </html>
