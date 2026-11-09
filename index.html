@@ -806,6 +806,7 @@ body::before{
       <a href="myp4-5/frameworks.html">Frameworks</a>
       <a href="appendix-citations.html">MLA 9 &amp; appendix</a>
     </div>
+    <span id="visits" hidden></span>
   </div>
 </footer>
 
@@ -821,6 +822,38 @@ body::before{
 <script src="assets/search-index.js"></script>
 <script>
 (function(){
+  // visit counter in the footer: total visits and today's, each browser counted once per day (India time).
+  // Uses a free counting service (no account); if it is unreachable the line simply stays hidden.
+  (function(){
+    var el = document.getElementById('visits');
+    if(!el || !window.fetch || !window.Promise) return;
+    var API = 'https://abacus.jasoncameron.dev';
+    // local testing counts into its own namespace, so it never inflates the live numbers
+    var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+    var NS = local ? 'myp-design-digital-dev' : 'myp-design-digital';
+    var KEY = 'myp-visit-day';
+    var day;
+    try { day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date()); }
+    catch(e){ day = new Date().toISOString().slice(0, 10); }
+    var counted = false;
+    try { counted = localStorage.getItem(KEY) === day; } catch(e){}
+    var isBot = /bot|crawl|spider/i.test(navigator.userAgent);
+    var action = (counted || isBot) ? 'get' : 'hit';
+
+    function read(key){
+      return fetch(API + '/' + action + '/' + NS + '/' + key)
+        .then(function(res){ return res.ok ? res.json() : { value: 0 }; })
+        .then(function(data){ return data.value || 0; });
+    }
+
+    Promise.all([read('total'), read('day-' + day)]).then(function(v){
+      if(action === 'hit'){ try { localStorage.setItem(KEY, day); } catch(e){} }
+      var total = v[0].toLocaleString('en-IN');
+      el.textContent = total + (v[0] === 1 ? ' visit' : ' visits') + ' · ' + v[1].toLocaleString('en-IN') + ' today';
+      el.hidden = false;
+    })['catch'](function(){});
+  })();
+
   // back-to-top with scroll progress ring
   (function(){
     var btn = document.getElementById('totop');
