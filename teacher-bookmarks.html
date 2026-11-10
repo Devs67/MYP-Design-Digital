@@ -51,6 +51,16 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .links i{font-family:var(--mono);font-size:10.5px;font-style:normal;color:var(--slate)}
 .links .note{flex:0 0 100%;font-size:13.5px;line-height:1.5;color:var(--slate)}
 .links .pick a::before{content:"\2605";color:var(--dev);margin-right:6px;display:inline-block}
+[hidden]{display:none!important}
+
+.search{margin:24px 0 0;max-width:560px}
+.search label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--slate);margin:0 0 8px}
+.search input{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--card);
+  border:1px solid var(--rule);border-radius:12px;padding:12px 16px}
+.search input:focus{outline:none;border-color:var(--dev);box-shadow:0 0 0 3px rgba(106,76,147,.18)}
+.search p{margin:8px 0 0;font-family:var(--mono);font-size:11px;color:var(--slate)}
+.noresults{margin:0 0 24px;color:var(--slate)}
 
 footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
   font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
@@ -98,6 +108,11 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
     <p class="eyebrow">Teacher only &middot; not linked from the site</p>
     <h1>Teacher bookmarks</h1>
     <p class="sub">Planning and design references for the Design Team. Every link opens in a new tab. <span style="color:var(--dev)">&#9733;</span> marks a top pick.</p>
+    <div class="search" id="search" hidden>
+      <label for="q">Search bookmarks</label>
+      <input type="search" id="q" placeholder="Try &ldquo;colour&rdquo;, &ldquo;Arduino&rdquo; or &ldquo;Criterion A&rdquo;" autocomplete="off">
+      <p id="qcount" aria-live="polite"></p>
+    </div>
     <div class="group" style="margin:24px 0 0">
       <h3>Hidden pages on this site</h3>
       <ul class="links">
@@ -106,6 +121,8 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
     </div>
   </div>
 </header>
+
+<div class="wrap"><p class="noresults" id="noresults" hidden>No bookmarks match that search.</p></div>
 
 <section class="sec">
   <div class="wrap">
@@ -321,6 +338,7 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
         <li class="pick"><a href="https://wokwi.com/" target="_blank" rel="noopener noreferrer">Wokwi &ndash; Arduino / ESP32 simulator</a><i>wokwi.com</i><span class="note">Runs in the browser, so students don&rsquo;t need hardware.</span></li>
         <li><a href="https://docs.wokwi.com/" target="_blank" rel="noopener noreferrer">Wokwi &ndash; Docs</a><i>docs.wokwi.com</i></li>
         <li><a href="https://benchtwin.com/" target="_blank" rel="noopener noreferrer">BenchTwin &ndash; 3D electronics and robotics simulator</a><i>benchtwin.com</i><span class="note">Wire parts on a 3D bench and run Arduino, ESP32, SPIKE or VEX code in the browser.</span></li>
+        <li><a href="https://benchtwin.com/#app" target="_blank" rel="noopener noreferrer">BenchTwin &ndash; Open the app</a><i>benchtwin.com</i></li>
         <li><a href="https://microbit.org/teach/" target="_blank" rel="noopener noreferrer">micro:bit &ndash; Teach</a><i>microbit.org</i></li>
         <li><a href="https://www.arduino.cc/education" target="_blank" rel="noopener noreferrer">Arduino Education</a><i>arduino.cc</i></li>
         <li><a href="https://phet.colorado.edu/en/simulations/circuit-construction-kit-dc" target="_blank" rel="noopener noreferrer">PhET &ndash; Circuit Construction Kit</a><i>phet.colorado.edu</i></li>
@@ -356,5 +374,61 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
 </footer>
 
 <script src="assets/theme.js"></script>
+<script>
+(function () {
+  var box = document.getElementById('search');
+  var input = document.getElementById('q');
+  var count = document.getElementById('qcount');
+  var empty = document.getElementById('noresults');
+  if (!box || !input || !count || !empty) return;
+
+  var items = document.querySelectorAll('.links li');
+  var groups = document.querySelectorAll('.group');
+  var sections = document.querySelectorAll('section.sec');
+  var total = items.length;
+
+  // British and US spellings match each other (colour/color)
+  function norm(s) { return s.toLowerCase().replace(/colour/g, 'color'); }
+
+  // Each link is searchable by its name, website, note and group heading
+  var text = [];
+  for (var i = 0; i < items.length; i++) {
+    var g = items[i].parentNode && items[i].parentNode.parentNode;
+    var h = g ? g.querySelector('h3') : null;
+    text.push(norm((items[i].textContent || '') + ' ' + (h ? h.textContent : '')));
+  }
+
+  function hasVisible(el, sel) {
+    var kids = el.querySelectorAll(sel);
+    for (var k = 0; k < kids.length; k++) { if (!kids[k].hidden) return true; }
+    return false;
+  }
+
+  function run() {
+    var words = norm(input.value).split(/\s+/).filter(function (w) { return w; });
+    var shown = 0;
+    for (var i = 0; i < items.length; i++) {
+      var match = true;
+      for (var w = 0; w < words.length; w++) {
+        if (text[i].indexOf(words[w]) === -1) { match = false; break; }
+      }
+      items[i].hidden = !match;
+      if (match) shown++;
+    }
+    for (var j = 0; j < groups.length; j++) groups[j].hidden = !hasVisible(groups[j], '.links li');
+    for (var s = 0; s < sections.length; s++) sections[s].hidden = !hasVisible(sections[s], '.group');
+    count.textContent = words.length ? shown + ' of ' + total + ' links' : '';
+    empty.hidden = shown !== 0;
+  }
+
+  try {
+    box.hidden = false;
+    input.addEventListener('input', run);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { input.value = ''; run(); }
+    });
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
