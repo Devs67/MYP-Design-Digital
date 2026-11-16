@@ -92,7 +92,7 @@
     <input type="text" id="g_class" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-gramm="false">
     <h3 style="margin-top:18px">Rules of this online task</h3>
     <ul>
-      <li>The task opens in <b>full screen</b>. You must stay on this page until you press <b>Submit</b>.</li>
+      <li id="g_rule_fs">The task opens in <b>full screen</b>. You must stay on this page until you press <b>Submit</b>.</li>
       <li>If you switch tabs, open another window or leave full screen, it is <b>recorded</b> with the time and shown on your submitted PDF.</li>
       <li>Your answers save automatically on this device. Spell-check and auto-correct are switched off: write in your own words.</li>
       <li>After submitting, you can no longer edit. Save your work as a <b>PDF</b> and hand it in as your teacher instructs.</li>
@@ -338,12 +338,16 @@ function onReturn(){
   el("away").classList.add("show");
 }
 document.addEventListener("visibilitychange",function(){document.hidden?onLeave():onReturn()});
-window.addEventListener("blur",onLeave);
+/* iPads and phones: the on-screen keyboard breaks full screen and fires false blur
+   events, so there only switching apps or tabs (visibilitychange) is recorded. */
+var MOBILE=/iPad|iPhone|iPod|Android/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+window.addEventListener("blur",function(){if(!MOBILE)onLeave()});
+if(MOBILE)el("g_rule_fs").innerHTML="You must stay on this page until you press <b>Submit</b>. (Full screen is not used on iPad, because it stops you typing.)";
 window.addEventListener("focus",onReturn);
 el("away_ok").onclick=function(){el("away").classList.remove("show");goFull()};
 
 /* Standard API plus the webkit-prefixed one older iPads (iPadOS 12 to 16.3) use */
-function fsEnabled(){return !!(document.fullscreenEnabled||document.webkitFullscreenEnabled)}
+function fsEnabled(){return !MOBILE&&!!(document.fullscreenEnabled||document.webkitFullscreenEnabled)}
 function fsElement(){return document.fullscreenElement||document.webkitFullscreenElement||null}
 function goFull(){
   var d=document.documentElement;
