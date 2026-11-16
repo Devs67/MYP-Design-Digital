@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MYP Design – Criterion D: Writing Evaluative Statements</title>
+<style>
+  :root{--orange:#e8710a;--teal:#4aa8a0;--ink:#1c1c1c;--muted:#5c5c5c;--line:#d9d9d9;--bg:#f6f6f3;--card:#fff;--warn:#b3261e}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+  h1,h2,h3{font-family:"Arial Narrow",Arial,sans-serif;color:var(--orange);line-height:1.2;margin:0 0 .5em}
+  h1{font-size:2rem} h2{font-size:1.5rem;margin-top:0} h3{font-size:1.1rem;color:var(--ink)}
+  main{max-width:900px;margin:0 auto;padding:16px 16px 80px}
+  .card{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--teal);border-radius:8px;padding:20px 22px;margin:20px 0}
+  .card.example{border-top-color:var(--orange)}
+  .topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:3px solid var(--teal);padding:8px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .topbar .t{font-weight:bold;color:var(--orange)}
+  .topbar .sp{flex:1}
+  .pill{font-size:.8rem;border:1px solid var(--line);border-radius:99px;padding:3px 10px;background:#fafafa}
+  .pill.bad{border-color:var(--warn);color:var(--warn);background:#fdeceb}
+  button{font:inherit;cursor:pointer;border-radius:6px;border:1px solid var(--teal);background:#fff;color:#126b64;padding:7px 14px}
+  button:hover{background:#eef8f7}
+  button.primary{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:bold}
+  button.primary:hover{background:#c85f05}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  table{border-collapse:collapse;margin:10px 0;min-width:260px;max-width:100%}
+  th,td{border:1px solid #bbb;padding:6px 12px;text-align:left}
+  th{background:#eef8f7}
+  .meta{display:grid;grid-template-columns:140px 1fr;gap:4px 12px;margin:8px 0}
+  .meta b{color:var(--muted)}
+  .step{border-left:4px solid var(--teal);padding:2px 0 2px 14px;margin:14px 0}
+  .step h3{margin-bottom:.2em}
+  .calc{font-family:"Courier New",monospace;background:#f4f4f1;padding:8px 12px;border-radius:5px;overflow-wrap:anywhere}
+  .statement{background:#fff7ee;border:1px solid #f1c79b;border-radius:6px;padding:12px 14px}
+  .checklist li{margin:4px 0}
+  label.q{display:block;font-weight:bold;margin:16px 0 4px}
+  .hint{font-size:.88rem;color:var(--muted);margin:0 0 6px}
+  textarea,input[type=text]{width:100%;font:inherit;border:1px solid #999;border-radius:6px;padding:9px 11px;background:#fff;color:var(--ink);
+    white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word}
+  textarea{resize:vertical;min-height:90px;overflow:hidden}
+  textarea:focus,input:focus{outline:3px solid #bfe3df;border-color:var(--teal)}
+  textarea[readonly],input[readonly]{background:#f3f3f3}
+  .wc{font-size:.8rem;color:var(--muted);text-align:right}
+  .verdict label{margin-right:18px;font-weight:normal}
+  .selfcheck{background:#f4fbfa;border:1px dashed var(--teal);border-radius:6px;padding:8px 14px;margin-top:10px}
+  .selfcheck label{display:block}
+  .mirror{display:none}
+  /* overlays */
+  .ov{position:fixed;inset:0;z-index:100;background:rgba(20,20,20,.92);display:none;align-items:center;justify-content:center;padding:20px}
+  .ov.show{display:flex}
+  .ov .box{background:#fff;border-radius:10px;padding:26px 30px;max-width:620px;width:100%;max-height:92vh;overflow:auto}
+  .ov.gate{background:var(--bg);overflow:auto;align-items:flex-start}
+  .ov.gate .box{margin:30px auto;border-top:6px solid var(--orange)}
+  .ov h2{margin-bottom:.4em}
+  .warn{color:var(--warn)}
+  .banner{display:none;background:#e9f7ef;border:1px solid #8fd1a8;border-radius:8px;padding:14px 18px;margin:16px 0}
+  body.submitted .banner{display:block}
+  .printhead,.integrity{display:none}
+  .integrity{font-size:.85rem}
+  .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .small{font-size:.85rem;color:var(--muted)}
+
+  @media print{
+    @page{size:A4;margin:14mm}
+    body{background:#fff;font-size:11pt}
+    .topbar,.ov,.hint,.wc,.noprint,.selfcheck input{display:none!important}
+    .banner{display:none!important}
+    main{max-width:none;padding:0}
+    .card{border:1px solid #999;border-top:4px solid #444;break-inside:auto;margin:12px 0;padding:12px 14px}
+    .step,.statement,table{break-inside:avoid}
+    textarea{display:none!important}
+    .mirror{display:block;white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;border:1px solid #888;border-radius:4px;padding:8px 10px;min-height:40px;background:#fff}
+    .printhead{display:block;border-bottom:2px solid #444;margin-bottom:10px;padding-bottom:6px}
+    .printhead h1{color:#000;font-size:18pt}
+    .integrity{display:block;border:1px solid #888;padding:8px 12px;margin-top:16px;break-inside:avoid}
+    input[type=text]{border:none;padding:0}
+    h1,h2{color:#000}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ START / RESUME GATE ============ -->
+<div id="gate" class="ov gate show" role="dialog" aria-modal="true">
+  <div class="box">
+    <h1>Criterion D: Writing Evaluative Statements</h1>
+    <p>MYP Design · Task sheet with worked examples and five case studies</p>
+    <label class="q" for="g_name">Full name</label>
+    <input type="text" id="g_name" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-gramm="false">
+    <label class="q" for="g_class">Class / Section</label>
+    <input type="text" id="g_class" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-gramm="false">
+    <h3 style="margin-top:18px">Rules of this online task</h3>
+    <ul>
+      <li>The task opens in <b>full screen</b>. You must stay on this page until you press <b>Submit</b>.</li>
+      <li>If you switch tabs, open another window or leave full screen, it is <b>recorded</b> with the time and shown on your submitted PDF.</li>
+      <li>Your answers save automatically on this device. Spell-check and auto-correct are switched off: write in your own words.</li>
+      <li>After submitting, you can no longer edit. Save your work as a <b>PDF</b> and hand it in as your teacher instructs.</li>
+    </ul>
+    <label style="display:block;margin:12px 0"><input type="checkbox" id="g_agree"> I have read and understood these rules.</label>
+    <button class="primary" id="g_start" disabled>Start task</button>
+    <p class="small" id="g_note"></p>
+    <p class="small" id="g_reset" style="display:none">Not you? <button type="button" id="g_resetBtn">Start a new task on this device</button></p>
+  </div>
+</div>
+
+<!-- ============ LEFT-PAGE WARNING ============ -->
+<div id="away" class="ov" role="alertdialog" aria-modal="true">
+  <div class="box">
+    <h2 class="warn">You left the task page</h2>
+    <p id="away_msg"></p>
+    <p>This has been recorded. Stay on this page until you submit.</p>
+    <button class="primary" id="away_ok">Return to the task</button>
+  </div>
+</div>
+
+<!-- ============ FULLSCREEN EXIT ============ -->
+<div id="fs" class="ov" role="alertdialog" aria-modal="true">
+  <div class="box">
+    <h2 class="warn">Full screen was closed</h2>
+    <p>The task must stay in full screen until you submit. This has been recorded.</p>
+    <button class="primary" id="fs_ok">Return to full screen</button>
+  </div>
+</div>
+
+<!-- ============ SUBMIT CONFIRM ============ -->
+<div id="confirm" class="ov" role="dialog" aria-modal="true">
+  <div class="box">
+    <h2>Submit your task?</h2>
+    <p id="confirm_msg"></p>
+    <p><b>After submitting you cannot change your answers.</b></p>
+    <div class="row">
+      <button id="confirm_no">Go back</button>
+      <button class="primary" id="confirm_yes">Yes, submit</button>
+    </div>
+  </div>
+</div>
+
+<div class="topbar" id="topbar">
+  <span class="t">Criterion D · Evaluative Statements</span>
+  <span class="pill" id="who"></span>
+  <span class="pill" id="timer">00:00</span>
+  <span class="pill" id="focusPill">Focus warnings: 0</span>
+  <span class="sp"></span>
+  <button id="btnPdf" title="Downloads your answers as a PDF file">Save as PDF</button>
+  <button id="btnPrint" class="noprint" title="Backup option: opens the print window">Print view</button>
+  <button class="primary" id="btnSubmit">Submit</button>
+</div>
+
+<div id="pdfmsg" class="noprint" style="display:none;background:#fff8e1;border-bottom:1px solid #e6c65c;padding:8px 16px;font-size:.9rem"></div>
+<main id="main">
+  <div class="printhead">
+    <h1>MYP Design – Criterion D: Writing Evaluative Statements</h1>
+    <div id="ph_info"></div>
+  </div>
+
+  <div class="banner" id="banner">
+    <b>Task submitted.</b> <span id="banner_time"></span><br>
+    Your answers are locked. Press <b>Save as PDF</b> (top bar) to download your answers, then hand in the file as your teacher instructs.
+    <div class="row noprint">Next student on this device? <button type="button" id="resetBtn2">Clear and start a new task</button></div>
+  </div>
+
+  <section class="card" style="border-top-color:var(--orange)">
+    <h1>Writing Evaluative Statements</h1>
+    <p><b>Criterion D, Strand ii:</b> Analyse the data collected through authentic testing and critically evaluate the success of the solution against the design specification using mathematical tools.</p>
+    <p><b>Analyse:</b> break down to bring out the essential elements, identify parts and relationships, and interpret information to reach conclusions. <b>Evaluate:</b> make an appraisal by weighing up strengths and limitations.</p>
+    <p>First <b>study the two worked examples</b>. Then complete the <b>five case studies</b>. In each one you must show your calculation, compare it with the specification, and write your own evaluative statement.</p>
+    <p class="small">Tip: you can scroll back to the worked examples at any time.</p>
+  </section>
+
+  <!-- ================= WORKED EXAMPLES ================= -->
+  <section class="card example" id="examples">
+    <h2>Worked Examples: How to Write an Evaluative Statement</h2>
+    <p>Study the following two examples before attempting the case studies. Notice how the mathematical calculations are used as evidence to evaluate the success of a solution against its design specification.</p>
+
+    <h2 style="font-size:1.25rem;margin-top:22px">Example 1: The Water Bottle – Calculating the Mean</h2>
+    <div class="meta"><b>Design context</b><span>A student has designed a reusable water bottle for school students. The bottle is expected to keep drinking water cool throughout the school day.</span>
+      <b>Design specification</b><span>The bottle should maintain an average water temperature of <b>15°C or below</b> after being used for three hours.</span>
+      <b>Testing method</b><span>The student filled the bottle with water and measured its temperature using a digital thermometer at the end of three hours. The test was repeated five times under identical conditions.</span></div>
+    <b>Testing data</b>
+    <table><tr><th>Trial</th><th>Water temperature (°C)</th></tr>
+      <tr><td>1</td><td>14</td></tr><tr><td>2</td><td>16</td></tr><tr><td>3</td><td>15</td></tr><tr><td>4</td><td>13</td></tr><tr><td>5</td><td>17</td></tr></table>
+    <div class="step"><h3>Step 1: Analyse the data</h3>
+      <p>To calculate the mean: Mean = Sum of all readings ÷ Number of readings</p>
+      <div class="calc">= (14 + 16 + 15 + 13 + 17) ÷ 5<br>Mean = 15°C</div></div>
+    <div class="step"><h3>Step 2: Compare with the design specification</h3>
+      <p>Required temperature: 15°C or below. Actual mean temperature: 15°C.<br><b>The solution meets the design specification exactly.</b></p></div>
+    <div class="step"><h3>Step 3: Write the evaluative statement</h3>
+      <div class="statement">The water bottle successfully meets the design specification, as the average water temperature after three hours was 15°C, which is within the required limit of 15°C or below. This indicates that the bottle is effective in maintaining cool water for students throughout this period. However, the mean is exactly at the maximum permitted temperature, suggesting that there is little performance margin. Further improvements in insulation could help maintain an even lower temperature, particularly in warmer conditions.</div></div>
+
+    <hr style="margin:28px 0;border:none;border-top:2px dashed var(--line)">
+
+    <h2 style="font-size:1.25rem">Example 2: The Automatic Hand Sanitiser Dispenser – Percentage of Success</h2>
+    <div class="meta"><b>Design context</b><span>A student has designed an automatic hand sanitiser dispenser for school corridors. The dispenser uses an infrared sensor to detect a user's hand and release sanitiser automatically.</span>
+      <b>Design specification</b><span>The dispenser should detect a user's hand and release sanitiser successfully in <b>at least 90%</b> of testing trials.</span>
+      <b>Testing method</b><span>The student placed their hand under the sensor and observed whether the dispenser released sanitiser correctly. The test was repeated 20 times.</span></div>
+    <b>Testing data</b>
+    <table><tr><th>Test outcome</th><th>Number of trials</th></tr>
+      <tr><td>Sanitiser dispensed correctly</td><td>17</td></tr><tr><td>Dispenser failed to respond</td><td>3</td></tr><tr><td><b>Total trials</b></td><td><b>20</b></td></tr></table>
+    <div class="step"><h3>Step 1: Analyse the data</h3>
+      <p>To calculate the percentage of successful trials: Success rate (%) = (Successful trials ÷ Total trials) × 100</p>
+      <div class="calc">= (17 ÷ 20) × 100<br>Success rate = 85%</div></div>
+    <div class="step"><h3>Step 2: Compare with the design specification</h3>
+      <p>Required success rate: at least 90%. Actual success rate: 85%.<br><b>The solution does not meet the design specification.</b></p></div>
+    <div class="step"><h3>Step 3: Write the evaluative statement</h3>
+      <div class="statement">The automatic hand sanitiser dispenser does not fully meet the design specification, as it achieved a success rate of 85%, which is 5 percentage points below the required 90%. Although the dispenser functioned correctly in 17 out of 20 trials, the three unsuccessful attempts indicate that the infrared sensor may not consistently detect the user's hand. This could cause inconvenience and reduce the reliability of the dispenser in busy school corridors. The sensor sensitivity or positioning needs to be improved to achieve the required level of performance.</div></div>
+
+    <h3 style="margin-top:24px">What should your evaluative statement include?</h3>
+    <ol class="checklist">
+      <li><b>Mathematical evidence:</b> include the calculated result, such as the mean, percentage or error rate.</li>
+      <li><b>Comparison:</b> state whether the result meets the design specification.</li>
+      <li><b>Evaluation:</b> explain the strengths and limitations of the solution.</li>
+      <li><b>User impact:</b> explain how the results affect the intended user or the overall performance of the solution.</li>
+    </ol>
+    <p><b>Important:</b> do not simply write that a product is successful or unsuccessful. Support your judgement with numerical evidence and explain what the results mean.</p>
+  </section>
+
+  <!-- ================= CASE STUDIES (rendered by script) ================= -->
+  <div id="cases"></div>
+
+  <section class="card" id="submitSection">
+    <h2>Finished?</h2>
+    <p>Check that you have answered every question and ticked the self-check boxes honestly. When you press <b>Submit</b>, your answers are locked and the task page is released.</p>
+    <div class="row noprint"><button class="primary" id="btnSubmit2">Submit task</button></div>
+  </section>
+
+  <section class="integrity" id="integrity"></section>
+</main>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- case study content ---------- */
+var CASES=[
+{title:"Case Study 1: The Solar Phone Charger",tool:"Mean (average)",
+ ctx:"A student has designed a portable solar charger for hikers who have no access to mains electricity.",
+ spec:"When left in direct sunlight for 30 minutes, the charger should raise a phone's battery level by an <b>average of at least 20 percentage points</b>.",
+ method:"The phone battery percentage gained after 30 minutes of direct sunlight was recorded. The test was repeated five times outdoors under similar conditions.",
+ head:["Trial","Battery gained (percentage points)"],rows:[[1,18],[2,21],[3,19],[4,17],[5,20]]},
+{title:"Case Study 2: The Homework Reminder App",tool:"Error rate",
+ ctx:"A student has created a mobile app that sends reminders to students about homework deadlines.",
+ spec:"The app should be reliable, keeping the <b>error rate below 5%</b>. An error is a reminder that arrives late or does not arrive at all.",
+ method:"The student scheduled 50 reminders and observed whether each notification appeared at the correct time.",
+ head:["Test outcome","Number of reminders"],rows:[["Appeared at the correct time",48],["Late or did not appear",2],["<b>Total reminders</b>","<b>50</b>"]]},
+{title:"Case Study 3: The Cardboard Desk Organiser Shelves",tool:"Comparison against a threshold",
+ ctx:"A student has designed a stackable desk organiser made from recycled cardboard to hold books and files.",
+ spec:"<b>Each</b> shelf should be able to hold a load of <b>at least 5 kg</b> without bending or collapsing.",
+ method:"Six identical shelves were loaded with weights until they bent. The maximum mass each shelf held was recorded.",
+ head:["Shelf","Maximum load held (kg)"],rows:[["A",6.2],["B",5.8],["C",4.7],["D",5.5],["E",5.1],["F",4.9]]},
+{title:"Case Study 4: The Reusable Lunch Box",tool:"Frequency counts, mode and percentage",
+ ctx:"A student has designed a lunch box with a new one-hand latch for younger students.",
+ spec:"At least <b>75% of users</b> should rate the ease of opening the latch as <b>4 or 5</b> out of 5 (5 = very easy).",
+ method:"Twenty Year 7 students each opened the lunch box and rated it on the 1 to 5 scale. The ratings were recorded on an observation chart.",
+ head:["Rating (1 to 5)","Number of users"],rows:[[5,6],[4,8],[3,4],[2,2],[1,0],["<b>Total</b>","<b>20</b>"]]},
+{title:"Case Study 5: The School Club Website",tool:"Trend or pattern identification (with mean and threshold)",
+ ctx:"A student has built a website for the school robotics club. After each daily improvement (for example compressing images) the home page load time on a mobile phone was tested.",
+ spec:"The home page should load in <b>under 3 seconds</b> on a mobile device.",
+ method:"Over five consecutive days, the student measured the mobile load time (in seconds) after making that day's improvement.",
+ head:["Day","Load time (s)"],rows:[["Day 1",4.8],["Day 2",4.1],["Day 3",3.6],["Day 4",3.2],["Day 5",2.9]],
+ extra:"Describe the trend in the data. Then explain why the mean of all five days would be a misleading way to judge whether the final website meets the specification."}
+];
+
+var el=function(id){return document.getElementById(id)};
+var KEY="critD_evalTask_v1";
+var S={name:"",cls:"",started:false,startedAt:null,submitted:false,submittedAt:null,elapsed:0,events:[],data:{}};
+var away=false,awayAt=0,printing=false,tickTimer=null,lastTick=0;
+
+/* ---------- build case studies ---------- */
+function build(){
+  var h="";
+  CASES.forEach(function(c,i){
+    var n=i+1,t="<table><tr>"+c.head.map(function(x){return "<th>"+x+"</th>"}).join("")+"</tr>"+
+      c.rows.map(function(r){return "<tr>"+r.map(function(x){return "<td>"+x+"</td>"}).join("")+"</tr>"}).join("")+"</table>";
+    h+='<section class="card"><h2>'+c.title+'</h2>'+
+     '<div class="meta"><b>Design context</b><span>'+c.ctx+'</span><b>Design specification</b><span>'+c.spec+'</span><b>Testing method</b><span>'+c.method+'</span><b>Maths tool to use</b><span>'+c.tool+'</span></div>'+
+     '<b>Testing data</b>'+t+
+     fld("cs"+n+"_calc","Step 1: Analyse the data","Write the formula, show every step of your calculation, and state your result with units.",5)+
+     fld("cs"+n+"_comp","Step 2: Compare with the design specification","State the required value, your calculated value, and whether the solution meets, partly meets or does not meet the specification.",3)+
+     (c.extra?fld("cs"+n+"_extra","Step 2b: Trend and limitation",c.extra,4):"")+
+     '<div class="verdict"><label class="q" style="margin-bottom:2px">Overall judgement</label>'+
+       ["Meets","Partly meets","Does not meet"].map(function(v){return '<label><input type="radio" name="cs'+n+'_v" value="'+v+'" data-key="cs'+n+'_v_'+v+'"> '+v+'</label>'}).join("")+'</div>'+
+     fld("cs"+n+"_stmt","Step 3: Write your evaluative statement","Use the numbers from your calculation. Include mathematical evidence, comparison, evaluation (strengths and limitations) and user impact.",9,true)+
+     '<div class="selfcheck"><b>Self-check: my statement includes</b>'+
+       ["Mathematical evidence (my calculated result)","A comparison with the specification","Evaluation (strengths and limitations)","User impact"].map(function(x,k){return '<label><input type="checkbox" data-key="cs'+n+'_chk'+k+'"> '+x+'</label>'}).join("")+'</div>'+
+     '</section>';
+  });
+  el("cases").innerHTML=h;
+}
+function fld(key,label,hint,rows,wc){
+  return '<label class="q" for="'+key+'">'+label+'</label><p class="hint">'+hint+'</p>'+
+   '<textarea id="'+key+'" data-key="'+key+'" rows="'+rows+'" wrap="soft" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" data-gramm="false" data-gramm_editor="false" data-enable-grammarly="false" writingsuggestions="false"></textarea>'+
+   '<div class="mirror" data-mirror="'+key+'"></div>'+(wc?'<div class="wc" data-wc="'+key+'">0 words</div>':'');
+}
+
+/* ---------- storage ---------- */
+function save(){
+  try{
+    S.elapsed=S.elapsed||0;
+    document.querySelectorAll("[data-key]").forEach(function(f){
+      S.data[f.dataset.key]=(f.type==="checkbox"||f.type==="radio")?f.checked:f.value;
+    });
+    localStorage.setItem(KEY,JSON.stringify(S));
+  }catch(e){}
+}
+function load(){
+  try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);for(var k in o)S[k]=o[k];}}catch(e){}
+}
+function fillFields(){
+  document.querySelectorAll("[data-key]").forEach(function(f){
+    var v=S.data[f.dataset.key];if(v===undefined)return;
+    if(f.type==="checkbox"||f.type==="radio")f.checked=!!v;else f.value=v;
+    sync(f);
+  });
+}
+function sync(f){
+  if(f.tagName==="TEXTAREA"){
+    f.style.height="auto";f.style.height=Math.max(f.scrollHeight+2,60)+"px";
+    var m=document.querySelector('[data-mirror="'+f.id+'"]');if(m)m.textContent=f.value;
+    var w=document.querySelector('[data-wc="'+f.id+'"]');
+    if(w){var n=f.value.trim()?f.value.trim().split(/\s+/).length:0;w.textContent=n+" word"+(n===1?"":"s");}
+  }
+}
+
+/* ---------- focus lock ---------- */
+function locked(){return S.started&&!S.submitted}
+function onLeave(){
+  if(!locked()||away||printing)return;
+  away=true;awayAt=Date.now();
+}
+function onReturn(){
+  if(!away)return;
+  away=false;
+  var secs=Math.max(1,Math.round((Date.now()-awayAt)/1000));
+  S.events.push({t:new Date().toISOString(),type:"Left the page / window",secs:secs});
+  updatePill();save();
+  el("away_msg").textContent="You were away from the task for about "+secs+" second"+(secs===1?"":"s")+".";
+  el("away").classList.add("show");
+}
+document.addEventListener("visibilitychange",function(){document.hidden?onLeave():onReturn()});
+window.addEventListener("blur",onLeave);
+window.addEventListener("focus",onReturn);
+el("away_ok").onclick=function(){el("away").classList.remove("show");goFull()};
+
+/* Standard API plus the webkit-prefixed one older iPads (iPadOS 12 to 16.3) use */
+function fsEnabled(){return !!(document.fullscreenEnabled||document.webkitFullscreenEnabled)}
+function fsElement(){return document.fullscreenElement||document.webkitFullscreenElement||null}
+function goFull(){
+  var d=document.documentElement;
+  try{
+    if(!fsEnabled()||fsElement())return;
+    if(d.requestFullscreen){var p=d.requestFullscreen();if(p&&p.catch)p.catch(function(){});}
+    else if(d.webkitRequestFullscreen)d.webkitRequestFullscreen();
+  }catch(e){}
+}
+function onFsChange(){
+  if(!fsElement()&&locked()&&!printing&&fsEnabled()){
+    S.events.push({t:new Date().toISOString(),type:"Exited full screen",secs:0});
+    updatePill();save();el("fs").classList.add("show");
+  }
+}
+document.addEventListener("fullscreenchange",onFsChange);
+document.addEventListener("webkitfullscreenchange",onFsChange);
+el("fs_ok").onclick=function(){el("fs").classList.remove("show");goFull()};
+window.addEventListener("beforeunload",function(e){if(locked()){save();e.preventDefault();e.returnValue="";return ""}});
+document.addEventListener("keydown",function(e){
+  if(!locked())return;
+  var k=e.key.toLowerCase();
+  if((e.ctrlKey||e.metaKey)&&(k==="t"||k==="n"||k==="w"||k==="l"||k==="tab"))e.preventDefault();
+});
+
+function updatePill(){
+  var n=S.events.length,p=el("focusPill");
+  p.textContent="Focus warnings: "+n;p.className="pill"+(n?" bad":"");
+}
+
+/* ---------- timer ---------- */
+function tick(){
+  var now=Date.now();
+  if(locked()){S.elapsed+=Math.round((now-lastTick)/1000);}
+  lastTick=now;
+  var s=S.elapsed||0,m=Math.floor(s/60),ss=s%60;
+  el("timer").textContent=(m<10?"0":"")+m+":"+(ss<10?"0":"")+ss;
+}
+
+/* ---------- gate ---------- */
+function checkGate(){
+  var ok=el("g_name").value.trim()&&el("g_class").value.trim()&&el("g_agree").checked;
+  el("g_start").disabled=!ok;
+}
+["g_name","g_class"].forEach(function(i){el(i).addEventListener("input",checkGate)});
+el("g_agree").addEventListener("change",checkGate);
+el("g_start").onclick=function(){
+  S.name=el("g_name").value.trim();S.cls=el("g_class").value.trim();
+  if(!S.started){S.started=true;S.startedAt=new Date().toISOString();}
+  save();enter();goFull();
+};
+function enter(){
+  el("gate").classList.remove("show");
+  el("who").textContent=S.name+" · "+S.cls;
+  lastTick=Date.now();updatePill();setInterval(tick,1000);
+  document.querySelectorAll("[data-key]").forEach(function(f){sync(f)});
+}
+
+/* ---------- submit ---------- */
+function openConfirm(){
+  var un=0;
+  for(var i=1;i<=CASES.length;i++){
+    ["calc","comp","stmt"].forEach(function(p){if(!el("cs"+i+"_"+p).value.trim())un++});
+  }
+  el("confirm_msg").innerHTML=un?('<span class="warn"><b>'+un+' answer box'+(un===1?" is":"es are")+' still empty.</b></span> You can go back and finish them.'):"All main answer boxes have been filled.";
+  el("confirm").classList.add("show");
+}
+el("btnSubmit").onclick=openConfirm;el("btnSubmit2").onclick=openConfirm;
+el("confirm_no").onclick=function(){el("confirm").classList.remove("show")};
+el("confirm_yes").onclick=function(){
+  el("confirm").classList.remove("show");
+  S.submitted=true;S.submittedAt=new Date().toISOString();save();
+  lockUI();
+  try{if(fsElement()){if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}catch(e){}
+  window.scrollTo(0,0);
+};
+function lockUI(){
+  document.body.classList.add("submitted");
+  document.querySelectorAll("textarea,input[type=text]").forEach(function(f){f.readOnly=true});
+  document.querySelectorAll("input[type=checkbox],input[type=radio]").forEach(function(f){f.disabled=true});
+  el("btnSubmit").disabled=true;el("btnSubmit2").disabled=true;
+  var d=new Date(S.submittedAt);
+  el("banner_time").textContent="Submitted on "+d.toLocaleString()+".";
+  buildIntegrity();
+}
+function buildIntegrity(){
+  var d=S.submittedAt?new Date(S.submittedAt).toLocaleString():"Not yet submitted (draft PDF)";
+  var m=Math.floor((S.elapsed||0)/60);
+  var h="<b>Task record</b><br>Student: "+esc(S.name)+" · Class: "+esc(S.cls)+"<br>Status: "+(S.submitted?"SUBMITTED":"DRAFT")+" · Submitted: "+d+" · Time on task: about "+m+" min<br>"+
+    "Focus warnings (left page / exited full screen): <b>"+S.events.length+"</b>";
+  if(S.events.length){h+="<ul>"+S.events.map(function(e){return "<li>"+new Date(e.t).toLocaleTimeString()+" – "+e.type+(e.secs?" ("+e.secs+" s)":"")+"</li>"}).join("")+"</ul>";}
+  el("integrity").innerHTML=h;
+  el("ph_info").innerHTML="Student: <b>"+esc(S.name)+"</b> · Class: <b>"+esc(S.cls)+"</b> · "+(S.submitted?"Submitted "+d:"DRAFT – not yet submitted");
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+/* ---------- PDF (print) ---------- */
+el("btnPrint").onclick=function(){
+  save();buildIntegrity();
+  document.querySelectorAll("textarea").forEach(sync);
+  printing=true;
+  setTimeout(function(){try{window.print()}catch(e){}setTimeout(function(){printing=false;away=false},400)},100);
+};
+
+/* Direct PDF download: builds a real PDF file in the browser (no print dialog needed) */
+function plain(h){return String(h).replace(/<[^>]+>/g,"").replace(/&amp;/g,"&")}
+function winEnc(s){
+  var M={8211:150,8212:151,8216:145,8217:146,8220:147,8221:148,8226:149,8230:133};
+  s=String(s).replace(/≥/g,">=").replace(/≤/g,"<=").replace(/→/g,"->").replace(/−/g,"-");
+  var o="";
+  for(var i=0;i<s.length;i++){var c=s.charCodeAt(i);
+    if(c===9)o+="    ";else if(c<32||(c>126&&c<160&&!M[c]))o+=" ";
+    else if(c<256)o+=s[i];else if(M[c])o+=String.fromCharCode(M[c]);else o+="?";}
+  return o;
+}
+function pdfEsc(s){return s.replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)")}
+function makePdf(){
+  var W=595,H=842,MX=50,MT=60,MB=60,CW=W-2*MX;
+  var cv=document.createElement("canvas").getContext("2d");
+  var pages=[[]],y=H-MT;
+  function fontCss(f,sz){return (f==="F2"?"bold ":f==="F3"?"italic ":"")+sz+"px Arial"}
+  function wrap(t,f,sz,maxW){
+    cv.font=fontCss(f,sz);var out=[];
+    String(t).split(/\r?\n/).forEach(function(par){
+      if(!par.trim()){out.push("");return}
+      var words=par.split(/\s+/),cur="";
+      words.forEach(function(w){
+        while(cv.measureText(w).width>maxW){
+          var k=w.length;while(k>1&&cv.measureText(w.slice(0,k)).width>maxW)k--;
+          if(cur){out.push(cur);cur=""}
+          out.push(w.slice(0,k));w=w.slice(k);
+        }
+        var test=cur?cur+" "+w:w;
+        if(cv.measureText(test).width>maxW&&cur){out.push(cur);cur=w}else cur=test;
+      });
+      out.push(cur);
+    });
+    return out;
+  }
+  function newPage(){pages.push([]);y=H-MT}
+  function text(t,o){
+    o=o||{};var f=o.f||"F1",sz=o.sz||10.5,ind=o.ind||0,lh=sz*1.35;
+    wrap(winEnc(t),f,sz,CW-ind).forEach(function(l){
+      if(y-lh<MB)newPage();
+      y-=lh;
+      if(l)pages[pages.length-1].push("BT /"+f+" "+sz+" Tf "+(MX+ind)+" "+y.toFixed(1)+" Td ("+pdfEsc(l)+") Tj ET");
+    });
+    y-=(o.after===undefined?3:o.after);
+  }
+  function rule(){
+    if(y-8<MB)newPage();y-=4;
+    pages[pages.length-1].push("0.6 G 0.8 w "+MX+" "+y.toFixed(1)+" m "+(W-MX)+" "+y.toFixed(1)+" l S 0 G");y-=8;
+  }
+  var done=S.submitted;
+  text("MYP Design - Criterion D: Writing Evaluative Statements",{f:"F2",sz:16,after:6});
+  text("Student: "+S.name+"    Class: "+S.cls,{f:"F2",sz:11});
+  text("Status: "+(done?"SUBMITTED on "+new Date(S.submittedAt).toLocaleString():"DRAFT (not yet submitted)")+"    Time on task: about "+Math.floor((S.elapsed||0)/60)+" min",{sz:10});
+  text("Focus warnings (left page / exited full screen): "+S.events.length,{sz:10});
+  S.events.forEach(function(e){text("- "+new Date(e.t).toLocaleTimeString()+": "+e.type+(e.secs?" ("+e.secs+" s)":""),{sz:9,ind:12,after:0})});
+  y-=4;rule();
+  CASES.forEach(function(c,i){
+    var n=i+1;
+    if(y<MB+120)newPage();
+    text(c.title,{f:"F2",sz:13,after:4});
+    text("Design specification: "+plain(c.spec),{sz:10});
+    text("Testing data:",{f:"F2",sz:10,after:1});
+    text(c.head.map(plain).join("  |  "),{f:"F2",sz:9.5,ind:10,after:0});
+    c.rows.forEach(function(r){text(r.map(plain).join("  |  "),{sz:9.5,ind:10,after:0})});
+    y-=6;
+    function ans(label,key){
+      text(label,{f:"F2",sz:10.5,after:1});
+      var v=(el(key)||{}).value||"";
+      if(v.trim())text(v,{sz:10.5,ind:10});else text("(no answer)",{f:"F3",sz:10,ind:10});
+      y-=3;
+    }
+    ans("Step 1: Analyse the data (calculation)","cs"+n+"_calc");
+    ans("Step 2: Compare with the design specification","cs"+n+"_comp");
+    if(c.extra)ans("Step 2b: Trend and limitation","cs"+n+"_extra");
+    var vv=document.querySelector('input[name="cs'+n+'_v"]:checked');
+    text("Overall judgement: "+(vv?vv.value:"(not selected)"),{f:"F2",sz:10.5});
+    ans("Step 3: Evaluative statement","cs"+n+"_stmt");
+    var labels=["mathematical evidence","comparison","evaluation","user impact"],ticks=[];
+    labels.forEach(function(l,k){var cb=document.querySelector('[data-key="cs'+n+'_chk'+k+'"]');if(cb&&cb.checked)ticks.push(l)});
+    text("Student self-check (ticked): "+(ticks.length?ticks.join(", "):"none"),{f:"F3",sz:9.5});
+    rule();
+  });
+  /* assemble file */
+  var total=pages.length,objs=[];
+  objs[1]="<< /Type /Catalog /Pages 2 0 R >>";
+  var kids=[];for(var p=0;p<total;p++)kids.push((5+p*2)+" 0 R");
+  objs[2]="<< /Type /Pages /Kids ["+kids.join(" ")+"] /Count "+total+" >>";
+  objs[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+  objs[4]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+  var obj5font="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>";
+  var extraObjNo=5+total*2;
+  for(var q=0;q<total;q++){
+    var footer="BT /F1 8.5 Tf "+MX+" 30 Td (Page "+(q+1)+" of "+total+"   |   "+pdfEsc(winEnc(S.name))+"   |   "+(done?"SUBMITTED":"DRAFT")+") Tj ET";
+    var stream=pages[q].join("\n")+"\n"+footer;
+    objs[5+q*2]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+W+" "+H+"] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 "+extraObjNo+" 0 R >> >> /Contents "+(6+q*2)+" 0 R >>";
+    objs[6+q*2]="<< /Length "+stream.length+" >>\nstream\n"+stream+"\nendstream";
+  }
+  objs[extraObjNo]=obj5font;
+  var out="%PDF-1.4\n",off=[];
+  for(var k=1;k<objs.length;k++){off[k]=out.length;out+=k+" 0 obj\n"+objs[k]+"\nendobj\n"}
+  var xr=out.length;
+  out+="xref\n0 "+objs.length+"\n0000000000 65535 f \n";
+  for(var m=1;m<objs.length;m++)out+=("0000000000"+off[m]).slice(-10)+" 00000 n \n";
+  out+="trailer\n<< /Size "+objs.length+" /Root 1 0 R >>\nstartxref\n"+xr+"\n%%EOF";
+  var u8=new Uint8Array(out.length);for(var z=0;z<out.length;z++)u8[z]=out.charCodeAt(z)&255;
+  return new Blob([u8],{type:"application/pdf"});
+}
+el("btnPdf").onclick=function(){
+  save();
+  var msg=el("pdfmsg");
+  try{
+    var blob=makePdf();
+    var fn=(S.name||"student").replace(/[^A-Za-z0-9]+/g,"_")+"_"+(S.cls||"class").replace(/[^A-Za-z0-9]+/g,"_")+"_CriterionD"+(S.submitted?"":"_DRAFT")+".pdf";
+    var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fn;
+    document.body.appendChild(a);
+    printing=true;a.click();
+    setTimeout(function(){document.body.removeChild(a);printing=false;away=false},1500);
+    msg.textContent="PDF created: "+fn+". Check your Downloads folder (on iPad: Files app > Downloads). If nothing downloaded, try the Print view button, or open this page directly in Safari, Chrome or Edge (not inside a preview window).";
+  }catch(e){msg.textContent="Could not create the PDF ("+e.message+"). Try the Print view button, or open this file directly in Chrome or Edge.";}
+  msg.style.display="block";
+};
+window.addEventListener("beforeprint",function(){printing=true;buildIntegrity();document.querySelectorAll("textarea").forEach(sync)});
+window.addEventListener("afterprint",function(){setTimeout(function(){printing=false;away=false},400)});
+
+/* ---------- shared devices: clear the last student's work ---------- */
+function resetDevice(){
+  printing=true;
+  var ok=window.confirm("This clears "+(S.name||"the last student")+"'s answers from this device. Make sure their PDF has been saved first. Start a new task?");
+  setTimeout(function(){printing=false;away=false},400);
+  if(!ok)return;
+  try{localStorage.removeItem(KEY);}catch(e){}
+  S.started=false;S.submitted=false;
+  window.location.reload();
+}
+el("g_resetBtn").onclick=resetDevice;
+el("resetBtn2").onclick=resetDevice;
+
+/* ---------- init ---------- */
+build();
+load();
+fillFields();
+document.addEventListener("input",function(e){
+  if(e.target.matches("[data-key]")){sync(e.target);save();}
+});
+document.addEventListener("change",function(e){if(e.target.matches("[data-key]"))save()});
+window.addEventListener("resize",function(){document.querySelectorAll("textarea").forEach(sync)});
+setInterval(function(){if(locked())save()},10000);
+
+if(S.submitted){
+  el("gate").classList.remove("show");
+  el("who").textContent=S.name+" · "+S.cls;updatePill();lockUI();tick();
+}else if(S.started){
+  el("g_name").value=S.name;el("g_class").value=S.cls;
+  el("g_start").textContent="Resume task";
+  el("g_note").textContent="Your earlier answers on this device have been restored. Time spent so far counts.";
+  el("g_reset").style.display="block";
+  checkGate();
+}
+})();
+</script>
+</body>
+</html>
