@@ -741,3 +741,101 @@ html{scroll-behavior:smooth}
 /* Criterion D: sub-heading inside a step, and the answer inside a show-answer <details> */
 .step h4{font-family:var(--display);font-size:17px;font-weight:600;margin:22px 0 10px;letter-spacing:-.01em}
 .docwrap > .ans{padding:16px 26px 20px;font-size:15px;line-height:1.55}
+
+/* Criterion D analysis calculator (strand ii). Everything is scoped to .calc */
+.calc{--d:#B23A2E;--d-tint:#F8E9E6}
+:root.dark .calc{--d:#E05445;--d-tint:#2D1B1B}
+.calc .picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:0 0 22px}
+.calc .pk{all:unset;box-sizing:border-box;cursor:pointer;padding:14px 16px;background:var(--card);
+  border:1px solid var(--rule);border-radius:12px;display:flex;flex-direction:column;gap:3px;
+  transition:border-color .15s,box-shadow .15s}
+.calc .pk b{font-family:var(--body);font-weight:600;font-size:15px;line-height:1.3}
+.calc .pk span{font-size:13px;color:var(--slate)}
+.calc .pk:hover{border-color:var(--slate)}
+.calc .pk:focus-visible{outline:2px solid var(--d);outline-offset:2px}
+.calc .pk.on{border-color:var(--d);box-shadow:inset 0 0 0 1px var(--d);background:var(--d-tint)}
+.calc .pk.on b{color:var(--d)}
+.calc .tool{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);background:var(--card);
+  border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+.calc .tool[hidden]{display:none}
+.calc .tool__in{padding:24px 26px;border-right:1px solid var(--rule-soft)}
+.calc .tool__in h3{font-family:var(--display);font-weight:600;font-size:21px;margin:0 0 4px}
+.calc .tool__out{padding:24px 26px;background:var(--paper)}
+.calc .tool__what{margin:0 0 18px;color:var(--slate);font-size:14.5px}
+.calc .fld{display:block;margin:0 0 14px;font-size:13.5px;font-weight:600}
+.calc .fld i{font-style:normal;font-weight:400;color:var(--slate);margin-left:6px;font-size:12.5px}
+.calc .fld input,.calc .fld select,.calc .fld textarea{display:block;width:100%;margin-top:6px;padding:10px 12px;
+  font:inherit;font-weight:400;font-size:15px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--rule);border-radius:7px}
+.calc .fld textarea{font-family:var(--mono);font-size:14px;resize:vertical}
+.calc .fld input:focus,.calc .fld select:focus,.calc .fld textarea:focus{outline:2px solid var(--d);outline-offset:1px;border-color:transparent}
+.calc .fld--short{max-width:260px}
+.calc .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.calc .hint{font-size:13px;color:var(--slate);margin:4px 0 14px}
+.calc .mode-switch{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.calc .ms{font:inherit;font-size:13px;padding:7px 12px;border-radius:7px;border:1px solid var(--rule);
+  background:var(--paper);color:var(--slate);cursor:pointer}
+.calc .ms.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.calc .rate-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.calc .rate-grid label{font-family:var(--mono);font-size:11.5px;color:var(--slate);text-align:center}
+.calc .rate-grid input{display:block;width:100%;margin-top:4px;padding:8px 6px;text-align:center;font:inherit;
+  font-size:15px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:7px}
+.calc .target{margin-top:6px;padding:14px 16px 2px;border:1px dashed var(--rule);border-radius:12px}
+.calc .target__hd{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:13.5px;font-weight:600}
+.calc .target__hd input{width:18px;height:18px;accent-color:var(--d)}
+.calc .target[data-off="1"] .row2{display:none}
+.calc .themes{margin:4px 0 10px}
+.calc .theme{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-bottom:8px}
+.calc .theme input[type=text]{padding:9px 11px;font:inherit;font-size:14.5px;color:var(--ink);
+  background:var(--paper);border:1px solid var(--rule);border-radius:7px;min-width:0}
+.calc .stepper{display:flex;align-items:center;border:1px solid var(--rule);border-radius:7px;overflow:hidden;background:var(--paper)}
+.calc .stepper button{width:34px;height:36px;border:0;background:transparent;font:inherit;font-size:18px;color:var(--ink);cursor:pointer}
+.calc .stepper button:hover{background:var(--rule-soft)}
+.calc .stepper output{min-width:30px;text-align:center;font-family:var(--mono);font-weight:600}
+.calc .btn{font:inherit;font-size:13.5px;padding:8px 14px;border-radius:7px;border:1px solid var(--rule);
+  background:transparent;color:var(--ink);cursor:pointer}
+.calc .btn:hover{border-color:var(--slate)}
+.calc .res__lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);margin:0 0 6px}
+.calc .res__big{font-family:var(--display);font-weight:600;font-size:40px;line-height:1.05;margin:0 0 4px;letter-spacing:-.01em}
+.calc .res__small{font-size:14px;color:var(--slate);margin:0 0 18px}
+.calc .verdict{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:4px 10px;border-radius:7px;margin:0 0 18px}
+.calc .verdict--met{background:var(--moss-tint);color:var(--moss)}
+.calc .verdict--not{background:var(--clay-tint);color:var(--clay)}
+.calc .work{font-family:var(--mono);font-size:13.5px;line-height:1.75;background:var(--card);border:1px solid var(--rule);
+  border-radius:12px;padding:14px 16px;margin:0 0 18px;white-space:pre-wrap;word-break:break-word}
+.calc .say{background:var(--card);border:1px solid var(--rule);border-left:4px solid var(--moss);border-radius:12px;
+  padding:14px 16px;margin:0 0 10px;font-size:15px}
+.calc .copy{font:inherit;font-size:12.5px;font-family:var(--mono);letter-spacing:.06em;padding:6px 12px;border-radius:7px;
+  border:1px solid var(--rule);background:var(--card);color:var(--ink);cursor:pointer;margin:0 6px 18px 0}
+.calc .copy:hover{border-color:var(--slate)}
+.calc .err{color:var(--clay);background:var(--clay-tint);border-radius:12px;padding:12px 16px;font-size:14.5px;margin:0}
+.calc .tip{font-size:13.5px;color:var(--slate);margin:0;padding-top:14px;border-top:1px solid var(--rule)}
+.calc .tip b{color:var(--ink)}
+.calc .ftable{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 18px;background:var(--card);
+  border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+.calc .ftable th,.calc .ftable td{padding:8px 12px;text-align:left;border-bottom:1px solid var(--rule-soft)}
+.calc .ftable th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);font-weight:500}
+.calc .ftable tr.top td{font-weight:600}
+.calc .ftable td.n{font-family:var(--mono);text-align:right;white-space:nowrap}
+.calc .bars{display:block;width:100%;height:auto;margin:0 0 18px;background:var(--card);border:1px solid var(--rule);border-radius:12px}
+.calc .bars .bar{fill:var(--d);opacity:.82}
+.calc .bars .lbl{font-family:var(--mono);font-size:11px;fill:var(--slate)}
+.calc .bars .val{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+.calc .bars .fit{stroke:var(--ink);stroke-width:2;stroke-dasharray:5 4;fill:none}
+.calc .foot-note{font-size:13px;color:var(--slate);margin:18px 0 0}
+@media (max-width:820px){
+  .calc .tool{grid-template-columns:1fr}
+  .calc .tool__in{border-right:0;border-bottom:1px solid var(--rule-soft)}
+}
+@media (max-width:480px){
+  .calc .tool__in,.calc .tool__out{padding:20px 18px}
+  .calc .row2{grid-template-columns:1fr}
+  .calc .res__big{font-size:34px}
+}
+@media print{
+  .calc .picker,.calc .mode-switch,.calc .copy,.calc .btn{display:none}
+}
+/* land below the sticky top bar and strand tabs when opened from a #calc link */
+#calc{scroll-margin-top:130px}
+@media (max-width:600px){#calc{scroll-margin-top:180px}}
