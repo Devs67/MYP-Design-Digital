@@ -4,6 +4,7 @@
   --amber:#B05A1C; --amber-tint:#FBEEE2;
   --moss:#2F6B4F; --moss-tint:#E8F1EC;
   --clay:#9C3E2F; --clay-tint:#F8E9E6;
+  --a:#12707F; --b:#96700A; --c:#38722C; --d:#B23A2E;
   --display:"Fraunces",Georgia,serif;
   --body:"Work Sans",-apple-system,BlinkMacSystemFont,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
@@ -432,7 +433,14 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .band__n{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--slate)}
 .band--top .band__n{color:var(--moss)}
 .band--sub .band__n{color:var(--amber)}
-.cterm{font-family:var(--display);font-size:16px;font-weight:600}
+.cterm{font-family:var(--display);font-size:16px;font-weight:600;color:var(--ct,inherit)}
+
+/* command terms take the criterion's colour, set by data-crit on <body> */
+body[data-crit="a"]{--ct:var(--a)}
+body[data-crit="b"]{--ct:var(--b)}
+body[data-crit="c"]{--ct:var(--c)}
+body[data-crit="d"]{--ct:var(--d)}
+.ct{color:var(--ct,var(--amber));font-weight:600}
 .steps-req{margin-left:auto;display:flex;gap:5px}
 .sq{font-family:var(--mono);font-size:10px;width:22px;height:22px;border-radius:7px;
   display:flex;align-items:center;justify-content:center;
@@ -673,7 +681,7 @@ html{scroll-behavior:smooth}
   border:1px solid var(--ink)}
 .ctile__band{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--slate);
   margin:0 0 8px}
-.ctile__term{font-family:var(--display);font-size:23px;font-weight:600;color:var(--amber);
+.ctile__term{font-family:var(--display);font-size:23px;font-weight:600;color:var(--ct,var(--amber));
   line-height:1.1;margin:0}
 .ctile__hint{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--slate);margin:12px 0 0;opacity:.75}
