@@ -737,3 +737,7 @@ html{scroll-behavior:smooth}
   .docwrap > summary:active,.fwgroup > summary:active{
     transform:scale(.98);transition:transform 140ms ease-out}
 }
+
+/* Criterion D: sub-heading inside a step, and the answer inside a show-answer <details> */
+.step h4{font-family:var(--display);font-size:17px;font-weight:600;margin:22px 0 10px;letter-spacing:-.01em}
+.docwrap > .ans{padding:16px 26px 20px;font-size:15px;line-height:1.55}
