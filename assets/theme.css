@@ -30,7 +30,7 @@
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--rule,#D3E0E5);transition:background .2s ease,border-color .2s ease}
 :root.dark .topbar{background:rgba(12,26,32,.88)}
-.topbar__wrap{max-width:1320px;margin:0 auto;padding:0 30px;height:62px;
+.topbar__wrap{max-width:1776px;margin:0 auto;padding:0 clamp(16px,3vw,48px);height:62px;
   display:flex;align-items:center;gap:14px}
 .topbar__brand{display:flex;align-items:center;gap:10px;text-decoration:none;
   color:inherit;flex:0 0 auto}
