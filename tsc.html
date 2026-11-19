@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Task-Specific Clarifications — MYP 1&ndash;3 Design</title>
+<title>Task-Specific Clarifications — MYP 1&ndash;5 Design</title>
 <script>(function(){try{var m=/[?&]theme=(dark|light)\b/.exec(location.search);var t=m?m[1]:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light');if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,6 +73,111 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
   .mast{padding:40px 0 28px}
   .docwrap > summary{padding:16px 18px}
 }
+
+/* jump links in the masthead */
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.jump a{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;padding:8px 14px;border:1px solid var(--rule);
+  border-radius:7px;background:var(--card)}
+.jump a:hover{border-color:var(--amber);color:var(--amber)}
+.sec__h{font-family:var(--display);font-weight:600;font-size:clamp(24px,3.4vw,32px);
+  line-height:1.15;letter-spacing:-.01em;margin:8px 0 6px}
+.sec__sub{margin:0 0 22px;color:var(--slate);max-width:70ch}
+#myp1-3,#myp4-5,.tscp,.trow{scroll-margin-top:84px}
+
+/* ===== MYP 4 & 5 TSC (built from the Figma "Digital — TSC" page) ===== */
+:root{
+  --a:#12707F; --b:#96700A; --c:#38722C; --d:#B23A2E;
+  --a-tint:#E4F1F3; --b-tint:#F6EFDD; --c-tint:#E6F0E3; --d-tint:#F8E9E6;
+}
+.wrap--wide{max-width:1440px}
+[data-crit="a"]{--cc:var(--a);--cc-tint:var(--a-tint)}
+[data-crit="b"]{--cc:var(--b);--cc-tint:var(--b-tint)}
+[data-crit="c"]{--cc:var(--c);--cc-tint:var(--c-tint)}
+[data-crit="d"]{--cc:var(--d);--cc-tint:var(--d-tint)}
+
+.howto{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:24px}
+.howto > div{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:16px 18px}
+.howto .n{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--amber);margin:0}
+.howto h3{font-family:var(--display);font-weight:600;font-size:18px;margin:4px 0 6px}
+.howto p{margin:0;font-size:14px;line-height:1.55;color:var(--slate)}
+
+.ctabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.ctab{display:block;text-decoration:none;color:var(--ink);background:var(--card);
+  border:1px solid var(--rule);border-top:4px solid var(--cc);border-radius:12px;padding:13px 16px 14px}
+.ctab:hover{border-color:var(--cc)}
+.ctab[aria-selected="true"]{background:var(--cc);border-color:var(--cc);color:var(--card)}
+.ctab__eb{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;opacity:.85}
+.ctab b{display:block;font-family:var(--display);font-weight:600;font-size:18px;line-height:1.25;margin:3px 0 6px}
+.ctab__list{display:flex;flex-direction:column;font-size:12.5px;line-height:1.55}
+.ctab__list i{font-style:normal;font-family:var(--mono);font-size:11px;opacity:.8;display:inline-block;min-width:24px}
+
+.tscp{margin-bottom:30px}
+.tscp__head{display:flex;gap:18px;align-items:center;background:var(--cc);color:var(--card);
+  border-radius:12px;padding:16px 22px;margin-bottom:8px}
+.tscp__letter{font-family:var(--display);font-weight:700;font-size:56px;line-height:1}
+.tscp__meta{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;margin:0;opacity:.9}
+.tscp__head h3{font-family:var(--display);font-weight:600;font-size:clamp(22px,3vw,30px);line-height:1.15;margin:2px 0 0}
+
+.tgrid{display:flex;flex-direction:column;gap:8px}
+.trow{display:grid;grid-template-columns:190px repeat(4,minmax(0,1fr));gap:8px}
+.trow--head span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  padding:9px 12px;border-radius:7px;background:var(--cc-tint);color:var(--ink)}
+.trow--head span:first-child{background:none;color:var(--cc);padding-left:4px}
+.trow--head span.top{background:var(--cc);color:var(--card)}
+.tstrand{background:var(--cc-tint);border-radius:12px;padding:14px 16px}
+.tstrand p{margin:0}
+.tstrand__id{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.1;color:var(--cc)}
+.tstrand__name{font-weight:600;line-height:1.3;margin:4px 0 6px !important}
+.tstrand__obj{font-size:12.5px;line-height:1.45;color:var(--slate)}
+.tcell{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:12px 13px;
+  display:flex;flex-direction:column;gap:8px;min-width:0}
+.tcell p{margin:0}
+.tcell--top{border:2px solid var(--cc)}
+.tcell--zero{grid-column:2 / -1;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center}
+.tcell__band{display:none;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--cc)}
+.pills{display:flex;flex-wrap:wrap;gap:5px}
+.pill{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--cc);color:var(--card);padding:3px 9px;border-radius:99px;line-height:1.5}
+.ib{border:1.5px solid var(--cc);border-radius:7px;padding:8px 10px;background:var(--card)}
+.ib p:last-child{font-size:13px;line-height:1.45;font-weight:600}
+.ib--none p:last-child{font-weight:400;font-style:italic;color:var(--slate);font-size:12.5px}
+.lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--slate);margin:0 0 2px !important}
+.ib .lab{color:var(--cc)}
+.tsc{font-size:14px;line-height:1.55}
+.ct{color:var(--cc);font-weight:600}
+.ib .ct{font-weight:700}
+.must{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.must b{font-family:var(--mono);font-size:9.5px;font-weight:500;letter-spacing:.11em;text-transform:uppercase;color:var(--cc);margin-right:2px}
+.chip{font-size:11.5px;line-height:1.4;border:1px solid var(--cc);border-radius:7px;padding:2px 7px;background:var(--card)}
+
+.gloss__title{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,26px);margin:6px 0 6px}
+.gloss__note{margin:0 0 14px;font-size:14px;color:var(--slate);max-width:90ch}
+.gloss{--cc:var(--amber);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.gcard{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:16px 18px}
+.gcard__h{font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;margin:0 0 10px;color:var(--ink)}
+.gcard dl{margin:0}
+.gcard dt{margin:12px 0 4px}
+.gcard dt:first-child{margin-top:0}
+.gcard dd{margin:0;font-size:13.5px;line-height:1.5;color:var(--slate)}
+.gloss__zero{font-size:13.5px;font-style:italic;color:var(--slate);margin:16px 0 0}
+
+@media (max-width:1100px){
+  .trow{grid-template-columns:1fr;gap:6px}
+  .trow--head{display:none}
+  .tgrid{gap:18px}
+  .tcell__band{display:block}
+  .tcell--zero{grid-column:auto;grid-template-columns:1fr;gap:10px}
+  .gloss{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:760px){
+  .howto{grid-template-columns:1fr}
+  .ctabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ctab__list{display:none}
+  .tscp__head{padding:14px 16px;gap:14px}
+  .tscp__letter{font-size:44px}
+  .gloss{grid-template-columns:1fr}
+}
 </style>
 <link rel="stylesheet" href="assets/theme.css">
 </head>
@@ -108,13 +213,17 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
 <header class="mast">
   <div class="wrap">
     <a class="homelink" href="index.html">&larr; Choose a different year group</a>
-    <p class="eyebrow">IB MYP Design &middot; Years 1&ndash;3</p>
+    <p class="eyebrow">IB MYP Design &middot; Years 1&ndash;5</p>
     <h1>Task-specific clarifications</h1>
-    <p class="sub">The source wording this site's guides are built from &mdash; MYP 1 Criterion A, MYP 2 Criteria A &amp; B, and MYP 3 Criteria A &amp; B.</p>
+    <p class="sub">The source wording this site's guides are built from. MYP 1&ndash;3 are in a Google Doc. MYP 4 &amp; 5 are set out below, criterion by criterion.</p>
+    <nav class="jump" aria-label="Jump to a year group">
+      <a href="#myp1-3">MYP 1&ndash;3</a>
+      <a href="#myp4-5">MYP 4 &amp; 5</a>
+    </nav>
   </div>
 </header>
 
-<section class="sec">
+<section class="sec" id="myp1-3">
   <div class="wrap">
     <details class="docwrap" open>
       <summary><b>TSCs — MYP 1&ndash;3</b><i>Google Doc &middot; opens in page</i></summary>
@@ -130,13 +239,654 @@ footer{margin-top:16px;padding:28px 0 54px;border-top:1px solid var(--rule);
   </div>
 </section>
 
+<section class="sec" id="myp4-5">
+  <div class="wrap wrap--wide">
+    <p class="eyebrow">MYP 4 &amp; 5 &middot; Criteria A&ndash;D</p>
+    <h2 class="sec__h">MYP 4 &amp; 5</h2>
+    <p class="sec__sub">Built on the IB Year 5 descriptors. MYP 4 is assessed against the Year 5 rubric.</p>
+
+    <div class="howto">
+      <div><p class="n">1</p><h3>Find your strand</h3><p>Each criterion has four rows, strands i to iv. Work on one row at a time.</p></div>
+      <div><p class="n">2</p><h3>Read left &rarr; right</h3><p>Columns are the bands 1&ndash;2, 3&ndash;4, 5&ndash;6, 7&ndash;8. Compare a cell with the one to its left: the new words are what lifts the work up a band. On a phone the bands stack, so compare with the one above.</p></div>
+      <div><p class="n">3</p><h3>How each cell works</h3><p>The boxed, bold text is the official IB Year 5 descriptor. Below it is our task-specific clarification. Coloured words and pills are the command terms. &ldquo;Must show&rdquo; labels are evidence the clarification requires.</p></div>
+    </div>
+
+<!-- TSC45 START: generated from the Figma "Digital — TSC" page; edit the data, not this block -->
+<div class="ctabs" role="tablist" aria-label="Criteria">
+<a class="ctab" href="#tsc-a" id="tsctab-a" data-crit="a" role="tab"><span class="ctab__eb">Criterion A</span><b>Inquiring &amp; analysing</b><span class="ctab__list"><span><i>i</i> Need for a solution</span><span><i>ii</i> Research plan</span><span><i>iii</i> Existing products</span><span><i>iv</i> Design brief</span></span></a>
+<a class="ctab" href="#tsc-b" id="tsctab-b" data-crit="b" role="tab"><span class="ctab__eb">Criterion B</span><b>Developing ideas</b><span class="ctab__list"><span><i>i</i> Design specification</span><span><i>ii</i> Design ideas</span><span><i>iii</i> Chosen design</span><span><i>iv</i> Planning drawings</span></span></a>
+<a class="ctab" href="#tsc-c" id="tsctab-c" data-crit="c" role="tab"><span class="ctab__eb">Criterion C</span><b>Creating the solution</b><span class="ctab__list"><span><i>i</i> Plan</span><span><i>ii</i> Technical skills</span><span><i>iii</i> Solution &amp; process journal</span><span><i>iv</i> Changes justified</span></span></a>
+<a class="ctab" href="#tsc-d" id="tsctab-d" data-crit="d" role="tab"><span class="ctab__eb">Criterion D</span><b>Evaluating</b><span class="ctab__list"><span><i>i</i> Testing methods</span><span><i>ii</i> Evaluating success</span><span><i>iii</i> Improvements</span><span><i>iv</i> Impact on client</span></span></a>
+</div>
+<div class="tscp" id="tsc-a" data-crit="a" role="tabpanel" aria-labelledby="tsctab-a">
+<div class="tscp__head"><span class="tscp__letter" aria-hidden="true">A</span><div><p class="tscp__meta">Criterion A &middot; Maximum 8 &middot; MYP 4 &amp; 5</p><h3>Inquiring &amp; analysing</h3></div></div>
+<div class="tgrid">
+<div class="trow trow--head" aria-hidden="true"><span>Strand</span><span>Band 1&ndash;2</span><span>Band 3&ndash;4</span><span>Band 5&ndash;6</span><span class="top">Band 7&ndash;8</span></div>
+<div class="trow trow--zero"><div class="tstrand"><p class="tstrand__id">0</p><p class="tstrand__name">Level 0</p></div>
+<div class="tcell tcell--zero"><div class="ib"><p class="lab">IB descriptor</p><p>The student <span class="ct">does not</span> reach a standard described by any of the descriptors below.</p></div><div><p class="lab">Task-specific clarification</p><p class="tsc">The student <span class="ct">does not</span> reach a standard described by any of the descriptors below.</p></div></div></div>
+<div class="trow" id="tsc-ai">
+<div class="tstrand"><p class="tstrand__id">Ai</p><p class="tstrand__name">Need for a solution</p><p class="tstrand__obj">Year 5 objective: explain and justify the need for a solution to a problem for a specified client/target audience.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">States</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">States</span> the need for a solution to a problem for a specified client/target audience</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">States</span> the need for a solution to a problem for a specified client/target audience.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Outlines</span> the need for a solution to a problem for a specified client/target audience</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Outlines</span> the need for a solution to a problem for a specified client/target audience using an Empathy map and create a problem statement.</p>
+<p class="must"><b>Must show</b><span class="chip">Empathy map</span><span class="chip">Problem statement</span></p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Explains</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Explains</span> the need for a solution to a problem for a specified client/target audience</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Explains</span> the problem situation by establishing the context through the unit&rsquo;s key concept, related concepts and global context. <span class="ct">Identify</span> the client/target audience, <span class="ct">critically present</span> the cause and reason for the problem using graphic organizers/tools (Statistical analysis, Empathy map, Circle of viewpoints) and create the problem statement.</p>
+<p class="must"><b>Must show</b><span class="chip">Problem statement</span></p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Explains</span><span class="pill">Justifies</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Explains</span> and <span class="ct">justifies</span> the need for a solution to a problem for a client/target audience</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Explains</span> the problem situation by establishing the context through the unit&rsquo;s key concept, related concepts and global context. <span class="ct">Identify</span> the client/target audience, <span class="ct">critically present</span> the cause and reason for the problem using graphic organizers/tools (Statistical analysis, Empathy map, Circle of viewpoints) and create the problem statement. <span class="ct">Justify</span> the need for a solution to a problem by citing minimum 10-12 secondary research and relevant primary resources.</p>
+<p class="must"><b>Must show</b><span class="chip">Problem statement</span><span class="chip">10-12 secondary research</span><span class="chip">Primary resources</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-aii">
+<div class="tstrand"><p class="tstrand__id">Aii</p><p class="tstrand__name">Research plan</p><p class="tstrand__obj">Year 5 objective: identify and prioritize primary and secondary research needed to develop a solution to the problem.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">States</span></p>
+<div class="ib ib--none"><p class="lab">IB descriptor</p><p>No separate IB Year 5 descriptor for this strand at 1&ndash;2 &mdash; the IB lists fewer strands at this band.</p></div>
+<p class="lab">Task-specific clarification &middot; SIS addition</p>
+<p class="tsc"><span class="ct">States</span> some research questions needed to develop a solution to the problem, with a high level of guidance.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Outlines</span> a research plan, which <span class="ct">identifies</span> primary and secondary research needed to develop a solution to the problem, with some guidance</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Outlines</span> a research plan, which <span class="ct">identifies</span> primary and secondary research needed to develop a solution to the problem, with some guidance (Research question minimum 5 - type of research - justification).</p>
+<p class="must"><b>Must show</b><span class="chip">Min. 5 research questions</span></p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Constructs</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Constructs</span> a research plan, which <span class="ct">identifies</span> and <span class="ct">prioritizes</span> primary and secondary research needed to develop a solution to the problem, with some guidance</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Constructs</span> a detailed research plan using tables/flowchart/Mind map, which <span class="ct">identifies</span> research area, <span class="ct">construct</span> research questions and <span class="ct">prioritizes</span> the primary and secondary research needed to develop a solution to the problem, with some guidance.</p>
+<p class="must"><b>Must show</b><span class="chip">Research questions</span></p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Constructs</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Constructs</span> a detailed research plan, which <span class="ct">identifies</span> and <span class="ct">prioritizes</span> the primary and secondary research needed to develop a solution to the problem independently</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Constructs</span> a detailed research plan using tables/flowchart/Mind map, which <span class="ct">identifies</span> research area, <span class="ct">construct</span> research questions and <span class="ct">prioritizes</span> the primary and secondary research needed to develop a solution to the problem independently.</p>
+<p class="must"><b>Must show</b><span class="chip">Research questions</span><span class="chip">Independently</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-aiii">
+<div class="tstrand"><p class="tstrand__id">Aiii</p><p class="tstrand__name">Existing products</p><p class="tstrand__obj">Year 5 objective: analyse a range of existing products that inspire a solution to the problem.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">States</span></p>
+<div class="ib ib--none"><p class="lab">IB descriptor</p><p>No separate IB Year 5 descriptor for this strand at 1&ndash;2 &mdash; the IB lists fewer strands at this band.</p></div>
+<p class="lab">Task-specific clarification &middot; SIS addition</p>
+<p class="tsc"><span class="ct">States</span> the main features of one existing product that inspires a solution to the problem.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Analyses</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Analyses</span> one existing product that inspires a solution to the problem</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Analyses</span> two existing products that inspire a solution to the problem using possible tools like ACCESSFM.</p>
+<p class="must"><b>Must show</b><span class="chip">2 products</span></p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Analyses</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Analyses</span> a range of existing products that inspire a solution to the problem</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Analyses</span> a diverse range (3-4) of existing products that inspire a solution to the problem in detail using possible tools like ACCESSFM, Parts-Purpose-Complexities, Product Matrix.</p>
+<p class="must"><b>Must show</b><span class="chip">3-4 products</span></p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Analyses</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Analyses</span> a range of existing products that inspire a solution to the problem in detail</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Analyses</span> a diverse range (5) of existing products that inspire a solution to the problem in detail using possible tools like ACCESSFM, Parts-Purpose-Complexities, Product Matrix.</p>
+<p class="must"><b>Must show</b><span class="chip">5 products</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-aiv">
+<div class="tstrand"><p class="tstrand__id">Aiv</p><p class="tstrand__name">Design brief</p><p class="tstrand__obj">Year 5 objective: develop a detailed design brief, which summarizes the analysis of relevant research.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">Develops</span><span class="pill">States</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> a basic design brief, which <span class="ct">states</span> the findings of relevant research</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> a basic design brief, which <span class="ct">states</span> the findings of relevant research.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Develops</span><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> a design brief, which <span class="ct">outlines</span> the analysis of relevant research</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> a design brief, which <span class="ct">outlines</span> the analysis of relevant research from all the previous strands, <span class="ct">outline</span> the expected product outcome by listing its key features and connecting the solution to SOI.</p>
+<p class="must"><b>Must show</b><span class="chip">Key features</span><span class="chip">Link to SOI</span></p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Develops</span><span class="pill">Explains</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> a design brief, which <span class="ct">explains</span> the analysis of relevant research</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> a design brief, which <span class="ct">explains</span> the analysis of relevant research from all the previous strands, <span class="ct">describe</span> the expected product outcome by <span class="ct">outlining</span> its key features and connecting the solution to SOI.</p>
+<p class="must"><b>Must show</b><span class="chip">Key features</span><span class="chip">Link to SOI</span></p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Develops</span><span class="pill">Summarizes</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> a detailed design brief, which <span class="ct">summarizes</span> the analysis of relevant research</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> a detailed design brief, which <span class="ct">summarizes</span> the analysis of relevant research from all the previous strands, <span class="ct">state</span> the design question, <span class="ct">describe</span> the expected product outcome by <span class="ct">outlining</span> its key features and connecting the solution to SOI.</p>
+<p class="must"><b>Must show</b><span class="chip">Design question</span><span class="chip">Key features</span><span class="chip">Link to SOI</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="tscp" id="tsc-b" data-crit="b" role="tabpanel" aria-labelledby="tsctab-b">
+<div class="tscp__head"><span class="tscp__letter" aria-hidden="true">B</span><div><p class="tscp__meta">Criterion B &middot; Maximum 8 &middot; MYP 4 &amp; 5</p><h3>Developing ideas</h3></div></div>
+<div class="tgrid">
+<div class="trow trow--head" aria-hidden="true"><span>Strand</span><span>Band 1&ndash;2</span><span>Band 3&ndash;4</span><span>Band 5&ndash;6</span><span class="top">Band 7&ndash;8</span></div>
+<div class="trow trow--zero"><div class="tstrand"><p class="tstrand__id">0</p><p class="tstrand__name">Level 0</p></div>
+<div class="tcell tcell--zero"><div class="ib"><p class="lab">IB descriptor</p><p>The student <span class="ct">does not</span> reach a standard described by any of the descriptors below.</p></div><div><p class="lab">Task-specific clarification</p><p class="tsc">The student <span class="ct">does not</span> reach a standard described by any of the descriptors below.</p></div></div></div>
+<div class="trow" id="tsc-bi">
+<div class="tstrand"><p class="tstrand__id">Bi</p><p class="tstrand__name">Design specification</p><p class="tstrand__obj">Year 5 objective: develop design specifications, which clearly states the success criteria for the design of a solution.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">Lists</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Lists</span> some basic design specifications for the design of a solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Lists</span> some basic design specifications for the design of a solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Lists</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Lists</span> some design specifications, which relate to the success criteria for the design of a solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Lists</span> some design specifications, which relate to the success criteria for the design of a solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Develops</span><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> design specifications, which <span class="ct">outline</span> the success criteria for the design of a solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> design specifications, which <span class="ct">outline</span> the success criteria for the design of a solution.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Develops</span><span class="pill">Explains</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> detailed design specifications, which <span class="ct">explain</span> the success criteria for the design of a solution based on the analysis of the research</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> detailed design specifications using ACCESSFM, which <span class="ct">explain</span> the success criteria for the design of a solution based on the analysis of the research done in Criterion A (A1&ndash;A3), and <span class="ct">identifies</span> how each specification will be tested.</p>
+<p class="must"><b>Must show</b><span class="chip">ACCESSFM</span><span class="chip">Test for each spec</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-bii">
+<div class="tstrand"><p class="tstrand__id">Bii</p><p class="tstrand__name">Design ideas</p><p class="tstrand__obj">Year 5 objective: develop a range of feasible design ideas, which can be correctly interpreted by others.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">Presents</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Presents</span> one design, which can be interpreted by others</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Presents</span> one design, which can be interpreted by others.</p>
+<p class="must"><b>Must show</b><span class="chip">1 design</span></p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Presents</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Presents</span> a few feasible <span class="ct">designs</span>, using an appropriate medium(s) or annotation, which can be interpreted by others</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Presents</span> a few feasible <span class="ct">designs</span>, using an appropriate medium(s) or annotation, which can be interpreted by others.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Develops</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> a range of feasible design ideas, using an appropriate medium(s) and annotation, which can be interpreted by others</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> a range of feasible design ideas, using an appropriate medium(s) and annotation, which can be interpreted by others.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Develops</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> a range of feasible design ideas, using an appropriate medium(s) and detailed annotation, which can be correctly interpreted by others</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> a range of feasible design ideas (minimum 3) from different perspectives, using appropriate mediums like Fusion 360, Tinkercad, Isometric drawing, Orthographic drawing, perspective drawing, wireframe etc. and detailed annotation that highlights functions and features of the design, which can be correctly interpreted by others.</p>
+<p class="must"><b>Must show</b><span class="chip">Min. 3 ideas</span><span class="chip">Detailed annotation</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-biii">
+<div class="tstrand"><p class="tstrand__id">Biii</p><p class="tstrand__name">Chosen design</p><p class="tstrand__obj">Year 5 objective: present the chosen design and justify its selection.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">States</span></p>
+<div class="ib ib--none"><p class="lab">IB descriptor</p><p>No separate IB Year 5 descriptor for this strand at 1&ndash;2 &mdash; the IB lists fewer strands at this band.</p></div>
+<p class="lab">Task-specific clarification &middot; SIS addition</p>
+<p class="tsc"><span class="ct">States</span> the chosen design, without justifying its selection.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Justifies</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Justifies</span> the selection of the chosen design with reference to the design specification</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Justifies</span> the selection of the chosen design with reference to the design specification.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Presents</span><span class="pill">Justifies</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Presents</span> the chosen design and <span class="ct">justifies</span> its selection with reference to the design specification</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Presents</span> the chosen design and <span class="ct">justifies</span> its selection with reference to the design specification.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Presents</span><span class="pill">Justifies</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Presents</span> the chosen design and <span class="ct">justifies</span> fully and <span class="ct">critically</span> its selection with detailed reference to the design specification</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Presents</span> the chosen design that you will create in Criterion C in the form of images and <span class="ct">justifies</span> fully all the important aspects of the design and <span class="ct">critically</span> its selection with detailed reference to the design specification in B1.</p>
+<p class="must"><b>Must show</b><span class="chip">Images</span><span class="chip">Reference to B1</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-biv">
+<div class="tstrand"><p class="tstrand__id">Biv</p><p class="tstrand__name">Planning drawings</p><p class="tstrand__obj">Year 5 objective: develop accurate and detailed planning drawings/diagrams and outline the requirements for the creation of the chosen solution.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">Creates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Creates</span> incomplete planning drawings/diagrams</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Creates</span> incomplete planning drawings/diagrams.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Creates</span><span class="pill">Lists</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Creates</span> planning drawings/diagrams or <span class="ct">lists</span> requirements for the creation of the chosen solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Creates</span> planning drawings/diagrams or <span class="ct">lists</span> requirements for the creation of the chosen solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Develops</span><span class="pill">Lists</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> accurate planning drawings/diagrams and <span class="ct">lists</span> requirements for the creation of the chosen solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> accurate planning drawings/diagrams and <span class="ct">lists</span> requirements for the creation of the chosen solution.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Develops</span><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Develops</span> accurate and detailed planning drawings/diagrams and <span class="ct">outlines</span> requirements for the creation of the chosen solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Develops</span> accurate and detailed planning drawings/diagrams using specifications, and test that will be used in the design cycle and <span class="ct">outlines</span> requirements for the creation of the chosen solution using details necessary to include materials, process, tools, software, wiring diagrams, flowcharts etc.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="tscp" id="tsc-c" data-crit="c" role="tabpanel" aria-labelledby="tsctab-c">
+<div class="tscp__head"><span class="tscp__letter" aria-hidden="true">C</span><div><p class="tscp__meta">Criterion C &middot; Maximum 8 &middot; MYP 4 &amp; 5</p><h3>Creating the solution</h3></div></div>
+<div class="tgrid">
+<div class="trow trow--head" aria-hidden="true"><span>Strand</span><span>Band 1&ndash;2</span><span>Band 3&ndash;4</span><span>Band 5&ndash;6</span><span class="top">Band 7&ndash;8</span></div>
+<div class="trow trow--zero"><div class="tstrand"><p class="tstrand__id">0</p><p class="tstrand__name">Level 0</p></div>
+<div class="tcell tcell--zero"><div class="ib"><p class="lab">IB descriptor</p><p>The student <span class="ct">does not</span> reach a standard described by any of the descriptors below.</p></div><div><p class="lab">Task-specific clarification</p><p class="tsc">The student <span class="ct">does not</span> reach a standard described by any of the descriptors below.</p></div></div></div>
+<div class="trow" id="tsc-ci">
+<div class="tstrand"><p class="tstrand__id">Ci</p><p class="tstrand__name">Plan</p><p class="tstrand__obj">Year 5 objective: construct a logical plan, which describes the efficient use of time and resources, sufficient for peers to be able to follow to create the solution.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">Lists</span></p>
+<div class="ib ib--none"><p class="lab">IB descriptor</p><p>No separate IB Year 5 descriptor for this strand at 1&ndash;2 &mdash; the IB lists fewer strands at this band.</p></div>
+<p class="lab">Task-specific clarification &middot; SIS addition</p>
+<p class="tsc"><span class="ct">Lists</span> some steps in a plan that contains few production details, which peers cannot follow to create the solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Constructs</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Constructs</span> a plan that contains some production details, resulting in peers having difficulty following the plan</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Constructs</span> a plan that contains some production details, resulting in peers having difficulty following the plan.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Constructs</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Constructs</span> a logical plan, which considers time and resources, sufficient for peers to be able to follow to create the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Constructs</span> a logical plan, which considers time and resources, sufficient for peers to be able to follow to create the solution.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Constructs</span><span class="pill">Describes</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Constructs</span> a detailed and logical plan, which <span class="ct">describes</span> the efficient use of time and resources, sufficient for peers to be able to follow to create the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Constructs</span> a detailed and logical plan using tools like a table/Gantt chart/flow chart which <span class="ct">describes</span> the efficient use of time and resources. A sufficient level of detail that would allow another person to follow the steps to create the solution.</p>
+</div>
+</div>
+<div class="trow" id="tsc-cii">
+<div class="tstrand"><p class="tstrand__id">Cii</p><p class="tstrand__name">Technical skills</p><p class="tstrand__obj">Year 5 objective: demonstrate excellent technical skills when making the solution.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">Demonstrates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Demonstrates</span> minimal technical skills when making the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Demonstrates</span> minimal technical skills when making the solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Demonstrates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Demonstrates</span> satisfactory technical skills when making the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Demonstrates</span> satisfactory technical skills when making the solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Demonstrates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Demonstrates</span> competent technical skills when making the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Demonstrates</span> competent technical skills when making the solution.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Demonstrates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Demonstrates</span> excellent technical skills when making the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Demonstrates</span> excellent technical skills through careful documentation (these are the skills used to produce the solution) which includes evidence like screenshots/a CAD timeline of learning and using tools, equipment, procedures, and software in a safe, efficient, and accurate way when making the solution.</p>
+<p class="must"><b>Must show</b><span class="chip">Documented evidence</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-ciii">
+<div class="tstrand"><p class="tstrand__id">Ciii</p><p class="tstrand__name">Solution &amp; process journal</p><p class="tstrand__obj">Year 5 objective: follow the plan to create the solution, which functions as intended.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">Creates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Creates</span> the solution, which functions poorly and is presented in an incomplete form</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Creates</span> the solution, which functions poorly and is presented in an incomplete form.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Creates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Creates</span> the solution, which partially functions and is adequately presented</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Creates</span> the solution, which partially functions and is adequately presented.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Creates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Creates</span> the solution, which functions as intended and is presented appropriately</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Creates</span> the solution, which functions as intended and is presented appropriately.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Follows</span><span class="pill">Presents</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Follows</span> the plan to create the solution, which functions as intended and is presented appropriately</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Presents</span> a process journal/log which <span class="ct">follows</span> the plan set out in C1, to create the solution, that functions as intended as closely as possible, meets the design brief (A4) and design specifications (B1), and is presented appropriately using images of the physical product, screenshots of the completed code, interface, or screens with the timestamp.</p>
+<p class="must"><b>Must show</b><span class="chip">Process journal/log</span><span class="chip">Timestamps</span><span class="chip">Meets A4 + B1</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-civ">
+<div class="tstrand"><p class="tstrand__id">Civ</p><p class="tstrand__name">Changes justified</p><p class="tstrand__obj">Year 5 objective: fully justify changes made to the chosen design and plan when making the solution.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">States</span></p>
+<div class="ib ib--none"><p class="lab">IB descriptor</p><p>No separate IB Year 5 descriptor for this strand at 1&ndash;2 &mdash; the IB lists fewer strands at this band.</p></div>
+<p class="lab">Task-specific clarification &middot; SIS addition</p>
+<p class="tsc"><span class="ct">States</span> one change made to the chosen design or plan when making the solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Outlines</span> changes made to the chosen design and plan when making the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Outlines</span> changes made to the chosen design and plan when making the solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Describes</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Describes</span> changes made to the chosen design and plan when making the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Describes</span> changes made to the chosen design and plan when making the solution.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Justifies</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p>Fully <span class="ct">justifies</span> changes made to the chosen design and plan when making the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc">Fully <span class="ct">justifies</span> changes to the plan, design and timeline using images and evidence from the strands (C1, C2 and C3), as well as the specifications (B1) when making the solution.</p>
+<p class="must"><b>Must show</b><span class="chip">Evidence from C1&ndash;C3</span><span class="chip">Link to B1</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="tscp" id="tsc-d" data-crit="d" role="tabpanel" aria-labelledby="tsctab-d">
+<div class="tscp__head"><span class="tscp__letter" aria-hidden="true">D</span><div><p class="tscp__meta">Criterion D &middot; Maximum 8 &middot; MYP 4 &amp; 5</p><h3>Evaluating</h3></div></div>
+<div class="tgrid">
+<div class="trow trow--head" aria-hidden="true"><span>Strand</span><span>Band 1&ndash;2</span><span>Band 3&ndash;4</span><span>Band 5&ndash;6</span><span class="top">Band 7&ndash;8</span></div>
+<div class="trow trow--zero"><div class="tstrand"><p class="tstrand__id">0</p><p class="tstrand__name">Level 0</p></div>
+<div class="tcell tcell--zero"><div class="ib"><p class="lab">IB descriptor</p><p>The student <span class="ct">does not</span> reach a standard described by any of the descriptors below.</p></div><div><p class="lab">Task-specific clarification</p><p class="tsc">The student <span class="ct">does not</span> reach a standard described by any of the descriptors below.</p></div></div></div>
+<div class="trow" id="tsc-di">
+<div class="tstrand"><p class="tstrand__id">Di</p><p class="tstrand__name">Testing methods</p><p class="tstrand__obj">Year 5 objective: design detailed and relevant testing methods, which generate data, to measure the success of the solution.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">Designs</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Designs</span> a testing method, which is used to measure the success of the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Designs</span> a testing method, which is used to measure the success of the solution.</p>
+<p class="must"><b>Must show</b><span class="chip">1 method</span></p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Designs</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Designs</span> a relevant testing method, which generates data, to measure the success of the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Designs</span> at least 2 relevant testing methods using a model/table/flowchart meaningfully connecting design specifications, which generate data, to measure the success of the solution.</p>
+<p class="must"><b>Must show</b><span class="chip">Min. 2 methods</span></p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Designs</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Designs</span> relevant testing methods, which generate data, to measure the success of the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Designs</span> at least 3 relevant testing methods using a model/table/flowchart meaningfully connecting design specifications, which generate data, to measure the success of the solution and stating the data analysis techniques like averages (mean, mode); percentage of success/failure; frequency counts; error rate and trend pattern analysis.</p>
+<p class="must"><b>Must show</b><span class="chip">Min. 3 methods</span><span class="chip">Analysis techniques stated</span></p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Designs</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Designs</span> detailed and relevant testing methods, which generate data, to measure the success of the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Designs</span> at least 5 detailed and relevant testing methods and <span class="ct">presents</span> it using a model/table/flowchart meaningfully connecting design specifications, which generate data, to measure the success of the solution and stating the data analysis techniques like averages (mean, mode); percentage of success/failure; frequency counts; error rate and trend pattern analysis.</p>
+<p class="must"><b>Must show</b><span class="chip">Min. 5 methods</span><span class="chip">Analysis techniques stated</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-dii">
+<div class="tstrand"><p class="tstrand__id">Dii</p><p class="tstrand__name">Evaluating success</p><p class="tstrand__obj">Year 5 objective: critically evaluate the success of the solution against the design specification.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">States</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">States</span> the success of the solution</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">States</span> the success of the solution.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Outlines</span> the success of the solution against the design specification based on relevant product testing</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Outlines</span> the success of the solution against the design specifications based on relevant product testing.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Explains</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Explains</span> the success of the solution against the design specification based on relevant product testing</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Explains</span> the success of the solution against the design specification by <span class="ct">analyzing</span> the collected data based on relevant product testing.</p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Critically evaluates</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Critically evaluates</span> the success of the solution against the design specification based on authentic product testing</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Critically evaluates</span> the success of the solution against the design specification, by <span class="ct">analyzing</span> the collected data using the data analysis techniques mentioned in Strand 1, based on authentic product testing.</p>
+<p class="must"><b>Must show</b><span class="chip">Authentic product testing</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-diii">
+<div class="tstrand"><p class="tstrand__id">Diii</p><p class="tstrand__name">Improvements</p><p class="tstrand__obj">Year 5 objective: explain how the solution could be improved.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">States</span></p>
+<div class="ib ib--none"><p class="lab">IB descriptor</p><p>No separate IB Year 5 descriptor for this strand at 1&ndash;2 &mdash; the IB lists fewer strands at this band.</p></div>
+<p class="lab">Task-specific clarification &middot; SIS addition</p>
+<p class="tsc"><span class="ct">States</span> one way in which the solution could be improved.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Outlines</span> how the solution could be improved</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Outlines</span> how the solution can be improved.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Describes</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Describes</span> how the solution could be improved</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Describes</span> how the solution can be improved through the evaluation data in hand.</p>
+<p class="must"><b>Must show</b><span class="chip">Uses evaluation data</span></p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Explains</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Explains</span> how the solution could be improved</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Explains</span> how the solution can be improved through the evaluation data in hand.</p>
+<p class="must"><b>Must show</b><span class="chip">Uses evaluation data</span></p>
+</div>
+</div>
+<div class="trow" id="tsc-div">
+<div class="tstrand"><p class="tstrand__id">Div</p><p class="tstrand__name">Impact on client</p><p class="tstrand__obj">Year 5 objective: explain the impact of the solution on the client/target audience.</p></div>
+<div class="tcell">
+<p class="tcell__band">Band 1&ndash;2</p>
+<p class="pills"><span class="pill">States</span></p>
+<div class="ib ib--none"><p class="lab">IB descriptor</p><p>No separate IB Year 5 descriptor for this strand at 1&ndash;2 &mdash; the IB lists fewer strands at this band.</p></div>
+<p class="lab">Task-specific clarification &middot; SIS addition</p>
+<p class="tsc"><span class="ct">States</span> one way in which the solution can impact the client/target audience.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 3&ndash;4</p>
+<p class="pills"><span class="pill">Outlines</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Outlines</span> the impact of the solution on the client/target audience</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Outlines</span> the impact of the solution on the client/target audience.</p>
+</div>
+<div class="tcell">
+<p class="tcell__band">Band 5&ndash;6</p>
+<p class="pills"><span class="pill">Explains</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Explains</span> the impact of the solution on the client/target audience, with guidance</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Explains</span>, with guidance, the impact of the product on the client/target audience, using evidence from client/target audience testing.</p>
+<p class="must"><b>Must show</b><span class="chip">Client testing evidence</span></p>
+</div>
+<div class="tcell tcell--top">
+<p class="tcell__band">Band 7&ndash;8</p>
+<p class="pills"><span class="pill">Explains</span></p>
+<div class="ib"><p class="lab">IB descriptor</p><p><span class="ct">Explains</span> the impact of the product on the client/target audience</p></div>
+<p class="lab">Task-specific clarification</p>
+<p class="tsc"><span class="ct">Explains</span>, through authentic evidence, the impact of the product on the client/target audience after at least a week long client/target audience testing.</p>
+<p class="must"><b>Must show</b><span class="chip">Authentic evidence</span><span class="chip">1-week+ client testing</span></p>
+</div>
+</div>
+</div>
+</div>
+<h3 class="gloss__title">Command terms &mdash; what each verb asks you to do</h3>
+<p class="gloss__note">Definitions quoted from the MYP Design Guide (Appendices: MYP command terms for design). The groupings are a reading aid, not IB wording. &ldquo;Critically evaluates&rdquo; is not separately defined &mdash; read it as Evaluate, with the judgement backed by test data.</p>
+<div class="gloss">
+<div class="gcard"><p class="gcard__h">Brief answers &mdash; usually bands 1&ndash;4</p><dl><dt><span class="pill">State</span></dt><dd>Give a specific name, value or other brief answer without explanation or calculation.</dd><dt><span class="pill">List</span></dt><dd>Give a sequence of brief answers with no explanation.</dd><dt><span class="pill">Outline</span></dt><dd>Give a brief account or summary.</dd><dt><span class="pill">Identify</span></dt><dd>Provide an answer from a number of possibilities. Recognize and state briefly a distinguishing fact or feature.</dd></dl></div>
+<div class="gcard"><p class="gcard__h">Detail &mdash; usually band 5&ndash;6</p><dl><dt><span class="pill">Describe</span></dt><dd>Give a detailed account or picture of a situation, event, pattern or process.</dd><dt><span class="pill">Explain</span></dt><dd>Give a detailed account including reasons or causes. (See also &ldquo;Justify&rdquo;.)</dd><dt><span class="pill">Prioritize</span></dt><dd>Give relative importance to, or put in an order of preference.</dd></dl></div>
+<div class="gcard"><p class="gcard__h">Reasons &amp; judgement &mdash; usually band 7&ndash;8</p><dl><dt><span class="pill">Justify</span></dt><dd>Give valid reasons or evidence to support an answer or conclusion. (See also &ldquo;Explain&rdquo;.)</dd><dt><span class="pill">Analyse</span></dt><dd>Break down in order to bring out the essential elements or structure. (To identify parts and relationships, and to interpret information to reach conclusions.)</dd><dt><span class="pill">Summarize</span></dt><dd>Abstract a general theme or major point(s).</dd><dt><span class="pill">Evaluate</span></dt><dd>Make an appraisal by weighing up the strengths and limitations.</dd></dl></div>
+<div class="gcard"><p class="gcard__h">Making &amp; doing &mdash; the words around them set the band</p><dl><dt><span class="pill">Construct</span></dt><dd>Display information in a diagrammatic or logical form.</dd><dt><span class="pill">Develop</span></dt><dd>To improve incrementally, elaborate or expand in detail. Evolve to a more advanced or effective state.</dd><dt><span class="pill">Design</span></dt><dd>Produce a plan, simulation or model.</dd><dt><span class="pill">Create</span></dt><dd>To evolve from one&rsquo;s own thought or imagination, as a work or an invention.</dd><dt><span class="pill">Demonstrate</span></dt><dd>Make clear by reasoning or evidence, illustrating with examples or practical application.</dd><dt><span class="pill">Present</span></dt><dd>Offer for display, observation, examination or consideration.</dd></dl></div>
+</div>
+<p class="gloss__zero">Level 0 on every criterion: &ldquo;The student does not reach a standard described by any of the descriptors below.&rdquo;</p>
+<!-- TSC45 END -->
+  </div>
+</section>
+
 <footer>
   <div class="wrap" style="display:flex;justify-content:space-between;gap:12px;width:100%;flex-wrap:wrap">
     <span>Design Team - SIS</span>
-    <span>MYP Years 1&ndash;3</span>
+    <span>MYP Years 1&ndash;5</span>
   </div>
 </footer>
 
 <script src="assets/theme.js"></script>
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.ctab');
+  var panels = document.querySelectorAll('.tscp');
+  if(!tabs.length || !panels.length) return;
+
+  function show(k){
+    var i;
+    for(i = 0; i < tabs.length; i++){
+      var on = tabs[i].getAttribute('data-crit') === k;
+      tabs[i].setAttribute('aria-selected', on ? 'true' : 'false');
+      tabs[i].setAttribute('tabindex', on ? '0' : '-1');
+    }
+    for(i = 0; i < panels.length; i++){
+      panels[i].hidden = panels[i].id !== 'tsc-' + k;
+    }
+  }
+  // #tsc-b opens Criterion B; #tsc-bii also scrolls to strand ii
+  function fromHash(){
+    var m = /^#tsc-([abcd])(i{1,3}|iv)?$/.exec(window.location.hash || '');
+    return m ? {k: m[1], row: m[2] ? document.getElementById('tsc-' + m[1] + m[2]) : null} : null;
+  }
+  function openHash(){
+    var h = fromHash();
+    if(!h) return;
+    show(h.k);
+    var t = h.row || document.getElementById('tsc-' + h.k);
+    if(t && t.scrollIntoView) t.scrollIntoView();
+  }
+
+  for(var i = 0; i < tabs.length; i++){
+    tabs[i].addEventListener('click', function(e){
+      e.preventDefault();
+      var k = this.getAttribute('data-crit');
+      show(k);
+      try{ history.replaceState(null, '', '#tsc-' + k); }catch(err){}
+    });
+    tabs[i].addEventListener('keydown', function(e){
+      var k = e.key, idx = -1, j;
+      if(k !== 'ArrowRight' && k !== 'ArrowLeft') return;
+      for(j = 0; j < tabs.length; j++){ if(tabs[j] === this) idx = j; }
+      idx = (idx + (k === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+      e.preventDefault();
+      show(tabs[idx].getAttribute('data-crit'));
+      tabs[idx].focus();
+    });
+  }
+
+  show('a');
+  try{ openHash(); }catch(e){}
+  window.addEventListener('hashchange', function(){ try{ openHash(); }catch(e){} });
+})();
+</script>
 </body>
 </html>
